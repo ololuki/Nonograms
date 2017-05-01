@@ -1,5 +1,5 @@
-/debug
-/release
+*/debug
+*/release
 *.user
 *.stash
 Makefile
