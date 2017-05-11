@@ -15,8 +15,14 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS #emit warning if any deprecated feature is used
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    widgets/DrawingAreaView.cpp \
+    widgets/ColumnsDescriptionView.cpp \
+    widgets/RowsDescriptionView.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    widgets/DrawingAreaView.h \
+    widgets/ColumnsDescriptionView.h \
+    widgets/RowsDescriptionView.h
 
 FORMS    += mainwindow.ui
