@@ -18,11 +18,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     widgets/DrawingAreaView.cpp \
     widgets/ColumnsDescriptionView.cpp \
-    widgets/RowsDescriptionView.cpp
+    widgets/RowsDescriptionView.cpp \
+    field/AddressOnDrawingArea.cpp \
+    field/Pixel.cpp
 
 HEADERS  += mainwindow.h \
     widgets/DrawingAreaView.h \
     widgets/ColumnsDescriptionView.h \
-    widgets/RowsDescriptionView.h
+    widgets/RowsDescriptionView.h \
+    field/AddressOnDrawingArea.h \
+    field/pixelSign.h \
+    field/Pixel.h
 
 FORMS    += mainwindow.ui
