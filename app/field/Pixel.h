@@ -11,10 +11,13 @@
 class Pixel
 {
 public:
-	Pixel(pixelSign sign, AddressOnDrawingArea address) : sign(sign), address(address) {}
+	Pixel(AddressOnDrawingArea address, pixelSign sign = pixelSign::SGN_EMPTY) : address(address), sign(sign) {}
 	bool isFilledBlack(){return sign == pixelSign::SGN_FILL_BLACK;}
 	bool isDot(){return sign == pixelSign::SGN_DOT;}
 	bool isEmpty(){return sign == pixelSign::SGN_EMPTY;}
+	void makeFilledBlack() {sign = pixelSign::SGN_FILL_BLACK;}
+	void makeDot(){sign = pixelSign::SGN_DOT;}
+	void makeEmpty(){sign = pixelSign::SGN_EMPTY;}
 	AddressOnDrawingArea getAddress() {return address;}
 private:
 	AddressOnDrawingArea address;
