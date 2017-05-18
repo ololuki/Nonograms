@@ -4,7 +4,7 @@
 #include <QPoint>
 #include <QWidget>
 #include <QtWidgets>
-
+#include "iostream"
 
 DrawingAreaView::DrawingAreaView(QWidget *parent)
     : QWidget(parent)
@@ -35,7 +35,17 @@ void DrawingAreaView::setField(DrawingAreaField *field)
 
 void DrawingAreaView::onDataChanged()
 {
-	//TODO: stub
+	std::cout << "DrawingArea::onDataChanged" << std::endl;
+	for (int y = 0; y < field->getHeight(); y++)
+	{
+		for (int x = 0; x < field->getWidth(); x++)
+		{
+			AddressOnDrawingArea address(x, y);
+			//drawOnePixel(field->getPixel(address));
+		}
+	}
+	drawGrid();
+	update();
 }
 
 void DrawingAreaView::mousePressEvent(QMouseEvent *event)
@@ -59,6 +69,7 @@ void DrawingAreaView::mousePressEvent(QMouseEvent *event)
 		break;
 	}
 	drawOnePixel(pixel);
+	field->setPixel(pixel);
 	update();
 }
 

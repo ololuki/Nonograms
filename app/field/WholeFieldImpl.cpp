@@ -10,4 +10,5 @@ Pixel WholeFieldImpl::getPixel(AddressOnDrawingArea address)
 void WholeFieldImpl::setPixel(Pixel pixel)
 {
 	//TODO: stub
+	emit dataChanged();
 }
