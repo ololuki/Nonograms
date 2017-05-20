@@ -8,12 +8,15 @@
 class AddressOnDrawingArea
 {
 public:
-	AddressOnDrawingArea(int x, int y) : x(x), y(y) {}
-	int getX() {return x;}
-	int getY() {return y;}
+	AddressOnDrawingArea(unsigned int x, unsigned int y) : x{x}, y(y) {}
+	unsigned int getX() {return x;}
+	unsigned int getY() {return y;}
+	bool operator==(const AddressOnDrawingArea &address) const {
+		return (this->x == address.x && this->y == address.y);
+	}
 private:
-	int x;
-	int y;
+	unsigned int x;
+	unsigned int y;
 };
 
 #endif // ADDRESSONDRAWINGAREA_H
