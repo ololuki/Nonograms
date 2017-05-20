@@ -41,7 +41,7 @@ void DrawingAreaView::onDataChanged()
 		for (int x = 0; x < field->getWidth(); x++)
 		{
 			AddressOnDrawingArea address(x, y);
-			//drawOnePixel(field->getPixel(address));
+			drawOnePixel(field->getPixel(address));
 		}
 	}
 	drawGrid();
@@ -68,9 +68,7 @@ void DrawingAreaView::mousePressEvent(QMouseEvent *event)
 		pixel.makeEmpty();
 		break;
 	}
-	drawOnePixel(pixel);
 	field->setPixel(pixel);
-	update();
 }
 
 void DrawingAreaView::paintEvent(QPaintEvent *event)

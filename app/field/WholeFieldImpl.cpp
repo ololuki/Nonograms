@@ -3,12 +3,15 @@
 
 Pixel WholeFieldImpl::getPixel(AddressOnDrawingArea address)
 {
-	//TODO: stub
-	return Pixel(address);
+	unsigned int x = address.getX();
+	unsigned int y = address.getY();
+	return array[x][y];
 }
 
 void WholeFieldImpl::setPixel(Pixel pixel)
 {
-	//TODO: stub
+	unsigned int x = pixel.getAddress().getX();
+	unsigned int y = pixel.getAddress().getY();
+	array[x][y] = pixel;
 	emit dataChanged();
 }

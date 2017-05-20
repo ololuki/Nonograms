@@ -1,4 +1,4 @@
-QT       += core
+QT       += core gui
 
 TARGET = NonogramsTests
 TEMPLATE = app
@@ -6,8 +6,12 @@ TEMPLATE = app
 CONFIG += console
 
 SOURCES += TestMain.cpp \
-    ExampleTest.cpp
+    LineOfPixelsTest.cpp \
+    AddressOnDrawingAreaTest.cpp \
+    ArrayOfPixelsTest.cpp
 
 INCLUDEPATH += \
     ../app \
     ../lib
+
+HEADERS +=

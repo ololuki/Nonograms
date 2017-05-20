@@ -24,7 +24,9 @@ SOURCES += main.cpp\
     field/RootField.cpp \
     field/DrawingAreaField.cpp \
     field/WholeField.cpp \
-    field/WholeFieldImpl.cpp
+    field/WholeFieldImpl.cpp \
+    field/LineOfPixels.cpp \
+    field/ArrayOfPixels.cpp
 
 HEADERS  += mainwindow.h \
     widgets/DrawingAreaView.h \
@@ -36,6 +38,8 @@ HEADERS  += mainwindow.h \
     field/RootField.h \
     field/DrawingAreaField.h \
     field/WholeField.h \
-    field/WholeFieldImpl.h
+    field/WholeFieldImpl.h \
+    field/LineOfPixels.h \
+    field/ArrayOfPixels.h
 
 FORMS    += mainwindow.ui
