@@ -16,7 +16,7 @@ class ArrayOfPixels : private std::vector<std::vector<Pixel>>
 {
 public:
 	ArrayOfPixels() {}
-	ArrayOfPixels(unsigned int width, unsigned int height)
+	ArrayOfPixels(size_t width, size_t height)
 	{
 		for (size_t i = 0; i < width; i++)
 		{
@@ -26,16 +26,12 @@ public:
 				this->at(i).push_back(Pixel(AddressOnDrawingArea(i, j)));
 			}
 		}
-	} 
-	std::vector<Pixel> & operator[](unsigned int i) 
-	{ 
-		return this->at(i);
 	}
-	const std::vector<Pixel> & operator[] (unsigned int i) const 
-	{ 
-		return this->at(i);
+	Pixel& operator()(size_t x, size_t y)
+	{
+		return this->at(x)[y];
 	}
-	// getPixelAt(x, y) 
+	// getPixelAt(x, y)
 };
 
 #endif // ARRAYOFPIXELS_H

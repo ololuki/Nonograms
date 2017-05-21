@@ -11,7 +11,7 @@
 class WholeFieldImpl : public WholeField
 {
 public:
-	WholeFieldImpl(int width, int height) : RootField(width, height) {array = ArrayOfPixels(width, height);}
+	WholeFieldImpl(size_t width, size_t height);
 	virtual Pixel getPixel(AddressOnDrawingArea address) override;
 	virtual void setPixel(Pixel pixel) override;
 private:

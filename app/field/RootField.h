@@ -14,14 +14,14 @@ class RootField : public QObject
 	Q_OBJECT
 public:
 	RootField();
-	RootField(int width, int height) : width(width), height(height) {}
-	int getWidth() {return width;}
-	int getHeight() {return height;}
+	RootField(size_t width, size_t height);
+	size_t getWidth() {return width;}
+	size_t getHeight() {return height;}
 signals:
 	void dataChanged();
 private:
-	int width;
-	int height;
+	size_t width;
+	size_t height;
 };
 
 #endif // ROOTFIELD_H
