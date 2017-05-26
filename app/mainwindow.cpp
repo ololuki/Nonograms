@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	
 	ui->drawingArea->setField(field);
+	ui->columnsDescription->setField(field);
 }
 
 MainWindow::~MainWindow()

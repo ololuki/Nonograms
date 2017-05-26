@@ -26,7 +26,12 @@ SOURCES += main.cpp\
     field/WholeField.cpp \
     field/WholeFieldImpl.cpp \
     field/LineOfPixels.cpp \
-    field/ArrayOfPixels.cpp
+    field/ArrayOfPixels.cpp \
+    field/BlocksDescriptionField.cpp \
+    field/AddressOnBlocksDescription.cpp \
+    field/BlockDescription.cpp \
+    field/LineDescription.cpp \
+    field/AllLinesDescription.cpp
 
 HEADERS  += mainwindow.h \
     widgets/DrawingAreaView.h \
@@ -40,6 +45,11 @@ HEADERS  += mainwindow.h \
     field/WholeField.h \
     field/WholeFieldImpl.h \
     field/LineOfPixels.h \
-    field/ArrayOfPixels.h
+    field/ArrayOfPixels.h \
+    field/BlocksDescriptionField.h \
+    field/AddressOnBlocksDescription.h \
+    field/BlockDescription.h \
+    field/LineDescription.h \
+    field/AllLinesDescription.h
 
 FORMS    += mainwindow.ui

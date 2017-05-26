@@ -7,6 +7,7 @@
 #include <QPainter>
 #include <QSize>
 
+
 DrawingAreaView::DrawingAreaView(QWidget *parent)
     : QWidget(parent)
 {
@@ -35,9 +36,9 @@ void DrawingAreaView::setField(DrawingAreaField *field)
 
 void DrawingAreaView::onDataChanged()
 {
-	for (int y = 0; y < field->getHeight(); y++)
+	for (size_t y = 0; y < field->getHeight(); y++)
 	{
-		for (int x = 0; x < field->getWidth(); x++)
+		for (size_t x = 0; x < field->getWidth(); x++)
 		{
 			AddressOnDrawingArea address(x, y);
 			drawOnePixel(field->getPixel(address));
@@ -53,8 +54,11 @@ void DrawingAreaView::mousePressEvent(QMouseEvent *event)
 	
 	size_t pixelX = currentPoint.x() / squareSize;
 	size_t pixelY = currentPoint.y() / squareSize;
-	Pixel pixel(AddressOnDrawingArea(pixelX, pixelY));
 	
+	if (pixelX >= field->getWidth()) return;
+	if (pixelY >= field->getHeight()) return;
+	
+	Pixel pixel(AddressOnDrawingArea(pixelX, pixelY));
 	switch(event->button())
 	{
 	case Qt::LeftButton:
