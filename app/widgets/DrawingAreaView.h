@@ -20,7 +20,7 @@ protected:
 	void paintEvent(QPaintEvent *event) override;
 	
 private:
-	const int squareSize = 30;
+	const size_t squareSize = 30;		// TODO: move to generalView class
 	void drawGrid();
 	void drawOnePixel(Pixel pixel);
 	

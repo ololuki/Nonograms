@@ -3,8 +3,9 @@
 #include <QImage>
 #include <QPoint>
 #include <QWidget>
-#include <QtWidgets>
-#include "iostream"
+#include <QMouseEvent>
+#include <QPainter>
+#include <QSize>
 
 DrawingAreaView::DrawingAreaView(QWidget *parent)
     : QWidget(parent)
@@ -15,7 +16,6 @@ DrawingAreaView::DrawingAreaView(QWidget *parent)
 	
 	QSize size(211, 211);
 	resizeDrawingArea(size);
-	//setMinimumSize(211, 211);		// for scroll area
 	
 	lastPoint = QPoint(0, 0);
 }
@@ -25,8 +25,8 @@ void DrawingAreaView::setField(DrawingAreaField *field)
 	this->field = field;
 	connect(field, &DrawingAreaField::dataChanged, this, &DrawingAreaView::onDataChanged);
 	
-	int sizeX = field->getWidth() * squareSize + 1;
-	int sizeY = field->getHeight() * squareSize + 1;
+	size_t sizeX = field->getWidth() * squareSize + 1;
+	size_t sizeY = field->getHeight() * squareSize + 1;
 	QSize size(sizeX, sizeY);
 	resizeDrawingArea(size);
 	
@@ -35,7 +35,6 @@ void DrawingAreaView::setField(DrawingAreaField *field)
 
 void DrawingAreaView::onDataChanged()
 {
-	std::cout << "DrawingArea::onDataChanged" << std::endl;
 	for (int y = 0; y < field->getHeight(); y++)
 	{
 		for (int x = 0; x < field->getWidth(); x++)
@@ -52,8 +51,8 @@ void DrawingAreaView::mousePressEvent(QMouseEvent *event)
 {
 	QPoint currentPoint = event->pos();
 	
-	int pixelX = currentPoint.x() / squareSize;
-	int pixelY = currentPoint.y() / squareSize;
+	size_t pixelX = currentPoint.x() / squareSize;
+	size_t pixelY = currentPoint.y() / squareSize;
 	Pixel pixel(AddressOnDrawingArea(pixelX, pixelY));
 	
 	switch(event->button())
@@ -66,6 +65,8 @@ void DrawingAreaView::mousePressEvent(QMouseEvent *event)
 		break;
 	case Qt::MiddleButton:
 		pixel.makeEmpty();
+		break;
+	default:
 		break;
 	}
 	field->setPixel(pixel);

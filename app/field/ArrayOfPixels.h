@@ -7,7 +7,7 @@
 
 ///
 /// \brief ArrayOfPixels stores Pixels in 2-dimensional array.
-/// Pixels are accesible by operator[], use array[x][y]
+/// Pixels are accesible by operator(), use (x, y)
 /// Pixels are stored in vector of columns vector of Pixels to make sure
 /// that in operator[] first [] will be for x (column number)
 /// and second [] will be for y (row number)
