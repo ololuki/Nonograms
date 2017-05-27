@@ -15,12 +15,15 @@ public:
 		VERTICAL,
 	};
 	
-	AddressOnBlocksDescription(AddressOnBlocksDescription::orientation o, size_t line, size_t count);
+	AddressOnBlocksDescription(orientation o, size_t line, size_t count);
 	size_t getLine() {return line;}
 	size_t getCount() {return count;}
+	orientation getOrientation() {return o;}
 	bool isColumn() {return o == VERTICAL;}
 	bool isRow() {return o == HORIZONTAL;}
-	
+	bool operator==(const AddressOnBlocksDescription &address) const {
+		return (this->line == address.line && this->count == address.count && this->o == address.o);
+	}
 private:
 	orientation o;
 	size_t line;

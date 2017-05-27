@@ -19,6 +19,7 @@ public:
 	bool isFilledBlack(){return sign == pixelSign::SGN_FILL_BLACK;}
 	void makeFilledBlack() {sign = pixelSign::SGN_FILL_BLACK;}
 	AddressOnBlocksDescription getAddress() {return address;}
+	void updateAddress(AddressOnBlocksDescription newAddress) {address = newAddress;}
 private:
 	AddressOnBlocksDescription address;
 	size_t blockSize;

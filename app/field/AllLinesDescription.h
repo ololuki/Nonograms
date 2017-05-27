@@ -18,8 +18,8 @@ public:
 	size_t numberOfBlocksInLine(size_t lineNumber);
 	bool isDefinedDescriptionAt(size_t line, size_t count);	// true if BlockDescription exists on given position
 	void updateDescription(BlockDescription blockDescription);
-	//void insertDescriptionBefore(size_t line, size_t count);
-	//void addDescriptionAtEnd(size_t line);
+	void insertDescriptionBefore(BlockDescription blockDescription);
+	void addDescriptionAtEnd(BlockDescription blockDescription);
 	//void deleteDescriptionAt(size_t line, size_t count);
 	BlockDescription& operator()(size_t line, size_t count)
 	{

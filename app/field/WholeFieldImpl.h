@@ -18,7 +18,11 @@ public:
 	virtual void setPixel(Pixel pixel) override;
 	virtual BlockDescription getBlockDescription(AddressOnBlocksDescription address) override;
 	virtual void updateBlockDescription(BlockDescription blockDescription) override;
+	virtual void insertDescriptionBefore(BlockDescription blockDescription) override;
+	virtual void addDescriptionAtEnd(BlockDescription blockDescription) override;
+	
 	virtual size_t numberOfBlocksInColumn(size_t columnNumber) override;
+	virtual size_t columnsDescriptionHeight() override;
 	virtual bool isDefinedColumnDescriptionAt(size_t line, size_t count) override;
 private:
 	ArrayOfPixels array;

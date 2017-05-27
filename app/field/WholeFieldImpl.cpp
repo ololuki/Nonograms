@@ -38,9 +38,32 @@ void WholeFieldImpl::updateBlockDescription(BlockDescription blockDescription)
 	emit dataChanged();
 }
 
+void WholeFieldImpl::insertDescriptionBefore(BlockDescription blockDescription)
+{
+	columnsDescription.insertDescriptionBefore(blockDescription);
+	emit dataChanged();
+}
+
+void WholeFieldImpl::addDescriptionAtEnd(BlockDescription blockDescription)
+{
+	
+	columnsDescription.addDescriptionAtEnd(blockDescription);
+	emit dataChanged();
+}
+
 size_t WholeFieldImpl::numberOfBlocksInColumn(size_t columnNumber)
 {
 	return columnsDescription.numberOfBlocksInLine(columnNumber);
+}
+
+size_t WholeFieldImpl::columnsDescriptionHeight()
+{
+	size_t height = 0;
+	for (size_t i = 0; i < getWidth(); i++)
+	{
+		height = std::max(height, columnsDescription.numberOfBlocksInLine(i));
+	}
+	return height;
 }
 
 bool WholeFieldImpl::isDefinedColumnDescriptionAt(size_t line, size_t count)

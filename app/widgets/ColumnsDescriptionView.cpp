@@ -13,6 +13,8 @@ ColumnsDescriptionView::ColumnsDescriptionView(QWidget *parent) : QWidget(parent
 	QSize size(211, 211);
 	resize(size);
 	initTextBox();
+	initInsertingButton();
+	
 }
 
 void ColumnsDescriptionView::setField(BlocksDescriptionField *field)
@@ -21,7 +23,7 @@ void ColumnsDescriptionView::setField(BlocksDescriptionField *field)
 	connect(field, &BlocksDescriptionField::dataChanged, this, &ColumnsDescriptionView::onDataChanged);
 	
 	int screenX = field->getWidth() * squareSize + myPenWidth;
-	int heightInSquares = 2;
+	int heightInSquares = 3;
 	int screenY = heightInSquares * squareSize + myPenWidth;
 	QSize size(screenX, screenY);
 	resize(size);
@@ -30,8 +32,32 @@ void ColumnsDescriptionView::setField(BlocksDescriptionField *field)
 
 void ColumnsDescriptionView::onDataChanged()
 {
-	//TODO: if (size() > currentSize) resize(currentSize)
+	size_t currentHeight = minimumHeight() / squareSize;
+	if (field->columnsDescriptionHeight() > currentHeight)
+	{
+		int screenX = field->getWidth() * squareSize + myPenWidth;
+		int newHeightInSquares = field->columnsDescriptionHeight();
+		int screenY = newHeightInSquares * squareSize + myPenWidth;
+		QSize size(screenX, screenY);
+		resize(size);
+	}
 	redrawAll();
+}
+
+void ColumnsDescriptionView::onInsertingButtonClick()
+{
+	size_t column = (insertingButton->pos().x()) / squareSize;
+	size_t count = (insertingButton->pos().y() + squareSize) / squareSize;
+	
+	AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, column, count);
+	if (count < field->numberOfBlocksInColumn(column))
+	{
+		field->insertDescriptionBefore(BlockDescription(address, 0));
+	}
+	else if (count == field->numberOfBlocksInColumn(column))
+	{
+		field->addDescriptionAtEnd(BlockDescription(address, 0));
+	}
 }
 
 void ColumnsDescriptionView::paintEvent(QPaintEvent *event)
@@ -56,6 +82,15 @@ void ColumnsDescriptionView::mousePressEvent(QMouseEvent *event)
 	} else {
 		hideTextBox();
 	}
+}
+
+void ColumnsDescriptionView::mouseMoveEvent(QMouseEvent *event)
+{
+	QPoint screenPoint = event->pos();
+	size_t squareX = static_cast<size_t>(screenPoint.x() / squareSize);
+	size_t squareY = static_cast<size_t>((screenPoint.y() + (squareSize/2)) / squareSize);
+	AddressOnBlocksDescription address(AddressOnBlocksDescription::orientation::VERTICAL, squareX, squareY);
+	moveAndShowInsertingButton(address);
 }
 
 bool ColumnsDescriptionView::isPointOnDefinedDescription(QPoint screenPoint)
@@ -141,6 +176,28 @@ void ColumnsDescriptionView::moveAndShowTextBox(AddressOnBlocksDescription addre
 	qTextEdit->selectAll();
 }
 
+void ColumnsDescriptionView::initInsertingButton()
+{
+	insertingButton = new QPushButton("+", this);
+	insertingButton->setFixedHeight(squareSize/2);
+	insertingButton->setFixedWidth(squareSize);
+	insertingButton->setStatusTip("insert or add new block description");
+	setMouseTracking(true);
+	connect(insertingButton, &QPushButton::clicked, this, &ColumnsDescriptionView::onInsertingButtonClick);
+}
+
+void ColumnsDescriptionView::hideInsertingButton()
+{
+	insertingButton->hide();
+}
+
+void ColumnsDescriptionView::moveAndShowInsertingButton(AddressOnBlocksDescription address)
+{
+	int screenX = static_cast<int>(address.getLine()) * squareSize;
+	int screenY = static_cast<int>(address.getCount()) * squareSize - (squareSize/4);
+	insertingButton->move(screenX, screenY);
+	insertingButton->show();
+}
 
 void ColumnsDescriptionView::resize(const QSize &newSize)
 {
