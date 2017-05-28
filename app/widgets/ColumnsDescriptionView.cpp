@@ -22,7 +22,7 @@ void ColumnsDescriptionView::setField(BlocksDescriptionField *field)
 	this->field = field;
 	connect(field, &BlocksDescriptionField::dataChanged, this, &ColumnsDescriptionView::onDataChanged);
 	
-	int screenX = field->getWidth() * squareSize + myPenWidth;
+	int screenX = static_cast<int>(field->getWidth()) * squareSize + myPenWidth;
 	int heightInSquares = 3;
 	int screenY = heightInSquares * squareSize + myPenWidth;
 	QSize size(screenX, screenY);
@@ -32,11 +32,11 @@ void ColumnsDescriptionView::setField(BlocksDescriptionField *field)
 
 void ColumnsDescriptionView::onDataChanged()
 {
-	size_t currentHeight = minimumHeight() / squareSize;
+	size_t currentHeight = static_cast<size_t>(minimumHeight() / squareSize);
 	if (field->columnsDescriptionHeight() > currentHeight)
 	{
-		int screenX = field->getWidth() * squareSize + myPenWidth;
-		int newHeightInSquares = field->columnsDescriptionHeight();
+		int screenX = static_cast<int>(field->getWidth()) * squareSize + myPenWidth;
+		int newHeightInSquares = static_cast<int>(field->columnsDescriptionHeight());
 		int screenY = newHeightInSquares * squareSize + myPenWidth;
 		QSize size(screenX, screenY);
 		resize(size);
@@ -46,8 +46,8 @@ void ColumnsDescriptionView::onDataChanged()
 
 void ColumnsDescriptionView::onInsertingButtonClick()
 {
-	size_t column = (insertingButton->pos().x()) / squareSize;
-	size_t count = (insertingButton->pos().y() + squareSize) / squareSize;
+	size_t column = static_cast<size_t>(insertingButton->pos().x() / squareSize);
+	size_t count = static_cast<size_t>((insertingButton->pos().y() + squareSize) / squareSize);
 	
 	AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, column, count);
 	if (count < field->numberOfBlocksInColumn(column))
@@ -73,11 +73,17 @@ void ColumnsDescriptionView::mousePressEvent(QMouseEvent *event)
 	QPoint screenPoint = event->pos();
 	if (isPointOnDefinedDescription(screenPoint))
 	{
-		if (event->button() == Qt::LeftButton) {
-			size_t squareX = static_cast<size_t>(screenPoint.x()) / squareSize;
-			size_t squareY = static_cast<size_t>(screenPoint.y()) / squareSize;
-			AddressOnBlocksDescription address(AddressOnBlocksDescription::orientation::VERTICAL, squareX, squareY);
+		size_t squareX = static_cast<size_t>(screenPoint.x() / squareSize);
+		size_t squareY = static_cast<size_t>(screenPoint.y() / squareSize);
+		AddressOnBlocksDescription address(AddressOnBlocksDescription::orientation::VERTICAL, squareX, squareY);
+		if (event->button() == Qt::LeftButton)
+		{
 			moveAndShowTextBox(address);
+		}
+		else if (event->button() == Qt::RightButton)
+		{
+			hideTextBox();
+			field->deleteDescription(BlockDescription(address, 0));
 		}
 	} else {
 		hideTextBox();
@@ -95,13 +101,19 @@ void ColumnsDescriptionView::mouseMoveEvent(QMouseEvent *event)
 
 bool ColumnsDescriptionView::isPointOnDefinedDescription(QPoint screenPoint)
 {
-	size_t squareX = static_cast<size_t>(screenPoint.x()) / squareSize;
-	size_t squareY = static_cast<size_t>(screenPoint.y()) / squareSize;
+	size_t squareX = static_cast<size_t>(screenPoint.x() / squareSize);
+	size_t squareY = static_cast<size_t>(screenPoint.y() / squareSize);
 	return (field->isDefinedColumnDescriptionAt(squareX, squareY));
 }
 
 void ColumnsDescriptionView::redrawAll()
 {
+	for(size_t i = 0; i < field->getWidth(); i++)
+	{
+		size_t numberOfBlocksInLine = field->numberOfBlocksInColumn(i);
+		AddressOnBlocksDescription addressAfterLine = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, i, numberOfBlocksInLine);
+		drawCleanOneBlock(addressAfterLine);
+	}
 	for(size_t i = 0; i < field->getWidth(); i++)
 	{
 		size_t numberOfBlocksInLine = field->numberOfBlocksInColumn(i);
@@ -118,8 +130,8 @@ void ColumnsDescriptionView::drawOneBlockDescription(BlockDescription blockDescr
 {
 	//TODO: start drawing from bottom and check the height of canvas image
 	AddressOnBlocksDescription address = blockDescription.getAddress();
-	int screenX = static_cast<int>(squareSize * address.getLine());
-	int screenY = static_cast<int>(squareSize * address.getCount());
+	int screenX = static_cast<int>(address.getLine()) * squareSize;
+	int screenY = static_cast<int>(address.getCount()) * squareSize;
 	
 	QPainter painter(&image);
 	painter.setPen(QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -140,6 +152,21 @@ void ColumnsDescriptionView::drawOneBlockDescription(BlockDescription blockDescr
 	update();
 }
 
+void ColumnsDescriptionView::drawCleanOneBlock(AddressOnBlocksDescription address)
+{
+	int screenX = static_cast<int>(address.getLine()) * squareSize;
+	int screenY = static_cast<int>(address.getCount()) * squareSize;
+	
+	QPainter painter(&image);
+	QColor backgroundColor = Qt::white;
+	painter.setPen(QPen(backgroundColor, myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	
+	QRect rectangle = QRect(screenX, screenY, squareSize, squareSize);
+	painter.fillRect(rectangle, backgroundColor);
+	painter.drawRect(rectangle);
+	update();
+}
+
 void ColumnsDescriptionView::initTextBox()
 {
 	qTextEdit = new QTextEdit("0", this);
@@ -157,20 +184,24 @@ void ColumnsDescriptionView::hideTextBox()
 
 void ColumnsDescriptionView::saveTextBoxToBlockDescription()
 {
-	size_t squareX = qTextEdit->pos().x() / squareSize;
-	size_t squareY = qTextEdit->pos().y() / squareSize;
-	AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, squareX, squareY);
-	QString textFromBox = qTextEdit->toPlainText();
-	size_t blockSize = textFromBox.toInt();
-	BlockDescription blockDecription = BlockDescription(address, blockSize);
-	field->updateBlockDescription(blockDecription);
+	if (! qTextEdit->isHidden())
+	{
+		size_t squareX = static_cast<size_t>(qTextEdit->pos().x() / squareSize);
+		size_t squareY = static_cast<size_t>(qTextEdit->pos().y() / squareSize);
+		
+		AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, squareX, squareY);
+		QString textFromBox = qTextEdit->toPlainText();
+		size_t blockSize = static_cast<size_t>(textFromBox.toInt());
+		BlockDescription blockDecription = BlockDescription(address, blockSize);
+		field->updateBlockDescription(blockDecription);
+	}
 }
 
 void ColumnsDescriptionView::moveAndShowTextBox(AddressOnBlocksDescription address)
 {
-	int x = squareSize * address.getLine();
-	int y = squareSize * address.getCount();
-	qTextEdit->move(x, y);
+	int screenX = static_cast<int>(address.getLine()) * squareSize;
+	int screenY = static_cast<int>(address.getCount()) * squareSize;
+	qTextEdit->move(screenX, screenY);
 	qTextEdit->show();
 	qTextEdit->setFocus();
 	qTextEdit->selectAll();

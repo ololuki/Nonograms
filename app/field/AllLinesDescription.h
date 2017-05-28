@@ -20,7 +20,7 @@ public:
 	void updateDescription(BlockDescription blockDescription);
 	void insertDescriptionBefore(BlockDescription blockDescription);
 	void addDescriptionAtEnd(BlockDescription blockDescription);
-	//void deleteDescriptionAt(size_t line, size_t count);
+	void deleteDescription(BlockDescription blockDescription);
 	BlockDescription& operator()(size_t line, size_t count)
 	{
 		return lines[line][count];

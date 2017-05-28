@@ -18,7 +18,7 @@ public:
 	virtual void updateBlockDescription(BlockDescription blockDescription) = 0;
 	virtual void insertDescriptionBefore(BlockDescription blockDescription) = 0;
 	virtual void addDescriptionAtEnd(BlockDescription blockDescription) = 0;
-	//virtual void deleteDescriptionAt(BlockDescription blockDescription) = 0;
+	virtual void deleteDescription(BlockDescription blockDescription) = 0;
 	virtual size_t numberOfBlocksInColumn(size_t columnNumber) = 0;
 	virtual size_t columnsDescriptionHeight() = 0;
 	virtual bool isDefinedColumnDescriptionAt(size_t line, size_t count) = 0;

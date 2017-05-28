@@ -34,6 +34,7 @@ bool AllLinesDescription::isDefinedDescriptionAt(size_t line, size_t count)
 void AllLinesDescription::updateDescription(BlockDescription blockDescription)
 {
 	AddressOnBlocksDescription address = blockDescription.getAddress();
+	if (address.getCount() >= lines[address.getLine()].size()) return;
 	lines[address.getLine()][address.getCount()] = blockDescription;
 }
 
@@ -66,4 +67,17 @@ void AllLinesDescription::addDescriptionAtEnd(BlockDescription blockDescription)
 	{
 		lines[line].push_back(blockDescription);
 	}
+}
+
+void AllLinesDescription::deleteDescription(BlockDescription blockDescription)
+{
+	size_t line = blockDescription.getAddress().getLine();
+	size_t count = blockDescription.getAddress().getCount();
+	if (lines[line].size() <= 1) return;
+	size_t newLength = lines[line].size() - 1;
+	for(size_t i = count; i < newLength; i++)
+	{
+		lines[line][i].setBlockSize( lines[line][i+1].getBlockSize());
+	}
+	lines[line].pop_back();
 }

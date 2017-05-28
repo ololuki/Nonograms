@@ -39,6 +39,7 @@ private:
 	bool isPointOnDefinedDescription(QPoint point);
 	void redrawAll();
 	void drawOneBlockDescription(BlockDescription blockDescription);
+	void drawCleanOneBlock(AddressOnBlocksDescription address);
 	void initTextBox();
 	void hideTextBox();
 	void saveTextBoxToBlockDescription();

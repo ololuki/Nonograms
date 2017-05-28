@@ -40,14 +40,28 @@ void WholeFieldImpl::updateBlockDescription(BlockDescription blockDescription)
 
 void WholeFieldImpl::insertDescriptionBefore(BlockDescription blockDescription)
 {
-	columnsDescription.insertDescriptionBefore(blockDescription);
+	if (blockDescription.getAddress().isColumn())
+	{
+		columnsDescription.insertDescriptionBefore(blockDescription);
+	}
 	emit dataChanged();
 }
 
 void WholeFieldImpl::addDescriptionAtEnd(BlockDescription blockDescription)
 {
-	
-	columnsDescription.addDescriptionAtEnd(blockDescription);
+	if (blockDescription.getAddress().isColumn())
+	{
+		columnsDescription.addDescriptionAtEnd(blockDescription);
+	}
+	emit dataChanged();
+}
+
+void WholeFieldImpl::deleteDescription(BlockDescription blockDescription)
+{
+	if (blockDescription.getAddress().isColumn())
+	{
+		columnsDescription.deleteDescription(blockDescription);
+	}
 	emit dataChanged();
 }
 
