@@ -22,11 +22,14 @@ public:
 	virtual void addDescriptionAtEnd(BlockDescription blockDescription) override;
 	virtual void deleteDescription(BlockDescription blockDescription) override;
 	virtual size_t numberOfBlocksInColumn(size_t columnNumber) override;
+	virtual size_t numberOfBlocksInRow(size_t rowNumber) override;
 	virtual size_t columnsDescriptionHeight() override;
-	virtual bool isDefinedColumnDescriptionAt(size_t line, size_t count) override;
+	virtual size_t rowsDescriptionWidth() override;
+	virtual bool isDefinedColumnDescriptionAt(AddressOnBlocksDescription address) override;
 private:
 	ArrayOfPixels array;
 	AllLinesDescription columnsDescription;
+	AllLinesDescription rowsDescription;
 };
 
 #endif // WHOLEFIELDIMPL_H

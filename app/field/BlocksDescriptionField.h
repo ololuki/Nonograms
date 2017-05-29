@@ -20,8 +20,10 @@ public:
 	virtual void addDescriptionAtEnd(BlockDescription blockDescription) = 0;
 	virtual void deleteDescription(BlockDescription blockDescription) = 0;
 	virtual size_t numberOfBlocksInColumn(size_t columnNumber) = 0;
+	virtual size_t numberOfBlocksInRow(size_t rowNumber) = 0;
 	virtual size_t columnsDescriptionHeight() = 0;
-	virtual bool isDefinedColumnDescriptionAt(size_t line, size_t count) = 0;
+	virtual size_t rowsDescriptionWidth() = 0;
+	virtual bool isDefinedColumnDescriptionAt(AddressOnBlocksDescription address) = 0;	
 };
 
 #endif // BLOCKSDESCRIPTIONFIELD_H

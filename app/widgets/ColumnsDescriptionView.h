@@ -37,7 +37,7 @@ private:
 	QImage image;
 	BlocksDescriptionField *field;
 	
-	bool isPointOnDefinedDescription(QPoint point);
+	bool isPointOnDefinedDescription(QPoint screenPoint);
 	void redrawAll();
 	void drawOneBlockDescription(BlockDescription blockDescription);
 	void drawCleanOneBlock(AddressOnBlocksDescription address);

@@ -2,20 +2,13 @@
 
 AllLinesDescription::AllLinesDescription(AddressOnBlocksDescription::orientation orientation, size_t numberOfLines)
 {
-	switch(orientation)
+	const size_t defaultBlockSize = 0;
+	for(size_t i = 0; i < numberOfLines; i++)
 	{
-	case AddressOnBlocksDescription::VERTICAL:
-		for(size_t i = 0; i < numberOfLines; i++)
-		{
-			AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, i, 0);
-			std::vector<BlockDescription> line;
-			line.push_back(BlockDescription(address, 0));
-			lines.push_back(line);
-		}
-		break;
-	case AddressOnBlocksDescription::HORIZONTAL:
-		// TODO
-		break;
+		AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, i, 0);
+		std::vector<BlockDescription> line;
+		line.push_back(BlockDescription(address, defaultBlockSize));
+		lines.push_back(line);
 	}
 }
 

@@ -4,7 +4,6 @@
 #include <QRect>
 #include <QPaintEvent>
 #include <QStaticText>
-#include <string>
 
 
 ColumnsDescriptionView::ColumnsDescriptionView(QWidget *parent) : QWidget(parent)
@@ -110,9 +109,10 @@ void ColumnsDescriptionView::mouseMoveEvent(QMouseEvent *event)
 
 bool ColumnsDescriptionView::isPointOnDefinedDescription(QPoint screenPoint)
 {
-	size_t squareX = static_cast<size_t>(screenPoint.x() / squareSize);
-	size_t squareY = static_cast<size_t>(screenPoint.y() / squareSize);
-	return (field->isDefinedColumnDescriptionAt(squareX, squareY));
+	size_t line = static_cast<size_t>(screenPoint.x() / squareSize);
+	size_t count = static_cast<size_t>(screenPoint.y() / squareSize);
+	AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, line, count);
+	return (field->isDefinedColumnDescriptionAt(address));
 }
 
 void ColumnsDescriptionView::redrawAll()
