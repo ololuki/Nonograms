@@ -14,7 +14,6 @@ ColumnsDescriptionView::ColumnsDescriptionView(QWidget *parent) : QWidget(parent
 	resize(size);
 	initTextBox();
 	initInsertingButton();
-	
 }
 
 void ColumnsDescriptionView::setField(BlocksDescriptionField *field)
@@ -93,10 +92,20 @@ void ColumnsDescriptionView::mousePressEvent(QMouseEvent *event)
 void ColumnsDescriptionView::mouseMoveEvent(QMouseEvent *event)
 {
 	QPoint screenPoint = event->pos();
+	int halfSquareSize = squareSize/2;
 	size_t squareX = static_cast<size_t>(screenPoint.x() / squareSize);
-	size_t squareY = static_cast<size_t>((screenPoint.y() + (squareSize/2)) / squareSize);
+	size_t squareY = static_cast<size_t>((screenPoint.y() + halfSquareSize) / squareSize);
 	AddressOnBlocksDescription address(AddressOnBlocksDescription::orientation::VERTICAL, squareX, squareY);
-	moveAndShowInsertingButton(address);
+	if ((screenPoint.y() + insertingButtonHeight/2) % squareSize < insertingButtonHeight)
+	{
+		screenPoint.setY(screenPoint.y() - insertingButtonHeight/2);	// remap to area with defined descriptions + area for half of insertButtons
+		if(isPointOnDefinedDescription(screenPoint))
+			moveAndShowInsertingButton(address);
+		else
+			hideInsertingButton();
+	} else {
+		hideInsertingButton();
+	}
 }
 
 bool ColumnsDescriptionView::isPointOnDefinedDescription(QPoint screenPoint)
@@ -170,8 +179,8 @@ void ColumnsDescriptionView::drawCleanOneBlock(AddressOnBlocksDescription addres
 void ColumnsDescriptionView::initTextBox()
 {
 	qTextEdit = new QTextEdit("0", this);
-	qTextEdit->setFixedHeight(30);
-	qTextEdit->setFixedWidth(30);
+	qTextEdit->setFixedHeight(squareSize);
+	qTextEdit->setFixedWidth(squareSize);
 	qTextEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	qTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	qTextEdit->hide();
@@ -210,11 +219,12 @@ void ColumnsDescriptionView::moveAndShowTextBox(AddressOnBlocksDescription addre
 void ColumnsDescriptionView::initInsertingButton()
 {
 	insertingButton = new QPushButton("+", this);
-	insertingButton->setFixedHeight(squareSize/2);
+	insertingButton->setFixedHeight(insertingButtonHeight);
 	insertingButton->setFixedWidth(squareSize);
 	insertingButton->setStatusTip("insert or add new block description");
 	setMouseTracking(true);
 	connect(insertingButton, &QPushButton::clicked, this, &ColumnsDescriptionView::onInsertingButtonClick);
+	hideInsertingButton();
 }
 
 void ColumnsDescriptionView::hideInsertingButton()

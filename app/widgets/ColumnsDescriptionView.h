@@ -32,6 +32,7 @@ private:
 	const QColor myPenColor = Qt::black;
 	QTextEdit *qTextEdit;
 	QPushButton *insertingButton;
+	const int insertingButtonHeight = squareSize/2;
 	
 	QImage image;
 	BlocksDescriptionField *field;
