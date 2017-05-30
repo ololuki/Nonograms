@@ -21,10 +21,10 @@ DrawingAreaView::DrawingAreaView(QWidget *parent)
 	lastPoint = QPoint(0, 0);
 }
 
-void DrawingAreaView::setField(DrawingAreaField *field)
+void DrawingAreaView::setField(std::shared_ptr<DrawingAreaField> field)
 {
 	this->field = field;
-	connect(field, &DrawingAreaField::dataChanged, this, &DrawingAreaView::onDataChanged);
+	connect(static_cast<DrawingAreaField*>(this->field.get()), &DrawingAreaField::dataChanged, this, &DrawingAreaView::onDataChanged);
 	
 	size_t sizeX = field->getWidth() * squareSize + 1;
 	size_t sizeY = field->getHeight() * squareSize + 1;

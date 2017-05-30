@@ -15,12 +15,12 @@ ColumnsDescriptionView::ColumnsDescriptionView(QWidget *parent) : QWidget(parent
 	initInsertingButton();
 }
 
-void ColumnsDescriptionView::setField(BlocksDescriptionField *field)
+void ColumnsDescriptionView::setField(std::shared_ptr<BlocksDescriptionField> field)
 {
 	this->field = field;
-	connect(field, &BlocksDescriptionField::dataChanged, this, &ColumnsDescriptionView::onDataChanged);
+	connect(static_cast<BlocksDescriptionField*>(this->field.get()), &BlocksDescriptionField::dataChanged, this, &ColumnsDescriptionView::onDataChanged);
 	
-	int screenX = static_cast<int>(field->getWidth()) * squareSize + myPenWidth;
+	int screenX = static_cast<int>(this->field->getWidth()) * squareSize + myPenWidth;
 	int heightInSquares = 3;
 	int screenY = heightInSquares * squareSize + myPenWidth;
 	QSize size(screenX, screenY);

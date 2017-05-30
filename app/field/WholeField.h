@@ -11,6 +11,8 @@
 ///
 class WholeField : public DrawingAreaField, public BlocksDescriptionField, virtual public RootField
 {
+	virtual void clearDrawingArea() = 0;
+	virtual void clearBlocksDescription() = 0;
 };
 
 #endif // WHOLEFIELD_H

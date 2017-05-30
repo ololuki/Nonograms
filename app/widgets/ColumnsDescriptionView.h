@@ -1,18 +1,20 @@
 #ifndef COLUMNSDESCRIPTIONVIEW_H
 #define COLUMNSDESCRIPTIONVIEW_H
 
+#include <memory>
 #include <QWidget>
 #include <QTextEdit>
 #include <QPushButton>
 #include "field/BlocksDescriptionField.h"
 #include "field/BlockDescription.h"
 
+
 class ColumnsDescriptionView : public QWidget
 {
 	Q_OBJECT
 public:
 	explicit ColumnsDescriptionView(QWidget *parent = 0);
-	void setField(BlocksDescriptionField *field);
+	void setField(std::shared_ptr<BlocksDescriptionField> field);
 	
 signals:
 	
@@ -35,7 +37,7 @@ private:
 	const int insertingButtonHeight = squareSize/2;
 	
 	QImage image;
-	BlocksDescriptionField *field;
+	std::shared_ptr<BlocksDescriptionField> field;
 	
 	bool isPointOnDefinedDescription(QPoint screenPoint);
 	void redrawAll();

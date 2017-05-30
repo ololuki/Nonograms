@@ -15,10 +15,10 @@ RowsDescriptionView::RowsDescriptionView(QWidget *parent) : QWidget(parent)
 	initInsertingButton();
 }
 
-void RowsDescriptionView::setField(BlocksDescriptionField *field)
+void RowsDescriptionView::setField(std::shared_ptr<BlocksDescriptionField> field)
 {
 	this->field = field;
-	connect(field, &BlocksDescriptionField::dataChanged, this, &RowsDescriptionView::onDataChanged);
+	connect(static_cast<BlocksDescriptionField*>(this->field.get()), &BlocksDescriptionField::dataChanged, this, &RowsDescriptionView::onDataChanged);
 	
 	int widthInSquares = 3;
 	int screenX = widthInSquares * squareSize + myPenWidth;

@@ -14,6 +14,7 @@ class WholeFieldImpl : public WholeField
 {
 public:
 	WholeFieldImpl(size_t width, size_t height);
+	~WholeFieldImpl();
 	virtual Pixel getPixel(AddressOnDrawingArea address) override;
 	virtual void setPixel(Pixel pixel) override;
 	virtual BlockDescription getBlockDescription(AddressOnBlocksDescription address) override;
@@ -26,6 +27,8 @@ public:
 	virtual size_t columnsDescriptionHeight() override;
 	virtual size_t rowsDescriptionWidth() override;
 	virtual bool isDefinedColumnDescriptionAt(AddressOnBlocksDescription address) override;
+	virtual void clearDrawingArea() override;
+	virtual void clearBlocksDescription() override;
 private:
 	ArrayOfPixels array;
 	AllLinesDescription columnsDescription;

@@ -1,18 +1,20 @@
 #ifndef ROWSDESCRIPTIONVIEW_H
 #define ROWSDESCRIPTIONVIEW_H
 
+#include <memory>
 #include <QWidget>
 #include <QTextEdit>
 #include <QPushButton>
 #include "field/BlocksDescriptionField.h"
 #include "field/BlockDescription.h"
 
+
 class RowsDescriptionView : public QWidget
 {
 	Q_OBJECT
 public:
 	explicit RowsDescriptionView(QWidget *parent = 0);
-	void setField(BlocksDescriptionField *field);
+	void setField(std::shared_ptr<BlocksDescriptionField> field);
 	
 public slots:
 	void onDataChanged();
@@ -32,7 +34,7 @@ private:
 	const int insertingButtonWidth = squareSize/2;
 	
 	QImage image;
-	BlocksDescriptionField *field;
+	std::shared_ptr<BlocksDescriptionField> field;
 	
 	bool isPointOnDefinedDescription(QPoint screenPoint);
 	void redrawAll();

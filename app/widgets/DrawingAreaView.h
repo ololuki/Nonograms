@@ -1,6 +1,7 @@
 #ifndef DRAWINGAREAVIEW_H
 #define DRAWINGAREAVIEW_H
 
+#include <memory>
 #include <QWidget>
 #include "field/DrawingAreaField.h"
 
@@ -10,7 +11,7 @@ class DrawingAreaView : public QWidget
 	Q_OBJECT
 public:
 	explicit DrawingAreaView(QWidget *parent = 0);
-	void setField(DrawingAreaField *field);
+	void setField(std::shared_ptr<DrawingAreaField> field);
 	
 public slots:
 	void onDataChanged();
@@ -30,7 +31,7 @@ private:
 	QImage image;
 	QPoint lastPoint;
 	
-	DrawingAreaField *field;
+	std::shared_ptr<DrawingAreaField> field;
 };
 
 #endif // DRAWINGAREAVIEW_H
