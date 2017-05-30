@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	this->setWindowTitle("Nonograms");
 	recreateField(14, 10);
 }
 
@@ -82,4 +83,16 @@ void MainWindow::on_actionSave_as_triggered()
 void MainWindow::on_actionAbout_Qt_triggered()
 {
     QMessageBox::aboutQt(this);
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+	QString textAbout = "Program to create and solve nonograms.<br>"
+			"<a href=\"https://ololuki.pl\">ololuki.pl</a><br>"
+			"<a href=\"https://github.com/ololuki/nonograms\">GitHub</a>";
+	QMessageBox msgBox;
+	msgBox.setWindowTitle("About nonograms");
+	msgBox.setTextFormat(Qt::RichText);
+	msgBox.setText(textAbout);
+	msgBox.exec();	
 }
