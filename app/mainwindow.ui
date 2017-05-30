@@ -48,6 +48,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionAbout_Qt"/>
    </widget>
    <widget class="QMenu" name="menuTest_add">
     <property name="title">
@@ -91,6 +92,11 @@
   <action name="actionAdd_blocks">
    <property name="text">
     <string>Add blocks</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt</string>
    </property>
   </action>
  </widget>

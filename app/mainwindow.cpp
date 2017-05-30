@@ -4,6 +4,7 @@
 #include <QDebug>
 
 #include <QMessageBox>
+#include <QFileDialog>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -66,4 +67,19 @@ void MainWindow::recreateField(size_t width, size_t height)
 	ui->drawingArea->setField(field);
 	ui->columnsDescription->setField(field);
 	ui->rowsDescription->setField(field);
+}
+
+void MainWindow::on_actionSave_as_triggered()
+{
+	QString fileName =
+		QFileDialog::getSaveFileName(this,
+			tr("Save File"),
+			QDir::currentPath(),
+			tr("nonogram (*.nonogram)"));
+	qDebug() << fileName;
+}
+
+void MainWindow::on_actionAbout_Qt_triggered()
+{
+    QMessageBox::aboutQt(this);
 }

@@ -23,6 +23,10 @@ private slots:
 	
 	void on_actionAdd_blocks_triggered();
 	
+	void on_actionSave_as_triggered();
+	
+	void on_actionAbout_Qt_triggered();
+	
 private:
 	Ui::MainWindow *ui;
 	std::shared_ptr<WholeField> field;
