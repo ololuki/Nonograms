@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "SizeDialog.h"
+#include <QDebug>
 
 #include <QMessageBox>
 
@@ -22,7 +24,13 @@ void MainWindow::on_actionNew_triggered()
 	if (!abandonChangesOrSavePrompt()) return;
 	
 	// todo: get new size from user getSizePrompt(&width, &height)
-	recreateField(14, 20);
+	SizeDialog *d = new SizeDialog(this);
+	qDebug() << d->exec();
+	size_t width = d->getWidth();
+	size_t height = d->getHeight();
+	delete d;
+	
+	recreateField(width, height);
 }
 
 bool MainWindow::abandonChangesOrSavePrompt()
