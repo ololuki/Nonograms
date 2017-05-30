@@ -23,7 +23,6 @@ void MainWindow::on_actionNew_triggered()
 {
 	if (!abandonChangesOrSavePrompt()) return;
 	
-	// todo: get new size from user getSizePrompt(&width, &height)
 	SizeDialog *d = new SizeDialog(this);
 	qDebug() << d->exec();
 	size_t width = d->getWidth();
