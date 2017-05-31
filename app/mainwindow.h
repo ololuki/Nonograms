@@ -20,20 +20,25 @@ public:
 	
 private slots:
 	void on_actionNew_triggered();
+	void on_actionOpen_triggered();
+	void on_actionSave_as_triggered();
 	
 	void on_actionAdd_blocks_triggered();
 	
-	void on_actionSave_as_triggered();
-	
-	void on_actionAbout_Qt_triggered();
-	
 	void on_actionAbout_triggered();
+	void on_actionAbout_Qt_triggered();
 	
 private:
 	Ui::MainWindow *ui;
 	std::shared_ptr<WholeField> field;
-	void recreateField(size_t width, size_t height);
+	QString currentFileName;
+	bool isFileNameSet;
+	
+	void setCurrentFileName(const QString &pathAndName);
+	void saveFile();
 	bool abandonChangesOrSavePrompt();
+	void recreateField(size_t width, size_t height);
+	void replaceField(std::shared_ptr<WholeField> newField);
 };
 
 #endif // MAINWINDOW_H

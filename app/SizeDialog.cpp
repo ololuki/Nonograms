@@ -9,6 +9,7 @@ SizeDialog::SizeDialog(QWidget *parent) :
 	ui(new Ui::SizeDialog)
 {
 	ui->setupUi(this);
+	this->setWindowTitle("Enter new field sizes");
 }
 
 SizeDialog::~SizeDialog()

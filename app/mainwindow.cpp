@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "SizeDialog.h"
+#include "file/FileWriter.h"
+#include "file/FileReader.h"
+#include "file/NonogramFileWriter.h"
+#include "file/NonogramFileReader.h"
 #include <QDebug>
 
 #include <QMessageBox>
@@ -26,29 +30,45 @@ void MainWindow::on_actionNew_triggered()
 	if (!abandonChangesOrSavePrompt()) return;
 	
 	SizeDialog *d = new SizeDialog(this);
-	qDebug() << d->exec();
+	bool isConfirmed = d->exec();
 	size_t width = d->getWidth();
 	size_t height = d->getHeight();
 	delete d;
-	
-	recreateField(width, height);
+	if (isConfirmed)
+	{
+		recreateField(width, height);
+	}
 }
 
-bool MainWindow::abandonChangesOrSavePrompt()
+void MainWindow::on_actionOpen_triggered()
 {
-	auto answer = QMessageBox::question(this,
-								"Unsaved changes",
-								"Do you want to save changes?",
-								QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
-	if (answer == QMessageBox::Yes) {
-		//on_actionSave_triggered();
-		//if (isDirty()) 
-			return false;
-	} else if (answer == QMessageBox::Cancel) {
-		return false;
-	}
+	if (!abandonChangesOrSavePrompt()) return;
 
-    return true;
+	QString fileName =
+		QFileDialog::getOpenFileName(this,
+			tr("Open File"),
+			QDir::currentPath(),
+			tr("nonogram (*.nonogram);;All File Types (*.*)"));
+	
+	if (fileName.isEmpty()) return;
+	
+	FileReader *reader = new NonogramFileReader();
+	reader->read(fileName.toStdString());
+	replaceField(reader->getField());
+	delete reader;
+}
+
+void MainWindow::on_actionSave_as_triggered()
+{
+	QString fileName =
+		QFileDialog::getSaveFileName(this,
+			tr("Save File"),
+			QDir::currentPath(),
+			tr("nonogram (*.nonogram)"));
+	qDebug() << fileName;
+	if (fileName.isEmpty()) return;
+	setCurrentFileName(fileName);
+	saveFile();
 }
 
 void MainWindow::on_actionAdd_blocks_triggered()
@@ -62,29 +82,6 @@ void MainWindow::on_actionAdd_blocks_triggered()
 	field->updateBlockDescription(BlockDescription(AddressOnBlocksDescription(AddressOnBlocksDescription::HORIZONTAL, 7, 0), 1));
 }
 
-void MainWindow::recreateField(size_t width, size_t height)
-{
-	field.reset(new WholeFieldImpl(width, height));
-	ui->drawingArea->setField(field);
-	ui->columnsDescription->setField(field);
-	ui->rowsDescription->setField(field);
-}
-
-void MainWindow::on_actionSave_as_triggered()
-{
-	QString fileName =
-		QFileDialog::getSaveFileName(this,
-			tr("Save File"),
-			QDir::currentPath(),
-			tr("nonogram (*.nonogram)"));
-	qDebug() << fileName;
-}
-
-void MainWindow::on_actionAbout_Qt_triggered()
-{
-    QMessageBox::aboutQt(this);
-}
-
 void MainWindow::on_actionAbout_triggered()
 {
 	QString textAbout = "Program to create and solve nonograms.<br>"
@@ -95,4 +92,68 @@ void MainWindow::on_actionAbout_triggered()
 	msgBox.setTextFormat(Qt::RichText);
 	msgBox.setText(textAbout);
 	msgBox.exec();	
+}
+
+void MainWindow::on_actionAbout_Qt_triggered()
+{
+    QMessageBox::aboutQt(this);
+}
+
+void MainWindow::setCurrentFileName(const QString &pathAndName)
+{
+	currentFileName = pathAndName;
+	isFileNameSet = true;
+}
+
+void MainWindow::saveFile()
+{
+	FileWriter *writer = new NonogramFileWriter();
+	writer->setField(field);
+	if (writer->write(currentFileName.toStdString()))
+	{
+		ui->statusBar->showMessage(QString("Saved file: \"%1\"").arg(currentFileName));
+	} else {
+		QMessageBox::critical(this,
+			"File Write Error",
+			"Can not write to file.");
+	}
+	delete writer;
+}
+
+bool MainWindow::abandonChangesOrSavePrompt()
+{
+	auto answer = QMessageBox::question(this,
+		"Unsaved changes",
+		"Do you want to save changes?",
+		QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
+	if (answer == QMessageBox::Yes)
+	{
+		on_actionSave_as_triggered();
+		
+	} else if (answer == QMessageBox::Cancel) {
+		return false;
+	}
+	return true;
+}
+
+void MainWindow::recreateField(size_t width, size_t height)
+{
+	field.reset(new WholeFieldImpl(width, height));
+	ui->drawingArea->setField(field);
+	ui->columnsDescription->setField(field);
+	ui->rowsDescription->setField(field);
+}
+
+void MainWindow::replaceField(std::shared_ptr<WholeField> newField)
+{
+	if (newField == nullptr)
+	{
+		qDebug() << "null ptr";
+		return;
+	}
+	field = newField;
+	ui->drawingArea->setField(field);
+	ui->columnsDescription->setField(field);
+	ui->rowsDescription->setField(field);
+	field->dataChanged();
 }

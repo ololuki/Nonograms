@@ -32,7 +32,9 @@ SOURCES += main.cpp\
     field/BlockDescription.cpp \
     field/LineDescription.cpp \
     field/AllLinesDescription.cpp \
-    SizeDialog.cpp
+    SizeDialog.cpp \
+    file/NonogramFileWriter.cpp \
+    file/NonogramFileReader.cpp
 
 HEADERS  += mainwindow.h \
     widgets/DrawingAreaView.h \
@@ -52,7 +54,11 @@ HEADERS  += mainwindow.h \
     field/BlockDescription.h \
     field/LineDescription.h \
     field/AllLinesDescription.h \
-    SizeDialog.h
+    SizeDialog.h \
+    file/FileWriter.h \
+    file/NonogramFileWriter.h \
+    file/FileReader.h \
+    file/NonogramFileReader.h
 
 FORMS    += mainwindow.ui \
     sizedialog.ui
