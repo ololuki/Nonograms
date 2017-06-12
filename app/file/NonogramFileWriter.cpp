@@ -28,15 +28,17 @@ bool NonogramFileWriter::write(const std::string &fileDir)
 	}
 	
 	QJsonObject jsonObj;
-	jsonObj["size"] = writeSize(field);
-	jsonObj["drawingArea"] = writeDrawingArea(field);
+	jsonObj["size"] = serializeSize();
+	jsonObj["drawingArea"] = serializeDrawingArea();
+	jsonObj["columnsDescription"] = serializeColumnsDescription();
+	jsonObj["rowsDescription"] = serializeRowsDescription();
 	
 	QJsonDocument jsonDoc(jsonObj);
 	fileToSave.write(jsonDoc.toJson());
 	return true;
 }
 
-QJsonObject NonogramFileWriter::writeSize(std::shared_ptr<WholeField> field)
+QJsonObject NonogramFileWriter::serializeSize()
 {
 	QJsonObject size;
 	size["width"] = static_cast<int>(field->getWidth());
@@ -44,7 +46,7 @@ QJsonObject NonogramFileWriter::writeSize(std::shared_ptr<WholeField> field)
 	return size;
 }
 
-QJsonArray NonogramFileWriter::writeDrawingArea(std::shared_ptr<WholeField> field)
+QJsonArray NonogramFileWriter::serializeDrawingArea()
 {
 	QJsonArray drawingArea;
 	for (size_t y = 0; y < field->getHeight(); y++)
@@ -53,13 +55,13 @@ QJsonArray NonogramFileWriter::writeDrawingArea(std::shared_ptr<WholeField> fiel
 		{
 			AddressOnDrawingArea address(x, y);
 			Pixel pixel = field->getPixel(address);
-			drawingArea.append(writePixel(pixel));
+			drawingArea.append(serializePixel(pixel));
 		}
 	}
 	return drawingArea;
 }
 
-QJsonObject NonogramFileWriter::writePixel(Pixel pixel)
+QJsonObject NonogramFileWriter::serializePixel(Pixel pixel)
 {
 	QJsonObject jsonPixel;
 	jsonPixel["sign"] = pixel.isDot() ? "dot" : (pixel.isFilledBlack() ? "fillBlack" : "empty");
@@ -67,3 +69,66 @@ QJsonObject NonogramFileWriter::writePixel(Pixel pixel)
 	jsonPixel["addressY"] = static_cast<int>(pixel.getAddress().getY());
 	return jsonPixel;
 }
+
+QJsonArray NonogramFileWriter::serializeColumnsDescription()
+{
+	QJsonArray columnsDescription;
+	for (size_t i = 0; i < field->getWidth(); i++)
+	{
+		columnsDescription.append(serializeLineDescription(i, AddressOnBlocksDescription::VERTICAL));
+	}
+	return columnsDescription;
+}
+
+QJsonArray NonogramFileWriter::serializeRowsDescription()
+{
+	QJsonArray rowsDescription;
+	for (size_t i = 0; i < field->getHeight(); i++)
+	{
+		rowsDescription.append(serializeLineDescription(i, AddressOnBlocksDescription::HORIZONTAL));
+	}
+	return rowsDescription;
+}
+
+QJsonObject NonogramFileWriter::serializeLineDescription(size_t lineNumber, AddressOnBlocksDescription::orientation orientation)
+{
+	QJsonObject lineDescription;
+	lineDescription["lineNumber"] = static_cast<int>(lineNumber);
+	size_t lineLength;
+	switch (orientation)
+	{
+	case AddressOnBlocksDescription::VERTICAL:
+		lineLength = field->numberOfBlocksInColumn(lineNumber);
+		lineDescription["lineLength"] = static_cast<int>(lineLength);
+		break;
+	case AddressOnBlocksDescription::HORIZONTAL:
+		lineLength = field->numberOfBlocksInRow(lineNumber);
+		lineDescription["lineLength"] = static_cast<int>(lineLength);
+		break;
+	}
+	lineDescription["lineDescription"] = serializeArrayOfBlockDescription(lineNumber, lineLength, orientation);
+
+	return lineDescription;
+	
+}
+
+QJsonArray NonogramFileWriter::serializeArrayOfBlockDescription(size_t lineNumber, size_t lineLength, AddressOnBlocksDescription::orientation orientation)
+{
+	QJsonArray arrayOfBlockDescription;
+	for (size_t i = 0; i < lineLength; i++)
+	{
+		AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, lineNumber, i);
+		arrayOfBlockDescription.append(serializeBlockDescription(address));
+	}
+	return arrayOfBlockDescription;
+}
+
+QJsonObject NonogramFileWriter::serializeBlockDescription(AddressOnBlocksDescription address)
+{
+	QJsonObject blockDescription;
+	blockDescription["blockSize"] = static_cast<int>(field->getBlockDescription(address).getBlockSize());
+	blockDescription["count"] = static_cast<int>(address.getCount());
+	blockDescription["isBlack"] = field->getBlockDescription(address).isFilledBlack();
+	return blockDescription;
+}
+
