@@ -25,6 +25,7 @@ void DrawingAreaView::setField(std::shared_ptr<DrawingAreaField> field)
 {
 	this->field = field;
 	connect(static_cast<DrawingAreaField*>(this->field.get()), &DrawingAreaField::dataChanged, this, &DrawingAreaView::onDataChanged);
+	connect(static_cast<DrawingAreaField*>(this->field.get()), &DrawingAreaField::pixelChanged, this, &DrawingAreaView::onPixelChanged);
 	
 	size_t sizeX = field->getWidth() * squareSize + 1;
 	size_t sizeY = field->getHeight() * squareSize + 1;
@@ -45,6 +46,12 @@ void DrawingAreaView::onDataChanged()
 		}
 	}
 	drawGrid();
+	update();
+}
+
+void DrawingAreaView::onPixelChanged(AddressOnDrawingArea address)
+{
+	drawOnePixel(field->getPixel(address));
 	update();
 }
 

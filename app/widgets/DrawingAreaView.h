@@ -15,6 +15,7 @@ public:
 	
 public slots:
 	void onDataChanged();
+	void onPixelChanged(AddressOnDrawingArea address);
 	
 protected:
 	void mousePressEvent(QMouseEvent *event) override;

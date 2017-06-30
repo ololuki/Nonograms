@@ -29,7 +29,7 @@ void WholeFieldImpl::setPixel(Pixel pixel)
 	size_t x = pixel.getAddress().getX();
 	size_t y = pixel.getAddress().getY();
 	array(x, y) = pixel;
-	emit dataChanged();
+	emit pixelChanged(pixel.getAddress());
 }
 
 BlockDescription WholeFieldImpl::getBlockDescription(AddressOnBlocksDescription address)
