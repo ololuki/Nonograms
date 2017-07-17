@@ -4,6 +4,7 @@
 #include "RootField.h"
 #include "AddressOnDrawingArea.h"
 #include "Pixel.h"
+#include "ArrayOfPixels.h"
 
 
 ///
@@ -14,10 +15,12 @@ class DrawingAreaField : public virtual RootField, public QObject
 {
 	Q_OBJECT
 public:
-	virtual Pixel getPixel(AddressOnDrawingArea address) = 0;
-	virtual void setPixel(Pixel pixel) = 0;
+	virtual Pixel getPixel(AddressOnDrawingArea address);
+	virtual void setPixel(Pixel pixel);
 signals:
 	void pixelChanged(AddressOnDrawingArea address);
+protected:
+	ArrayOfPixels array;
 };
 
 #endif // DRAWINGAREAFIELD_H
