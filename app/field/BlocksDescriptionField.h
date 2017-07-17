@@ -1,6 +1,7 @@
 #ifndef BLOCKSDESCRIPTIONFIELD_H
 #define BLOCKSDESCRIPTIONFIELD_H
 
+#include <QObject>
 #include "RootField.h"
 #include "AddressOnBlocksDescription.h"
 #include "BlockDescription.h"
@@ -12,8 +13,9 @@
 /// to share data of Field with ColumnsDescriptionView and RowsDescriptionView.
 /// It derives virtual from RootField because RootField is used in class DrawingAreaField too.
 ///
-class BlocksDescriptionField : public virtual RootField
+class BlocksDescriptionField : public QObject, public virtual RootField
 {
+	Q_OBJECT
 public:
 	virtual BlockDescription getBlockDescription(AddressOnBlocksDescription address);
 	virtual void updateBlockDescription(BlockDescription blockDescription);
@@ -24,7 +26,9 @@ public:
 	virtual size_t numberOfBlocksInRow(size_t rowNumber);
 	virtual size_t columnsDescriptionHeight();
 	virtual size_t rowsDescriptionWidth();
-	virtual bool isDefinedColumnDescriptionAt(AddressOnBlocksDescription address);	
+	virtual bool isDefinedColumnDescriptionAt(AddressOnBlocksDescription address);
+signals:
+	void blocksDescriptionChanged();
 protected:
 	AllLinesDescription columnsDescription;
 	AllLinesDescription rowsDescription;

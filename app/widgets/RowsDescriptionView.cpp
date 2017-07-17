@@ -18,7 +18,7 @@ RowsDescriptionView::RowsDescriptionView(QWidget *parent) : QWidget(parent)
 void RowsDescriptionView::setField(std::shared_ptr<BlocksDescriptionField> field)
 {
 	this->field = field;
-	connect(static_cast<BlocksDescriptionField*>(this->field.get()), &BlocksDescriptionField::dataChanged, this, &RowsDescriptionView::onDataChanged);
+	connect(static_cast<BlocksDescriptionField*>(this->field.get()), &BlocksDescriptionField::blocksDescriptionChanged, this, &RowsDescriptionView::onDataChanged);
 	
 	int widthInSquares = 3;
 	int screenX = widthInSquares * squareSize + myPenWidth;

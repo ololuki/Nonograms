@@ -24,18 +24,16 @@ DrawingAreaView::DrawingAreaView(QWidget *parent)
 void DrawingAreaView::setField(std::shared_ptr<DrawingAreaField> field)
 {
 	this->field = field;
-	connect(static_cast<DrawingAreaField*>(this->field.get()), &DrawingAreaField::dataChanged, this, &DrawingAreaView::onDataChanged);
 	connect(static_cast<DrawingAreaField*>(this->field.get()), &DrawingAreaField::pixelChanged, this, &DrawingAreaView::onPixelChanged);
 	
 	size_t sizeX = field->getWidth() * squareSize + 1;
 	size_t sizeY = field->getHeight() * squareSize + 1;
 	QSize size(sizeX, sizeY);
 	resizeDrawingArea(size);
-	
-	drawGrid();
+	drawAllPixels();
 }
 
-void DrawingAreaView::onDataChanged()
+void DrawingAreaView::drawAllPixels()
 {
 	for (size_t y = 0; y < field->getHeight(); y++)
 	{

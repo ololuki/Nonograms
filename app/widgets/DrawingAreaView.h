@@ -14,7 +14,6 @@ public:
 	void setField(std::shared_ptr<DrawingAreaField> field);
 	
 public slots:
-	void onDataChanged();
 	void onPixelChanged(AddressOnDrawingArea address);
 	
 protected:
@@ -25,6 +24,7 @@ private:
 	const size_t squareSize = 30;		// TODO: move to generalView class
 	void drawGrid();
 	void drawOnePixel(Pixel pixel);
+	void drawAllPixels();
 	
 	void resizeDrawingArea(const QSize &newSize);
 	int myPenWidth;

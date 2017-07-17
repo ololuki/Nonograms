@@ -18,7 +18,7 @@ ColumnsDescriptionView::ColumnsDescriptionView(QWidget *parent) : QWidget(parent
 void ColumnsDescriptionView::setField(std::shared_ptr<BlocksDescriptionField> field)
 {
 	this->field = field;
-	connect(static_cast<BlocksDescriptionField*>(this->field.get()), &BlocksDescriptionField::dataChanged, this, &ColumnsDescriptionView::onDataChanged);
+	connect(static_cast<BlocksDescriptionField*>(this->field.get()), &BlocksDescriptionField::blocksDescriptionChanged, this, &ColumnsDescriptionView::onDataChanged);
 	
 	int screenX = static_cast<int>(this->field->getWidth()) * squareSize + myPenWidth;
 	int heightInSquares = 3;

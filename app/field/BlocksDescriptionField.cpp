@@ -19,7 +19,7 @@ void BlocksDescriptionField::updateBlockDescription(BlockDescription blockDescri
 	} else {
 		rowsDescription.updateDescription(blockDescription);
 	}
-	emit dataChanged();
+	emit blocksDescriptionChanged();
 }
 
 void BlocksDescriptionField::insertDescriptionBefore(BlockDescription blockDescription)
@@ -30,7 +30,7 @@ void BlocksDescriptionField::insertDescriptionBefore(BlockDescription blockDescr
 	} else {
 		rowsDescription.insertDescriptionBefore(blockDescription);
 	}
-	emit dataChanged();
+	emit blocksDescriptionChanged();
 }
 
 void BlocksDescriptionField::addDescriptionAtEnd(BlockDescription blockDescription)
@@ -41,7 +41,7 @@ void BlocksDescriptionField::addDescriptionAtEnd(BlockDescription blockDescripti
 	} else {
 		rowsDescription.addDescriptionAtEnd(blockDescription);
 	}
-	emit dataChanged();
+	emit blocksDescriptionChanged();
 }
 
 void BlocksDescriptionField::deleteDescription(BlockDescription blockDescription)
@@ -52,7 +52,7 @@ void BlocksDescriptionField::deleteDescription(BlockDescription blockDescription
 	} else {
 		rowsDescription.deleteDescription(blockDescription);
 	}
-	emit dataChanged();
+	emit blocksDescriptionChanged();
 }
 
 size_t BlocksDescriptionField::numberOfBlocksInColumn(size_t columnNumber)

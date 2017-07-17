@@ -155,5 +155,4 @@ void MainWindow::replaceField(std::shared_ptr<WholeField> newField)
 	ui->drawingArea->setField(field);
 	ui->columnsDescription->setField(field);
 	ui->rowsDescription->setField(field);
-	field->dataChanged();
 }
