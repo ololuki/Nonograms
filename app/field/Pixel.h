@@ -11,7 +11,7 @@
 class Pixel
 {
 public:
-	Pixel(AddressOnDrawingArea address, pixelSign sign = pixelSign::SGN_EMPTY) : address(address), sign(sign) {}
+	Pixel(AddressOnDrawingArea address, pixelSign sign = pixelSign::SGN_EMPTY);
 	bool isFilledBlack(){return sign == pixelSign::SGN_FILL_BLACK;}
 	bool isDot(){return sign == pixelSign::SGN_DOT;}
 	bool isEmpty(){return sign == pixelSign::SGN_EMPTY;}

@@ -14,6 +14,7 @@ SOURCES += TestMain.cpp \
 SOURCES += ../app/field/AddressOnDrawingArea.cpp \
     ../app/field/AddressOnBlocksDescription.cpp \
     ../app/field/AllLinesDescription.cpp \
+    ../app/field/Pixel.cpp \
     
 
 INCLUDEPATH += \
