@@ -12,8 +12,8 @@ class RootField
 public:
 	RootField();
 	RootField(size_t width, size_t height);
-	size_t getWidth() {return width;}
-	size_t getHeight() {return height;}
+	size_t getWidth() const {return width;}
+	size_t getHeight() const {return height;}
 private:
 	size_t width;
 	size_t height;

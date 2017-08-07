@@ -12,6 +12,14 @@ WholeFieldImpl::WholeFieldImpl(size_t width, size_t height) : RootField(width, h
 	qDebug() << "construct whole field";
 }
 
+WholeFieldImpl::WholeFieldImpl(const WholeField &field) : RootField(field.getWidth(), field.getHeight())
+{
+	array = field.array;
+	columnsDescription = field.columnsDescription;
+	rowsDescription = field.rowsDescription;
+	qDebug() << "copy c-tor";
+}
+
 WholeFieldImpl::~WholeFieldImpl()
 {
 	qDebug() << "destruct whole field";

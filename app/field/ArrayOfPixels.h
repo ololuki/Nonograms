@@ -31,7 +31,9 @@ public:
 	{
 		return this->at(x)[y];
 	}
-	// getPixelAt(x, y)
+	Pixel getPixelAt(size_t x, size_t y) const {
+		return this->at(x).at(y);
+	}
 };
 
 #endif // ARRAYOFPIXELS_H

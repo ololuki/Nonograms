@@ -16,7 +16,7 @@ class DrawingAreaField : public QObject, public virtual RootField
 {
 	Q_OBJECT
 public:
-	virtual Pixel getPixel(AddressOnDrawingArea address);
+	virtual Pixel getPixel(AddressOnDrawingArea address) const;
 	virtual void setPixel(Pixel pixel);
 signals:
 	void pixelChanged(AddressOnDrawingArea address);

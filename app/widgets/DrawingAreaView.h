@@ -11,10 +11,13 @@ class DrawingAreaView : public QWidget
 	Q_OBJECT
 public:
 	explicit DrawingAreaView(QWidget *parent = 0);
-	void setField(std::shared_ptr<DrawingAreaField> field);
+	void setField(std::shared_ptr<const DrawingAreaField> field);
 	
 public slots:
 	void onPixelChanged(AddressOnDrawingArea address);
+	
+signals:
+	void mousePressed(Qt::MouseButton MouseButton, AddressOnDrawingArea);
 	
 protected:
 	void mousePressEvent(QMouseEvent *event) override;
@@ -32,7 +35,7 @@ private:
 	QImage image;
 	QPoint lastPoint;
 	
-	std::shared_ptr<DrawingAreaField> field;
+	std::shared_ptr<const DrawingAreaField> field;
 };
 
 #endif // DRAWINGAREAVIEW_H

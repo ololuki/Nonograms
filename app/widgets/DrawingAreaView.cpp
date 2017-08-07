@@ -21,10 +21,10 @@ DrawingAreaView::DrawingAreaView(QWidget *parent)
 	lastPoint = QPoint(0, 0);
 }
 
-void DrawingAreaView::setField(std::shared_ptr<DrawingAreaField> field)
+void DrawingAreaView::setField(std::shared_ptr<const DrawingAreaField> field)
 {
 	this->field = field;
-	connect(static_cast<DrawingAreaField*>(this->field.get()), &DrawingAreaField::pixelChanged, this, &DrawingAreaView::onPixelChanged);
+	connect(static_cast<const DrawingAreaField*>(this->field.get()), &DrawingAreaField::pixelChanged, this, &DrawingAreaView::onPixelChanged);
 	
 	size_t sizeX = field->getWidth() * squareSize + 1;
 	size_t sizeY = field->getHeight() * squareSize + 1;
@@ -63,22 +63,7 @@ void DrawingAreaView::mousePressEvent(QMouseEvent *event)
 	if (pixelX >= field->getWidth()) return;
 	if (pixelY >= field->getHeight()) return;
 	
-	Pixel pixel(AddressOnDrawingArea(pixelX, pixelY));
-	switch(event->button())
-	{
-	case Qt::LeftButton:
-		pixel.makeFilledBlack();
-		break;
-	case Qt::RightButton:
-		pixel.makeDot();
-		break;
-	case Qt::MiddleButton:
-		pixel.makeEmpty();
-		break;
-	default:
-		break;
-	}
-	field->setPixel(pixel);
+	emit mousePressed(event->button(), AddressOnDrawingArea(pixelX, pixelY));
 }
 
 void DrawingAreaView::paintEvent(QPaintEvent *event)

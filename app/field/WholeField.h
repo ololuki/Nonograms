@@ -11,6 +11,9 @@
 ///
 class WholeField : public DrawingAreaField, public BlocksDescriptionField, virtual public RootField
 {
+	friend class WholeFieldImpl;	// for copy c-tor
+public:
+	virtual ~WholeField();
 	virtual void clearDrawingArea() = 0;
 	virtual void clearBlocksDescription() = 0;
 };

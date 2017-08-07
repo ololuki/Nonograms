@@ -3,12 +3,13 @@
 
 #include <QMainWindow>
 #include <memory>
-#include "field/WholeFieldImpl.h"
+#include "controller/FieldController.h"
 
 
 namespace Ui {
 class MainWindow;
 }
+
 
 class MainWindow : public QMainWindow
 {
@@ -30,15 +31,7 @@ private slots:
 	
 private:
 	Ui::MainWindow *ui;
-	std::shared_ptr<WholeField> field;
-	QString currentFileName;
-	bool isFileNameSet;
-	
-	void setCurrentFileName(const QString &pathAndName);
-	void saveFile();
-	bool abandonChangesOrSavePrompt();
-	void recreateField(size_t width, size_t height);
-	void replaceField(std::shared_ptr<WholeField> newField);
+	std::shared_ptr<FieldController> fieldController;
 };
 
 #endif // MAINWINDOW_H

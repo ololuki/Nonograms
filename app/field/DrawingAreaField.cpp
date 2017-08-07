@@ -1,11 +1,11 @@
 #include "DrawingAreaField.h"
 
 
-Pixel DrawingAreaField::getPixel(AddressOnDrawingArea address)
+Pixel DrawingAreaField::getPixel(AddressOnDrawingArea address) const
 {
 	size_t x = address.getX();
 	size_t y = address.getY();
-	return array(x, y);
+	return array.getPixelAt(x, y);
 }
 
 void DrawingAreaField::setPixel(Pixel pixel)

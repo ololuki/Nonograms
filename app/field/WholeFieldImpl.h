@@ -12,6 +12,7 @@ class WholeFieldImpl : public WholeField
 {
 public:
 	WholeFieldImpl(size_t width, size_t height);
+	WholeFieldImpl(const WholeField &field);
 	~WholeFieldImpl();
 	virtual void clearDrawingArea() override;
 	virtual void clearBlocksDescription() override;
