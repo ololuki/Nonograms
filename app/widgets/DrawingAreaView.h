@@ -11,7 +11,8 @@ class DrawingAreaView : public QWidget
 	Q_OBJECT
 public:
 	explicit DrawingAreaView(QWidget *parent = 0);
-	void setField(std::shared_ptr<const DrawingAreaField> field);
+	virtual ~DrawingAreaView();
+	void setField(const std::shared_ptr<const DrawingAreaField> &field);
 	
 public slots:
 	void onPixelChanged(AddressOnDrawingArea address);

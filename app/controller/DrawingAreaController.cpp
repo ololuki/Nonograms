@@ -3,7 +3,7 @@
 #include <QDebug>
 
 
-DrawingAreaController::DrawingAreaController(std::shared_ptr<WholeField> newField, DrawingAreaView *drawingAreaView)
+DrawingAreaController::DrawingAreaController(std::shared_ptr<DrawingAreaField> newField, DrawingAreaView *drawingAreaView)
 {
 	qDebug() << "DrawingAreaController constructor";
 	this->field = newField;
@@ -18,7 +18,7 @@ DrawingAreaController::~DrawingAreaController()
 	disconnect(drawingAreaView, &DrawingAreaView::mousePressed, this, &DrawingAreaController::onMouseButtonClicked);
 }
 
-void DrawingAreaController::replaceField(std::shared_ptr<WholeField> newField)
+void DrawingAreaController::replaceField(std::shared_ptr<DrawingAreaField> newField)
 {
 	this->field = newField;
 	drawingAreaView->setField(field);

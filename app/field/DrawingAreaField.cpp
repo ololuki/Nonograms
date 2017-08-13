@@ -1,5 +1,17 @@
 #include "DrawingAreaField.h"
+#include <QDebug>
 
+
+DrawingAreaField::DrawingAreaField(int width, int height)
+{
+	array = ArrayOfPixels(width, height);
+	qDebug() << "DrawingAreaField width height c-tor";
+}
+
+DrawingAreaField::~DrawingAreaField()
+{
+	qDebug() << "DrawingAreaField d-tor";
+}
 
 Pixel DrawingAreaField::getPixel(AddressOnDrawingArea address) const
 {

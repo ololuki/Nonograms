@@ -60,7 +60,7 @@ void NonogramFileReader::parseDrawingArea(QJsonArray drawingArea)
 	{
 		QJsonObject jsonPixel = drawingArea[i].toObject();
 		Pixel pixel = parsePixel(jsonPixel);
-		field->setPixel(pixel);
+		field->drawingArea()->setPixel(pixel);
 	}
 }
 

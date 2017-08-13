@@ -4,25 +4,27 @@
 #include <QDebug>
 
 
-WholeFieldImpl::WholeFieldImpl(size_t width, size_t height) : RootField(width, height)
+WholeFieldImpl::WholeFieldImpl(size_t width, size_t height)
+	: RootField(width, height),
+	  WholeField(width, height)
 {
-	array = ArrayOfPixels(width, height);
 	columnsDescription = AllLinesDescription(AddressOnBlocksDescription::VERTICAL, width);
 	rowsDescription = AllLinesDescription(AddressOnBlocksDescription::HORIZONTAL, height);
-	qDebug() << "construct whole field";
+	qDebug() << "WholeFieldImpl width height c-tor";
 }
 
-WholeFieldImpl::WholeFieldImpl(const WholeField &field) : RootField(field.getWidth(), field.getHeight())
+WholeFieldImpl::WholeFieldImpl(const WholeField &field)
+	: RootField(field.getWidth(), field.getHeight()),
+	  WholeField(field)
 {
-	array = field.array;
 	columnsDescription = field.columnsDescription;
 	rowsDescription = field.rowsDescription;
-	qDebug() << "copy c-tor";
+	qDebug() << "WholeFieldImpl copy c-tor";
 }
 
 WholeFieldImpl::~WholeFieldImpl()
 {
-	qDebug() << "destruct whole field";
+	qDebug() << "WholeFieldImpl d-tor";
 }
 
 void WholeFieldImpl::clearDrawingArea()
@@ -31,7 +33,7 @@ void WholeFieldImpl::clearDrawingArea()
 	{
 		for (size_t j = 0; j < getHeight(); j++)
 		{
-			setPixel(Pixel(AddressOnDrawingArea(i, j)));
+			drawingArea()->setPixel(Pixel(AddressOnDrawingArea(i, j)));
 		}
 	}
 }

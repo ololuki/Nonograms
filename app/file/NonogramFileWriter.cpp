@@ -54,7 +54,7 @@ QJsonArray NonogramFileWriter::serializeDrawingArea()
 		for (size_t x = 0; x < field->getWidth(); x++)
 		{
 			AddressOnDrawingArea address(x, y);
-			Pixel pixel = field->getPixel(address);
+			Pixel pixel = field->drawingArea()->getPixel(address);
 			drawingArea.append(serializePixel(pixel));
 		}
 	}

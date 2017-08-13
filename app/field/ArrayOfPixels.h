@@ -34,6 +34,8 @@ public:
 	Pixel getPixelAt(size_t x, size_t y) const {
 		return this->at(x).at(y);
 	}
+	int width() const;
+	int height() const;
 };
 
 #endif // ARRAYOFPIXELS_H

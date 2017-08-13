@@ -9,13 +9,17 @@
 
 
 ///
-/// \brief DrawingAreaField class is "interface" class to share data of Field with DrawingAreaView.
-/// It derives virtual from RootField because RootField is used in class BlocksDescriptionField too.
+/// \brief DrawingAreaField class is model class of drawing area data.
+/// DrawingAreaField is part of WholeField. WholeField contains DrawingAreaField.
 ///
-class DrawingAreaField : public QObject, public virtual RootField
+class DrawingAreaField : public QObject
 {
 	Q_OBJECT
 public:
+	DrawingAreaField(int width, int height);
+	~DrawingAreaField();
+	int getWidth() const {return array.width();}
+	int getHeight() const {return array.height();}
 	virtual Pixel getPixel(AddressOnDrawingArea address) const;
 	virtual void setPixel(Pixel pixel);
 signals:
