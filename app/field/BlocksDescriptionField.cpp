@@ -1,6 +1,18 @@
 #include "BlocksDescriptionField.h"
 
 
+BlocksDescriptionField::BlocksDescriptionField(size_t width, size_t height)
+	: width(width),
+	  height(height)
+{
+	
+}
+
+BlocksDescriptionField::~BlocksDescriptionField()
+{
+	
+}
+
 BlockDescription BlocksDescriptionField::getBlockDescription(AddressOnBlocksDescription address)
 {
 	if (address.isColumn())
@@ -63,6 +75,16 @@ size_t BlocksDescriptionField::numberOfBlocksInColumn(size_t columnNumber)
 size_t BlocksDescriptionField::numberOfBlocksInRow(size_t rowNumber)
 {
 	return rowsDescription.numberOfBlocksInLine(rowNumber);
+}
+
+size_t BlocksDescriptionField::getWidth() const
+{
+	return width;
+}
+
+size_t BlocksDescriptionField::getHeight() const
+{
+	return height;
 }
 
 size_t BlocksDescriptionField::columnsDescriptionHeight()

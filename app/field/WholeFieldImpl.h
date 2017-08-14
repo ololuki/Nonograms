@@ -6,7 +6,6 @@
 
 ///
 /// \brief WholeFieldImpl class implementation - contains whole data about Field.
-/// Constructor should invoke RootField(width, height) constructor.
 ///
 class WholeFieldImpl : public WholeField
 {

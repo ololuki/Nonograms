@@ -8,11 +8,9 @@
 
 ///
 /// \brief WholeField class is "interface" that contains whole data about Field.
-/// You should invoke RootField(width, height) constructor in child class constructor
 ///
-class WholeField : public BlocksDescriptionField, virtual public RootField
+class WholeField : public BlocksDescriptionField
 {
-	friend class WholeFieldImpl;	// for copy c-tor
 public:
 	WholeField(size_t width, size_t height);
 	WholeField(const WholeField &field);

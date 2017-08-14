@@ -21,7 +21,6 @@ SOURCES += main.cpp\
     widgets/RowsDescriptionView.cpp \
     field/AddressOnDrawingArea.cpp \
     field/Pixel.cpp \
-    field/RootField.cpp \
     field/DrawingAreaField.cpp \
     field/WholeField.cpp \
     field/WholeFieldImpl.cpp \
@@ -46,7 +45,6 @@ HEADERS  += mainwindow.h \
     field/AddressOnDrawingArea.h \
     field/pixelSign.h \
     field/Pixel.h \
-    field/RootField.h \
     field/DrawingAreaField.h \
     field/WholeField.h \
     field/WholeFieldImpl.h \

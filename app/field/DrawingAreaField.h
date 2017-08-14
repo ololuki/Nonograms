@@ -2,7 +2,6 @@
 #define DRAWINGAREAFIELD_H
 
 #include <QObject>
-#include "RootField.h"
 #include "AddressOnDrawingArea.h"
 #include "Pixel.h"
 #include "ArrayOfPixels.h"
