@@ -75,7 +75,17 @@
     </property>
     <addaction name="actionAdd_blocks"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionFree_drawing"/>
+    <addaction name="actionField_defining"/>
+    <addaction name="actionHuman_solving"/>
+    <addaction name="actionAuto_solving"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
    <addaction name="menuTest_add"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -116,6 +126,41 @@
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionFree_drawing">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Free drawing</string>
+   </property>
+  </action>
+  <action name="actionField_defining">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Field defining</string>
+   </property>
+  </action>
+  <action name="actionHuman_solving">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Human solving</string>
+   </property>
+  </action>
+  <action name="actionAuto_solving">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Auto solving</string>
    </property>
   </action>
  </widget>

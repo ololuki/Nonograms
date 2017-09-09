@@ -1,3 +1,23 @@
+/**********************************************************************
+ * Copyright (C) 2017 Ololuki
+ * https://ololuki.pl
+ * 
+ * This file is part of Nonograms
+ * https://github.com/ololuki/nonograms
+ * 
+ * Nonograms is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Nonograms is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
+ *********************************************************************/
 #include "ColumnsDescriptionView.h"
 
 #include <QPainter>
@@ -42,12 +62,41 @@ void ColumnsDescriptionView::onDataChanged()
 	redrawAll();
 }
 
+///
+/// \brief	invoke when one block description is changed
+/// \param	address lying on edited (changed) line of blocks descriptions
+///
+void ColumnsDescriptionView::onLineDescriptionChanged(AddressOnBlocksDescription address)
+{
+	
+}
+
+///
+/// \brief	turning on visibility of inserting (+) button between block descriptions.
+///			Plus button is visible until cursor is gone out of area of plus button.
+/// \param	address of block description after plus button position.
+///			Plus button will be inserted between this and previous address.
+///
+void ColumnsDescriptionView::showInsertingButtonBefore(AddressOnBlocksDescription address)
+{
+	if (address.isColumn())
+	{
+		moveAndShowInsertingButton(address);
+	}
+}
+
+void ColumnsDescriptionView::showDescriptionEditingBox(AddressOnBlocksDescription address)
+{
+	
+}
+
 void ColumnsDescriptionView::onInsertingButtonClick()
 {
 	size_t column = static_cast<size_t>(insertingButton->pos().x() / squareSize);
 	size_t count = static_cast<size_t>((insertingButton->pos().y() + squareSize) / squareSize);
 	
 	AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, column, count);
+	//TODO emit onInsertingButtonClick(Qt::MouseButton, address);
 	if (count < field->numberOfBlocksInColumn(column))
 	{
 		field->insertDescriptionBefore(BlockDescription(address, 0));
@@ -74,6 +123,7 @@ void ColumnsDescriptionView::mousePressEvent(QMouseEvent *event)
 		size_t squareX = static_cast<size_t>(screenPoint.x() / squareSize);
 		size_t squareY = static_cast<size_t>(screenPoint.y() / squareSize);
 		AddressOnBlocksDescription address(AddressOnBlocksDescription::orientation::VERTICAL, squareX, squareY);
+		//TODO emit mouseClickedOnBlockDescription(Qt::MouseButton, address);
 		if (event->button() == Qt::LeftButton)
 		{
 			moveAndShowTextBox(address);
@@ -99,9 +149,11 @@ void ColumnsDescriptionView::mouseMoveEvent(QMouseEvent *event)
 	{
 		screenPoint.setY(screenPoint.y() - insertingButtonHeight/2);	// remap to area with defined descriptions + area for half of insertButtons
 		if(isPointOnDefinedDescription(screenPoint))
-			moveAndShowInsertingButton(address);
-		else
+		{
+			insertingButtonHover(address);
+		} else {
 			hideInsertingButton();
+		}
 	} else {
 		hideInsertingButton();
 	}

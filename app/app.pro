@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     file/NonogramFileReader.cpp \
     controller/FieldController.cpp \
     controller/DrawingAreaController.cpp \
-    controller/FileController.cpp
+    controller/FileController.cpp \
+    controller/BlocksDescriptionController.cpp
 
 HEADERS  += mainwindow.h \
     widgets/DrawingAreaView.h \
@@ -55,6 +56,7 @@ HEADERS  += mainwindow.h \
     field/BlockDescription.h \
     field/LineDescription.h \
     field/AllLinesDescription.h \
+    field/FieldMode.h \
     SizeDialog.h \
     file/FileWriter.h \
     file/NonogramFileWriter.h \
@@ -62,7 +64,8 @@ HEADERS  += mainwindow.h \
     file/NonogramFileReader.h \
     controller/FieldController.h \
     controller/DrawingAreaController.h \
-    controller/FileController.h
+    controller/FileController.h \
+    controller/BlocksDescriptionController.h
 
 FORMS    += mainwindow.ui \
     sizedialog.ui

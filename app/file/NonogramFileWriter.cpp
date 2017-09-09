@@ -1,3 +1,23 @@
+/**********************************************************************
+ * Copyright (C) 2017 Ololuki
+ * https://ololuki.pl
+ * 
+ * This file is part of Nonograms
+ * https://github.com/ololuki/nonograms
+ * 
+ * Nonograms is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Nonograms is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
+ *********************************************************************/
 #include "NonogramFileWriter.h"
 
 #include <QFile>
@@ -98,11 +118,11 @@ QJsonObject NonogramFileWriter::serializeLineDescription(size_t lineNumber, Addr
 	switch (orientation)
 	{
 	case AddressOnBlocksDescription::VERTICAL:
-		lineLength = field->numberOfBlocksInColumn(lineNumber);
+		lineLength = field->columnsDescription()->numberOfBlocksInColumn(lineNumber);
 		lineDescription["lineLength"] = static_cast<int>(lineLength);
 		break;
 	case AddressOnBlocksDescription::HORIZONTAL:
-		lineLength = field->numberOfBlocksInRow(lineNumber);
+		lineLength = field->rowsDescription()->numberOfBlocksInRow(lineNumber);
 		lineDescription["lineLength"] = static_cast<int>(lineLength);
 		break;
 	}
@@ -126,9 +146,19 @@ QJsonArray NonogramFileWriter::serializeArrayOfBlockDescription(size_t lineNumbe
 QJsonObject NonogramFileWriter::serializeBlockDescription(AddressOnBlocksDescription address)
 {
 	QJsonObject blockDescription;
-	blockDescription["blockSize"] = static_cast<int>(field->getBlockDescription(address).getBlockSize());
-	blockDescription["count"] = static_cast<int>(address.getCount());
-	blockDescription["isBlack"] = field->getBlockDescription(address).isFilledBlack();
+	switch (address.getOrientation())
+	{
+	case AddressOnBlocksDescription::VERTICAL:
+		blockDescription["blockSize"] = static_cast<int>(field->columnsDescription()->getBlockDescription(address).getBlockSize());
+		blockDescription["count"] = static_cast<int>(address.getCount());
+		blockDescription["isBlack"] = field->columnsDescription()->getBlockDescription(address).isFilledBlack();
+		break;
+	case AddressOnBlocksDescription::HORIZONTAL:
+		blockDescription["blockSize"] = static_cast<int>(field->rowsDescription()->getBlockDescription(address).getBlockSize());
+		blockDescription["count"] = static_cast<int>(address.getCount());
+		blockDescription["isBlack"] = field->rowsDescription()->getBlockDescription(address).isFilledBlack();		
+		break;
+	}
 	return blockDescription;
 }
 
