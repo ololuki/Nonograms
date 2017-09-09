@@ -10,7 +10,7 @@
 
 FileController::FileController(std::shared_ptr<WholeField> field)
 {
-	this->fieldInFile = std::make_shared<WholeFieldImpl>(*field);
+	this->fieldInFile = std::make_shared<WholeField>(*field);
 }
 
 bool FileController::isFieldDirty(std::shared_ptr<WholeField> field)
@@ -64,13 +64,13 @@ void FileController::tryOpenAnotherFile()
 
 void FileController::setNewCreatedField(std::shared_ptr<WholeField> field)
 {
-	this->fieldInFile = std::make_shared<WholeFieldImpl>(*field);
+	this->fieldInFile = std::make_shared<WholeField>(*field);
 	dropCurrentFileName();
 }
 
 std::shared_ptr<WholeField> FileController::getField()
 {
-	return std::make_shared<WholeFieldImpl>(*fieldInFile);
+	return std::make_shared<WholeField>(*fieldInFile);
 }
 
 void FileController::setCurrentFileName(const QString &pathAndName)
@@ -91,7 +91,7 @@ void FileController::saveFile(std::shared_ptr<WholeField> field)
 	writer->setField(field);
 	if (writer->write(currentFileName.toStdString()))
 	{
-		this->fieldInFile = std::make_shared<WholeFieldImpl>(*field);
+		this->fieldInFile = std::make_shared<WholeField>(*field);
 		//ui->statusBar->showMessage(QString("Saved file: \"%1\"").arg(currentFileName));
 		// public Qstring status = TODO
 	} else {

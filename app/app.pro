@@ -23,7 +23,6 @@ SOURCES += main.cpp\
     field/Pixel.cpp \
     field/DrawingAreaField.cpp \
     field/WholeField.cpp \
-    field/WholeFieldImpl.cpp \
     field/LineOfPixels.cpp \
     field/ArrayOfPixels.cpp \
     field/BlocksDescriptionField.cpp \
@@ -48,7 +47,6 @@ HEADERS  += mainwindow.h \
     field/Pixel.h \
     field/DrawingAreaField.h \
     field/WholeField.h \
-    field/WholeFieldImpl.h \
     field/LineOfPixels.h \
     field/ArrayOfPixels.h \
     field/BlocksDescriptionField.h \

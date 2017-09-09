@@ -47,6 +47,16 @@ WholeField::~WholeField()
 	qDebug() << "WholeField d-tor";
 }
 
+size_t WholeField::getWidth() const
+{
+	return width;
+}
+
+size_t WholeField::getHeight() const
+{
+	return height;
+}
+
 std::shared_ptr<DrawingAreaField> WholeField::drawingArea()
 {
 	return drawingAreaField;
@@ -62,12 +72,18 @@ std::shared_ptr<BlocksDescriptionField> WholeField::rowsDescription()
 	return rowsDescriptionField;
 }
 
-size_t WholeField::getWidth() const
+void WholeField::clearDrawingArea()
 {
-	return width;
+	for (size_t i = 0; i < getWidth(); i++)
+	{
+		for (size_t j = 0; j < getHeight(); j++)
+		{
+			drawingArea()->setPixel(Pixel(AddressOnDrawingArea(i, j)));
+		}
+	}
 }
 
-size_t WholeField::getHeight() const
+void WholeField::clearBlocksDescription()
 {
-	return height;
+	// TODO
 }

@@ -22,7 +22,7 @@
 
 #include <QJsonDocument>
 #include <QFile>
-#include "field/WholeFieldImpl.h"
+#include "field/WholeField.h"
 
 
 NonogramFileReader::NonogramFileReader()
@@ -55,7 +55,7 @@ bool NonogramFileReader::read(const std::string &fileDir)
 	size_t width;
 	size_t height;
 	parseSize(width, height, jsonSize);
-	field.reset(new WholeFieldImpl(width, height));
+	field.reset(new WholeField(width, height));
 	QJsonArray drawingArea = jsonObj["drawingArea"].toArray();
 	parseDrawingArea(drawingArea);
 	

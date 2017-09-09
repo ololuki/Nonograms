@@ -42,8 +42,8 @@ public:
 	std::shared_ptr<DrawingAreaField> drawingArea();
 	std::shared_ptr<BlocksDescriptionField> columnsDescription();
 	std::shared_ptr<BlocksDescriptionField> rowsDescription();
-	virtual void clearDrawingArea() = 0;
-	virtual void clearBlocksDescription() = 0;
+	void clearDrawingArea();
+	void clearBlocksDescription();
 private:
 	size_t width;
 	size_t height;

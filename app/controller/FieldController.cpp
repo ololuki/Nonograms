@@ -19,7 +19,6 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "FieldController.h"
-#include "field/WholeFieldImpl.h"
 #include "SizeDialog.h"
 #include <QDebug>
 
@@ -27,7 +26,7 @@
 FieldController::FieldController(DrawingAreaView *drawingAreaView, ColumnsDescriptionView *columnsDescriptionView, RowsDescriptionView *rowsDescriptionView)
 {
 	// create initial field
-	field.reset(new WholeFieldImpl(14, 10));
+	field.reset(new WholeField(14, 10));
 	
 	this->drawingAreaView = drawingAreaView;
 	drawingAreaController = std::make_shared<DrawingAreaController>(field->drawingArea(), drawingAreaView);
@@ -56,7 +55,7 @@ void FieldController::addDummyBlock()
 
 void FieldController::recreateField(size_t width, size_t height)
 {
-	field.reset(new WholeFieldImpl(width, height));
+	field.reset(new WholeField(width, height));
 	drawingAreaController->replaceField(field->drawingArea());
 	columnsDescriptionView->setField(field->columnsDescription());
 	rowsDescriptionView->setField(field->rowsDescription());
