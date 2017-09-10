@@ -45,7 +45,7 @@ signals:
 	// when inserting button is clicked
 	void insertingButtonBeforeAddressClicked(AddressOnBlocksDescription address);
 	// when block description is clicked in order to editing
-	void blockDescriptionClicked(AddressOnBlocksDescription address);
+	void blockDescriptionClicked(AddressOnBlocksDescription address); // Qt::MouseButton MouseButton
 	
 public slots:
 	// invoked by model to inform about changes

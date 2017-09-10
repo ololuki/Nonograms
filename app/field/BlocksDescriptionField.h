@@ -38,28 +38,25 @@ class BlocksDescriptionField : public QObject
 {
 	Q_OBJECT
 public:
-	BlocksDescriptionField(size_t width, size_t height, AddressOnBlocksDescription::orientation o);
+	BlocksDescriptionField(size_t numberOfLines, AddressOnBlocksDescription::orientation o);
 	virtual ~BlocksDescriptionField();
 	virtual BlockDescription getBlockDescription(AddressOnBlocksDescription address);
 	virtual void updateBlockDescription(BlockDescription blockDescription);
 	virtual void insertDescriptionBefore(BlockDescription blockDescription);
 	virtual void addDescriptionAtEnd(BlockDescription blockDescription);
 	virtual void deleteDescription(BlockDescription blockDescription);
-	virtual size_t numberOfBlocksInColumn(size_t columnNumber);
-	virtual size_t numberOfBlocksInRow(size_t rowNumber);
-	virtual size_t getWidth() const;
-	virtual size_t getHeight() const;
-	virtual size_t columnsDescriptionHeight();
-	virtual size_t rowsDescriptionWidth();
-	virtual bool isDefinedColumnDescriptionAt(AddressOnBlocksDescription address);
+	
+	virtual size_t numberOfBlocksInLine(size_t lineNumber);
+	virtual size_t getNumberOfLines() const;
+	virtual size_t allBlocksDescriptionLength();
+	
+	virtual bool isDefinedDescriptionAt(AddressOnBlocksDescription address);
 signals:
 	void blocksDescriptionChanged();
 protected:
-	AllLinesDescription columnsDescription;
-	AllLinesDescription rowsDescription;
+	AllLinesDescription allLinesDescription;
 private:
-	size_t width;
-	size_t height;
+	size_t numberOfLines;
 };
 
 #endif // BLOCKSDESCRIPTIONFIELD_H

@@ -40,7 +40,7 @@ void ColumnsDescriptionView::setField(std::shared_ptr<BlocksDescriptionField> fi
 	this->field = field;
 	connect(static_cast<BlocksDescriptionField*>(this->field.get()), &BlocksDescriptionField::blocksDescriptionChanged, this, &ColumnsDescriptionView::onDataChanged);
 	
-	int screenX = static_cast<int>(this->field->getWidth()) * squareSize + myPenWidth;
+	int screenX = static_cast<int>(this->field->getNumberOfLines()) * squareSize + myPenWidth;
 	int heightInSquares = 3;
 	int screenY = heightInSquares * squareSize + myPenWidth;
 	QSize size(screenX, screenY);
@@ -51,10 +51,10 @@ void ColumnsDescriptionView::setField(std::shared_ptr<BlocksDescriptionField> fi
 void ColumnsDescriptionView::onDataChanged()
 {
 	size_t currentHeight = static_cast<size_t>(minimumHeight() / squareSize);
-	if (field->columnsDescriptionHeight() > currentHeight)
+	if (field->allBlocksDescriptionLength() > currentHeight)
 	{
-		int screenX = static_cast<int>(field->getWidth()) * squareSize + myPenWidth;
-		int newHeightInSquares = static_cast<int>(field->columnsDescriptionHeight());
+		int screenX = static_cast<int>(field->getNumberOfLines()) * squareSize + myPenWidth;
+		int newHeightInSquares = static_cast<int>(field->allBlocksDescriptionLength());
 		int screenY = newHeightInSquares * squareSize + myPenWidth;
 		QSize size(screenX, screenY);
 		resize(size);
@@ -97,11 +97,11 @@ void ColumnsDescriptionView::onInsertingButtonClick()
 	
 	AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, column, count);
 	//TODO emit onInsertingButtonClick(Qt::MouseButton, address);
-	if (count < field->numberOfBlocksInColumn(column))
+	if (count < field->numberOfBlocksInLine(column))
 	{
 		field->insertDescriptionBefore(BlockDescription(address, 0));
 	}
-	else if (count == field->numberOfBlocksInColumn(column))
+	else if (count == field->numberOfBlocksInLine(column))
 	{
 		field->addDescriptionAtEnd(BlockDescription(address, 0));
 	}
@@ -164,20 +164,20 @@ bool ColumnsDescriptionView::isPointOnDefinedDescription(QPoint screenPoint)
 	size_t line = static_cast<size_t>(screenPoint.x() / squareSize);
 	size_t count = static_cast<size_t>(screenPoint.y() / squareSize);
 	AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, line, count);
-	return (field->isDefinedColumnDescriptionAt(address));
+	return (field->isDefinedDescriptionAt(address));
 }
 
 void ColumnsDescriptionView::redrawAll()
 {
-	for(size_t i = 0; i < field->getWidth(); i++)
+	for(size_t i = 0; i < field->getNumberOfLines(); i++)
 	{
-		size_t numberOfBlocksInLine = field->numberOfBlocksInColumn(i);
+		size_t numberOfBlocksInLine = field->numberOfBlocksInLine(i);
 		AddressOnBlocksDescription addressAfterLine = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, i, numberOfBlocksInLine);
 		drawCleanOneBlock(addressAfterLine);
 	}
-	for(size_t i = 0; i < field->getWidth(); i++)
+	for(size_t i = 0; i < field->getNumberOfLines(); i++)
 	{
-		size_t numberOfBlocksInLine = field->numberOfBlocksInColumn(i);
+		size_t numberOfBlocksInLine = field->numberOfBlocksInLine(i);
 		for(size_t j = 0; j < numberOfBlocksInLine; j++)
 		{
 			AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, i, j);

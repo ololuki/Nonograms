@@ -1,3 +1,23 @@
+/**********************************************************************
+ * Copyright (C) 2017 Ololuki
+ * https://ololuki.pl
+ * 
+ * This file is part of Nonograms
+ * https://github.com/ololuki/nonograms
+ * 
+ * Nonograms is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Nonograms is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
+ *********************************************************************/
 #include "RowsDescriptionView.h"
 
 #include <QPainter>
@@ -22,7 +42,7 @@ void RowsDescriptionView::setField(std::shared_ptr<BlocksDescriptionField> field
 	
 	int widthInSquares = 3;
 	int screenX = widthInSquares * squareSize + myPenWidth;
-	int screenY = static_cast<int>(field->getHeight()) * squareSize + myPenWidth;
+	int screenY = static_cast<int>(field->getNumberOfLines()) * squareSize + myPenWidth;
 	QSize size(screenX, screenY);
 	resize(size);
 	onDataChanged();
@@ -31,11 +51,11 @@ void RowsDescriptionView::setField(std::shared_ptr<BlocksDescriptionField> field
 void RowsDescriptionView::onDataChanged()
 {
 	size_t currentWidth = static_cast<size_t>(minimumWidth() / squareSize);
-	if (field->rowsDescriptionWidth() > currentWidth)
+	if (field->allBlocksDescriptionLength() > currentWidth)
 	{
-		int newWidthInSquares = static_cast<int>(field->rowsDescriptionWidth());
+		int newWidthInSquares = static_cast<int>(field->allBlocksDescriptionLength());
 		int screenX = newWidthInSquares * squareSize + myPenWidth;
-		int screenY = static_cast<int>(field->getHeight()) * squareSize + myPenWidth;
+		int screenY = static_cast<int>(field->getNumberOfLines()) * squareSize + myPenWidth;
 		QSize size(screenX, screenY);
 		resize(size);
 	}
@@ -48,11 +68,11 @@ void RowsDescriptionView::onInsertingButtonClick()
 	size_t row = static_cast<size_t>(insertingButton->pos().y() / squareSize);
 	
 	AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::HORIZONTAL, row, count);
-	if (count < field->numberOfBlocksInRow(row))
+	if (count < field->numberOfBlocksInLine(row))
 	{
 		field->insertDescriptionBefore(BlockDescription(address, 0));
 	}
-	else if (count == field->numberOfBlocksInRow(row))
+	else if (count == field->numberOfBlocksInLine(row))
 	{
 		field->addDescriptionAtEnd(BlockDescription(address, 0));
 	}
@@ -112,20 +132,20 @@ bool RowsDescriptionView::isPointOnDefinedDescription(QPoint screenPoint)
 	size_t count = static_cast<size_t>(screenPoint.x() / squareSize);
 	size_t line = static_cast<size_t>(screenPoint.y() / squareSize);
 	AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::HORIZONTAL, line, count);
-	return (field->isDefinedColumnDescriptionAt(address));
+	return (field->isDefinedDescriptionAt(address));
 }
 
 void RowsDescriptionView::redrawAll()
 {
-	for(size_t i = 0; i < field->getHeight(); i++)
+	for(size_t i = 0; i < field->getNumberOfLines(); i++)
 	{
-		size_t numberOfBlocksInLine = field->numberOfBlocksInRow(i);
+		size_t numberOfBlocksInLine = field->numberOfBlocksInLine(i);
 		AddressOnBlocksDescription addressAfterLine = AddressOnBlocksDescription(AddressOnBlocksDescription::HORIZONTAL, i, numberOfBlocksInLine);
 		drawCleanOneBlock(addressAfterLine);
 	}
-	for(size_t i = 0; i < field->getHeight(); i++)
+	for(size_t i = 0; i < field->getNumberOfLines(); i++)
 	{
-		size_t numberOfBlocksInLine = field->numberOfBlocksInRow(i);
+		size_t numberOfBlocksInLine = field->numberOfBlocksInLine(i);
 		for(size_t j = 0; j < numberOfBlocksInLine; j++)
 		{
 			AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::HORIZONTAL, i, j);

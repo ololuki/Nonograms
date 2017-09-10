@@ -21,16 +21,10 @@
 #include "BlocksDescriptionField.h"
 
 
-BlocksDescriptionField::BlocksDescriptionField(size_t width, size_t height, AddressOnBlocksDescription::orientation o)
-	: width(width),
-	  height(height)
+BlocksDescriptionField::BlocksDescriptionField(size_t numberOfLines, AddressOnBlocksDescription::orientation o)
 {
-	if (o == AddressOnBlocksDescription::VERTICAL)
-	{
-		columnsDescription = AllLinesDescription(AddressOnBlocksDescription::VERTICAL, width);
-	} else {
-		rowsDescription = AllLinesDescription(AddressOnBlocksDescription::HORIZONTAL, height);
-	}
+	this->numberOfLines = numberOfLines;
+	allLinesDescription = AllLinesDescription(o, numberOfLines);
 }
 
 BlocksDescriptionField::~BlocksDescriptionField()
@@ -40,104 +34,54 @@ BlocksDescriptionField::~BlocksDescriptionField()
 
 BlockDescription BlocksDescriptionField::getBlockDescription(AddressOnBlocksDescription address)
 {
-	if (address.isColumn())
-	{
-		return columnsDescription(address.getLine(), address.getCount());
-	} else {
-		return rowsDescription(address.getLine(), address.getCount());
-	}
+	return allLinesDescription(address.getLine(), address.getCount());
 }
 
 void BlocksDescriptionField::updateBlockDescription(BlockDescription blockDescription)
 {
-	if (blockDescription.getAddress().isColumn())
-	{
-		columnsDescription.updateDescription(blockDescription);
-	} else {
-		rowsDescription.updateDescription(blockDescription);
-	}
+	allLinesDescription.updateDescription(blockDescription);
 	emit blocksDescriptionChanged();
 }
 
 void BlocksDescriptionField::insertDescriptionBefore(BlockDescription blockDescription)
 {
-	if (blockDescription.getAddress().isColumn())
-	{
-		columnsDescription.insertDescriptionBefore(blockDescription);
-	} else {
-		rowsDescription.insertDescriptionBefore(blockDescription);
-	}
+	allLinesDescription.insertDescriptionBefore(blockDescription);
 	emit blocksDescriptionChanged();
 }
 
 void BlocksDescriptionField::addDescriptionAtEnd(BlockDescription blockDescription)
 {
-	if (blockDescription.getAddress().isColumn())
-	{
-		columnsDescription.addDescriptionAtEnd(blockDescription);
-	} else {
-		rowsDescription.addDescriptionAtEnd(blockDescription);
-	}
+	allLinesDescription.addDescriptionAtEnd(blockDescription);
 	emit blocksDescriptionChanged();
 }
 
 void BlocksDescriptionField::deleteDescription(BlockDescription blockDescription)
 {
-	if (blockDescription.getAddress().isColumn())
-	{
-		columnsDescription.deleteDescription(blockDescription);
-	} else {
-		rowsDescription.deleteDescription(blockDescription);
-	}
+	allLinesDescription.deleteDescription(blockDescription);
 	emit blocksDescriptionChanged();
 }
 
-size_t BlocksDescriptionField::numberOfBlocksInColumn(size_t columnNumber)
+size_t BlocksDescriptionField::numberOfBlocksInLine(size_t lineNumber)
 {
-	return columnsDescription.numberOfBlocksInLine(columnNumber);
+	return allLinesDescription.numberOfBlocksInLine(lineNumber);
 }
 
-size_t BlocksDescriptionField::numberOfBlocksInRow(size_t rowNumber)
+size_t BlocksDescriptionField::getNumberOfLines() const
 {
-	return rowsDescription.numberOfBlocksInLine(rowNumber);
+	return numberOfLines;
 }
 
-size_t BlocksDescriptionField::getWidth() const
+size_t BlocksDescriptionField::allBlocksDescriptionLength()
 {
-	return width;
-}
-
-size_t BlocksDescriptionField::getHeight() const
-{
-	return height;
-}
-
-size_t BlocksDescriptionField::columnsDescriptionHeight()
-{
-	size_t height = 0;
-	for (size_t i = 0; i < getWidth(); i++)
+	size_t length = 0;
+	for (size_t i = 0; i < numberOfLines; i++)
 	{
-		height = std::max(height, columnsDescription.numberOfBlocksInLine(i));
+		length = std::max(length, numberOfBlocksInLine(i));
 	}
-	return height;
+	return length;
 }
 
-size_t BlocksDescriptionField::rowsDescriptionWidth()
+bool BlocksDescriptionField::isDefinedDescriptionAt(AddressOnBlocksDescription address)
 {
-	size_t width = 0;
-	for (size_t i = 0; i < getHeight(); i++)
-	{
-		width = std::max(width, rowsDescription.numberOfBlocksInLine(i));
-	}
-	return width;
-}
-
-bool BlocksDescriptionField::isDefinedColumnDescriptionAt(AddressOnBlocksDescription address)
-{
-	if (address.isColumn())
-	{
-		return columnsDescription.isDefinedDescriptionAt(address.getLine(), address.getCount());
-	} else {
-		return rowsDescription.isDefinedDescriptionAt(address.getLine(), address.getCount());
-	}
+	return allLinesDescription.isDefinedDescriptionAt(address.getLine(), address.getCount());
 }

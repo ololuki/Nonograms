@@ -118,11 +118,11 @@ QJsonObject NonogramFileWriter::serializeLineDescription(size_t lineNumber, Addr
 	switch (orientation)
 	{
 	case AddressOnBlocksDescription::VERTICAL:
-		lineLength = field->columnsDescription()->numberOfBlocksInColumn(lineNumber);
+		lineLength = field->columnsDescription()->numberOfBlocksInLine(lineNumber);
 		lineDescription["lineLength"] = static_cast<int>(lineLength);
 		break;
 	case AddressOnBlocksDescription::HORIZONTAL:
-		lineLength = field->rowsDescription()->numberOfBlocksInRow(lineNumber);
+		lineLength = field->rowsDescription()->numberOfBlocksInLine(lineNumber);
 		lineDescription["lineLength"] = static_cast<int>(lineLength);
 		break;
 	}

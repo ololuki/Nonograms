@@ -27,8 +27,8 @@ WholeField::WholeField(size_t width, size_t height)
 	  height(height)
 {
 	drawingAreaField = std::make_shared<DrawingAreaField>(width, height);
-	columnsDescriptionField = std::make_shared<BlocksDescriptionField>(width, height, AddressOnBlocksDescription::VERTICAL);
-	rowsDescriptionField = std::make_shared<BlocksDescriptionField>(width, height, AddressOnBlocksDescription::HORIZONTAL);
+	columnsDescriptionField = std::make_shared<BlocksDescriptionField>(width, AddressOnBlocksDescription::VERTICAL);
+	rowsDescriptionField = std::make_shared<BlocksDescriptionField>(height, AddressOnBlocksDescription::HORIZONTAL);
 	qDebug() << "WholeField width height c-tor";
 }
 
