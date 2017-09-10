@@ -18,40 +18,18 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREAVIEW_H
-#define DRAWINGAREAVIEW_H
+#ifndef FIELDVIEWCONSTANTS_H
+#define FIELDVIEWCONSTANTS_H
 
-#include <memory>
 #include <QWidget>
-#include "field/DrawingAreaField.h"
-#include "common/FieldViewConstants.h"
-#include "common/DrawableView.h"
 
 
-class DrawingAreaView : public DrawableView
+class FieldViewConstants
 {
-	Q_OBJECT
 public:
-	explicit DrawingAreaView(QWidget *parent = 0);
-	virtual ~DrawingAreaView();
-	void setField(const std::shared_ptr<const DrawingAreaField> &field);
-	
-public slots:
-	void onPixelChanged(AddressOnDrawingArea address);
-	
-signals:
-	void mousePressed(Qt::MouseButton MouseButton, AddressOnDrawingArea);
-	
-protected:
-	void mousePressEvent(QMouseEvent *event) override;
-	
-private:
-	FieldViewConstants constants;
-	void drawGrid();
-	void drawOnePixel(Pixel pixel);
-	void drawAllPixels();
-	
-	std::shared_ptr<const DrawingAreaField> field;
+	const size_t squareSize = 30;
+	int myPenWidth = 1;
+	QColor myPenColor = Qt::black;
 };
 
-#endif // DRAWINGAREAVIEW_H
+#endif // FIELDVIEWCONSTANTS_H

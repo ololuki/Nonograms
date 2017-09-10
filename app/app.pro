@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     controller/FieldController.cpp \
     controller/DrawingAreaController.cpp \
     controller/FileController.cpp \
-    controller/BlocksDescriptionController.cpp
+    controller/BlocksDescriptionController.cpp \
+    widgets/common/DrawableView.cpp
 
 HEADERS  += mainwindow.h \
     widgets/DrawingAreaView.h \
@@ -63,7 +64,9 @@ HEADERS  += mainwindow.h \
     controller/FieldController.h \
     controller/DrawingAreaController.h \
     controller/FileController.h \
-    controller/BlocksDescriptionController.h
+    controller/BlocksDescriptionController.h \
+    widgets/common/FieldViewConstants.h \
+    widgets/common/DrawableView.h
 
 FORMS    += mainwindow.ui \
     sizedialog.ui

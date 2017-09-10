@@ -1,3 +1,23 @@
+/**********************************************************************
+ * Copyright (C) 2017 Ololuki
+ * https://ololuki.pl
+ * 
+ * This file is part of Nonograms
+ * https://github.com/ololuki/nonograms
+ * 
+ * Nonograms is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Nonograms is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
+ *********************************************************************/
 #include "DrawingAreaView.h"
 #include <QColor>
 #include <QImage>
@@ -9,16 +29,9 @@
 
 
 DrawingAreaView::DrawingAreaView(QWidget *parent)
-    : QWidget(parent)
+    : DrawableView(parent)
 {
-	setAttribute(Qt::WA_StaticContents); 
-	myPenWidth = 1;
-	myPenColor = Qt::black;
 	
-	QSize size(211, 211);
-	resizeDrawingArea(size);
-	
-	lastPoint = QPoint(0, 0);
 }
 
 DrawingAreaView::~DrawingAreaView()
@@ -31,10 +44,10 @@ void DrawingAreaView::setField(const std::shared_ptr<const DrawingAreaField> &fi
 	this->field = field;
 	connect(static_cast<const DrawingAreaField*>(this->field.get()), &DrawingAreaField::pixelChanged, this, &DrawingAreaView::onPixelChanged);
 	
-	size_t sizeX = field->getWidth() * squareSize + 1;
-	size_t sizeY = field->getHeight() * squareSize + 1;
+	size_t sizeX = field->getWidth() * constants.squareSize + 1;
+	size_t sizeY = field->getHeight() * constants.squareSize + 1;
 	QSize size(sizeX, sizeY);
-	resizeDrawingArea(size);
+	resize(size);
 	drawAllPixels();
 }
 
@@ -62,8 +75,8 @@ void DrawingAreaView::mousePressEvent(QMouseEvent *event)
 {
 	QPoint currentPoint = event->pos();
 	
-	size_t pixelX = currentPoint.x() / squareSize;
-	size_t pixelY = currentPoint.y() / squareSize;
+	size_t pixelX = currentPoint.x() / constants.squareSize;
+	size_t pixelY = currentPoint.y() / constants.squareSize;
 	
 	if (pixelX >= field->getWidth()) return;
 	if (pixelY >= field->getHeight()) return;
@@ -71,24 +84,17 @@ void DrawingAreaView::mousePressEvent(QMouseEvent *event)
 	emit mousePressed(event->button(), AddressOnDrawingArea(pixelX, pixelY));
 }
 
-void DrawingAreaView::paintEvent(QPaintEvent *event)
-{
-	QPainter painter(this);
-	QRect dirtyRect = event->rect();
-	painter.drawImage(dirtyRect, image, dirtyRect);
-}
-
 void DrawingAreaView::drawGrid()
 {
 	QPainter p(&image);
-	p.setPen(QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	p.setPen(QPen(constants.myPenColor, constants.myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	for (int y = 0; y < field->getHeight(); y++)
 	{
 		for (int x = 0; x < field->getWidth(); x++)
 		{
-			int currentX = x * squareSize;
-			int currentY = y * squareSize;
-			QRect rectangle = QRect(currentX, currentY, squareSize, squareSize);
+			int currentX = x * constants.squareSize;
+			int currentY = y * constants.squareSize;
+			QRect rectangle = QRect(currentX, currentY, constants.squareSize, constants.squareSize);
 			p.drawRect(rectangle);
 		}
 	}
@@ -97,33 +103,23 @@ void DrawingAreaView::drawGrid()
 void DrawingAreaView::drawOnePixel(Pixel pixel)
 {
 	QPainter painter(&image);
-	painter.setPen(QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	painter.setPen(QPen(constants.myPenColor, constants.myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	
 	int x = pixel.getAddress().getX();
 	int y = pixel.getAddress().getY();
 	
-	int currentX = x * squareSize;
-	int currentY = y * squareSize;
-	QRect rectangle = QRect(currentX, currentY, squareSize, squareSize);
+	int currentX = x * constants.squareSize;
+	int currentY = y * constants.squareSize;
+	QRect rectangle = QRect(currentX, currentY, constants.squareSize, constants.squareSize);
 	
 	if (pixel.isFilledBlack()) {
 		painter.fillRect(rectangle, Qt::black);
 	} else if (pixel.isDot()) {
 		painter.fillRect(rectangle, Qt::white);
-		QPoint centerP(currentX + squareSize / 2, currentY + squareSize / 2);
-		painter.drawEllipse(centerP, squareSize / 10, squareSize / 10);
+		QPoint centerP(currentX + constants.squareSize / 2, currentY + constants.squareSize / 2);
+		painter.drawEllipse(centerP, constants.squareSize / 10, constants.squareSize / 10);
 	}else if (pixel.isEmpty()) {
 		painter.fillRect(rectangle, Qt::white);
 	}
 	painter.drawRect(rectangle);
-}
-
-void DrawingAreaView::resizeDrawingArea(const QSize &newSize)
-{
-	setMinimumSize(newSize);		// for scroll area, minimum size - you cannot shrink window size lower than this	
-	
-	// init image:
-	QImage newImage(newSize, QImage::Format_RGB32);
-	newImage.fill(qRgb(255, 255, 255));
-	image = newImage;
 }

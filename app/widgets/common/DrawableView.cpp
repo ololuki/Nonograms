@@ -18,40 +18,33 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREAVIEW_H
-#define DRAWINGAREAVIEW_H
+#include "DrawableView.h"
 
-#include <memory>
-#include <QWidget>
-#include "field/DrawingAreaField.h"
-#include "common/FieldViewConstants.h"
-#include "common/DrawableView.h"
+#include <QPainter>
+#include <QPaintEvent>
 
 
-class DrawingAreaView : public DrawableView
+DrawableView::DrawableView(QWidget *parent)
+	: QWidget(parent)
 {
-	Q_OBJECT
-public:
-	explicit DrawingAreaView(QWidget *parent = 0);
-	virtual ~DrawingAreaView();
-	void setField(const std::shared_ptr<const DrawingAreaField> &field);
-	
-public slots:
-	void onPixelChanged(AddressOnDrawingArea address);
-	
-signals:
-	void mousePressed(Qt::MouseButton MouseButton, AddressOnDrawingArea);
-	
-protected:
-	void mousePressEvent(QMouseEvent *event) override;
-	
-private:
-	FieldViewConstants constants;
-	void drawGrid();
-	void drawOnePixel(Pixel pixel);
-	void drawAllPixels();
-	
-	std::shared_ptr<const DrawingAreaField> field;
-};
+	setAttribute(Qt::WA_StaticContents);
+	QSize size(211, 211);
+	resize(size);
+}
 
-#endif // DRAWINGAREAVIEW_H
+void DrawableView::resize(const QSize &newSize)
+{
+	setMinimumSize(newSize);	// for scroll area, minimum size - you cannot shrink window size lower than this
+	
+	// init image:
+	QImage newImage(newSize, QImage::Format_RGB32);
+	newImage.fill(qRgb(255, 255, 255));
+	image = newImage;
+}
+
+void DrawableView::paintEvent(QPaintEvent *event)
+{
+	QPainter painter(this);
+	QRect dirtyRect = event->rect();
+	painter.drawImage(dirtyRect, image, dirtyRect);
+}

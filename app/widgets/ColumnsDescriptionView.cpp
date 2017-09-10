@@ -26,11 +26,9 @@
 #include <QStaticText>
 
 
-ColumnsDescriptionView::ColumnsDescriptionView(QWidget *parent) : QWidget(parent)
+ColumnsDescriptionView::ColumnsDescriptionView(QWidget *parent)
+	: DrawableView(parent)
 {
-	setAttribute(Qt::WA_StaticContents);
-	QSize size(211, 211);
-	resize(size);
 	initTextBox();
 	initInsertingButton();
 }
@@ -40,9 +38,9 @@ void ColumnsDescriptionView::setField(std::shared_ptr<BlocksDescriptionField> fi
 	this->field = field;
 	connect(static_cast<BlocksDescriptionField*>(this->field.get()), &BlocksDescriptionField::blocksDescriptionChanged, this, &ColumnsDescriptionView::onDataChanged);
 	
-	int screenX = static_cast<int>(this->field->getNumberOfLines()) * squareSize + myPenWidth;
+	int screenX = static_cast<int>(this->field->getNumberOfLines()) * constants.squareSize + constants.myPenWidth;
 	int heightInSquares = 3;
-	int screenY = heightInSquares * squareSize + myPenWidth;
+	int screenY = heightInSquares * constants.squareSize + constants.myPenWidth;
 	QSize size(screenX, screenY);
 	resize(size);
 	onDataChanged();
@@ -50,12 +48,12 @@ void ColumnsDescriptionView::setField(std::shared_ptr<BlocksDescriptionField> fi
 
 void ColumnsDescriptionView::onDataChanged()
 {
-	size_t currentHeight = static_cast<size_t>(minimumHeight() / squareSize);
+	size_t currentHeight = static_cast<size_t>(minimumHeight() / constants.squareSize);
 	if (field->allBlocksDescriptionLength() > currentHeight)
 	{
-		int screenX = static_cast<int>(field->getNumberOfLines()) * squareSize + myPenWidth;
+		int screenX = static_cast<int>(field->getNumberOfLines()) * constants.squareSize + constants.myPenWidth;
 		int newHeightInSquares = static_cast<int>(field->allBlocksDescriptionLength());
-		int screenY = newHeightInSquares * squareSize + myPenWidth;
+		int screenY = newHeightInSquares * constants.squareSize + constants.myPenWidth;
 		QSize size(screenX, screenY);
 		resize(size);
 	}
@@ -92,8 +90,8 @@ void ColumnsDescriptionView::showDescriptionEditingBox(AddressOnBlocksDescriptio
 
 void ColumnsDescriptionView::onInsertingButtonClick()
 {
-	size_t column = static_cast<size_t>(insertingButton->pos().x() / squareSize);
-	size_t count = static_cast<size_t>((insertingButton->pos().y() + squareSize) / squareSize);
+	size_t column = static_cast<size_t>(insertingButton->pos().x() / constants.squareSize);
+	size_t count = static_cast<size_t>((insertingButton->pos().y() + constants.squareSize) / constants.squareSize);
 	
 	AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, column, count);
 	//TODO emit onInsertingButtonClick(Qt::MouseButton, address);
@@ -107,21 +105,14 @@ void ColumnsDescriptionView::onInsertingButtonClick()
 	}
 }
 
-void ColumnsDescriptionView::paintEvent(QPaintEvent *event)
-{
-	QPainter painter(this);
-	QRect dirtyRect = event->rect();
-	painter.drawImage(dirtyRect, image, dirtyRect);
-}
-
 void ColumnsDescriptionView::mousePressEvent(QMouseEvent *event)
 {
 	saveTextBoxToBlockDescription();
 	QPoint screenPoint = event->pos();
 	if (isPointOnDefinedDescription(screenPoint))
 	{
-		size_t squareX = static_cast<size_t>(screenPoint.x() / squareSize);
-		size_t squareY = static_cast<size_t>(screenPoint.y() / squareSize);
+		size_t squareX = static_cast<size_t>(screenPoint.x() / constants.squareSize);
+		size_t squareY = static_cast<size_t>(screenPoint.y() / constants.squareSize);
 		AddressOnBlocksDescription address(AddressOnBlocksDescription::orientation::VERTICAL, squareX, squareY);
 		//TODO emit mouseClickedOnBlockDescription(Qt::MouseButton, address);
 		if (event->button() == Qt::LeftButton)
@@ -141,11 +132,11 @@ void ColumnsDescriptionView::mousePressEvent(QMouseEvent *event)
 void ColumnsDescriptionView::mouseMoveEvent(QMouseEvent *event)
 {
 	QPoint screenPoint = event->pos();
-	int halfSquareSize = squareSize/2;
-	size_t squareX = static_cast<size_t>(screenPoint.x() / squareSize);
-	size_t squareY = static_cast<size_t>((screenPoint.y() + halfSquareSize) / squareSize);
+	int halfSquareSize = constants.squareSize/2;
+	size_t squareX = static_cast<size_t>(screenPoint.x() / constants.squareSize);
+	size_t squareY = static_cast<size_t>((screenPoint.y() + halfSquareSize) / constants.squareSize);
 	AddressOnBlocksDescription address(AddressOnBlocksDescription::orientation::VERTICAL, squareX, squareY);
-	if ((screenPoint.y() + insertingButtonHeight/2) % squareSize < insertingButtonHeight)
+	if ((screenPoint.y() + insertingButtonHeight/2) % constants.squareSize < insertingButtonHeight)
 	{
 		screenPoint.setY(screenPoint.y() - insertingButtonHeight/2);	// remap to area with defined descriptions + area for half of insertButtons
 		if(isPointOnDefinedDescription(screenPoint))
@@ -161,8 +152,8 @@ void ColumnsDescriptionView::mouseMoveEvent(QMouseEvent *event)
 
 bool ColumnsDescriptionView::isPointOnDefinedDescription(QPoint screenPoint)
 {
-	size_t line = static_cast<size_t>(screenPoint.x() / squareSize);
-	size_t count = static_cast<size_t>(screenPoint.y() / squareSize);
+	size_t line = static_cast<size_t>(screenPoint.x() / constants.squareSize);
+	size_t count = static_cast<size_t>(screenPoint.y() / constants.squareSize);
 	AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, line, count);
 	return (field->isDefinedDescriptionAt(address));
 }
@@ -191,14 +182,14 @@ void ColumnsDescriptionView::drawOneBlockDescription(BlockDescription blockDescr
 {
 	//TODO: start drawing from bottom and check the height of canvas image
 	AddressOnBlocksDescription address = blockDescription.getAddress();
-	int screenX = static_cast<int>(address.getLine()) * squareSize;
-	int screenY = static_cast<int>(address.getCount()) * squareSize;
+	int screenX = static_cast<int>(address.getLine()) * constants.squareSize;
+	int screenY = static_cast<int>(address.getCount()) * constants.squareSize;
 	
 	QPainter painter(&image);
-	painter.setPen(QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	painter.setPen(QPen(constants.myPenColor, constants.myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	
 	// square - mój prostokąt:
-	QRect rectangle = QRect(screenX, screenY, squareSize, squareSize);
+	QRect rectangle = QRect(screenX, screenY, constants.squareSize, constants.squareSize);
 	painter.fillRect(rectangle, Qt::yellow);
 	painter.drawRect(rectangle);
 	
@@ -215,14 +206,14 @@ void ColumnsDescriptionView::drawOneBlockDescription(BlockDescription blockDescr
 
 void ColumnsDescriptionView::drawCleanOneBlock(AddressOnBlocksDescription address)
 {
-	int screenX = static_cast<int>(address.getLine()) * squareSize;
-	int screenY = static_cast<int>(address.getCount()) * squareSize;
+	int screenX = static_cast<int>(address.getLine()) * constants.squareSize;
+	int screenY = static_cast<int>(address.getCount()) * constants.squareSize;
 	
 	QPainter painter(&image);
 	QColor backgroundColor = Qt::white;
-	painter.setPen(QPen(backgroundColor, myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	painter.setPen(QPen(backgroundColor, constants.myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	
-	QRect rectangle = QRect(screenX, screenY, squareSize, squareSize);
+	QRect rectangle = QRect(screenX, screenY, constants.squareSize, constants.squareSize);
 	painter.fillRect(rectangle, backgroundColor);
 	painter.drawRect(rectangle);
 	update();
@@ -231,8 +222,8 @@ void ColumnsDescriptionView::drawCleanOneBlock(AddressOnBlocksDescription addres
 void ColumnsDescriptionView::initTextBox()
 {
 	qTextEdit = new QTextEdit("0", this);
-	qTextEdit->setFixedHeight(squareSize);
-	qTextEdit->setFixedWidth(squareSize);
+	qTextEdit->setFixedHeight(constants.squareSize);
+	qTextEdit->setFixedWidth(constants.squareSize);
 	qTextEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	qTextEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	qTextEdit->hide();
@@ -247,8 +238,8 @@ void ColumnsDescriptionView::saveTextBoxToBlockDescription()
 {
 	if (! qTextEdit->isHidden())
 	{
-		size_t squareX = static_cast<size_t>(qTextEdit->pos().x() / squareSize);
-		size_t squareY = static_cast<size_t>(qTextEdit->pos().y() / squareSize);
+		size_t squareX = static_cast<size_t>(qTextEdit->pos().x() / constants.squareSize);
+		size_t squareY = static_cast<size_t>(qTextEdit->pos().y() / constants.squareSize);
 		
 		AddressOnBlocksDescription address = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, squareX, squareY);
 		QString textFromBox = qTextEdit->toPlainText();
@@ -260,8 +251,8 @@ void ColumnsDescriptionView::saveTextBoxToBlockDescription()
 
 void ColumnsDescriptionView::moveAndShowTextBox(AddressOnBlocksDescription address)
 {
-	int screenX = static_cast<int>(address.getLine()) * squareSize;
-	int screenY = static_cast<int>(address.getCount()) * squareSize;
+	int screenX = static_cast<int>(address.getLine()) * constants.squareSize;
+	int screenY = static_cast<int>(address.getCount()) * constants.squareSize;
 	qTextEdit->move(screenX, screenY);
 	qTextEdit->show();
 	qTextEdit->setFocus();
@@ -272,7 +263,7 @@ void ColumnsDescriptionView::initInsertingButton()
 {
 	insertingButton = new QPushButton("+", this);
 	insertingButton->setFixedHeight(insertingButtonHeight);
-	insertingButton->setFixedWidth(squareSize);
+	insertingButton->setFixedWidth(constants.squareSize);
 	insertingButton->setStatusTip("insert or add new block description");
 	setMouseTracking(true);
 	connect(insertingButton, &QPushButton::clicked, this, &ColumnsDescriptionView::onInsertingButtonClick);
@@ -286,18 +277,8 @@ void ColumnsDescriptionView::hideInsertingButton()
 
 void ColumnsDescriptionView::moveAndShowInsertingButton(AddressOnBlocksDescription address)
 {
-	int screenX = static_cast<int>(address.getLine()) * squareSize;
-	int screenY = static_cast<int>(address.getCount()) * squareSize - (squareSize/4);
+	int screenX = static_cast<int>(address.getLine()) * constants.squareSize;
+	int screenY = static_cast<int>(address.getCount()) * constants.squareSize - (constants.squareSize/4);
 	insertingButton->move(screenX, screenY);
 	insertingButton->show();
-}
-
-void ColumnsDescriptionView::resize(const QSize &newSize)
-{
-	setMinimumSize(newSize);		// for scroll area, minimum size - you cannot shrink window size lower than this	
-	
-	// init image:
-	QImage newImage(newSize, QImage::Format_RGB32);
-	newImage.fill(qRgb(255, 255, 255));
-	image = newImage;
 }
