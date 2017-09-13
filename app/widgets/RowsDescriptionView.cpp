@@ -109,6 +109,7 @@ void RowsDescriptionView::mouseMoveEvent(QMouseEvent *event)
 	if ((screenPoint.x() + insertingButtonWidth/2) % constants.squareSize < insertingButtonWidth)
 	{
 		screenPoint.setX(screenPoint.x() - insertingButtonWidth/2);	// remap to area with defined descriptions + area for half of insertButtons
+		if (screenPoint.x() < 0) screenPoint.setX(0);
 		if(isPointOnDefinedDescription(screenPoint))
 			moveAndShowInsertingButton(address);
 		else
