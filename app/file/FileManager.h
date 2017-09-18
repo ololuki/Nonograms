@@ -1,14 +1,14 @@
-#ifndef FILECONTROLLER_H
-#define FILECONTROLLER_H
+#ifndef FILEMANAGER_H
+#define FILEMANAGER_H
 
 #include <memory>
 #include "field/WholeField.h"
 
 
-class FileController
+class FileManager
 {
 public:
-	FileController(std::shared_ptr<WholeField> field);
+	FileManager(std::shared_ptr<WholeField> field);
 	bool isFieldDirty(std::shared_ptr<WholeField> field);	// porównuje wewnętrzny field z fieldem przekazanym, wewnętrzny field odpowiada temu zapisanemu w pliku
 	void trySaveChanges(std::shared_ptr<WholeField> field);		// zapisuje do bieżącego pliku lub pyta o scieżkę (trySaveAs); TODO zwraca SavedOkOrAbandoned = 0 lub Error = 1
 	void trySaveAs(std::shared_ptr<WholeField> field);		// pyta o scieżkę i zapisuje plik
@@ -28,4 +28,4 @@ private:
 	void saveFile(std::shared_ptr<WholeField> field);
 };
 
-#endif // FILECONTROLLER_H
+#endif // FILEMANAGER_H

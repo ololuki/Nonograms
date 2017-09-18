@@ -39,7 +39,7 @@ FieldController::FieldController(DrawingAreaView *drawingAreaView, ColumnsDescri
 	
 	columnsDescriptionController = std::make_shared<BlocksDescriptionController>(field->columnsDescription(), columnsDescriptionView, rowsDescriptionView);
 	
-	fileController = std::make_shared<FileController>(field);
+	fileManager = std::make_shared<FileManager>(field);
 }
 
 void FieldController::addDummyBlock()
@@ -78,8 +78,8 @@ void FieldController::replaceField(std::shared_ptr<WholeField> newField)
 
 void FieldController::onNew()
 {
-	if (!fileController->abandonChangesOrSavePrompt(field)) return;
-	//fileController->tryToSaveChanges(&isSavedOrAbandoned, &statusLog);
+	if (!fileManager->abandonChangesOrSavePrompt(field)) return;
+	//fileManager->tryToSaveChanges(&isSavedOrAbandoned, &statusLog);
 	//if (!isSavedOrAbandoned) return;
 	
 	SizeDialog *d = new SizeDialog();
@@ -90,18 +90,18 @@ void FieldController::onNew()
 	if (isConfirmed)
 	{
 		recreateField(width, height);
-		fileController->setNewCreatedField(field);
+		fileManager->setNewCreatedField(field);
 	}
 }
 
 void FieldController::onOpen()
 {
-	if (!fileController->abandonChangesOrSavePrompt(field)) return;
-	fileController->tryOpenAnotherFile();
-	replaceField(fileController->getField());
+	if (!fileManager->abandonChangesOrSavePrompt(field)) return;
+	fileManager->tryOpenAnotherFile();
+	replaceField(fileManager->getField());
 }
 
 void FieldController::onSaveAs()
 {
-	fileController->trySaveAs(field);
+	fileManager->trySaveAs(field);
 }

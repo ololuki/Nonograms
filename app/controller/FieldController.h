@@ -27,7 +27,7 @@
 #include "widgets/RowsDescriptionView.h"
 #include "controller/DrawingAreaController.h"
 #include "controller/BlocksDescriptionController.h"
-#include "controller/FileController.h"
+#include "file/FileManager.h"
 
 
 class FieldController : public QObject
@@ -52,7 +52,7 @@ private:
 	
 	std::shared_ptr<DrawingAreaController> drawingAreaController;
 	std::shared_ptr<BlocksDescriptionController> columnsDescriptionController;
-	std::shared_ptr<FileController> fileController;
+	std::shared_ptr<FileManager> fileManager;
 };
 
 #endif // FIELDCONTROLLER_H

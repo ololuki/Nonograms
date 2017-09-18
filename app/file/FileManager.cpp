@@ -1,4 +1,4 @@
-#include "FileController.h"
+#include "FileManager.h"
 
 #include <QMessageBox>
 #include <QDebug>
@@ -8,18 +8,18 @@
 #include "file/NonogramFileReader.h"
 
 
-FileController::FileController(std::shared_ptr<WholeField> field)
+FileManager::FileManager(std::shared_ptr<WholeField> field)
 {
 	this->fieldInFile = std::make_shared<WholeField>(*field);
 }
 
-bool FileController::isFieldDirty(std::shared_ptr<WholeField> field)
+bool FileManager::isFieldDirty(std::shared_ptr<WholeField> field)
 {
 	//return (*fieldInFile != *field);
 	return true;	//TODO
 }
 
-void FileController::trySaveChanges(std::shared_ptr<WholeField> field)
+void FileManager::trySaveChanges(std::shared_ptr<WholeField> field)
 {
 	if(isFileNameSet)
 	{
@@ -29,7 +29,7 @@ void FileController::trySaveChanges(std::shared_ptr<WholeField> field)
 	}
 }
 
-void FileController::trySaveAs(std::shared_ptr<WholeField> field)
+void FileManager::trySaveAs(std::shared_ptr<WholeField> field)
 {
 	// string filePath = FileView.FilePathDialog();
 	//setCurrentFileName(fileName);
@@ -46,7 +46,7 @@ void FileController::trySaveAs(std::shared_ptr<WholeField> field)
 	saveFile(field);
 }
 
-void FileController::tryOpenAnotherFile()
+void FileManager::tryOpenAnotherFile()
 {
 	QString fileName =
 		QFileDialog::getOpenFileName(nullptr,
@@ -62,30 +62,30 @@ void FileController::tryOpenAnotherFile()
 	delete reader;
 }
 
-void FileController::setNewCreatedField(std::shared_ptr<WholeField> field)
+void FileManager::setNewCreatedField(std::shared_ptr<WholeField> field)
 {
 	this->fieldInFile = std::make_shared<WholeField>(*field);
 	dropCurrentFileName();
 }
 
-std::shared_ptr<WholeField> FileController::getField()
+std::shared_ptr<WholeField> FileManager::getField()
 {
 	return std::make_shared<WholeField>(*fieldInFile);
 }
 
-void FileController::setCurrentFileName(const QString &pathAndName)
+void FileManager::setCurrentFileName(const QString &pathAndName)
 {
 	currentFileName = pathAndName;
 	isFileNameSet = true;
 }
 
-void FileController::dropCurrentFileName()
+void FileManager::dropCurrentFileName()
 {
 	currentFileName = "";
 	isFileNameSet = false;
 }
 
-void FileController::saveFile(std::shared_ptr<WholeField> field)
+void FileManager::saveFile(std::shared_ptr<WholeField> field)
 {
 	FileWriter *writer = new NonogramFileWriter();
 	writer->setField(field);
@@ -102,7 +102,7 @@ void FileController::saveFile(std::shared_ptr<WholeField> field)
 	delete writer;
 }
 
-bool FileController::abandonChangesOrSavePrompt(std::shared_ptr<WholeField> field)
+bool FileManager::abandonChangesOrSavePrompt(std::shared_ptr<WholeField> field)
 {
 	auto answer = QMessageBox::question(nullptr,
 		"Unsaved changes",

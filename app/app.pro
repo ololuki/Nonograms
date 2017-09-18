@@ -31,11 +31,11 @@ SOURCES += main.cpp\
     field/LineDescription.cpp \
     field/AllLinesDescription.cpp \
     SizeDialog.cpp \
+    file/FileManager.cpp \
     file/NonogramFileWriter.cpp \
     file/NonogramFileReader.cpp \
     controller/FieldController.cpp \
     controller/DrawingAreaController.cpp \
-    controller/FileController.cpp \
     controller/BlocksDescriptionController.cpp \
     widgets/common/DrawableView.cpp
 
@@ -57,13 +57,13 @@ HEADERS  += mainwindow.h \
     field/AllLinesDescription.h \
     field/FieldMode.h \
     SizeDialog.h \
+    file/FileManager.h \
     file/FileWriter.h \
     file/NonogramFileWriter.h \
     file/FileReader.h \
     file/NonogramFileReader.h \
     controller/FieldController.h \
     controller/DrawingAreaController.h \
-    controller/FileController.h \
     controller/BlocksDescriptionController.h \
     widgets/common/FieldViewConstants.h \
     widgets/common/DrawableView.h
