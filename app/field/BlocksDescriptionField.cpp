@@ -24,6 +24,7 @@
 BlocksDescriptionField::BlocksDescriptionField(size_t numberOfLines, AddressOnBlocksDescription::orientation o)
 {
 	this->numberOfLines = numberOfLines;
+	this->orientation = o;
 	allLinesDescription = AllLinesDescription(o, numberOfLines);
 }
 
@@ -79,6 +80,11 @@ size_t BlocksDescriptionField::allBlocksDescriptionLength()
 		length = std::max(length, numberOfBlocksInLine(i));
 	}
 	return length;
+}
+
+AddressOnBlocksDescription::orientation BlocksDescriptionField::getOrientation()
+{
+	return orientation;
 }
 
 bool BlocksDescriptionField::isDefinedDescriptionAt(AddressOnBlocksDescription address)

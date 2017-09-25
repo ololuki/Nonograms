@@ -23,7 +23,7 @@
 #include <QDebug>
 
 
-FieldController::FieldController(DrawingAreaView *drawingAreaView, ColumnsDescriptionView *columnsDescriptionView, RowsDescriptionView *rowsDescriptionView)
+FieldController::FieldController(DrawingAreaView *drawingAreaView, HintsView *columnsDescriptionView, HintsView *rowsDescriptionView)
 {
 	// create initial field
 	field.reset(new WholeField(14, 10));
@@ -37,7 +37,8 @@ FieldController::FieldController(DrawingAreaView *drawingAreaView, ColumnsDescri
 	this->rowsDescriptionView = rowsDescriptionView;
 	rowsDescriptionView->setField(field->rowsDescription());
 	
-	columnsDescriptionController = std::make_shared<BlocksDescriptionController>(field->columnsDescription(), columnsDescriptionView, rowsDescriptionView);
+	columnsHintsController = std::make_shared<BlocksDescriptionController>(field->columnsDescription(), columnsDescriptionView);
+	rowsHintsController = std::make_shared<BlocksDescriptionController>(field->rowsDescription(), rowsDescriptionView);
 	
 	fileManager = std::make_shared<FileManager>(field);
 }

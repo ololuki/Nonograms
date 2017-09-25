@@ -18,42 +18,58 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef ROWSDESCRIPTIONVIEW_H
-#define ROWSDESCRIPTIONVIEW_H
+#ifndef HINTSVIEW_H
+#define HINTSVIEW_H
 
 #include <memory>
 #include <QTextEdit>
 #include <QPushButton>
-#include "field/BlocksDescriptionField.h"
-#include "field/BlockDescription.h"
-#include "common/FieldViewConstants.h"
 #include "common/DrawableView.h"
+#include "common/FieldViewConstants.h"
+#include "field/BlocksDescriptionField.h"
 
 
-class RowsDescriptionView : public DrawableView
+class HintsView : public DrawableView
 {
 	Q_OBJECT
 public:
-	explicit RowsDescriptionView(QWidget *parent = 0);
+	explicit HintsView(QWidget *parent = 0);
 	void setField(std::shared_ptr<BlocksDescriptionField> field);
 	
+signals:
+	// signals emited to controller
+	// when cursor starts being on the potential inserting button area
+	void insertingButtonHover(AddressOnBlocksDescription address);
+	// when editing description ends
+	//void descriptionEditingFinished(BlockDescription blockDescription);
+	// when inserting button is clicked
+	void insertingButtonBeforeAddressClicked(AddressOnBlocksDescription address);
+	// when block description is clicked in order to editing
+	void blockDescriptionClicked(AddressOnBlocksDescription address); // Qt::MouseButton MouseButton
+	
 public slots:
+	// invoked by model to inform about changes
 	void onDataChanged();
+	// invoked by model to inform about changes
+	void onLineDescriptionChanged(AddressOnBlocksDescription address);
+	// invoked by controller
+	void showInsertingButtonBefore(AddressOnBlocksDescription address);
+	// invoked by controller
+	void showDescriptionEditingBox(AddressOnBlocksDescription address);
 	
 private slots:
 	void onInsertingButtonClick();
 	
 protected:
-	void mousePressEvent(QMouseEvent *event) override;
-	void mouseMoveEvent(QMouseEvent *event) override;
-	
-private:
 	FieldViewConstants constants;
 	QTextEdit *qTextEdit;
-	QPushButton *insertingButton;
-	const int insertingButtonWidth = constants.squareSize/2;
+	std::shared_ptr<QPushButton> insertingButton;
+	const int insertingButtonHeight = constants.squareSize/2;
 	
 	std::shared_ptr<BlocksDescriptionField> field;
+	
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
 	
 	bool isPointOnDefinedDescription(QPoint screenPoint);
 	void redrawAll();
@@ -66,6 +82,9 @@ private:
 	void initInsertingButton();
 	void hideInsertingButton();
 	void moveAndShowInsertingButton(AddressOnBlocksDescription address);
+	
+private:
+	AddressOnBlocksDescription::orientation orientation;
 };
 
-#endif // ROWSDESCRIPTIONVIEW_H
+#endif // HINTSVIEW_H

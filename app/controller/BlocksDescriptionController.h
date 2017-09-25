@@ -25,16 +25,14 @@
 #include "field/AddressOnBlocksDescription.h"
 #include "field/BlockDescription.h"
 #include <memory>
-#include "widgets/ColumnsDescriptionView.h"
-#include "widgets/RowsDescriptionView.h"
+#include "widgets/HintsView.h"
 
 
 class BlocksDescriptionController : public QObject
 {
 	Q_OBJECT
 public:
-	// TODO: should get abstract BlocksDescriptionView pointer (only one, not both)
-	BlocksDescriptionController(std::shared_ptr<BlocksDescriptionField> field, ColumnsDescriptionView *columnsDescriptionView, RowsDescriptionView *rowsDescriptionView);
+	BlocksDescriptionController(std::shared_ptr<BlocksDescriptionField> field, HintsView *hintsView);
 	~BlocksDescriptionController();
 	
 signals:

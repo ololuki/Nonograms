@@ -23,8 +23,7 @@
 
 #include "field/WholeField.h"
 #include "widgets/DrawingAreaView.h"
-#include "widgets/ColumnsDescriptionView.h"
-#include "widgets/RowsDescriptionView.h"
+#include "widgets/HintsView.h"
 #include "controller/DrawingAreaController.h"
 #include "controller/BlocksDescriptionController.h"
 #include "file/FileManager.h"
@@ -34,7 +33,7 @@ class FieldController : public QObject
 {
 	Q_OBJECT
 public:
-	FieldController(DrawingAreaView *drawingAreaView, ColumnsDescriptionView *columnsDescriptionView, RowsDescriptionView *rowsDescriptionView);
+	FieldController(DrawingAreaView *drawingAreaView, HintsView *columnsDescriptionView, HintsView *rowsDescriptionView);
 	void addDummyBlock();
 	
 	void onNew();
@@ -47,11 +46,12 @@ private:
 	std::shared_ptr<WholeField> field;
 	
 	DrawingAreaView *drawingAreaView;
-	ColumnsDescriptionView *columnsDescriptionView;
-	RowsDescriptionView *rowsDescriptionView;
+	HintsView *columnsDescriptionView;
+	HintsView *rowsDescriptionView;
 	
 	std::shared_ptr<DrawingAreaController> drawingAreaController;
-	std::shared_ptr<BlocksDescriptionController> columnsDescriptionController;
+	std::shared_ptr<BlocksDescriptionController> columnsHintsController;
+	std::shared_ptr<BlocksDescriptionController> rowsHintsController;
 	std::shared_ptr<FileManager> fileManager;
 };
 

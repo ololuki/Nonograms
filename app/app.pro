@@ -17,8 +17,6 @@ DEFINES += QT_DEPRECATED_WARNINGS #emit warning if any deprecated feature is use
 SOURCES += main.cpp\
         mainwindow.cpp \
     widgets/DrawingAreaView.cpp \
-    widgets/ColumnsDescriptionView.cpp \
-    widgets/RowsDescriptionView.cpp \
     field/AddressOnDrawingArea.cpp \
     field/Pixel.cpp \
     field/DrawingAreaField.cpp \
@@ -37,12 +35,11 @@ SOURCES += main.cpp\
     controller/FieldController.cpp \
     controller/DrawingAreaController.cpp \
     controller/BlocksDescriptionController.cpp \
-    widgets/common/DrawableView.cpp
+    widgets/common/DrawableView.cpp \
+    widgets/HintsView.cpp
 
 HEADERS  += mainwindow.h \
     widgets/DrawingAreaView.h \
-    widgets/ColumnsDescriptionView.h \
-    widgets/RowsDescriptionView.h \
     field/AddressOnDrawingArea.h \
     field/pixelSign.h \
     field/Pixel.h \
@@ -66,7 +63,8 @@ HEADERS  += mainwindow.h \
     controller/DrawingAreaController.h \
     controller/BlocksDescriptionController.h \
     widgets/common/FieldViewConstants.h \
-    widgets/common/DrawableView.h
+    widgets/common/DrawableView.h \
+    widgets/HintsView.h
 
 FORMS    += mainwindow.ui \
     sizedialog.ui

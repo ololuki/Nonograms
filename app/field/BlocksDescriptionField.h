@@ -49,6 +49,7 @@ public:
 	virtual size_t numberOfBlocksInLine(size_t lineNumber);
 	virtual size_t getNumberOfLines() const;
 	virtual size_t allBlocksDescriptionLength();
+	virtual AddressOnBlocksDescription::orientation getOrientation();
 	
 	virtual bool isDefinedDescriptionAt(AddressOnBlocksDescription address);
 signals:
@@ -57,6 +58,7 @@ protected:
 	AllLinesDescription allLinesDescription;
 private:
 	size_t numberOfLines;
+	AddressOnBlocksDescription::orientation orientation;
 };
 
 #endif // BLOCKSDESCRIPTIONFIELD_H

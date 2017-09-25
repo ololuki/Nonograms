@@ -27,7 +27,7 @@
 class FieldViewConstants
 {
 public:
-	const size_t squareSize = 30;
+	const int squareSize = 30;
 	int myPenWidth = 1;
 	QColor myPenColor = Qt::black;
 };

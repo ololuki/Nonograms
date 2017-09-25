@@ -37,10 +37,10 @@
             <widget class="DrawingAreaView" name="drawingArea" native="true"/>
            </item>
            <item row="0" column="1" alignment="Qt::AlignBottom">
-            <widget class="ColumnsDescriptionView" name="columnsDescription" native="true"/>
+            <widget class="HintsView" name="columnsDescription" native="true"/>
            </item>
            <item row="1" column="0" alignment="Qt::AlignRight">
-            <widget class="RowsDescriptionView" name="rowsDescription" native="true"/>
+            <widget class="HintsView" name="rowsDescription" native="true"/>
            </item>
           </layout>
          </widget>
@@ -179,15 +179,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ColumnsDescriptionView</class>
+   <class>HintsView</class>
    <extends>QWidget</extends>
-   <header>widgets/ColumnsDescriptionView.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>RowsDescriptionView</class>
-   <extends>QWidget</extends>
-   <header>widgets/RowsDescriptionView.h</header>
+   <header>widgets/HintsView.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

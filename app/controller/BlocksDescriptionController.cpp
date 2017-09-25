@@ -21,20 +21,18 @@
 #include "BlocksDescriptionController.h"
 
 
-BlocksDescriptionController::BlocksDescriptionController(std::shared_ptr<BlocksDescriptionField> field, ColumnsDescriptionView *columnsDescriptionView, RowsDescriptionView *rowsDescriptionView)
+BlocksDescriptionController::BlocksDescriptionController(std::shared_ptr<BlocksDescriptionField> field, HintsView *hintsView)
 {
-	connect(columnsDescriptionView, &ColumnsDescriptionView::insertingButtonHover, this, &BlocksDescriptionController::onInsertingButtonHover);
-	//connect(rowsDescriptionView, &RowsDescriptionView::insertingButtonHover, this, &BlocksDescriptionController::onInsertingButtonHover);
-	//connect(columnsDescriptionView, &ColumnsDescriptionView::descriptionEditingFinished, this, &BlocksDescriptionController::onDescriptionEditingFinished);
+	connect(hintsView, &HintsView::insertingButtonHover, this, &BlocksDescriptionController::onInsertingButtonHover);
+	//connect(hintsView, &HintsView::descriptionEditingFinished, this, &BlocksDescriptionController::onDescriptionEditingFinished);
 	
-	connect(columnsDescriptionView, &ColumnsDescriptionView::insertingButtonBeforeAddressClicked, this, &BlocksDescriptionController::onInsertingButtonBeforeAddressClicked);
+	connect(hintsView, &HintsView::insertingButtonBeforeAddressClicked, this, &BlocksDescriptionController::onInsertingButtonBeforeAddressClicked);
 	
-	connect(columnsDescriptionView, &ColumnsDescriptionView::blockDescriptionClicked, this, &BlocksDescriptionController::onBlockDescriptionClicked);
+	connect(hintsView, &HintsView::blockDescriptionClicked, this, &BlocksDescriptionController::onBlockDescriptionClicked);
 	
-	connect(this, &BlocksDescriptionController::showInsertingButtonBefore, columnsDescriptionView, &ColumnsDescriptionView::showInsertingButtonBefore);
+	connect(this, &BlocksDescriptionController::showInsertingButtonBefore, hintsView, &HintsView::showInsertingButtonBefore);
 	
-	connect(this, &BlocksDescriptionController::showDescriptionEditingBox, columnsDescriptionView, &ColumnsDescriptionView::showDescriptionEditingBox);
-	
+	connect(this, &BlocksDescriptionController::showDescriptionEditingBox, hintsView, &HintsView::showDescriptionEditingBox);
 }
 
 BlocksDescriptionController::~BlocksDescriptionController()
