@@ -25,7 +25,14 @@ BlocksDescriptionField::BlocksDescriptionField(size_t numberOfLines, AddressOnBl
 {
 	this->numberOfLines = numberOfLines;
 	this->orientation = o;
-	allLinesDescription = AllLinesDescription(o, numberOfLines);
+	const size_t defaultBlockSize = 0;
+	for(size_t i = 0; i < numberOfLines; i++)
+	{
+		AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, i, 0);
+		std::vector<BlockDescription> line;
+		line.push_back(BlockDescription(address, defaultBlockSize));
+		linesOfHints.push_back(line);
+	}
 }
 
 BlocksDescriptionField::~BlocksDescriptionField()
@@ -35,36 +42,67 @@ BlocksDescriptionField::~BlocksDescriptionField()
 
 BlockDescription BlocksDescriptionField::getBlockDescription(AddressOnBlocksDescription address)
 {
-	return allLinesDescription(address.getLine(), address.getCount());
+	return linesOfHints[address.getLine()][address.getCount()];
 }
 
 void BlocksDescriptionField::updateBlockDescription(BlockDescription blockDescription)
 {
-	allLinesDescription.updateDescription(blockDescription);
+	AddressOnBlocksDescription address = blockDescription.getAddress();
+	if (address.getCount() >= linesOfHints[address.getLine()].size()) return;
+	linesOfHints[address.getLine()][address.getCount()] = blockDescription;
 	emit blocksDescriptionChanged();
 }
 
 void BlocksDescriptionField::insertDescriptionBefore(BlockDescription blockDescription)
 {
-	allLinesDescription.insertDescriptionBefore(blockDescription);
+	size_t line = blockDescription.getAddress().getLine();
+	size_t count = blockDescription.getAddress().getCount();
+	size_t length = linesOfHints[line].size();
+	AddressOnBlocksDescription::orientation orientation = blockDescription.getAddress().getOrientation();
+	if (count >= length) return;
+	
+	AddressOnBlocksDescription addressOfNewLast = AddressOnBlocksDescription(orientation, line, length);
+	
+	BlockDescription newLastBlock = linesOfHints[line][length - 1];
+	newLastBlock.updateAddress(addressOfNewLast);
+	linesOfHints[line].push_back(newLastBlock);
+	
+	for (size_t i = length; i-- > count + 1;)
+	{
+		linesOfHints[line][i].setBlockSize( linesOfHints[line][i-1].getBlockSize());
+	}
+	linesOfHints[line][count] = blockDescription;
 	emit blocksDescriptionChanged();
 }
 
 void BlocksDescriptionField::addDescriptionAtEnd(BlockDescription blockDescription)
 {
-	allLinesDescription.addDescriptionAtEnd(blockDescription);
+	size_t line = blockDescription.getAddress().getLine();
+	size_t count = blockDescription.getAddress().getCount();
+	if (linesOfHints[line].size() == count)
+	{
+		linesOfHints[line].push_back(blockDescription);
+	}
 	emit blocksDescriptionChanged();
 }
 
 void BlocksDescriptionField::deleteDescription(BlockDescription blockDescription)
 {
-	allLinesDescription.deleteDescription(blockDescription);
+	size_t line = blockDescription.getAddress().getLine();
+	size_t count = blockDescription.getAddress().getCount();
+	if (linesOfHints[line].size() <= 1) return;
+	size_t newLength = linesOfHints[line].size() - 1;
+	for(size_t i = count; i < newLength; i++)
+	{
+		linesOfHints[line][i].setBlockSize( linesOfHints[line][i+1].getBlockSize());
+	}
+	linesOfHints[line].pop_back();
 	emit blocksDescriptionChanged();
 }
 
 size_t BlocksDescriptionField::numberOfBlocksInLine(size_t lineNumber)
 {
-	return allLinesDescription.numberOfBlocksInLine(lineNumber);
+	return linesOfHints[lineNumber].size();
 }
 
 size_t BlocksDescriptionField::getNumberOfLines() const
@@ -89,5 +127,8 @@ AddressOnBlocksDescription::orientation BlocksDescriptionField::getOrientation()
 
 bool BlocksDescriptionField::isDefinedDescriptionAt(AddressOnBlocksDescription address)
 {
-	return allLinesDescription.isDefinedDescriptionAt(address.getLine(), address.getCount());
+	size_t line = address.getLine();
+	if (line >= linesOfHints.size()) return false;
+	if (address.getCount() >= linesOfHints[line].size()) return false;
+	return true;
 }

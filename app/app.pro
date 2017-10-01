@@ -27,7 +27,6 @@ SOURCES += main.cpp\
     field/AddressOnBlocksDescription.cpp \
     field/BlockDescription.cpp \
     field/LineDescription.cpp \
-    field/AllLinesDescription.cpp \
     SizeDialog.cpp \
     file/FileManager.cpp \
     file/NonogramFileWriter.cpp \
@@ -51,7 +50,6 @@ HEADERS  += mainwindow.h \
     field/AddressOnBlocksDescription.h \
     field/BlockDescription.h \
     field/LineDescription.h \
-    field/AllLinesDescription.h \
     field/FieldMode.h \
     SizeDialog.h \
     file/FileManager.h \

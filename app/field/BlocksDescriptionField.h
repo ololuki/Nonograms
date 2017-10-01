@@ -24,7 +24,6 @@
 #include <QObject>
 #include "AddressOnBlocksDescription.h"
 #include "BlockDescription.h"
-#include "AllLinesDescription.h"
 
 
 ///
@@ -54,11 +53,10 @@ public:
 	virtual bool isDefinedDescriptionAt(AddressOnBlocksDescription address);
 signals:
 	void blocksDescriptionChanged();
-protected:
-	AllLinesDescription allLinesDescription;
 private:
 	size_t numberOfLines;
 	AddressOnBlocksDescription::orientation orientation;
+	std::vector<std::vector<BlockDescription>> linesOfHints;
 };
 
 #endif // BLOCKSDESCRIPTIONFIELD_H
