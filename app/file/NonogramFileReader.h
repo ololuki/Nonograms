@@ -43,14 +43,14 @@ public:
 private:
 	std::shared_ptr<WholeField> field;
 	
-	void parseSize(size_t &width, size_t &height, QJsonObject jsonSize);
+	void parseSize(int &width, int &height, QJsonObject jsonSize);
 	void parseDrawingArea(QJsonArray drawingArea);
 	Pixel parsePixel(QJsonObject jsonPixel);
 	
 	void parseColumnsDescription(QJsonArray columnsDescription);
 	void parseRowsDescription(QJsonArray rowsDescription);
-	void parseLineDescription(QJsonObject jsonLineDescription, size_t lineNumber, AddressOnBlocksDescription::orientation orientation);
-	void parseArrayOfBlockDescription(QJsonArray jsonArray, size_t lineNumber, size_t lineLength, AddressOnBlocksDescription::orientation orientation);
+	void parseLineDescription(QJsonObject jsonLineDescription, int lineNumber, AddressOnBlocksDescription::orientation orientation);
+	void parseArrayOfBlockDescription(QJsonArray jsonArray, int lineNumber, int lineLength, AddressOnBlocksDescription::orientation orientation);
 	void parseBlockDescription(QJsonObject jsonBlockDescription, AddressOnBlocksDescription address);
 };
 

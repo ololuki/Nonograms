@@ -14,8 +14,8 @@ class SizeDialog : public QDialog
 public:
 	explicit SizeDialog(QWidget *parent = 0);
 	~SizeDialog();
-	size_t getWidth();
-	size_t getHeight();
+	int getWidth();
+	int getHeight();
 	
 private:
 	Ui::SizeDialog *ui;

@@ -18,38 +18,32 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef WHOLEFIELD_H
-#define WHOLEFIELD_H
+#ifndef LINEOFHINTS_H
+#define LINEOFHINTS_H
 
-#include <memory>
-#include "DrawingAreaField.h"
-#include "BlocksDescriptionField.h"
-
+#include <vector>
+#include "utils/NVector.h"
+#include "field/BlockDescription.h"
 
 ///
-/// \brief WholeField class contains whole data about Field.
-/// It has models of field parts: drawing area, columns description
-/// and rows descriptions.
+/// \brief LineOfHints contains Hints (blocks descriptions) for one line of picture
 ///
-class WholeField
+class LineOfHints
 {
 public:
-	WholeField(int width, int height);
-	WholeField(const WholeField &field);
-	virtual ~WholeField();
-	int getWidth() const;
-	int getHeight() const;
-	std::shared_ptr<DrawingAreaField> drawingArea();
-	std::shared_ptr<BlocksDescriptionField> columnsDescription();
-	std::shared_ptr<BlocksDescriptionField> rowsDescription();
-	void clearDrawingArea();
-	void clearBlocksDescription();
+	LineOfHints(std::vector<BlockDescription> vectorToCopy);
+	int size();
+	
+	void updateBlockDescription(BlockDescription blockDescription);
+	void insertDescriptionBefore(BlockDescription blockDescription);
+	void addDescriptionAtEnd(BlockDescription blockDescription);
+	void deleteDescription(BlockDescription blockDescription);
+	
+	BlockDescription& operator[](const int count);
+	void push_back(BlockDescription hint);
+	void pop_back();
 private:
-	int width;
-	int height;
-	std::shared_ptr<DrawingAreaField> drawingAreaField;
-	std::shared_ptr<BlocksDescriptionField> columnsDescriptionField;
-	std::shared_ptr<BlocksDescriptionField> rowsDescriptionField;
+	NVector<BlockDescription> hints;
 };
 
-#endif // WHOLEFIELD_H
+#endif // LINEOFHINTS_H

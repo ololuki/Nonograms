@@ -22,7 +22,7 @@
 #include <QDebug>
 
 
-WholeField::WholeField(size_t width, size_t height)
+WholeField::WholeField(int width, int height)
 	: width(width),
 	  height(height)
 {
@@ -47,12 +47,12 @@ WholeField::~WholeField()
 	qDebug() << "WholeField d-tor";
 }
 
-size_t WholeField::getWidth() const
+int WholeField::getWidth() const
 {
 	return width;
 }
 
-size_t WholeField::getHeight() const
+int WholeField::getHeight() const
 {
 	return height;
 }
@@ -74,9 +74,9 @@ std::shared_ptr<BlocksDescriptionField> WholeField::rowsDescription()
 
 void WholeField::clearDrawingArea()
 {
-	for (size_t i = 0; i < getWidth(); i++)
+	for (int i = 0; i < getWidth(); i++)
 	{
-		for (size_t j = 0; j < getHeight(); j++)
+		for (int j = 0; j < getHeight(); j++)
 		{
 			drawingArea()->setPixel(Pixel(AddressOnDrawingArea(i, j)));
 		}

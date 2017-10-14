@@ -24,6 +24,8 @@
 #include <QObject>
 #include "AddressOnBlocksDescription.h"
 #include "BlockDescription.h"
+#include "LineOfHints.h"
+#include "utils/NVector.h"
 
 
 ///
@@ -37,7 +39,7 @@ class BlocksDescriptionField : public QObject
 {
 	Q_OBJECT
 public:
-	BlocksDescriptionField(size_t numberOfLines, AddressOnBlocksDescription::orientation o);
+	BlocksDescriptionField(int numberOfLines, AddressOnBlocksDescription::orientation o);
 	virtual ~BlocksDescriptionField();
 	virtual BlockDescription getBlockDescription(AddressOnBlocksDescription address);
 	virtual void updateBlockDescription(BlockDescription blockDescription);
@@ -45,18 +47,18 @@ public:
 	virtual void addDescriptionAtEnd(BlockDescription blockDescription);
 	virtual void deleteDescription(BlockDescription blockDescription);
 	
-	virtual size_t numberOfBlocksInLine(size_t lineNumber);
-	virtual size_t getNumberOfLines() const;
-	virtual size_t allBlocksDescriptionLength();
+	virtual int numberOfBlocksInLine(int lineNumber);
+	virtual int getNumberOfLines() const;
+	virtual int allBlocksDescriptionLength();
 	virtual AddressOnBlocksDescription::orientation getOrientation();
 	
 	virtual bool isDefinedDescriptionAt(AddressOnBlocksDescription address);
 signals:
 	void blocksDescriptionChanged();
 private:
-	size_t numberOfLines;
+	int numberOfLines;
 	AddressOnBlocksDescription::orientation orientation;
-	std::vector<std::vector<BlockDescription>> linesOfHints;
+	NVector<LineOfHints> linesOfHints;
 };
 
 #endif // BLOCKSDESCRIPTIONFIELD_H

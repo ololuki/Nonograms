@@ -26,7 +26,7 @@
 #include <QJsonArray>
 
 #include "field/Pixel.h"
-#include "field/LineDescription.h"
+#include "field/LineOfHints.h"
 #include "field/BlockDescription.h"
 
 
@@ -51,8 +51,8 @@ private:
 	
 	QJsonArray serializeColumnsDescription();
 	QJsonArray serializeRowsDescription();
-	QJsonObject serializeLineDescription(size_t lineNumber, AddressOnBlocksDescription::orientation orientation);
-	QJsonArray serializeArrayOfBlockDescription(size_t lineNumber, size_t lineLength, AddressOnBlocksDescription::orientation orientation);
+	QJsonObject serializeLineDescription(int lineNumber, AddressOnBlocksDescription::orientation orientation);
+	QJsonArray serializeArrayOfBlockDescription(int lineNumber, int lineLength, AddressOnBlocksDescription::orientation orientation);
 	QJsonObject serializeBlockDescription(AddressOnBlocksDescription address);
 };
 

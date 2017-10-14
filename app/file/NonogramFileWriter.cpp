@@ -69,9 +69,9 @@ QJsonObject NonogramFileWriter::serializeSize()
 QJsonArray NonogramFileWriter::serializeDrawingArea()
 {
 	QJsonArray drawingArea;
-	for (size_t y = 0; y < field->getHeight(); y++)
+	for (int y = 0; y < field->getHeight(); y++)
 	{
-		for (size_t x = 0; x < field->getWidth(); x++)
+		for (int x = 0; x < field->getWidth(); x++)
 		{
 			AddressOnDrawingArea address(x, y);
 			Pixel pixel = field->drawingArea()->getPixel(address);
@@ -93,7 +93,7 @@ QJsonObject NonogramFileWriter::serializePixel(Pixel pixel)
 QJsonArray NonogramFileWriter::serializeColumnsDescription()
 {
 	QJsonArray columnsDescription;
-	for (size_t i = 0; i < field->getWidth(); i++)
+	for (int i = 0; i < field->getWidth(); i++)
 	{
 		columnsDescription.append(serializeLineDescription(i, AddressOnBlocksDescription::VERTICAL));
 	}
@@ -103,18 +103,18 @@ QJsonArray NonogramFileWriter::serializeColumnsDescription()
 QJsonArray NonogramFileWriter::serializeRowsDescription()
 {
 	QJsonArray rowsDescription;
-	for (size_t i = 0; i < field->getHeight(); i++)
+	for (int i = 0; i < field->getHeight(); i++)
 	{
 		rowsDescription.append(serializeLineDescription(i, AddressOnBlocksDescription::HORIZONTAL));
 	}
 	return rowsDescription;
 }
 
-QJsonObject NonogramFileWriter::serializeLineDescription(size_t lineNumber, AddressOnBlocksDescription::orientation orientation)
+QJsonObject NonogramFileWriter::serializeLineDescription(int lineNumber, AddressOnBlocksDescription::orientation orientation)
 {
 	QJsonObject lineDescription;
-	lineDescription["lineNumber"] = static_cast<int>(lineNumber);
-	size_t lineLength;
+	lineDescription["lineNumber"] = lineNumber;
+	int lineLength;
 	switch (orientation)
 	{
 	case AddressOnBlocksDescription::VERTICAL:
@@ -132,10 +132,10 @@ QJsonObject NonogramFileWriter::serializeLineDescription(size_t lineNumber, Addr
 	
 }
 
-QJsonArray NonogramFileWriter::serializeArrayOfBlockDescription(size_t lineNumber, size_t lineLength, AddressOnBlocksDescription::orientation orientation)
+QJsonArray NonogramFileWriter::serializeArrayOfBlockDescription(int lineNumber, int lineLength, AddressOnBlocksDescription::orientation orientation)
 {
 	QJsonArray arrayOfBlockDescription;
-	for (size_t i = 0; i < lineLength; i++)
+	for (int i = 0; i < lineLength; i++)
 	{
 		AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, lineNumber, i);
 		arrayOfBlockDescription.append(serializeBlockDescription(address));

@@ -15,15 +15,14 @@
 class ArrayOfPixels : private std::vector<std::vector<Pixel>>
 {
 public:
-	ArrayOfPixels() {}
-	ArrayOfPixels(size_t width, size_t height)
+	ArrayOfPixels(int width, int height)
 	{
-		for (size_t i = 0; i < width; i++)
+		for (int i = 0; i < width; i++)
 		{
 			this->push_back(std::vector<Pixel>());
-			for (size_t j = 0; j < height; j++)
+			for (int j = 0; j < height; j++)
 			{
-				this->at(i).push_back(Pixel(AddressOnDrawingArea(i, j)));
+				this->at(static_cast<size_t>(i)).push_back(Pixel(AddressOnDrawingArea(i, j)));
 			}
 		}
 	}

@@ -44,8 +44,8 @@ void DrawingAreaView::setField(const std::shared_ptr<const DrawingAreaField> &fi
 	this->field = field;
 	connect(static_cast<const DrawingAreaField*>(this->field.get()), &DrawingAreaField::pixelChanged, this, &DrawingAreaView::onPixelChanged);
 	
-	size_t sizeX = field->getWidth() * constants.squareSize + 1;
-	size_t sizeY = field->getHeight() * constants.squareSize + 1;
+	int sizeX = field->getWidth() * constants.squareSize + 1;
+	int sizeY = field->getHeight() * constants.squareSize + 1;
 	QSize size(sizeX, sizeY);
 	resize(size);
 	drawAllPixels();
@@ -53,9 +53,9 @@ void DrawingAreaView::setField(const std::shared_ptr<const DrawingAreaField> &fi
 
 void DrawingAreaView::drawAllPixels()
 {
-	for (size_t y = 0; y < field->getHeight(); y++)
+	for (int y = 0; y < field->getHeight(); y++)
 	{
-		for (size_t x = 0; x < field->getWidth(); x++)
+		for (int x = 0; x < field->getWidth(); x++)
 		{
 			AddressOnDrawingArea address(x, y);
 			drawOnePixel(field->getPixel(address));
@@ -75,8 +75,8 @@ void DrawingAreaView::mousePressEvent(QMouseEvent *event)
 {
 	QPoint currentPoint = event->pos();
 	
-	size_t pixelX = currentPoint.x() / constants.squareSize;
-	size_t pixelY = currentPoint.y() / constants.squareSize;
+	int pixelX = currentPoint.x() / constants.squareSize;
+	int pixelY = currentPoint.y() / constants.squareSize;
 	
 	if (pixelX >= field->getWidth()) return;
 	if (pixelY >= field->getHeight()) return;

@@ -18,38 +18,38 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef WHOLEFIELD_H
-#define WHOLEFIELD_H
+#ifndef NVECTOR_H
+#define NVECTOR_H
 
-#include <memory>
-#include "DrawingAreaField.h"
-#include "BlocksDescriptionField.h"
+#include <vector>
 
 
-///
-/// \brief WholeField class contains whole data about Field.
-/// It has models of field parts: drawing area, columns description
-/// and rows descriptions.
-///
-class WholeField
+///////////////////////////////////////////////////////////////////////
+/// std::vector uses size_t which leads to warnings in comparision with
+/// int used by Qt. QVector uses int, but types inside vector needs to
+/// has defined default constructors, so I write my own vector wrapper
+/// which takes indexes as int and do not need default constructors
+/// of kept classes
+///////////////////////////////////////////////////////////////////////
+template <class T>
+class NVector
 {
 public:
-	WholeField(int width, int height);
-	WholeField(const WholeField &field);
-	virtual ~WholeField();
-	int getWidth() const;
-	int getHeight() const;
-	std::shared_ptr<DrawingAreaField> drawingArea();
-	std::shared_ptr<BlocksDescriptionField> columnsDescription();
-	std::shared_ptr<BlocksDescriptionField> rowsDescription();
-	void clearDrawingArea();
-	void clearBlocksDescription();
+	
+	void operator=(const std::vector<T>& right) {
+		vect = right;
+	}
+	
+	int size() {return static_cast<int>(vect.size());}
+	
+	T& operator[](const int index){return vect.operator [](index);}
+	
+	void push_back(T object){vect.push_back(object);}
+	
+	void pop_back(){vect.pop_back();}
+
 private:
-	int width;
-	int height;
-	std::shared_ptr<DrawingAreaField> drawingAreaField;
-	std::shared_ptr<BlocksDescriptionField> columnsDescriptionField;
-	std::shared_ptr<BlocksDescriptionField> rowsDescriptionField;
+	std::vector<T> vect;
 };
 
-#endif // WHOLEFIELD_H
+#endif // NVECTOR_H

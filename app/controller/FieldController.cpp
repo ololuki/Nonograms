@@ -54,7 +54,7 @@ void FieldController::addDummyBlock()
 	field->rowsDescription()->updateBlockDescription(BlockDescription(AddressOnBlocksDescription(AddressOnBlocksDescription::HORIZONTAL, 7, 0), 1));
 }
 
-void FieldController::recreateField(size_t width, size_t height)
+void FieldController::recreateField(int width, int height)
 {
 	field.reset(new WholeField(width, height));
 	drawingAreaController->replaceField(field->drawingArea());
@@ -85,8 +85,8 @@ void FieldController::onNew()
 	
 	SizeDialog *d = new SizeDialog();
 	bool isConfirmed = d->exec();
-	size_t width = d->getWidth();
-	size_t height = d->getHeight();
+	int width = d->getWidth();
+	int height = d->getHeight();
 	delete d;
 	if (isConfirmed)
 	{

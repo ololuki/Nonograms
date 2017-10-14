@@ -17,12 +17,12 @@ SizeDialog::~SizeDialog()
 	delete ui;
 }
 
-size_t SizeDialog::getWidth()
+int SizeDialog::getWidth()
 {
-	return static_cast<size_t>(ui->widthSpinBox->value());
+	return ui->widthSpinBox->value();
 }
 
-size_t SizeDialog::getHeight()
+int SizeDialog::getHeight()
 {
-	return static_cast<size_t>(ui->heightSpinBox->value());
+	return ui->heightSpinBox->value();
 }

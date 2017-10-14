@@ -15,7 +15,7 @@ SOURCES += TestMain.cpp \
 
 
 #Headers of Application classes (classes under tests)
-HEADERS += ../app/field/BlocksDescriptionField.h
+HEADERS += ../app/field/BlocksDescriptionField.h \
 
 
 #Sources of Application classes (classes under tests)
@@ -23,8 +23,10 @@ SOURCES += ../app/field/AddressOnDrawingArea.cpp \
     ../app/field/AddressOnBlocksDescription.cpp \
     ../app/field/BlockDescription.cpp \
     ../app/field/BlocksDescriptionField.cpp \
+    ../app/field/LineOfHints.cpp \
     ../app/field/ArrayOfPixels.cpp \
-    ../app/field/Pixel.cpp
+    ../app/field/LineOfPixels.cpp \
+    ../app/field/Pixel.cpp \
 
 
 INCLUDEPATH += \

@@ -88,7 +88,7 @@ void HintsView::onDataChanged()
 /// \brief	invoke when one block description is changed
 /// \param	address lying on edited (changed) line of blocks descriptions
 ///
-void HintsView::onLineDescriptionChanged(AddressOnBlocksDescription address)
+void HintsView::onLineOfHintsChanged(AddressOnBlocksDescription address)
 {
 	
 }
@@ -111,15 +111,15 @@ void HintsView::showDescriptionEditingBox(AddressOnBlocksDescription address)
 
 void HintsView::onInsertingButtonClick()
 {
-	size_t line;
-	size_t count;
+	int line;
+	int count;
 	if (orientation == AddressOnBlocksDescription::VERTICAL)
 	{
-		line = static_cast<size_t>(insertingButton->pos().x() / constants.squareSize);
-		count = static_cast<size_t>((insertingButton->pos().y() + constants.squareSize) / constants.squareSize);
+		line = insertingButton->pos().x() / constants.squareSize;
+		count = (insertingButton->pos().y() + constants.squareSize) / constants.squareSize;
 	} else {
-		line = static_cast<size_t>(insertingButton->pos().y() / constants.squareSize);
-		count = static_cast<size_t>((insertingButton->pos().x() + constants.squareSize) / constants.squareSize);
+		line = insertingButton->pos().y() / constants.squareSize;
+		count = (insertingButton->pos().x() + constants.squareSize) / constants.squareSize;
 	}
 	AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, line, count);
 	//TODO emit onInsertingButtonClick(Qt::MouseButton, address);
@@ -171,15 +171,15 @@ void HintsView::mouseMoveEvent(QMouseEvent *event)
 {
 	QPoint screenPoint = event->pos();
 	int halfSquareSize = constants.squareSize/2;
-	size_t hintLine;
-	size_t hintCount;
+	int hintLine;
+	int hintCount;
 	if(orientation == AddressOnBlocksDescription::VERTICAL)
 	{
-		hintLine = static_cast<size_t>(screenPoint.x() / constants.squareSize);
-		hintCount = static_cast<size_t>((screenPoint.y() + halfSquareSize) / constants.squareSize);
+		hintLine = screenPoint.x() / constants.squareSize;
+		hintCount = (screenPoint.y() + halfSquareSize) / constants.squareSize;
 	} else {
-		hintLine = static_cast<size_t>(screenPoint.y() / constants.squareSize);
-		hintCount = static_cast<size_t>((screenPoint.x() + halfSquareSize) / constants.squareSize);
+		hintLine = screenPoint.y() / constants.squareSize;
+		hintCount = (screenPoint.x() + halfSquareSize) / constants.squareSize;
 	}
 	
 	AddressOnBlocksDescription address(orientation, hintLine, hintCount);
@@ -215,15 +215,15 @@ void HintsView::mouseMoveEvent(QMouseEvent *event)
 
 bool HintsView::isPointOnDefinedDescription(QPoint screenPoint)
 {
-	size_t line;
-	size_t count;
+	int line;
+	int count;
 	if(orientation == AddressOnBlocksDescription::VERTICAL)
 	{
-		line = static_cast<size_t>(screenPoint.x() / constants.squareSize);
-		count = static_cast<size_t>(screenPoint.y() / constants.squareSize);
+		line = screenPoint.x() / constants.squareSize;
+		count = screenPoint.y() / constants.squareSize;
 	} else {
-		line = static_cast<size_t>(screenPoint.y() / constants.squareSize);
-		count = static_cast<size_t>(screenPoint.x() / constants.squareSize);
+		line = screenPoint.y() / constants.squareSize;
+		count = screenPoint.x() / constants.squareSize;
 	}
 	AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, line, count);
 	return (field->isDefinedDescriptionAt(address));
@@ -231,16 +231,16 @@ bool HintsView::isPointOnDefinedDescription(QPoint screenPoint)
 
 void HintsView::redrawAll()
 {
-	for(size_t i = 0; i < field->getNumberOfLines(); i++)
+	for(int i = 0; i < field->getNumberOfLines(); i++)
 	{
-		size_t numberOfBlocksInLine = field->numberOfBlocksInLine(i);
+		int numberOfBlocksInLine = field->numberOfBlocksInLine(i);
 		AddressOnBlocksDescription addressAfterLine = AddressOnBlocksDescription(orientation, i, numberOfBlocksInLine);
 		drawCleanOneBlock(addressAfterLine);
 	}
-	for(size_t i = 0; i < field->getNumberOfLines(); i++)
+	for(int i = 0; i < field->getNumberOfLines(); i++)
 	{
-		size_t numberOfBlocksInLine = field->numberOfBlocksInLine(i);
-		for(size_t j = 0; j < numberOfBlocksInLine; j++)
+		int numberOfBlocksInLine = field->numberOfBlocksInLine(i);
+		for(int j = 0; j < numberOfBlocksInLine; j++)
 		{
 			AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, i, j);
 			BlockDescription blockDescription = field->getBlockDescription(address);
@@ -336,7 +336,7 @@ void HintsView::saveTextBoxToBlockDescription()
 		}
 		AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, line, count);
 		QString textFromBox = qTextEdit->toPlainText();
-		size_t blockSize = static_cast<size_t>(textFromBox.toInt());
+		int blockSize = textFromBox.toInt();
 		BlockDescription blockDecription = BlockDescription(address, blockSize);
 		field->updateBlockDescription(blockDecription);
 	}

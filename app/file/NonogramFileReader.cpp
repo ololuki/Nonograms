@@ -52,8 +52,8 @@ bool NonogramFileReader::read(const std::string &fileDir)
 	
 	QJsonObject jsonObj = jsonDoc.object();
 	QJsonObject jsonSize = jsonObj["size"].toObject();
-	size_t width;
-	size_t height;
+	int width;
+	int height;
 	parseSize(width, height, jsonSize);
 	field.reset(new WholeField(width, height));
 	QJsonArray drawingArea = jsonObj["drawingArea"].toArray();
@@ -68,7 +68,7 @@ bool NonogramFileReader::read(const std::string &fileDir)
 	return true;
 }
 
-void NonogramFileReader::parseSize(size_t &width, size_t &height, QJsonObject jsonSize)
+void NonogramFileReader::parseSize(int &width, int &height, QJsonObject jsonSize)
 {
 	width = static_cast<size_t>(jsonSize["width"].toInt());
 	height = static_cast<size_t>(jsonSize["height"].toInt());
@@ -86,8 +86,8 @@ void NonogramFileReader::parseDrawingArea(QJsonArray drawingArea)
 
 Pixel NonogramFileReader::parsePixel(QJsonObject jsonPixel)
 {
-	size_t addressX = static_cast<size_t>(jsonPixel["addressX"].toInt());
-	size_t addressY = static_cast<size_t>(jsonPixel["addressY"].toInt());
+	int addressX = jsonPixel["addressX"].toInt();
+	int addressY = jsonPixel["addressY"].toInt();
 	AddressOnDrawingArea address(addressX, addressY);
 	Pixel pixel = Pixel(address);
 	if (jsonPixel["sign"].toString() == "empty") pixel.makeEmpty();
@@ -98,7 +98,7 @@ Pixel NonogramFileReader::parsePixel(QJsonObject jsonPixel)
 
 void NonogramFileReader::parseColumnsDescription(QJsonArray columnsDescription)
 {
-	for (size_t i = 0; i < columnsDescription.size(); i++)
+	for (int i = 0; i < columnsDescription.size(); i++)
 	{
 		QJsonObject jsonLineDescription = columnsDescription[i].toObject();
 		parseLineDescription(jsonLineDescription, i, AddressOnBlocksDescription::VERTICAL);
@@ -107,16 +107,16 @@ void NonogramFileReader::parseColumnsDescription(QJsonArray columnsDescription)
 
 void NonogramFileReader::parseRowsDescription(QJsonArray rowsDescription)
 {
-	for (size_t i = 0; i < rowsDescription.size(); i++)
+	for (int i = 0; i < rowsDescription.size(); i++)
 	{
 		QJsonObject jsonLineDescription = rowsDescription[i].toObject();
 		parseLineDescription(jsonLineDescription, i, AddressOnBlocksDescription::HORIZONTAL);
 	}
 }
 
-void NonogramFileReader::parseLineDescription(QJsonObject jsonLineDescription, size_t lineNumber, AddressOnBlocksDescription::orientation orientation)
+void NonogramFileReader::parseLineDescription(QJsonObject jsonLineDescription, int lineNumber, AddressOnBlocksDescription::orientation orientation)
 {
-	size_t lineLength = jsonLineDescription["lineLength"].toInt();
+	int lineLength = jsonLineDescription["lineLength"].toInt();
 	QJsonArray blocksDescriptionArray = jsonLineDescription["lineDescription"].toArray();
 	parseArrayOfBlockDescription(blocksDescriptionArray, lineNumber, lineLength, orientation);
 	switch (orientation)
@@ -131,9 +131,9 @@ void NonogramFileReader::parseLineDescription(QJsonObject jsonLineDescription, s
 
 }
 
-void NonogramFileReader::parseArrayOfBlockDescription(QJsonArray jsonArray, size_t lineNumber, size_t lineLength, AddressOnBlocksDescription::orientation orientation)
+void NonogramFileReader::parseArrayOfBlockDescription(QJsonArray jsonArray, int lineNumber, int lineLength, AddressOnBlocksDescription::orientation orientation)
 {
-	for (size_t i = 0; i < lineLength; i++)
+	for (int i = 0; i < lineLength; i++)
 	{
 		AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, lineNumber, i);
 		QJsonObject jsonBlockDescription = jsonArray[i].toObject();
@@ -143,7 +143,7 @@ void NonogramFileReader::parseArrayOfBlockDescription(QJsonArray jsonArray, size
 
 void NonogramFileReader::parseBlockDescription(QJsonObject jsonBlockDescription, AddressOnBlocksDescription address)
 {
-	size_t blockSize = jsonBlockDescription["blockSize"].toInt();
+	int blockSize = jsonBlockDescription["blockSize"].toInt();
 	switch (address.getOrientation())
 	{
 	case AddressOnBlocksDescription::VERTICAL:

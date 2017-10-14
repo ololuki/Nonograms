@@ -3,6 +3,7 @@
 
 #include "Pixel.h"
 #include "vector"
+#include "utils/NVector.h"
 
 
 ///
@@ -10,15 +11,17 @@
 /// Orientation of the line (horizontal or vertical) is arbitrary.
 /// Pixels are accesible by operator[].
 ///
-class LineOfPixels : private std::vector<Pixel>
+class LineOfPixels
 {
 public:
 	LineOfPixels() {}
-	LineOfPixels(std::vector<Pixel> vectorToCopy) : std::vector<Pixel>(vectorToCopy) {}
-	size_t size() {return std::vector<Pixel>::size();}
+	LineOfPixels(std::vector<Pixel> vectorToCopy);
+	int size();
 	
-	Pixel& getPixelAt(const unsigned int pixelNumber) {return this->at(pixelNumber);}
-	Pixel& operator[](const unsigned int pixelNumber) {return std::vector<Pixel>::operator[](pixelNumber);}
+	Pixel& getPixelAt(const int pixelNumber);
+	Pixel& operator[](const int pixelNumber);
+private:
+	NVector<Pixel> pixels;
 };
 
 #endif // LINEOFPIXELS_H

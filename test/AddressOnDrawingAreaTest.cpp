@@ -17,10 +17,16 @@ TEST_CASE("AddressOnDrawingArea") {
 		REQUIRE( addressA.getY() == yA );
 	}
 	
-	SECTION( "Addresses are equal when x and y are equal" ) {
+	SECTION( "Address compared with itself is equal" ) {
 		REQUIRE( addressA == addressA );
+	}
+	
+	SECTION( "Addresses with same x and y are equal" ) {
 		REQUIRE( addressA == addressADuplicate );
 		REQUIRE( addressB == addressBDuplicate );
+	}
+	
+	SECTION( "Addresses with different x and y are NOT equal" ) {
 		REQUIRE( (addressA == addressB) == false );
 		unsigned int a = 1;
 		REQUIRE( (AddressOnDrawingArea(a, a) == AddressOnDrawingArea(a, a+1)) == false );

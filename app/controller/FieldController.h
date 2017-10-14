@@ -40,7 +40,7 @@ public:
 	void onOpen();
 	void onSaveAs();
 private:
-	void recreateField(size_t width, size_t height);
+	void recreateField(int width, int height);
 	void replaceField(std::shared_ptr<WholeField> newField);
 	
 	std::shared_ptr<WholeField> field;

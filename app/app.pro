@@ -26,7 +26,7 @@ SOURCES += main.cpp\
     field/BlocksDescriptionField.cpp \
     field/AddressOnBlocksDescription.cpp \
     field/BlockDescription.cpp \
-    field/LineDescription.cpp \
+    field/LineOfHints.cpp \
     SizeDialog.cpp \
     file/FileManager.cpp \
     file/NonogramFileWriter.cpp \
@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     controller/DrawingAreaController.cpp \
     controller/BlocksDescriptionController.cpp \
     widgets/common/DrawableView.cpp \
-    widgets/HintsView.cpp
+    widgets/HintsView.cpp \
+    utils/NVector.cpp
 
 HEADERS  += mainwindow.h \
     widgets/DrawingAreaView.h \
@@ -49,7 +50,7 @@ HEADERS  += mainwindow.h \
     field/BlocksDescriptionField.h \
     field/AddressOnBlocksDescription.h \
     field/BlockDescription.h \
-    field/LineDescription.h \
+    field/LineOfHints.h \
     field/FieldMode.h \
     SizeDialog.h \
     file/FileManager.h \
@@ -62,7 +63,8 @@ HEADERS  += mainwindow.h \
     controller/BlocksDescriptionController.h \
     widgets/common/FieldViewConstants.h \
     widgets/common/DrawableView.h \
-    widgets/HintsView.h
+    widgets/HintsView.h \
+    utils/NVector.h
 
 FORMS    += mainwindow.ui \
     sizedialog.ui

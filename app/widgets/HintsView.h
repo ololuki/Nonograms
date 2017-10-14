@@ -51,7 +51,7 @@ public slots:
 	// invoked by model to inform about changes
 	void onDataChanged();
 	// invoked by model to inform about changes
-	void onLineDescriptionChanged(AddressOnBlocksDescription address);
+	void onLineOfHintsChanged(AddressOnBlocksDescription address);
 	// invoked by controller
 	void showInsertingButtonBefore(AddressOnBlocksDescription address);
 	// invoked by controller

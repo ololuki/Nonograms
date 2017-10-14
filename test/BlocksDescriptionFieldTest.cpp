@@ -3,12 +3,12 @@
 #include "../app/field/AddressOnBlocksDescription.h"
 
 
-TEST_CASE("BlocksDescriptionField insertDecriptionBefore") {
-	size_t numberOfLines = 2;
-	size_t lineNumber = 1;
-	size_t blockValueDefault = 0;
-	size_t blockValueAtZero = 5;
-	size_t blockValueAtFirst = 10;
+TEST_CASE("BlocksDescriptionField insertDescriptionBefore") {
+	int numberOfLines = 2;
+	int lineNumber = 1;
+	int blockValueDefault = 0;
+	int blockValueAtZero = 5;
+	int blockValueAtFirst = 10;
 	BlocksDescriptionField blocksDescriptionField(numberOfLines, AddressOnBlocksDescription::orientation::VERTICAL);
 	AddressOnBlocksDescription addressZero = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, lineNumber, 0);
 	AddressOnBlocksDescription addressFirst = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, lineNumber, 1);
@@ -56,12 +56,38 @@ TEST_CASE("BlocksDescriptionField insertDecriptionBefore") {
 }
 
 
-TEST_CASE("BlocksDescriptionField deleteDecription") {
-	size_t numberOfLines = 2;
-	size_t lineNumber = 1;
-	size_t blockValueDefault = 0;
-	size_t blockValueAtZero = 5;
-	size_t blockValueAtFirst = 10;
+TEST_CASE("BlocksDescriptionField updateDescription") {
+	int numberOfLines = 3;
+	int firstLine = 1;
+	int blockSizeValue = 5;
+	BlocksDescriptionField blocksDescriptionField(numberOfLines, AddressOnBlocksDescription::orientation::VERTICAL);
+	AddressOnBlocksDescription addressCountZeroLineFirst = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, firstLine, 0);
+	BlockDescription hintAtCountZeroLineFirst = BlockDescription(addressCountZeroLineFirst, blockSizeValue);
+	
+	SECTION( "number of lines should not change after update" ) {
+		int namberOfBlocksInFirstLine = blocksDescriptionField.numberOfBlocksInLine(firstLine);
+		blocksDescriptionField.updateBlockDescription(hintAtCountZeroLineFirst);
+		REQUIRE( blocksDescriptionField.numberOfBlocksInLine(firstLine) == namberOfBlocksInFirstLine );
+	}
+	
+	SECTION( "address should not change after update" ) {
+		blocksDescriptionField.updateBlockDescription(hintAtCountZeroLineFirst);
+		REQUIRE( blocksDescriptionField.getBlockDescription(addressCountZeroLineFirst).getAddress() == addressCountZeroLineFirst );
+	}
+	
+	SECTION( "block size value should change after update" ) {
+		blocksDescriptionField.updateBlockDescription(hintAtCountZeroLineFirst);
+		REQUIRE( blocksDescriptionField.getBlockDescription(addressCountZeroLineFirst).getBlockSize() == blockSizeValue );
+	}
+}
+
+
+TEST_CASE("BlocksDescriptionField deleteDescription") {
+	int numberOfLines = 2;
+	int lineNumber = 1;
+	int blockValueDefault = 0;
+	int blockValueAtZero = 5;
+	int blockValueAtFirst = 10;
 	BlocksDescriptionField blocksDescriptionField(numberOfLines, AddressOnBlocksDescription::orientation::VERTICAL);
 	AddressOnBlocksDescription addressZero = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, lineNumber, 0);
 	AddressOnBlocksDescription addressFirst = AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, lineNumber, 1);
@@ -73,7 +99,7 @@ TEST_CASE("BlocksDescriptionField deleteDecription") {
 	blocksDescriptionField.insertDescriptionBefore(descriptionAtFirst);
 	blocksDescriptionField.insertDescriptionBefore(descriptionAtFirst);
 	
-	SECTION( "number of lines should decrease after delete" ) {
+	SECTION( "number of hints in line should decrease after delete" ) {
 		REQUIRE( blocksDescriptionField.numberOfBlocksInLine(lineNumber) == 4 );
 		blocksDescriptionField.deleteDescription(descriptionAtFirst);
 		REQUIRE( blocksDescriptionField.numberOfBlocksInLine(lineNumber) == 3 );
