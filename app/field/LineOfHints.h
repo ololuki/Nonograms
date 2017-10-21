@@ -31,7 +31,7 @@
 class LineOfHints
 {
 public:
-	LineOfHints(std::vector<BlockDescription> vectorToCopy);
+	LineOfHints(NVector<BlockDescription> vectorToCopy);
 	int size();
 	
 	void updateBlockDescription(BlockDescription blockDescription);

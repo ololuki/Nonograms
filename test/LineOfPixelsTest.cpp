@@ -1,11 +1,12 @@
 #include "catch.hpp"
 #include "../app/field/LineOfPixels.h"
+#include "../app/utils/NVector.h"
 
 
 TEST_CASE("LineOfPixels") {
 	unsigned int size = 2;
 	AddressOnDrawingArea address(13, 46);
-	LineOfPixels lineOfPixels(std::vector <Pixel>(size, Pixel(address)));
+	LineOfPixels lineOfPixels(NVector<Pixel>(size, Pixel(address)));
 	
 	SECTION("size() should return size") {
 		REQUIRE(lineOfPixels.size() == 2);
@@ -33,7 +34,7 @@ TEST_CASE("LineOfPixels") {
 	SECTION( "max size should be at least 10000" ) {
 		unsigned int sizeMax = 10000;
 		AddressOnDrawingArea address(sizeMax, sizeMax);
-		LineOfPixels lineOfPixels(std::vector <Pixel>(sizeMax, Pixel(address)));
+		LineOfPixels lineOfPixels(NVector<Pixel>(sizeMax, Pixel(address)));
 		REQUIRE( lineOfPixels.size() == sizeMax );
 	}
 	

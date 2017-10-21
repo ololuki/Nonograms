@@ -21,9 +21,9 @@
 #include "LineOfHints.h"
 
 
-LineOfHints::LineOfHints(std::vector<BlockDescription> vectorToCopy)
+LineOfHints::LineOfHints(NVector<BlockDescription> vectorToCopy)
+	: hints(vectorToCopy)
 {
-	hints = vectorToCopy;
 }
 
 int LineOfHints::size()

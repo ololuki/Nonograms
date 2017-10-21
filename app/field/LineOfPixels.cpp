@@ -1,8 +1,9 @@
 #include "LineOfPixels.h"
 
-LineOfPixels::LineOfPixels(std::vector<Pixel> vectorToCopy)
+
+LineOfPixels::LineOfPixels(NVector<Pixel> vectorToCopy)
+	: pixels(vectorToCopy)
 {
-	pixels = vectorToCopy;
 }
 
 int LineOfPixels::size()

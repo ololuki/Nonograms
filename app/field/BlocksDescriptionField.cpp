@@ -29,7 +29,7 @@ BlocksDescriptionField::BlocksDescriptionField(int numberOfLines, AddressOnBlock
 	for(int i = 0; i < numberOfLines; i++)
 	{
 		AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, i, 0);
-		std::vector<BlockDescription> line;
+		NVector<BlockDescription> line;
 		line.push_back(BlockDescription(address, defaultBlockSize));
 		linesOfHints.push_back(line);
 	}

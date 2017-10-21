@@ -35,18 +35,25 @@ template <class T>
 class NVector
 {
 public:
+	NVector() {}
+	NVector(int count, const T& element = T())
+		: vect(count, element) {}
 	
 	void operator=(const std::vector<T>& right) {
 		vect = right;
 	}
 	
-	int size() {return static_cast<int>(vect.size());}
+	int size() const {return static_cast<int>(vect.size());}
 	
-	T& operator[](const int index){return vect.operator [](index);}
+	T& operator[](const int index) {return vect.operator[](index);}
+	T operator[](const int index) const {return vect.operator[](index);}
 	
-	void push_back(T object){vect.push_back(object);}
+	T& at(const int index) {return vect.at(index);}
+	T at(const int index) const {return vect.at(index);}
 	
-	void pop_back(){vect.pop_back();}
+	void push_back(T object) {vect.push_back(object);}
+	
+	void pop_back() {vect.pop_back();}
 
 private:
 	std::vector<T> vect;

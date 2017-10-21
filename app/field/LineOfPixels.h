@@ -14,8 +14,7 @@
 class LineOfPixels
 {
 public:
-	LineOfPixels() {}
-	LineOfPixels(std::vector<Pixel> vectorToCopy);
+	LineOfPixels(NVector<Pixel> vectorToCopy);
 	int size();
 	
 	Pixel& getPixelAt(const int pixelNumber);
