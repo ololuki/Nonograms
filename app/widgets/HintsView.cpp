@@ -363,6 +363,7 @@ void HintsView::moveAndShowTextBox(AddressOnBlocksDescription address)
 void HintsView::initInsertingButton()
 {
 	insertingButton = std::make_shared<QPushButton>("+", this);
+	insertingButton->installEventFilter(&insertingButtonEventFilter);
 	if(orientation == AddressOnBlocksDescription::VERTICAL)
 	{
 		insertingButton->setFixedWidth(constants.squareSize);

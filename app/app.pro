@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     controller/BlocksDescriptionController.cpp \
     widgets/common/DrawableView.cpp \
     widgets/HintsView.cpp \
-    utils/NVector.cpp
+    utils/NVector.cpp \
+    widgets/common/InsertingButtonEventFilter.cpp
 
 HEADERS  += mainwindow.h \
     widgets/DrawingAreaView.h \
@@ -64,7 +65,8 @@ HEADERS  += mainwindow.h \
     widgets/common/FieldViewConstants.h \
     widgets/common/DrawableView.h \
     widgets/HintsView.h \
-    utils/NVector.h
+    utils/NVector.h \
+    widgets/common/InsertingButtonEventFilter.h
 
 FORMS    += mainwindow.ui \
     sizedialog.ui

@@ -26,6 +26,7 @@
 #include <QPushButton>
 #include "common/DrawableView.h"
 #include "common/FieldViewConstants.h"
+#include "common/InsertingButtonEventFilter.h"
 #include "field/BlocksDescriptionField.h"
 
 
@@ -85,6 +86,7 @@ protected:
 	
 private:
 	AddressOnBlocksDescription::orientation orientation;
+	InsertingButtonEventFilter insertingButtonEventFilter;
 };
 
 #endif // HINTSVIEW_H
