@@ -18,41 +18,31 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREAVIEW_H
-#define DRAWINGAREAVIEW_H
-
-#include <memory>
-#include <QWidget>
-#include "field/DrawingAreaField.h"
-#include "common/FieldViewConstants.h"
-#include "common/DrawableView.h"
-#include "controller/action/CellAction.h"
+#ifndef HINTACTION_H
+#define HINTACTION_H
 
 
-class DrawingAreaView : public DrawableView
+///
+/// \brief Actions for Hint area (blocks description area)
+/// forwarded from widgets to controllers.
+///
+enum class HintAction
 {
-	Q_OBJECT
-public:
-	explicit DrawingAreaView(QWidget *parent = 0);
-	virtual ~DrawingAreaView();
-	void setField(const std::shared_ptr<const DrawingAreaField> &field);
+	NoAction,
 	
-public slots:
-	void onPixelChanged(AddressOnDrawingArea address);
+	// when cursor starts being on the potential inserting button area
+	InsertingButtonHover,
 	
-signals:
-	void action(CellAction action, AddressOnDrawingArea);
+	// when block description is clicked in order to editing
+	ShowEditBox,
 	
-protected:
-	void mousePressEvent(QMouseEvent *event) override;
+	// when inserting button is clicked
+	HintInsertBefore,
 	
-private:
-	FieldViewConstants constants;
-	void drawGrid();
-	void drawOnePixel(Pixel pixel);
-	void drawAllPixels();
+	// when editing description ends
+	HintUpdate,
 	
-	std::shared_ptr<const DrawingAreaField> field;
+	HintDelete,
 };
 
-#endif // DRAWINGAREAVIEW_H
+#endif // HINTACTION_H

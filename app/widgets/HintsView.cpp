@@ -33,11 +33,16 @@ HintsView::HintsView(QWidget *parent)
 	initInsertingButton();
 }
 
-void HintsView::setField(std::shared_ptr<BlocksDescriptionField> field)
+void HintsView::setField(const std::shared_ptr<const BlocksDescriptionField> &field)
 {
 	this->field = field;
-	orientation = field->getOrientation();
-	connect(static_cast<BlocksDescriptionField*>(this->field.get()), &BlocksDescriptionField::blocksDescriptionChanged, this, &HintsView::onDataChanged);
+	orientation = this->field->getOrientation();
+	connect(
+		static_cast<const BlocksDescriptionField*>(this->field.get()),
+		&BlocksDescriptionField::blocksDescriptionChanged,
+		this,
+		&HintsView::onDataChanged
+	);
 	
 	int initialLengthInSquares = 3;
 	int screenX;
@@ -106,7 +111,7 @@ void HintsView::showInsertingButtonBefore(AddressOnBlocksDescription address)
 
 void HintsView::showDescriptionEditingBox(AddressOnBlocksDescription address)
 {
-	
+	moveAndShowTextBox(address);
 }
 
 void HintsView::onInsertingButtonClick()
@@ -122,20 +127,12 @@ void HintsView::onInsertingButtonClick()
 		count = (insertingButton->pos().x() + constants.squareSize) / constants.squareSize;
 	}
 	AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, line, count);
-	//TODO emit onInsertingButtonClick(Qt::MouseButton, address);
-	if (count < field->numberOfBlocksInLine(line))
-	{
-		field->insertDescriptionBefore(BlockDescription(address, 0));
-	}
-	else if (count == field->numberOfBlocksInLine(line))
-	{
-		field->addDescriptionAtEnd(BlockDescription(address, 0));
-	}
+	emit action(HintAction::HintInsertBefore, address);
 }
 
 void HintsView::mousePressEvent(QMouseEvent *event)
 {
-	saveTextBoxToBlockDescription();
+	saveTextBoxToHint();
 	QPoint screenPoint = event->pos();
 	if (isPointOnDefinedDescription(screenPoint))
 	{
@@ -152,15 +149,14 @@ void HintsView::mousePressEvent(QMouseEvent *event)
 		
 		AddressOnBlocksDescription address(orientation, hintLine, hintCount);
 		
-		//TODO emit mouseClickedOnBlockDescription(Qt::MouseButton, address);
 		if (event->button() == Qt::LeftButton)
 		{
-			moveAndShowTextBox(address);
+			action(HintAction::ShowEditBox , address);
 		}
 		else if (event->button() == Qt::RightButton)
 		{
 			hideTextBox();
-			field->deleteDescription(BlockDescription(address, 0));
+			action(HintAction::HintDelete, address);
 		}
 	} else {
 		hideTextBox();
@@ -191,7 +187,7 @@ void HintsView::mouseMoveEvent(QMouseEvent *event)
 			if (screenPoint.y() < 0) screenPoint.setY(0);
 			if(isPointOnDefinedDescription(screenPoint))
 			{
-				insertingButtonHover(address);
+				action(HintAction::InsertingButtonHover, address);
 			} else {
 				hideInsertingButton();
 			}
@@ -282,7 +278,7 @@ void HintsView::drawOneBlockDescription(BlockDescription blockDescription)
 	
 	update();
 }
-// todo tu skończyłem
+
 void HintsView::drawCleanOneBlock(AddressOnBlocksDescription address)
 {
 	int screenX;
@@ -320,7 +316,7 @@ void HintsView::hideTextBox()
 	qTextEdit->hide();
 }
 
-void HintsView::saveTextBoxToBlockDescription()
+void HintsView::saveTextBoxToHint()
 {
 	if (! qTextEdit->isHidden())
 	{
@@ -337,8 +333,8 @@ void HintsView::saveTextBoxToBlockDescription()
 		AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, line, count);
 		QString textFromBox = qTextEdit->toPlainText();
 		int blockSize = textFromBox.toInt();
-		BlockDescription blockDecription = BlockDescription(address, blockSize);
-		field->updateBlockDescription(blockDecription);
+		BlockDescription blockDescription = BlockDescription(address, blockSize);
+		emit action(HintAction::HintUpdate, blockDescription);
 	}
 }
 

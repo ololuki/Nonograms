@@ -28,6 +28,7 @@
 #include "common/FieldViewConstants.h"
 #include "common/InsertingButtonEventFilter.h"
 #include "field/BlocksDescriptionField.h"
+#include "controller/action/HintAction.h"
 
 
 class HintsView : public DrawableView
@@ -35,18 +36,12 @@ class HintsView : public DrawableView
 	Q_OBJECT
 public:
 	explicit HintsView(QWidget *parent = 0);
-	void setField(std::shared_ptr<BlocksDescriptionField> field);
+	void setField(const std::shared_ptr<const BlocksDescriptionField> &field);
 	
 signals:
 	// signals emited to controller
-	// when cursor starts being on the potential inserting button area
-	void insertingButtonHover(AddressOnBlocksDescription address);
-	// when editing description ends
-	//void descriptionEditingFinished(BlockDescription blockDescription);
-	// when inserting button is clicked
-	void insertingButtonBeforeAddressClicked(AddressOnBlocksDescription address);
-	// when block description is clicked in order to editing
-	void blockDescriptionClicked(AddressOnBlocksDescription address); // Qt::MouseButton MouseButton
+	void action(HintAction action, AddressOnBlocksDescription address);
+	void action(HintAction action, BlockDescription blockDescription);
 	
 public slots:
 	// invoked by model to inform about changes
@@ -67,7 +62,7 @@ protected:
 	std::shared_ptr<QPushButton> insertingButton;
 	const int insertingButtonHeight = constants.squareSize/2;
 	
-	std::shared_ptr<BlocksDescriptionField> field;
+	std::shared_ptr<const BlocksDescriptionField> field;
 	
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
@@ -78,7 +73,7 @@ protected:
 	void drawCleanOneBlock(AddressOnBlocksDescription address);
 	void initTextBox();
 	void hideTextBox();
-	void saveTextBoxToBlockDescription();
+	void saveTextBoxToHint();
 	void moveAndShowTextBox(AddressOnBlocksDescription address);
 	void initInsertingButton();
 	void hideInsertingButton();

@@ -26,6 +26,7 @@
 #include "field/BlockDescription.h"
 #include <memory>
 #include "widgets/HintsView.h"
+#include "action/HintAction.h"
 
 
 class BlocksDescriptionController : public QObject
@@ -34,23 +35,24 @@ class BlocksDescriptionController : public QObject
 public:
 	BlocksDescriptionController(std::shared_ptr<BlocksDescriptionField> field, HintsView *hintsView);
 	~BlocksDescriptionController();
+	void replaceField(std::shared_ptr<BlocksDescriptionField> newField);
 	
 signals:
 	// invoked by controller
 	void showInsertingButtonBefore(AddressOnBlocksDescription address);
-	// invoked by controller
 	void showDescriptionEditingBox(AddressOnBlocksDescription address);
 	
 private slots:
 	// on signals emited to controller
-	// when cursor starts being on the potential inserting button area
-	void onInsertingButtonHover(AddressOnBlocksDescription address);
-	// when editing description ends
-	void onDescriptionEditingFinished(BlockDescription blockDescription);
-	// when inserting button is clicked
-	void onInsertingButtonBeforeAddressClicked(AddressOnBlocksDescription address);
-	void onBlockDescriptionClicked(AddressOnBlocksDescription address);
+	void onAction(HintAction action, AddressOnBlocksDescription address);
+	void onAction(HintAction action, BlockDescription blockDescription);
 	
+private:
+	// when inserting button is clicked
+	void onHintInsertBefore(AddressOnBlocksDescription address);
+	
+	std::shared_ptr<BlocksDescriptionField> field;
+	HintsView *hintsView;
 };
 
 #endif // BLOCKSDESCRIPTIONCONTROLLER_H

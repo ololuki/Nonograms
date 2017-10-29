@@ -41,18 +41,18 @@ class BlocksDescriptionField : public QObject
 public:
 	BlocksDescriptionField(int numberOfLines, AddressOnBlocksDescription::orientation o);
 	virtual ~BlocksDescriptionField();
-	virtual BlockDescription getBlockDescription(AddressOnBlocksDescription address);
+	virtual BlockDescription getBlockDescription(AddressOnBlocksDescription address) const;
 	virtual void updateBlockDescription(BlockDescription blockDescription);
 	virtual void insertDescriptionBefore(BlockDescription blockDescription);
 	virtual void addDescriptionAtEnd(BlockDescription blockDescription);
 	virtual void deleteDescription(BlockDescription blockDescription);
 	
-	virtual int numberOfBlocksInLine(int lineNumber);
+	virtual int numberOfBlocksInLine(int lineNumber) const;
 	virtual int getNumberOfLines() const;
-	virtual int allBlocksDescriptionLength();
-	virtual AddressOnBlocksDescription::orientation getOrientation();
+	virtual int allBlocksDescriptionLength() const;
+	virtual AddressOnBlocksDescription::orientation getOrientation() const;
 	
-	virtual bool isDefinedDescriptionAt(AddressOnBlocksDescription address);
+	virtual bool isDefinedDescriptionAt(AddressOnBlocksDescription address) const;
 signals:
 	void blocksDescriptionChanged();
 private:

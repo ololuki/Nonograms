@@ -40,7 +40,7 @@ BlocksDescriptionField::~BlocksDescriptionField()
 	
 }
 
-BlockDescription BlocksDescriptionField::getBlockDescription(AddressOnBlocksDescription address)
+BlockDescription BlocksDescriptionField::getBlockDescription(AddressOnBlocksDescription address) const
 {
 	return linesOfHints[address.getLine()][address.getCount()];
 }
@@ -84,7 +84,7 @@ void BlocksDescriptionField::deleteDescription(BlockDescription blockDescription
 	emit blocksDescriptionChanged();
 }
 
-int BlocksDescriptionField::numberOfBlocksInLine(int lineNumber)
+int BlocksDescriptionField::numberOfBlocksInLine(int lineNumber) const
 {
 	return linesOfHints[lineNumber].size();
 }
@@ -94,22 +94,22 @@ int BlocksDescriptionField::getNumberOfLines() const
 	return numberOfLines;
 }
 
-int BlocksDescriptionField::allBlocksDescriptionLength()
+int BlocksDescriptionField::allBlocksDescriptionLength() const
 {
 	int length = 0;
 	for (int i = 0; i < numberOfLines; i++)
 	{
-		length = std::max(length, numberOfBlocksInLine(i));
+		length = (numberOfBlocksInLine(i) > length) ? numberOfBlocksInLine(i) : length;
 	}
 	return length;
 }
 
-AddressOnBlocksDescription::orientation BlocksDescriptionField::getOrientation()
+AddressOnBlocksDescription::orientation BlocksDescriptionField::getOrientation() const
 {
 	return orientation;
 }
 
-bool BlocksDescriptionField::isDefinedDescriptionAt(AddressOnBlocksDescription address)
+bool BlocksDescriptionField::isDefinedDescriptionAt(AddressOnBlocksDescription address) const
 {
 	int line = address.getLine();
 	if (line >= linesOfHints.size()) return false;

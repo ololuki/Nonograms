@@ -29,14 +29,10 @@ FieldController::FieldController(DrawingAreaView *drawingAreaView, HintsView *co
 	field.reset(new WholeField(14, 10));
 	
 	this->drawingAreaView = drawingAreaView;
-	drawingAreaController = std::make_shared<DrawingAreaController>(field->drawingArea(), drawingAreaView);
-	
 	this->columnsDescriptionView = columnsDescriptionView;
-	columnsDescriptionView->setField(field->columnsDescription());
-	
 	this->rowsDescriptionView = rowsDescriptionView;
-	rowsDescriptionView->setField(field->rowsDescription());
 	
+	drawingAreaController = std::make_shared<DrawingAreaController>(field->drawingArea(), drawingAreaView);
 	columnsHintsController = std::make_shared<BlocksDescriptionController>(field->columnsDescription(), columnsDescriptionView);
 	rowsHintsController = std::make_shared<BlocksDescriptionController>(field->rowsDescription(), rowsDescriptionView);
 	
@@ -58,8 +54,8 @@ void FieldController::recreateField(int width, int height)
 {
 	field.reset(new WholeField(width, height));
 	drawingAreaController->replaceField(field->drawingArea());
-	columnsDescriptionView->setField(field->columnsDescription());
-	rowsDescriptionView->setField(field->rowsDescription());
+	columnsHintsController->replaceField(field->columnsDescription());
+	rowsHintsController->replaceField(field->rowsDescription());
 }
 
 void FieldController::replaceField(std::shared_ptr<WholeField> newField)
@@ -72,9 +68,8 @@ void FieldController::replaceField(std::shared_ptr<WholeField> newField)
 	field = newField;
 	
 	drawingAreaController->replaceField(field->drawingArea());
-	
-	columnsDescriptionView->setField(field->columnsDescription());
-	rowsDescriptionView->setField(field->rowsDescription());
+	columnsHintsController->replaceField(field->columnsDescription());
+	rowsHintsController->replaceField(field->rowsDescription());
 }
 
 void FieldController::onNew()

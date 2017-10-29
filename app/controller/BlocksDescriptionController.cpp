@@ -22,17 +22,36 @@
 
 
 BlocksDescriptionController::BlocksDescriptionController(std::shared_ptr<BlocksDescriptionField> field, HintsView *hintsView)
+	: field(field)
 {
-	connect(hintsView, &HintsView::insertingButtonHover, this, &BlocksDescriptionController::onInsertingButtonHover);
-	//connect(hintsView, &HintsView::descriptionEditingFinished, this, &BlocksDescriptionController::onDescriptionEditingFinished);
+	this->hintsView = hintsView;
+	this->hintsView->setField(field);
 	
-	connect(hintsView, &HintsView::insertingButtonBeforeAddressClicked, this, &BlocksDescriptionController::onInsertingButtonBeforeAddressClicked);
+	connect(
+		hintsView,
+		static_cast<void (HintsView::*)(HintAction, AddressOnBlocksDescription)>(&HintsView::action),
+		this,
+		static_cast<void (BlocksDescriptionController::*)(HintAction, AddressOnBlocksDescription)>(&BlocksDescriptionController::onAction)
+	);
+	connect(
+		hintsView,
+		static_cast<void (HintsView::*)(HintAction, BlockDescription)>(&HintsView::action),
+		this,
+		static_cast<void (BlocksDescriptionController::*)(HintAction, BlockDescription)>(&BlocksDescriptionController::onAction)
+	);
 	
-	connect(hintsView, &HintsView::blockDescriptionClicked, this, &BlocksDescriptionController::onBlockDescriptionClicked);
-	
-	connect(this, &BlocksDescriptionController::showInsertingButtonBefore, hintsView, &HintsView::showInsertingButtonBefore);
-	
-	connect(this, &BlocksDescriptionController::showDescriptionEditingBox, hintsView, &HintsView::showDescriptionEditingBox);
+	connect(
+		this,
+		&BlocksDescriptionController::showInsertingButtonBefore,
+		hintsView,
+		&HintsView::showInsertingButtonBefore
+	);
+	connect(
+		this,
+		&BlocksDescriptionController::showDescriptionEditingBox,
+		hintsView,
+		&HintsView::showDescriptionEditingBox
+	);
 }
 
 BlocksDescriptionController::~BlocksDescriptionController()
@@ -40,22 +59,55 @@ BlocksDescriptionController::~BlocksDescriptionController()
 	
 }
 
-void BlocksDescriptionController::onInsertingButtonHover(AddressOnBlocksDescription address)
+void BlocksDescriptionController::replaceField(std::shared_ptr<BlocksDescriptionField> newField)
 {
-	showInsertingButtonBefore(address);
+	this->field = newField;
+	hintsView->setField(field);
 }
 
-void BlocksDescriptionController::onDescriptionEditingFinished(BlockDescription blockDescription)
+void BlocksDescriptionController::onAction(HintAction action, AddressOnBlocksDescription address)
 {
-	
+	switch(action)
+	{
+	case HintAction::InsertingButtonHover:
+		showInsertingButtonBefore(address);
+		break;
+	case HintAction::ShowEditBox:
+		showDescriptionEditingBox(address);
+		break;
+	case HintAction::HintInsertBefore:
+		onHintInsertBefore(address);
+		break;
+	case HintAction::HintDelete:
+		field->deleteDescription(BlockDescription(address, 0));
+		break;
+	default:
+		break;
+	}
 }
 
-void BlocksDescriptionController::onInsertingButtonBeforeAddressClicked(AddressOnBlocksDescription address)
+void BlocksDescriptionController::onAction(HintAction action, BlockDescription blockDescription)
 {
-	
+	switch(action)
+	{
+	case HintAction::HintUpdate:
+		field->updateBlockDescription(blockDescription);
+		break;
+	default:
+		break;
+	}
 }
 
-void BlocksDescriptionController::onBlockDescriptionClicked(AddressOnBlocksDescription address)
+void BlocksDescriptionController::onHintInsertBefore(AddressOnBlocksDescription address)
 {
-	
+	int line = address.getLine();
+	int count = address.getCount();
+	if (count < field->numberOfBlocksInLine(line))
+	{
+		field->insertDescriptionBefore(BlockDescription(address, 0));
+	}
+	else if (count == field->numberOfBlocksInLine(line))
+	{
+		field->addDescriptionAtEnd(BlockDescription(address, 0));
+	}
 }

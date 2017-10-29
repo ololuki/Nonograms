@@ -66,7 +66,9 @@ HEADERS  += mainwindow.h \
     widgets/common/DrawableView.h \
     widgets/HintsView.h \
     utils/NVector.h \
-    widgets/common/InsertingButtonEventFilter.h
+    widgets/common/InsertingButtonEventFilter.h \
+    controller/action/CellAction.h \
+    controller/action/HintAction.h
 
 FORMS    += mainwindow.ui \
     sizedialog.ui

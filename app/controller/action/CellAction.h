@@ -18,41 +18,23 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREAVIEW_H
-#define DRAWINGAREAVIEW_H
-
-#include <memory>
-#include <QWidget>
-#include "field/DrawingAreaField.h"
-#include "common/FieldViewConstants.h"
-#include "common/DrawableView.h"
-#include "controller/action/CellAction.h"
+#ifndef CELLACTION_H
+#define CELLACTION_H
 
 
-class DrawingAreaView : public DrawableView
+///
+/// \brief Actions for Cell area (drawing area)
+/// forwarded from widgets to controllers.
+///
+enum class CellAction
 {
-	Q_OBJECT
-public:
-	explicit DrawingAreaView(QWidget *parent = 0);
-	virtual ~DrawingAreaView();
-	void setField(const std::shared_ptr<const DrawingAreaField> &field);
+	NoAction,
 	
-public slots:
-	void onPixelChanged(AddressOnDrawingArea address);
+	MakeFilledBlack,
 	
-signals:
-	void action(CellAction action, AddressOnDrawingArea);
+	MakeDot,
 	
-protected:
-	void mousePressEvent(QMouseEvent *event) override;
-	
-private:
-	FieldViewConstants constants;
-	void drawGrid();
-	void drawOnePixel(Pixel pixel);
-	void drawAllPixels();
-	
-	std::shared_ptr<const DrawingAreaField> field;
+	MakeEmpty
 };
 
-#endif // DRAWINGAREAVIEW_H
+#endif // CELLACTION_H

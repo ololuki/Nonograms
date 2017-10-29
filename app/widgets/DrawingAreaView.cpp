@@ -42,7 +42,12 @@ DrawingAreaView::~DrawingAreaView()
 void DrawingAreaView::setField(const std::shared_ptr<const DrawingAreaField> &field)
 {
 	this->field = field;
-	connect(static_cast<const DrawingAreaField*>(this->field.get()), &DrawingAreaField::pixelChanged, this, &DrawingAreaView::onPixelChanged);
+	connect(
+		static_cast<const DrawingAreaField*>(this->field.get()),
+		&DrawingAreaField::pixelChanged,
+		this,
+		&DrawingAreaView::onPixelChanged
+	);
 	
 	int sizeX = field->getWidth() * constants.squareSize + 1;
 	int sizeY = field->getHeight() * constants.squareSize + 1;
@@ -81,7 +86,20 @@ void DrawingAreaView::mousePressEvent(QMouseEvent *event)
 	if (pixelX >= field->getWidth()) return;
 	if (pixelY >= field->getHeight()) return;
 	
-	emit mousePressed(event->button(), AddressOnDrawingArea(pixelX, pixelY));
+	CellAction cellAction;
+	switch(event->button())
+	{
+	case Qt::LeftButton:
+		cellAction = CellAction::MakeFilledBlack;
+		break;
+	case Qt::RightButton:
+		cellAction = CellAction::MakeDot;
+		break;
+	case Qt::MiddleButton:
+		cellAction = CellAction::MakeEmpty;
+		break;
+	}
+	emit action(cellAction, AddressOnDrawingArea(pixelX, pixelY));
 }
 
 void DrawingAreaView::drawGrid()
