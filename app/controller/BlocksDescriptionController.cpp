@@ -29,15 +29,15 @@ BlocksDescriptionController::BlocksDescriptionController(std::shared_ptr<BlocksD
 	
 	connect(
 		hintsView,
-		static_cast<void (HintsView::*)(HintAction, AddressOnBlocksDescription)>(&HintsView::action),
+		static_cast<void (HintsView::*)(HintAction, AddressOfHint)>(&HintsView::action),
 		this,
-		static_cast<void (BlocksDescriptionController::*)(HintAction, AddressOnBlocksDescription)>(&BlocksDescriptionController::onAction)
+		static_cast<void (BlocksDescriptionController::*)(HintAction, AddressOfHint)>(&BlocksDescriptionController::onAction)
 	);
 	connect(
 		hintsView,
-		static_cast<void (HintsView::*)(HintAction, BlockDescription)>(&HintsView::action),
+		static_cast<void (HintsView::*)(HintAction, Hint)>(&HintsView::action),
 		this,
-		static_cast<void (BlocksDescriptionController::*)(HintAction, BlockDescription)>(&BlocksDescriptionController::onAction)
+		static_cast<void (BlocksDescriptionController::*)(HintAction, Hint)>(&BlocksDescriptionController::onAction)
 	);
 	
 	connect(
@@ -65,7 +65,7 @@ void BlocksDescriptionController::replaceField(std::shared_ptr<BlocksDescription
 	hintsView->setField(field);
 }
 
-void BlocksDescriptionController::onAction(HintAction action, AddressOnBlocksDescription address)
+void BlocksDescriptionController::onAction(HintAction action, AddressOfHint address)
 {
 	switch(action)
 	{
@@ -79,35 +79,35 @@ void BlocksDescriptionController::onAction(HintAction action, AddressOnBlocksDes
 		onHintInsertBefore(address);
 		break;
 	case HintAction::HintDelete:
-		field->deleteDescription(BlockDescription(address, 0));
+		field->deleteHint(Hint(address, 0));
 		break;
 	default:
 		break;
 	}
 }
 
-void BlocksDescriptionController::onAction(HintAction action, BlockDescription blockDescription)
+void BlocksDescriptionController::onAction(HintAction action, Hint hint)
 {
 	switch(action)
 	{
 	case HintAction::HintUpdate:
-		field->updateBlockDescription(blockDescription);
+		field->updateHint(hint);
 		break;
 	default:
 		break;
 	}
 }
 
-void BlocksDescriptionController::onHintInsertBefore(AddressOnBlocksDescription address)
+void BlocksDescriptionController::onHintInsertBefore(AddressOfHint address)
 {
 	int line = address.getLine();
 	int count = address.getCount();
 	if (count < field->numberOfBlocksInLine(line))
 	{
-		field->insertDescriptionBefore(BlockDescription(address, 0));
+		field->insertHintBefore(Hint(address, 0));
 	}
 	else if (count == field->numberOfBlocksInLine(line))
 	{
-		field->addDescriptionAtEnd(BlockDescription(address, 0));
+		field->addHintAtEnd(Hint(address, 0));
 	}
 }

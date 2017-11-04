@@ -40,18 +40,18 @@ public:
 	
 signals:
 	// signals emited to controller
-	void action(HintAction action, AddressOnBlocksDescription address);
-	void action(HintAction action, BlockDescription blockDescription);
+	void action(HintAction action, AddressOfHint address);
+	void action(HintAction action, Hint hint);
 	
 public slots:
 	// invoked by model to inform about changes
 	void onDataChanged();
 	// invoked by model to inform about changes
-	void onLineOfHintsChanged(AddressOnBlocksDescription address);
+	void onLineOfHintsChanged(AddressOfHint address);
 	// invoked by controller
-	void showInsertingButtonBefore(AddressOnBlocksDescription address);
+	void showInsertingButtonBefore(AddressOfHint address);
 	// invoked by controller
-	void showDescriptionEditingBox(AddressOnBlocksDescription address);
+	void showDescriptionEditingBox(AddressOfHint address);
 	
 private slots:
 	void onInsertingButtonClick();
@@ -67,20 +67,20 @@ protected:
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
 	
-	bool isPointOnDefinedDescription(QPoint screenPoint);
+	bool isPointOnDefinedHint(QPoint screenPoint);
 	void redrawAll();
-	void drawOneBlockDescription(BlockDescription blockDescription);
-	void drawCleanOneBlock(AddressOnBlocksDescription address);
+	void drawOneHint(Hint hint);
+	void undrawOneHint(AddressOfHint address);
 	void initTextBox();
 	void hideTextBox();
 	void saveTextBoxToHint();
-	void moveAndShowTextBox(AddressOnBlocksDescription address);
+	void moveAndShowTextBox(AddressOfHint address);
 	void initInsertingButton();
 	void hideInsertingButton();
-	void moveAndShowInsertingButton(AddressOnBlocksDescription address);
+	void moveAndShowInsertingButton(AddressOfHint address);
 	
 private:
-	AddressOnBlocksDescription::orientation orientation;
+	AddressOfHint::orientation orientation;
 	InsertingButtonEventFilter insertingButtonEventFilter;
 };
 

@@ -22,16 +22,16 @@
 #include <QDebug>
 
 
-DrawingAreaController::DrawingAreaController(std::shared_ptr<DrawingAreaField> newField, DrawingAreaView *drawingAreaView)
+DrawingAreaController::DrawingAreaController(std::shared_ptr<DrawingAreaField> newField, CellsView *cellsView)
 	: field(newField)
 {
 	qDebug() << "DrawingAreaController constructor";
-	this->drawingAreaView = drawingAreaView;
-	this->drawingAreaView->setField(field);
+	this->cellsView = cellsView;
+	this->cellsView->setField(field);
 	
 	connect(
-		drawingAreaView,
-		&DrawingAreaView::action,
+		this->cellsView,
+		&CellsView::action,
 		this,
 		&DrawingAreaController::onAction
 	);
@@ -40,31 +40,31 @@ DrawingAreaController::DrawingAreaController(std::shared_ptr<DrawingAreaField> n
 DrawingAreaController::~DrawingAreaController()
 {
 	qDebug() << "DrawingAreaController destructor";
-	disconnect(drawingAreaView, &DrawingAreaView::action, this, &DrawingAreaController::onAction);
+	disconnect(this->cellsView, &CellsView::action, this, &DrawingAreaController::onAction);
 }
 
 void DrawingAreaController::replaceField(std::shared_ptr<DrawingAreaField> newField)
 {
 	this->field = newField;
-	drawingAreaView->setField(field);
+	cellsView->setField(field);
 }
 
-void DrawingAreaController::onAction(CellAction action, AddressOnDrawingArea address)
+void DrawingAreaController::onAction(CellAction action, AddressOfCell address)
 {
-	Pixel pixel(address);
+	Cell cell(address);
 	switch(action)
 	{
 	case CellAction::MakeFilledBlack:
-		pixel.makeFilledBlack();
+		cell.makeFilledBlack();
 		break;
 	case CellAction::MakeDot:
-		pixel.makeDot();
+		cell.makeDot();
 		break;
 	case CellAction::MakeEmpty:
-		pixel.makeEmpty();
+		cell.makeEmpty();
 		break;
 	default:
 		break;
 	}
-	field->setPixel(pixel);
+	field->setCell(cell);
 }

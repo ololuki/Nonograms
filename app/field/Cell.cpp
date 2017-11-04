@@ -18,11 +18,11 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include "AddressOnBlocksDescription.h"
+#include "Cell.h"
 
 
-AddressOnBlocksDescription::AddressOnBlocksDescription(orientation o, int line, int blockNumber)
-	: o(o), line(line), count(blockNumber)
+Cell::Cell(AddressOfCell address, cellSign sign)
+	: address(address), sign(sign)
 {
 	
 }

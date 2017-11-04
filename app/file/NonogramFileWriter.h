@@ -25,9 +25,9 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include "field/Pixel.h"
+#include "field/Cell.h"
 #include "field/LineOfHints.h"
-#include "field/BlockDescription.h"
+#include "field/Hint.h"
 
 
 ///
@@ -47,13 +47,13 @@ private:
 	
 	QJsonObject serializeSize();
 	QJsonArray serializeDrawingArea();
-	QJsonObject serializePixel(Pixel pixel);
+	QJsonObject serializeCell(Cell cell);
 	
 	QJsonArray serializeColumnsDescription();
 	QJsonArray serializeRowsDescription();
-	QJsonObject serializeLineDescription(int lineNumber, AddressOnBlocksDescription::orientation orientation);
-	QJsonArray serializeArrayOfBlockDescription(int lineNumber, int lineLength, AddressOnBlocksDescription::orientation orientation);
-	QJsonObject serializeBlockDescription(AddressOnBlocksDescription address);
+	QJsonObject serializeLineDescription(int lineNumber, AddressOfHint::orientation orientation);
+	QJsonArray serializeHintsInLine(int lineNumber, int lineLength, AddressOfHint::orientation orientation);
+	QJsonObject serializeHint(AddressOfHint address);
 };
 
 #endif // NONOGRAMFILEWRITER_H

@@ -18,4 +18,25 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include "BlockDescription.h"
+#include "LineOfCells.h"
+
+
+LineOfCells::LineOfCells(NVector<Cell> vectorToCopy)
+	: cells(vectorToCopy)
+{
+}
+
+int LineOfCells::size()
+{
+	return cells.size();
+}
+
+Cell &LineOfCells::getCellAt(const int cellNumber)
+{
+	return cells.operator[](cellNumber);
+}
+
+Cell &LineOfCells::operator[](const int cellNumber)
+{
+	return cells.operator[](cellNumber);
+}

@@ -23,7 +23,7 @@
 
 #include <vector>
 #include "utils/NVector.h"
-#include "field/BlockDescription.h"
+#include "field/Hint.h"
 
 ///
 /// \brief LineOfHints contains Hints (blocks descriptions) for one line of picture
@@ -31,19 +31,19 @@
 class LineOfHints
 {
 public:
-	LineOfHints(NVector<BlockDescription> vectorToCopy);
+	LineOfHints(NVector<Hint> vectorToCopy);
 	int size();
 	
-	void updateBlockDescription(BlockDescription blockDescription);
-	void insertDescriptionBefore(BlockDescription blockDescription);
-	void addDescriptionAtEnd(BlockDescription blockDescription);
-	void deleteDescription(BlockDescription blockDescription);
+	void updateHint(Hint hint);
+	void insertHintBefore(Hint blockDescription);
+	void addDescriptionAtEnd(Hint blockDescription);
+	void deleteDescription(Hint blockDescription);
 	
-	BlockDescription& operator[](const int count);
-	void push_back(BlockDescription hint);
+	Hint& operator[](const int count);
+	void push_back(Hint hint);
 	void pop_back();
 private:
-	NVector<BlockDescription> hints;
+	NVector<Hint> hints;
 };
 
 #endif // LINEOFHINTS_H

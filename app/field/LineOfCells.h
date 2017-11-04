@@ -18,29 +18,29 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREACONTROLLER_H
-#define DRAWINGAREACONTROLLER_H
+#ifndef LINEOFCELLS_H
+#define LINEOFCELLS_H
 
-#include "field/WholeField.h"
-#include "widgets/CellsView.h"
-#include "action/CellAction.h"
+#include "Cell.h"
+#include "vector"
+#include "utils/NVector.h"
 
-class DrawingAreaController : public QObject
+
+///
+/// \brief LineOfCells stores one line of Cells.
+/// Orientation of the line (horizontal or vertical) is arbitrary.
+/// Cells are accesible by operator[].
+///
+class LineOfCells
 {
-	Q_OBJECT
 public:
-	DrawingAreaController(std::shared_ptr<DrawingAreaField> newField, CellsView *cellsView);
-	~DrawingAreaController();
-	void replaceField(std::shared_ptr<DrawingAreaField> newField);
+	LineOfCells(NVector<Cell> vectorToCopy);
+	int size();
 	
-private slots:
-	void onAction(CellAction action, AddressOfCell address);
-	
-protected:
-	std::shared_ptr<DrawingAreaField> field;
-	
+	Cell& getCellAt(const int cellNumber);
+	Cell& operator[](const int cellNumber);
 private:
-	CellsView *cellsView;
+	NVector<Cell> cells;
 };
 
-#endif // DRAWINGAREACONTROLLER_H
+#endif // LINEOFCELLS_H

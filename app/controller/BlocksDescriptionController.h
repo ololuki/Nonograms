@@ -22,8 +22,8 @@
 #define BLOCKSDESCRIPTIONCONTROLLER_H
 
 #include <QObject>
-#include "field/AddressOnBlocksDescription.h"
-#include "field/BlockDescription.h"
+#include "field/AddressOfHint.h"
+#include "field/Hint.h"
 #include <memory>
 #include "widgets/HintsView.h"
 #include "action/HintAction.h"
@@ -39,17 +39,17 @@ public:
 	
 signals:
 	// invoked by controller
-	void showInsertingButtonBefore(AddressOnBlocksDescription address);
-	void showDescriptionEditingBox(AddressOnBlocksDescription address);
+	void showInsertingButtonBefore(AddressOfHint address);
+	void showDescriptionEditingBox(AddressOfHint address);
 	
 private slots:
 	// on signals emited to controller
-	void onAction(HintAction action, AddressOnBlocksDescription address);
-	void onAction(HintAction action, BlockDescription blockDescription);
+	void onAction(HintAction action, AddressOfHint address);
+	void onAction(HintAction action, Hint hint);
 	
 private:
 	// when inserting button is clicked
-	void onHintInsertBefore(AddressOnBlocksDescription address);
+	void onHintInsertBefore(AddressOfHint address);
 	
 	std::shared_ptr<BlocksDescriptionField> field;
 	HintsView *hintsView;

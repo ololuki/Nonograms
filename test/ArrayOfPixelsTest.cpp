@@ -7,40 +7,40 @@ TEST_CASE("ArrayOfPixels") {
 	unsigned int y = x + 1;
 	ArrayOfPixels array(x, y);
 			
-	SECTION( "operator(x, y) should return reference to Pixel" ) {
-		Pixel &pixel = array(0, 0);
+	SECTION( "operator(x, y) should return reference to Cell" ) {
+		Cell &cell = array(0, 0);
 		REQUIRE( array(0, 0).isDot() == false );
-		pixel.makeDot();
+		cell.makeDot();
 		REQUIRE( array(0, 0).isDot() == true );
 	}
 	
-	SECTION( "assigning pixel object to Pixel& referenced by operator() (array(x, y)) should work" ) {
-		Pixel pixel = Pixel(AddressOnDrawingArea(0, 0));
-		pixel.makeEmpty();
-		array(0, 0) = pixel;
+	SECTION( "assigning cell object to Cell& referenced by operator() (array(x, y)) should work" ) {
+		Cell cell = Cell(AddressOfCell(0, 0));
+		cell.makeEmpty();
+		array(0, 0) = cell;
 		REQUIRE( array(0, 0).isEmpty() );
-		pixel.makeDot();
-		array(0, 0) = pixel;
+		cell.makeDot();
+		array(0, 0) = cell;
 		REQUIRE( array(0, 0).isDot() );
 	}
 	
-	SECTION( "assigning pixel object to Pixel& referenced by operator() (array(x, y)) should be by value, NOT reference" ) {
-		Pixel pixel = Pixel(AddressOnDrawingArea(0, 0));
-		pixel.makeEmpty();
-		array(0, 0) = pixel;
+	SECTION( "assigning cell object to Cell& referenced by operator() (array(x, y)) should be by value, NOT reference" ) {
+		Cell cell = Cell(AddressOfCell(0, 0));
+		cell.makeEmpty();
+		array(0, 0) = cell;
 		REQUIRE( array(0, 0).isEmpty() );
-		pixel.makeDot();
+		cell.makeDot();
 		REQUIRE( array(0, 0).isEmpty() );
 	}
 	
-	SECTION( "operator(x, y) should return Pixel with suitable Address" ) {
-		REQUIRE( array(0, 0).getAddress() == AddressOnDrawingArea(0, 0) );
-		REQUIRE( array(0, 1).getAddress() == AddressOnDrawingArea(0, 1) );
-		REQUIRE( array(1, 0).getAddress() == AddressOnDrawingArea(1, 0) );
+	SECTION( "operator(x, y) should return Cell with suitable Address" ) {
+		REQUIRE( array(0, 0).getAddress() == AddressOfCell(0, 0) );
+		REQUIRE( array(0, 1).getAddress() == AddressOfCell(0, 1) );
+		REQUIRE( array(1, 0).getAddress() == AddressOfCell(1, 0) );
 	}
 	
 	SECTION( "order of ctor arguments should be same as order of operator(), eg. array(x, y) <=> ArrayOfPixels(x, y)" ) {
-		REQUIRE( array(x-1, y-1).getAddress() == AddressOnDrawingArea(x-1, y-1) );
+		REQUIRE( array(x-1, y-1).getAddress() == AddressOfCell(x-1, y-1) );
 	}
 	
 	SECTION( "width() and height() should return width and height of array" ) {

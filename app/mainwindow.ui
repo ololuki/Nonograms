@@ -34,13 +34,13 @@
          <widget class="QWidget" name="centeredField" native="true">
           <layout class="QGridLayout" name="gridLayout_3">
            <item row="1" column="1">
-            <widget class="DrawingAreaView" name="drawingArea" native="true"/>
+            <widget class="CellsView" name="cells" native="true"/>
            </item>
            <item row="0" column="1" alignment="Qt::AlignBottom">
-            <widget class="HintsView" name="columnsDescription" native="true"/>
+            <widget class="HintsView" name="columnsHints" native="true"/>
            </item>
            <item row="1" column="0" alignment="Qt::AlignRight">
-            <widget class="HintsView" name="rowsDescription" native="true"/>
+            <widget class="HintsView" name="rowsHints" native="true"/>
            </item>
           </layout>
          </widget>
@@ -173,9 +173,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>DrawingAreaView</class>
+   <class>CellsView</class>
    <extends>QWidget</extends>
-   <header>widgets/DrawingAreaView.h</header>
+   <header>widgets/CellsView.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

@@ -2,8 +2,8 @@
 #define DRAWINGAREAFIELD_H
 
 #include <QObject>
-#include "AddressOnDrawingArea.h"
-#include "Pixel.h"
+#include "AddressOfCell.h"
+#include "Cell.h"
 #include "ArrayOfPixels.h"
 
 
@@ -19,10 +19,10 @@ public:
 	~DrawingAreaField();
 	int getWidth() const {return array.width();}
 	int getHeight() const {return array.height();}
-	virtual Pixel getPixel(AddressOnDrawingArea address) const;
-	virtual void setPixel(Pixel pixel);
+	virtual Cell getCell(AddressOfCell address) const;
+	virtual void setCell(Cell cell);
 signals:
-	void pixelChanged(AddressOnDrawingArea address);
+	void cellChanged(AddressOfCell address);
 protected:
 	ArrayOfPixels array;
 };

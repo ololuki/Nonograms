@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include "DrawingAreaView.h"
+#include "CellsView.h"
 #include <QColor>
 #include <QImage>
 #include <QPoint>
@@ -28,63 +28,63 @@
 #include <QSize>
 
 
-DrawingAreaView::DrawingAreaView(QWidget *parent)
+CellsView::CellsView(QWidget *parent)
     : DrawableView(parent)
 {
 	
 }
 
-DrawingAreaView::~DrawingAreaView()
+CellsView::~CellsView()
 {
 	
 }
 
-void DrawingAreaView::setField(const std::shared_ptr<const DrawingAreaField> &field)
+void CellsView::setField(const std::shared_ptr<const DrawingAreaField> &field)
 {
 	this->field = field;
 	connect(
 		static_cast<const DrawingAreaField*>(this->field.get()),
-		&DrawingAreaField::pixelChanged,
+		&DrawingAreaField::cellChanged,
 		this,
-		&DrawingAreaView::onPixelChanged
+		&CellsView::onCellChanged
 	);
 	
 	int sizeX = field->getWidth() * constants.squareSize + 1;
 	int sizeY = field->getHeight() * constants.squareSize + 1;
 	QSize size(sizeX, sizeY);
 	resize(size);
-	drawAllPixels();
+	drawAllCells();
 }
 
-void DrawingAreaView::drawAllPixels()
+void CellsView::drawAllCells()
 {
 	for (int y = 0; y < field->getHeight(); y++)
 	{
 		for (int x = 0; x < field->getWidth(); x++)
 		{
-			AddressOnDrawingArea address(x, y);
-			drawOnePixel(field->getPixel(address));
+			AddressOfCell address(x, y);
+			drawOneCell(field->getCell(address));
 		}
 	}
 	drawGrid();
 	update();
 }
 
-void DrawingAreaView::onPixelChanged(AddressOnDrawingArea address)
+void CellsView::onCellChanged(AddressOfCell address)
 {
-	drawOnePixel(field->getPixel(address));
+	drawOneCell(field->getCell(address));
 	update();
 }
 
-void DrawingAreaView::mousePressEvent(QMouseEvent *event)
+void CellsView::mousePressEvent(QMouseEvent *event)
 {
 	QPoint currentPoint = event->pos();
 	
-	int pixelX = currentPoint.x() / constants.squareSize;
-	int pixelY = currentPoint.y() / constants.squareSize;
+	int cellX = currentPoint.x() / constants.squareSize;
+	int cellY = currentPoint.y() / constants.squareSize;
 	
-	if (pixelX >= field->getWidth()) return;
-	if (pixelY >= field->getHeight()) return;
+	if (cellX >= field->getWidth()) return;
+	if (cellY >= field->getHeight()) return;
 	
 	CellAction cellAction;
 	switch(event->button())
@@ -99,10 +99,10 @@ void DrawingAreaView::mousePressEvent(QMouseEvent *event)
 		cellAction = CellAction::MakeEmpty;
 		break;
 	}
-	emit action(cellAction, AddressOnDrawingArea(pixelX, pixelY));
+	emit action(cellAction, AddressOfCell(cellX, cellY));
 }
 
-void DrawingAreaView::drawGrid()
+void CellsView::drawGrid()
 {
 	QPainter p(&image);
 	p.setPen(QPen(constants.myPenColor, constants.myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -118,25 +118,25 @@ void DrawingAreaView::drawGrid()
 	}
 }
 
-void DrawingAreaView::drawOnePixel(Pixel pixel)
+void CellsView::drawOneCell(Cell cell)
 {
 	QPainter painter(&image);
 	painter.setPen(QPen(constants.myPenColor, constants.myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	
-	int x = pixel.getAddress().getX();
-	int y = pixel.getAddress().getY();
+	int x = cell.getAddress().getX();
+	int y = cell.getAddress().getY();
 	
 	int currentX = x * constants.squareSize;
 	int currentY = y * constants.squareSize;
 	QRect rectangle = QRect(currentX, currentY, constants.squareSize, constants.squareSize);
 	
-	if (pixel.isFilledBlack()) {
+	if (cell.isFilledBlack()) {
 		painter.fillRect(rectangle, Qt::black);
-	} else if (pixel.isDot()) {
+	} else if (cell.isDot()) {
 		painter.fillRect(rectangle, Qt::white);
 		QPoint centerP(currentX + constants.squareSize / 2, currentY + constants.squareSize / 2);
 		painter.drawEllipse(centerP, constants.squareSize / 10, constants.squareSize / 10);
-	}else if (pixel.isEmpty()) {
+	}else if (cell.isEmpty()) {
 		painter.fillRect(rectangle, Qt::white);
 	}
 	painter.drawRect(rectangle);

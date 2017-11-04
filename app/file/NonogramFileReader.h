@@ -25,7 +25,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include "field/Pixel.h"
+#include "field/Cell.h"
 
 
 ///
@@ -45,13 +45,13 @@ private:
 	
 	void parseSize(int &width, int &height, QJsonObject jsonSize);
 	void parseDrawingArea(QJsonArray drawingArea);
-	Pixel parsePixel(QJsonObject jsonPixel);
+	Cell parseCell(QJsonObject jsonCell);
 	
 	void parseColumnsDescription(QJsonArray columnsDescription);
 	void parseRowsDescription(QJsonArray rowsDescription);
-	void parseLineDescription(QJsonObject jsonLineDescription, int lineNumber, AddressOnBlocksDescription::orientation orientation);
-	void parseArrayOfBlockDescription(QJsonArray jsonArray, int lineNumber, int lineLength, AddressOnBlocksDescription::orientation orientation);
-	void parseBlockDescription(QJsonObject jsonBlockDescription, AddressOnBlocksDescription address);
+	void parseLineDescription(QJsonObject jsonLineDescription, int lineNumber, AddressOfHint::orientation orientation);
+	void parseHintsInLine(QJsonArray jsonLineOfHints, int lineNumber, int lineLength, AddressOfHint::orientation orientation);
+	void parseHint(QJsonObject jsonHint, AddressOfHint address);
 };
 
 #endif // NONOGRAMFILEREADER_H

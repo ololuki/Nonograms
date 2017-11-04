@@ -18,29 +18,31 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREACONTROLLER_H
-#define DRAWINGAREACONTROLLER_H
+#ifndef CELL_H
+#define CELL_H
 
-#include "field/WholeField.h"
-#include "widgets/CellsView.h"
-#include "action/CellAction.h"
+#include "AddressOfCell.h"
+#include "cellSign.h"
 
-class DrawingAreaController : public QObject
+
+///
+/// \brief Cell class contains one pixel (box) of picture (field).
+/// It has address in cells (boxes) and sign to draw.
+///
+class Cell
 {
-	Q_OBJECT
 public:
-	DrawingAreaController(std::shared_ptr<DrawingAreaField> newField, CellsView *cellsView);
-	~DrawingAreaController();
-	void replaceField(std::shared_ptr<DrawingAreaField> newField);
-	
-private slots:
-	void onAction(CellAction action, AddressOfCell address);
-	
-protected:
-	std::shared_ptr<DrawingAreaField> field;
-	
+	Cell(AddressOfCell address, cellSign sign = cellSign::SGN_EMPTY);
+	bool isFilledBlack(){return sign == cellSign::SGN_FILL_BLACK;}
+	bool isDot(){return sign == cellSign::SGN_DOT;}
+	bool isEmpty(){return sign == cellSign::SGN_EMPTY;}
+	void makeFilledBlack() {sign = cellSign::SGN_FILL_BLACK;}
+	void makeDot(){sign = cellSign::SGN_DOT;}
+	void makeEmpty(){sign = cellSign::SGN_EMPTY;}
+	AddressOfCell getAddress() {return address;}
 private:
-	CellsView *cellsView;
+	AddressOfCell address;
+	cellSign sign;
 };
 
-#endif // DRAWINGAREACONTROLLER_H
+#endif // CELL_H

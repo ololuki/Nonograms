@@ -22,7 +22,7 @@
 #define ARRAYOFPIXELS_H
 
 #include "utils/NVector.h"
-#include "Pixel.h"
+#include "Cell.h"
 
 
 ///
@@ -39,24 +39,24 @@ public:
 	{
 		for (int i = 0; i < width; i++)
 		{
-			array.push_back(NVector<Pixel>());
+			array.push_back(NVector<Cell>());
 			for (int j = 0; j < height; j++)
 			{
-				array[i].push_back(Pixel(AddressOnDrawingArea(i, j)));
+				array[i].push_back(Cell(AddressOfCell(i, j)));
 			}
 		}
 	}
-	Pixel& operator()(int x, int y)
+	Cell& operator()(int x, int y)
 	{
 		return array.at(x)[y];
 	}
-	Pixel getPixelAt(int x, int y) const {
+	Cell getPixelAt(int x, int y) const {
 		return array.at(x).at(y);
 	}
 	int width() const;
 	int height() const;
 private:
-	NVector<NVector<Pixel>> array;
+	NVector<NVector<Cell>> array;
 };
 
 #endif // ARRAYOFPIXELS_H

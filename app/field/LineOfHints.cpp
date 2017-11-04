@@ -21,7 +21,7 @@
 #include "LineOfHints.h"
 
 
-LineOfHints::LineOfHints(NVector<BlockDescription> vectorToCopy)
+LineOfHints::LineOfHints(NVector<Hint> vectorToCopy)
 	: hints(vectorToCopy)
 {
 }
@@ -31,27 +31,27 @@ int LineOfHints::size()
 	return static_cast<int>(hints.size());
 }
 
-void LineOfHints::updateBlockDescription(BlockDescription blockDescription)
+void LineOfHints::updateHint(Hint hint)
 {
-	AddressOnBlocksDescription address = blockDescription.getAddress();
+	AddressOfHint address = hint.getAddress();
 	int count = address.getCount();
 	if (count >= hints.size()) return;
 	if (hints[count].getAddress() != address) return;
-	hints[count] = blockDescription;
+	hints[count] = hint;
 }
 
-void LineOfHints::insertDescriptionBefore(BlockDescription blockDescription)
+void LineOfHints::insertHintBefore(Hint blockDescription)
 {
 	int line = blockDescription.getAddress().getLine();
 	int count = blockDescription.getAddress().getCount();
 	int length = hints.size();
-	AddressOnBlocksDescription::orientation orientation = blockDescription.getAddress().getOrientation();
+	AddressOfHint::orientation orientation = blockDescription.getAddress().getOrientation();
 	if (count >= length) return;
 	
-	AddressOnBlocksDescription addressOfNewLast = AddressOnBlocksDescription(orientation, line, length);
+	AddressOfHint addressOfNewLast = AddressOfHint(orientation, line, length);
 	
 	int indexOfCurrentLastBlock = length - 1;
-	BlockDescription newLastBlock = hints[indexOfCurrentLastBlock];
+	Hint newLastBlock = hints[indexOfCurrentLastBlock];
 	newLastBlock.updateAddress(addressOfNewLast);
 	hints.push_back(newLastBlock);
 	
@@ -62,12 +62,12 @@ void LineOfHints::insertDescriptionBefore(BlockDescription blockDescription)
 	hints[count] = blockDescription;
 }
 
-BlockDescription &LineOfHints::operator[](const int count)
+Hint &LineOfHints::operator[](const int count)
 {
 	return hints.operator[](static_cast<size_t>(count));
 }
 
-void LineOfHints::push_back(BlockDescription hint)
+void LineOfHints::push_back(Hint hint)
 {
 	hints.push_back(hint);
 }

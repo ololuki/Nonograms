@@ -16,16 +16,10 @@ DEFINES += QT_DEPRECATED_WARNINGS #emit warning if any deprecated feature is use
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    widgets/DrawingAreaView.cpp \
-    field/AddressOnDrawingArea.cpp \
-    field/Pixel.cpp \
     field/DrawingAreaField.cpp \
     field/WholeField.cpp \
-    field/LineOfPixels.cpp \
     field/ArrayOfPixels.cpp \
     field/BlocksDescriptionField.cpp \
-    field/AddressOnBlocksDescription.cpp \
-    field/BlockDescription.cpp \
     field/LineOfHints.cpp \
     SizeDialog.cpp \
     file/FileManager.cpp \
@@ -37,20 +31,19 @@ SOURCES += main.cpp\
     widgets/common/DrawableView.cpp \
     widgets/HintsView.cpp \
     utils/NVector.cpp \
-    widgets/common/InsertingButtonEventFilter.cpp
+    widgets/common/InsertingButtonEventFilter.cpp \
+    field/AddressOfHint.cpp \
+    field/AddressOfCell.cpp \
+    field/Cell.cpp \
+    field/Hint.cpp \
+    field/LineOfCells.cpp \
+    widgets/CellsView.cpp
 
 HEADERS  += mainwindow.h \
-    widgets/DrawingAreaView.h \
-    field/AddressOnDrawingArea.h \
-    field/pixelSign.h \
-    field/Pixel.h \
     field/DrawingAreaField.h \
     field/WholeField.h \
-    field/LineOfPixels.h \
     field/ArrayOfPixels.h \
     field/BlocksDescriptionField.h \
-    field/AddressOnBlocksDescription.h \
-    field/BlockDescription.h \
     field/LineOfHints.h \
     field/FieldMode.h \
     SizeDialog.h \
@@ -68,7 +61,14 @@ HEADERS  += mainwindow.h \
     utils/NVector.h \
     widgets/common/InsertingButtonEventFilter.h \
     controller/action/CellAction.h \
-    controller/action/HintAction.h
+    controller/action/HintAction.h \
+    field/AddressOfHint.h \
+    field/AddressOfCell.h \
+    field/Cell.h \
+    field/cellSign.h \
+    field/Hint.h \
+    field/LineOfCells.h \
+    widgets/CellsView.h
 
 FORMS    += mainwindow.ui \
     sizedialog.ui

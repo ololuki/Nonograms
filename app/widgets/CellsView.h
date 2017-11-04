@@ -18,29 +18,41 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREACONTROLLER_H
-#define DRAWINGAREACONTROLLER_H
+#ifndef CELLSVIEW_H
+#define CELLSVIEW_H
 
-#include "field/WholeField.h"
-#include "widgets/CellsView.h"
-#include "action/CellAction.h"
+#include <memory>
+#include <QWidget>
+#include "field/DrawingAreaField.h"
+#include "common/FieldViewConstants.h"
+#include "common/DrawableView.h"
+#include "controller/action/CellAction.h"
 
-class DrawingAreaController : public QObject
+
+class CellsView : public DrawableView
 {
 	Q_OBJECT
 public:
-	DrawingAreaController(std::shared_ptr<DrawingAreaField> newField, CellsView *cellsView);
-	~DrawingAreaController();
-	void replaceField(std::shared_ptr<DrawingAreaField> newField);
+	explicit CellsView(QWidget *parent = 0);
+	virtual ~CellsView();
+	void setField(const std::shared_ptr<const DrawingAreaField> &field);
 	
-private slots:
-	void onAction(CellAction action, AddressOfCell address);
+public slots:
+	void onCellChanged(AddressOfCell address);
+	
+signals:
+	void action(CellAction action, AddressOfCell);
 	
 protected:
-	std::shared_ptr<DrawingAreaField> field;
+	void mousePressEvent(QMouseEvent *event) override;
 	
 private:
-	CellsView *cellsView;
+	FieldViewConstants constants;
+	void drawGrid();
+	void drawOneCell(Cell cell);
+	void drawAllCells();
+	
+	std::shared_ptr<const DrawingAreaField> field;
 };
 
-#endif // DRAWINGAREACONTROLLER_H
+#endif // CELLSVIEW_H

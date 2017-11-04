@@ -18,29 +18,4 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREACONTROLLER_H
-#define DRAWINGAREACONTROLLER_H
-
-#include "field/WholeField.h"
-#include "widgets/CellsView.h"
-#include "action/CellAction.h"
-
-class DrawingAreaController : public QObject
-{
-	Q_OBJECT
-public:
-	DrawingAreaController(std::shared_ptr<DrawingAreaField> newField, CellsView *cellsView);
-	~DrawingAreaController();
-	void replaceField(std::shared_ptr<DrawingAreaField> newField);
-	
-private slots:
-	void onAction(CellAction action, AddressOfCell address);
-	
-protected:
-	std::shared_ptr<DrawingAreaField> field;
-	
-private:
-	CellsView *cellsView;
-};
-
-#endif // DRAWINGAREACONTROLLER_H
+#include "AddressOfCell.h"

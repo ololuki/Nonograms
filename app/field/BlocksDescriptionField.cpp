@@ -21,16 +21,16 @@
 #include "BlocksDescriptionField.h"
 
 
-BlocksDescriptionField::BlocksDescriptionField(int numberOfLines, AddressOnBlocksDescription::orientation o)
+BlocksDescriptionField::BlocksDescriptionField(int numberOfLines, AddressOfHint::orientation o)
 {
 	this->numberOfLines = numberOfLines;
 	this->orientation = o;
 	const int defaultBlockSize = 0;
 	for(int i = 0; i < numberOfLines; i++)
 	{
-		AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, i, 0);
-		NVector<BlockDescription> line;
-		line.push_back(BlockDescription(address, defaultBlockSize));
+		AddressOfHint address = AddressOfHint(orientation, i, 0);
+		NVector<Hint> line;
+		line.push_back(Hint(address, defaultBlockSize));
 		linesOfHints.push_back(line);
 	}
 }
@@ -40,48 +40,48 @@ BlocksDescriptionField::~BlocksDescriptionField()
 	
 }
 
-BlockDescription BlocksDescriptionField::getBlockDescription(AddressOnBlocksDescription address) const
+Hint BlocksDescriptionField::getHint(AddressOfHint address) const
 {
 	return linesOfHints[address.getLine()][address.getCount()];
 }
 
-void BlocksDescriptionField::updateBlockDescription(BlockDescription blockDescription)
+void BlocksDescriptionField::updateHint(Hint hint)
 {
-	int line = blockDescription.getAddress().getLine();
-	linesOfHints[line].updateBlockDescription(blockDescription);
-	emit blocksDescriptionChanged();
+	int line = hint.getAddress().getLine();
+	linesOfHints[line].updateHint(hint);
+	emit hintChanged();
 }
 
-void BlocksDescriptionField::insertDescriptionBefore(BlockDescription blockDescription)
+void BlocksDescriptionField::insertHintBefore(Hint hint)
 {
-	int line = blockDescription.getAddress().getLine();
-	linesOfHints[line].insertDescriptionBefore(blockDescription);
-	emit blocksDescriptionChanged();
+	int line = hint.getAddress().getLine();
+	linesOfHints[line].insertHintBefore(hint);
+	emit hintChanged();
 }
 
-void BlocksDescriptionField::addDescriptionAtEnd(BlockDescription blockDescription)
+void BlocksDescriptionField::addHintAtEnd(Hint hint)
 {
-	int line = blockDescription.getAddress().getLine();
-	int count = blockDescription.getAddress().getCount();
+	int line = hint.getAddress().getLine();
+	int count = hint.getAddress().getCount();
 	if (linesOfHints[line].size() == count)
 	{
-		linesOfHints[line].push_back(blockDescription);
+		linesOfHints[line].push_back(hint);
 	}
-	emit blocksDescriptionChanged();
+	emit hintChanged();
 }
 
-void BlocksDescriptionField::deleteDescription(BlockDescription blockDescription)
+void BlocksDescriptionField::deleteHint(Hint hint)
 {
-	int line = blockDescription.getAddress().getLine();
-	int count = blockDescription.getAddress().getCount();
+	int line = hint.getAddress().getLine();
+	int count = hint.getAddress().getCount();
 	if (linesOfHints[line].size() <= 1) return;
 	int newLength = linesOfHints[line].size() - 1;
 	for(int i = count; i < newLength; i++)
 	{
-		linesOfHints[line][i].setBlockSize( linesOfHints[line][i+1].getBlockSize());
+		linesOfHints[line][i].setBlockSize(linesOfHints[line][i+1].getBlockSize());
 	}
 	linesOfHints[line].pop_back();
-	emit blocksDescriptionChanged();
+	emit hintChanged();
 }
 
 int BlocksDescriptionField::numberOfBlocksInLine(int lineNumber) const
@@ -94,7 +94,7 @@ int BlocksDescriptionField::getNumberOfLines() const
 	return numberOfLines;
 }
 
-int BlocksDescriptionField::allBlocksDescriptionLength() const
+int BlocksDescriptionField::allHintsLength() const
 {
 	int length = 0;
 	for (int i = 0; i < numberOfLines; i++)
@@ -104,12 +104,12 @@ int BlocksDescriptionField::allBlocksDescriptionLength() const
 	return length;
 }
 
-AddressOnBlocksDescription::orientation BlocksDescriptionField::getOrientation() const
+AddressOfHint::orientation BlocksDescriptionField::getOrientation() const
 {
 	return orientation;
 }
 
-bool BlocksDescriptionField::isDefinedDescriptionAt(AddressOnBlocksDescription address) const
+bool BlocksDescriptionField::isDefinedHintAt(AddressOfHint address) const
 {
 	int line = address.getLine();
 	if (line >= linesOfHints.size()) return false;

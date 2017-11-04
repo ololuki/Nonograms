@@ -22,8 +22,8 @@
 #define BLOCKSDESCRIPTIONFIELD_H
 
 #include <QObject>
-#include "AddressOnBlocksDescription.h"
-#include "BlockDescription.h"
+#include "AddressOfHint.h"
+#include "Hint.h"
 #include "LineOfHints.h"
 #include "utils/NVector.h"
 
@@ -39,25 +39,25 @@ class BlocksDescriptionField : public QObject
 {
 	Q_OBJECT
 public:
-	BlocksDescriptionField(int numberOfLines, AddressOnBlocksDescription::orientation o);
+	BlocksDescriptionField(int numberOfLines, AddressOfHint::orientation o);
 	virtual ~BlocksDescriptionField();
-	virtual BlockDescription getBlockDescription(AddressOnBlocksDescription address) const;
-	virtual void updateBlockDescription(BlockDescription blockDescription);
-	virtual void insertDescriptionBefore(BlockDescription blockDescription);
-	virtual void addDescriptionAtEnd(BlockDescription blockDescription);
-	virtual void deleteDescription(BlockDescription blockDescription);
+	virtual Hint getHint(AddressOfHint address) const;
+	virtual void updateHint(Hint hint);
+	virtual void insertHintBefore(Hint hint);
+	virtual void addHintAtEnd(Hint hint);
+	virtual void deleteHint(Hint hint);
 	
 	virtual int numberOfBlocksInLine(int lineNumber) const;
 	virtual int getNumberOfLines() const;
-	virtual int allBlocksDescriptionLength() const;
-	virtual AddressOnBlocksDescription::orientation getOrientation() const;
+	virtual int allHintsLength() const;
+	virtual AddressOfHint::orientation getOrientation() const;
 	
-	virtual bool isDefinedDescriptionAt(AddressOnBlocksDescription address) const;
+	virtual bool isDefinedHintAt(AddressOfHint address) const;
 signals:
-	void blocksDescriptionChanged();
+	void hintChanged();
 private:
 	int numberOfLines;
-	AddressOnBlocksDescription::orientation orientation;
+	AddressOfHint::orientation orientation;
 	NVector<LineOfHints> linesOfHints;
 };
 

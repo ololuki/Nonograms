@@ -18,32 +18,39 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef BLOCKDESCRIPTION_H
-#define BLOCKDESCRIPTION_H
-
-#include "AddressOnBlocksDescription.h"
-#include "pixelSign.h"
+#ifndef ADDRESSOFHINT_H
+#define ADDRESSOFHINT_H
 
 
 ///
-/// \brief BlockDescription class contains one block description (number) of picture (field). 
-/// Sign is for future use - every block is currently black.
+/// \brief Contains address of every Block Description (hint) on BlocksDescriptionField
+/// address counts from top do bottom
+/// and from left to right
 ///
-class BlockDescription
+class AddressOfHint
 {
 public:
-	BlockDescription(AddressOnBlocksDescription address, int blockSize, pixelSign sign = pixelSign::SGN_FILL_BLACK)
-		: address(address), blockSize(blockSize), sign(sign) {}
-	int getBlockSize() {return blockSize;}
-	void setBlockSize(int blockSize) {this->blockSize = blockSize;}
-	bool isFilledBlack(){return sign == pixelSign::SGN_FILL_BLACK;}
-	void makeFilledBlack() {sign = pixelSign::SGN_FILL_BLACK;}
-	AddressOnBlocksDescription getAddress() {return address;}
-	void updateAddress(AddressOnBlocksDescription newAddress) {address = newAddress;}
+	enum orientation
+	{
+		HORIZONTAL,
+		VERTICAL,
+	};
+	AddressOfHint(orientation o, int line, int count);
+	int getLine() {return line;}
+	int getCount() {return count;}
+	orientation getOrientation() {return o;}
+	bool isColumn() {return o == VERTICAL;}
+	bool isRow() {return o == HORIZONTAL;}
+	bool operator==(const AddressOfHint &address) const {
+		return (this->line == address.line && this->count == address.count && this->o == address.o);
+	}
+	bool operator!=(const AddressOfHint &address) const {
+		return (this->line != address.line || this->count != address.count || this->o != address.o);
+	}
 private:
-	AddressOnBlocksDescription address;
-	int blockSize;
-	pixelSign sign;
+	orientation o;
+	int line;
+	int count;
 };
 
-#endif // BLOCKDESCRIPTION_H
+#endif // ADDRESSOFHINT_H

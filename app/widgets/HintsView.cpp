@@ -39,7 +39,7 @@ void HintsView::setField(const std::shared_ptr<const BlocksDescriptionField> &fi
 	orientation = this->field->getOrientation();
 	connect(
 		static_cast<const BlocksDescriptionField*>(this->field.get()),
-		&BlocksDescriptionField::blocksDescriptionChanged,
+		&BlocksDescriptionField::hintChanged,
 		this,
 		&HintsView::onDataChanged
 	);
@@ -47,13 +47,13 @@ void HintsView::setField(const std::shared_ptr<const BlocksDescriptionField> &fi
 	int initialLengthInSquares = 3;
 	int screenX;
 	int screenY;
-	if (orientation == AddressOnBlocksDescription::VERTICAL)
+	if (orientation == AddressOfHint::VERTICAL)
 	{
-		screenX = static_cast<int>(this->field->getNumberOfLines()) * constants.squareSize + constants.myPenWidth;
+		screenX = this->field->getNumberOfLines() * constants.squareSize + constants.myPenWidth;
 		screenY = initialLengthInSquares * constants.squareSize + constants.myPenWidth;
 	} else {
 		screenX = initialLengthInSquares * constants.squareSize + constants.myPenWidth;
-		screenY = static_cast<int>(this->field->getNumberOfLines()) * constants.squareSize + constants.myPenWidth;
+		screenY = this->field->getNumberOfLines() * constants.squareSize + constants.myPenWidth;
 	}
 	
 	QSize size(screenX, screenY);
@@ -64,24 +64,24 @@ void HintsView::setField(const std::shared_ptr<const BlocksDescriptionField> &fi
 
 void HintsView::onDataChanged()
 {
-	if (orientation == AddressOnBlocksDescription::VERTICAL)
+	if (orientation == AddressOfHint::VERTICAL)
 	{
 		int currentHeight = minimumHeight() / constants.squareSize;
-		if (field->allBlocksDescriptionLength() > currentHeight)
+		if (field->allHintsLength() > currentHeight)
 		{
 			int screenX = field->getNumberOfLines() * constants.squareSize + constants.myPenWidth;
-			int newHeightInSquares = static_cast<int>(field->allBlocksDescriptionLength());
+			int newHeightInSquares = field->allHintsLength();
 			int screenY = newHeightInSquares * constants.squareSize + constants.myPenWidth;
 			QSize size(screenX, screenY);
 			resize(size);
 		}
 	} else {
 		int currentWidth = minimumWidth() / constants.squareSize;
-		if (field->allBlocksDescriptionLength() > currentWidth)
+		if (field->allHintsLength() > currentWidth)
 		{
-			int newWidthInSquares = static_cast<int>(field->allBlocksDescriptionLength());
+			int newWidthInSquares = field->allHintsLength();
 			int screenX = newWidthInSquares * constants.squareSize + constants.myPenWidth;
-			int screenY = static_cast<int>(field->getNumberOfLines()) * constants.squareSize + constants.myPenWidth;
+			int screenY = field->getNumberOfLines() * constants.squareSize + constants.myPenWidth;
 			QSize size(screenX, screenY);
 			resize(size);
 		}
@@ -93,7 +93,7 @@ void HintsView::onDataChanged()
 /// \brief	invoke when one block description is changed
 /// \param	address lying on edited (changed) line of blocks descriptions
 ///
-void HintsView::onLineOfHintsChanged(AddressOnBlocksDescription address)
+void HintsView::onLineOfHintsChanged(AddressOfHint address)
 {
 	
 }
@@ -104,12 +104,12 @@ void HintsView::onLineOfHintsChanged(AddressOnBlocksDescription address)
 /// \param	address of block description after plus button position.
 ///			Plus button will be inserted between this and previous address.
 ///
-void HintsView::showInsertingButtonBefore(AddressOnBlocksDescription address)
+void HintsView::showInsertingButtonBefore(AddressOfHint address)
 {
 	moveAndShowInsertingButton(address);
 }
 
-void HintsView::showDescriptionEditingBox(AddressOnBlocksDescription address)
+void HintsView::showDescriptionEditingBox(AddressOfHint address)
 {
 	moveAndShowTextBox(address);
 }
@@ -118,7 +118,7 @@ void HintsView::onInsertingButtonClick()
 {
 	int line;
 	int count;
-	if (orientation == AddressOnBlocksDescription::VERTICAL)
+	if (orientation == AddressOfHint::VERTICAL)
 	{
 		line = insertingButton->pos().x() / constants.squareSize;
 		count = (insertingButton->pos().y() + constants.squareSize) / constants.squareSize;
@@ -126,7 +126,7 @@ void HintsView::onInsertingButtonClick()
 		line = insertingButton->pos().y() / constants.squareSize;
 		count = (insertingButton->pos().x() + constants.squareSize) / constants.squareSize;
 	}
-	AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, line, count);
+	AddressOfHint address = AddressOfHint(orientation, line, count);
 	emit action(HintAction::HintInsertBefore, address);
 }
 
@@ -134,11 +134,11 @@ void HintsView::mousePressEvent(QMouseEvent *event)
 {
 	saveTextBoxToHint();
 	QPoint screenPoint = event->pos();
-	if (isPointOnDefinedDescription(screenPoint))
+	if (isPointOnDefinedHint(screenPoint))
 	{
 		int hintLine;
 		int hintCount;
-		if (orientation == AddressOnBlocksDescription::VERTICAL)
+		if (orientation == AddressOfHint::VERTICAL)
 		{
 			hintLine = screenPoint.x() / constants.squareSize;
 			hintCount = screenPoint.y() / constants.squareSize;
@@ -147,7 +147,7 @@ void HintsView::mousePressEvent(QMouseEvent *event)
 			hintCount = screenPoint.x() / constants.squareSize;
 		}
 		
-		AddressOnBlocksDescription address(orientation, hintLine, hintCount);
+		AddressOfHint address(orientation, hintLine, hintCount);
 		
 		if (event->button() == Qt::LeftButton)
 		{
@@ -169,7 +169,7 @@ void HintsView::mouseMoveEvent(QMouseEvent *event)
 	int halfSquareSize = constants.squareSize/2;
 	int hintLine;
 	int hintCount;
-	if(orientation == AddressOnBlocksDescription::VERTICAL)
+	if(orientation == AddressOfHint::VERTICAL)
 	{
 		hintLine = screenPoint.x() / constants.squareSize;
 		hintCount = (screenPoint.y() + halfSquareSize) / constants.squareSize;
@@ -178,14 +178,14 @@ void HintsView::mouseMoveEvent(QMouseEvent *event)
 		hintCount = (screenPoint.x() + halfSquareSize) / constants.squareSize;
 	}
 	
-	AddressOnBlocksDescription address(orientation, hintLine, hintCount);
-	if(orientation == AddressOnBlocksDescription::VERTICAL)
+	AddressOfHint address(orientation, hintLine, hintCount);
+	if(orientation == AddressOfHint::VERTICAL)
 	{
 		if ((screenPoint.y() + insertingButtonHeight/2) % constants.squareSize < insertingButtonHeight)
 		{
 			screenPoint.setY(screenPoint.y() - insertingButtonHeight/2);	// remap to area with defined descriptions + area for half of insertButtons
 			if (screenPoint.y() < 0) screenPoint.setY(0);
-			if(isPointOnDefinedDescription(screenPoint))
+			if(isPointOnDefinedHint(screenPoint))
 			{
 				action(HintAction::InsertingButtonHover, address);
 			} else {
@@ -199,7 +199,7 @@ void HintsView::mouseMoveEvent(QMouseEvent *event)
 		{
 			screenPoint.setX(screenPoint.x() - insertingButtonHeight/2);	// remap to area with defined descriptions + area for half of insertButtons
 			if (screenPoint.x() < 0) screenPoint.setX(0);
-			if(isPointOnDefinedDescription(screenPoint))
+			if(isPointOnDefinedHint(screenPoint))
 				moveAndShowInsertingButton(address);
 			else
 				hideInsertingButton();
@@ -209,11 +209,11 @@ void HintsView::mouseMoveEvent(QMouseEvent *event)
 	}
 }
 
-bool HintsView::isPointOnDefinedDescription(QPoint screenPoint)
+bool HintsView::isPointOnDefinedHint(QPoint screenPoint)
 {
 	int line;
 	int count;
-	if(orientation == AddressOnBlocksDescription::VERTICAL)
+	if(orientation == AddressOfHint::VERTICAL)
 	{
 		line = screenPoint.x() / constants.squareSize;
 		count = screenPoint.y() / constants.squareSize;
@@ -221,8 +221,8 @@ bool HintsView::isPointOnDefinedDescription(QPoint screenPoint)
 		line = screenPoint.y() / constants.squareSize;
 		count = screenPoint.x() / constants.squareSize;
 	}
-	AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, line, count);
-	return (field->isDefinedDescriptionAt(address));
+	AddressOfHint address = AddressOfHint(orientation, line, count);
+	return (field->isDefinedHintAt(address));
 }
 
 void HintsView::redrawAll()
@@ -230,34 +230,34 @@ void HintsView::redrawAll()
 	for(int i = 0; i < field->getNumberOfLines(); i++)
 	{
 		int numberOfBlocksInLine = field->numberOfBlocksInLine(i);
-		AddressOnBlocksDescription addressAfterLine = AddressOnBlocksDescription(orientation, i, numberOfBlocksInLine);
-		drawCleanOneBlock(addressAfterLine);
+		AddressOfHint addressAfterLine = AddressOfHint(orientation, i, numberOfBlocksInLine);
+		undrawOneHint(addressAfterLine);
 	}
 	for(int i = 0; i < field->getNumberOfLines(); i++)
 	{
 		int numberOfBlocksInLine = field->numberOfBlocksInLine(i);
 		for(int j = 0; j < numberOfBlocksInLine; j++)
 		{
-			AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, i, j);
-			BlockDescription blockDescription = field->getBlockDescription(address);
-			drawOneBlockDescription(blockDescription);
+			AddressOfHint address = AddressOfHint(orientation, i, j);
+			Hint hint = field->getHint(address);
+			drawOneHint(hint);
 		}
 	}
 }
 
-void HintsView::drawOneBlockDescription(BlockDescription blockDescription)
+void HintsView::drawOneHint(Hint hint)
 {
 	//TODO: start drawing from bottom and check the height of canvas image
-	AddressOnBlocksDescription address = blockDescription.getAddress();
+	AddressOfHint address = hint.getAddress();
 	int screenX;
 	int screenY;
-	if (orientation == AddressOnBlocksDescription::VERTICAL)
+	if (orientation == AddressOfHint::VERTICAL)
 	{
-		screenX = static_cast<int>(address.getLine()) * constants.squareSize;
-		screenY = static_cast<int>(address.getCount()) * constants.squareSize;
+		screenX = address.getLine() * constants.squareSize;
+		screenY = address.getCount() * constants.squareSize;
 	} else {
-		screenX = static_cast<int>(address.getCount()) * constants.squareSize;
-		screenY = static_cast<int>(address.getLine()) * constants.squareSize;
+		screenX = address.getCount() * constants.squareSize;
+		screenY = address.getLine() * constants.squareSize;
 	}
 	QPainter painter(&image);
 	painter.setPen(QPen(constants.myPenColor, constants.myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -269,7 +269,7 @@ void HintsView::drawOneBlockDescription(BlockDescription blockDescription)
 	painter.drawRect(rectangle);
 	
 	//malowanie tekstu z textBoxa na rysunku:
-	QStaticText text = QString::number(blockDescription.getBlockSize());
+	QStaticText text = QString::number(hint.getBlockSize());
 	QFont font("Times", 14);
 	font.setStyleStrategy(QFont::ForceOutline);
 	painter.setFont(font);
@@ -279,17 +279,18 @@ void HintsView::drawOneBlockDescription(BlockDescription blockDescription)
 	update();
 }
 
-void HintsView::drawCleanOneBlock(AddressOnBlocksDescription address)
+/// Draws white square in place of Hint. It clears all borders.
+void HintsView::undrawOneHint(AddressOfHint address)
 {
 	int screenX;
 	int screenY;
-	if(orientation == AddressOnBlocksDescription::VERTICAL)
+	if(orientation == AddressOfHint::VERTICAL)
 	{
-		screenX = static_cast<int>(address.getLine()) * constants.squareSize;
-		screenY = static_cast<int>(address.getCount()) * constants.squareSize;
+		screenX = address.getLine() * constants.squareSize;
+		screenY = address.getCount() * constants.squareSize;
 	} else {
-		screenX = static_cast<int>(address.getCount()) * constants.squareSize;
-		screenY = static_cast<int>(address.getLine()) * constants.squareSize;
+		screenX = address.getCount() * constants.squareSize;
+		screenY = address.getLine() * constants.squareSize;
 	}
 	QPainter painter(&image);
 	QColor backgroundColor = Qt::white;
@@ -322,7 +323,7 @@ void HintsView::saveTextBoxToHint()
 	{
 		int line;
 		int count;
-		if (orientation == AddressOnBlocksDescription::VERTICAL)
+		if (orientation == AddressOfHint::VERTICAL)
 		{
 			line = qTextEdit->pos().x() / constants.squareSize;
 			count = qTextEdit->pos().y() / constants.squareSize;
@@ -330,19 +331,19 @@ void HintsView::saveTextBoxToHint()
 			line = qTextEdit->pos().y() / constants.squareSize;
 			count = qTextEdit->pos().x() / constants.squareSize;
 		}
-		AddressOnBlocksDescription address = AddressOnBlocksDescription(orientation, line, count);
+		AddressOfHint address = AddressOfHint(orientation, line, count);
 		QString textFromBox = qTextEdit->toPlainText();
 		int blockSize = textFromBox.toInt();
-		BlockDescription blockDescription = BlockDescription(address, blockSize);
-		emit action(HintAction::HintUpdate, blockDescription);
+		Hint hint = Hint(address, blockSize);
+		emit action(HintAction::HintUpdate, hint);
 	}
 }
 
-void HintsView::moveAndShowTextBox(AddressOnBlocksDescription address)
+void HintsView::moveAndShowTextBox(AddressOfHint address)
 {
 	int screenX;
 	int screenY;
-	if (orientation == AddressOnBlocksDescription::VERTICAL)
+	if (orientation == AddressOfHint::VERTICAL)
 	{
 		screenX = address.getLine() * constants.squareSize;
 		screenY = address.getCount() * constants.squareSize;
@@ -360,7 +361,7 @@ void HintsView::initInsertingButton()
 {
 	insertingButton = std::make_shared<QPushButton>("+", this);
 	insertingButton->installEventFilter(&insertingButtonEventFilter);
-	if(orientation == AddressOnBlocksDescription::VERTICAL)
+	if(orientation == AddressOfHint::VERTICAL)
 	{
 		insertingButton->setFixedWidth(constants.squareSize);
 		insertingButton->setFixedHeight(insertingButtonHeight);
@@ -385,17 +386,17 @@ void HintsView::hideInsertingButton()
 	insertingButton->hide();
 }
 
-void HintsView::moveAndShowInsertingButton(AddressOnBlocksDescription address)
+void HintsView::moveAndShowInsertingButton(AddressOfHint address)
 {
 	int screenX;
 	int screenY;
-	if (orientation == AddressOnBlocksDescription::VERTICAL)
+	if (orientation == AddressOfHint::VERTICAL)
 	{
-		screenX = static_cast<int>(address.getLine()) * constants.squareSize;
-		screenY = static_cast<int>(address.getCount()) * constants.squareSize - (insertingButtonHeight/2);
+		screenX = address.getLine() * constants.squareSize;
+		screenY = address.getCount() * constants.squareSize - (insertingButtonHeight/2);
 	} else {
-		screenX = static_cast<int>(address.getCount()) * constants.squareSize - (insertingButtonHeight/2);
-		screenY = static_cast<int>(address.getLine()) * constants.squareSize;
+		screenX = address.getCount() * constants.squareSize - (insertingButtonHeight/2);
+		screenY = address.getLine() * constants.squareSize;
 	}
 	insertingButton->move(screenX, screenY);
 	insertingButton->show();

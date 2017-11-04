@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->actionHuman_solving->setActionGroup(group);
 	ui->actionAuto_solving->setActionGroup(group);
 	
-	fieldController = std::make_shared<FieldController>(ui->drawingArea, ui->columnsDescription, ui->rowsDescription);
+	fieldController = std::make_shared<FieldController>(ui->cells, ui->columnsHints, ui->rowsHints);
 }
 
 MainWindow::~MainWindow()

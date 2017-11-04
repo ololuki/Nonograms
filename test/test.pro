@@ -8,10 +8,10 @@ CONFIG += console
 
 # Sources of Test classes
 SOURCES += TestMain.cpp \
-    LineOfPixelsTest.cpp \
-    AddressOnDrawingAreaTest.cpp \
     ArrayOfPixelsTest.cpp \
-    BlocksDescriptionFieldTest.cpp
+    BlocksDescriptionFieldTest.cpp \
+    AddressOfCellTest.cpp \
+    LineOfCellsTest.cpp
 
 
 #Headers of Application classes (classes under tests)
@@ -19,14 +19,14 @@ HEADERS += ../app/field/BlocksDescriptionField.h \
 
 
 #Sources of Application classes (classes under tests)
-SOURCES += ../app/field/AddressOnDrawingArea.cpp \
-    ../app/field/AddressOnBlocksDescription.cpp \
-    ../app/field/BlockDescription.cpp \
+SOURCES += ../app/field/AddressOfCell.cpp \
+    ../app/field/AddressOfHint.cpp \
+    ../app/field/Hint.cpp \
     ../app/field/BlocksDescriptionField.cpp \
     ../app/field/LineOfHints.cpp \
     ../app/field/ArrayOfPixels.cpp \
-    ../app/field/LineOfPixels.cpp \
-    ../app/field/Pixel.cpp \
+    ../app/field/LineOfCells.cpp \
+    ../app/field/Cell.cpp \
 
 
 INCLUDEPATH += \

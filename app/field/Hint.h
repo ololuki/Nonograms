@@ -18,29 +18,32 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREACONTROLLER_H
-#define DRAWINGAREACONTROLLER_H
+#ifndef HINT_H
+#define HINT_H
 
-#include "field/WholeField.h"
-#include "widgets/CellsView.h"
-#include "action/CellAction.h"
+#include "AddressOfHint.h"
+#include "cellSign.h"
 
-class DrawingAreaController : public QObject
+
+///
+/// \brief Hint class contains one block description (number) of picture (field).
+/// Sign is for future use - every block is currently black.
+///
+class Hint
 {
-	Q_OBJECT
 public:
-	DrawingAreaController(std::shared_ptr<DrawingAreaField> newField, CellsView *cellsView);
-	~DrawingAreaController();
-	void replaceField(std::shared_ptr<DrawingAreaField> newField);
-	
-private slots:
-	void onAction(CellAction action, AddressOfCell address);
-	
-protected:
-	std::shared_ptr<DrawingAreaField> field;
-	
+	Hint(AddressOfHint address, int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK)
+		: address(address), blockSize(blockSize), sign(sign) {}
+	int getBlockSize() {return blockSize;}
+	void setBlockSize(int blockSize) {this->blockSize = blockSize;}
+	bool isFilledBlack() {return sign == cellSign::SGN_FILL_BLACK;}
+	void makeFilledBlack() {sign = cellSign::SGN_FILL_BLACK;}
+	AddressOfHint getAddress() {return address;}
+	void updateAddress(AddressOfHint newAddress) {address = newAddress;}
 private:
-	CellsView *cellsView;
+	AddressOfHint address;
+	int blockSize;
+	cellSign sign;
 };
 
-#endif // DRAWINGAREACONTROLLER_H
+#endif // HINT_H

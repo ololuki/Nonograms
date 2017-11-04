@@ -23,16 +23,16 @@
 #include <QDebug>
 
 
-FieldController::FieldController(DrawingAreaView *drawingAreaView, HintsView *columnsDescriptionView, HintsView *rowsDescriptionView)
+FieldController::FieldController(CellsView *cellsView, HintsView *columnsDescriptionView, HintsView *rowsDescriptionView)
 {
 	// create initial field
 	field.reset(new WholeField(14, 10));
 	
-	this->drawingAreaView = drawingAreaView;
+	this->cellsView = cellsView;
 	this->columnsDescriptionView = columnsDescriptionView;
 	this->rowsDescriptionView = rowsDescriptionView;
 	
-	drawingAreaController = std::make_shared<DrawingAreaController>(field->drawingArea(), drawingAreaView);
+	drawingAreaController = std::make_shared<DrawingAreaController>(field->drawingArea(), cellsView);
 	columnsHintsController = std::make_shared<BlocksDescriptionController>(field->columnsDescription(), columnsDescriptionView);
 	rowsHintsController = std::make_shared<BlocksDescriptionController>(field->rowsDescription(), rowsDescriptionView);
 	
@@ -42,12 +42,12 @@ FieldController::FieldController(DrawingAreaView *drawingAreaView, HintsView *co
 void FieldController::addDummyBlock()
 {
 	if (field->getWidth() < 3 || field->getHeight() < 8) return;
-	field->drawingArea()->setPixel(Pixel(AddressOnDrawingArea(2,5), pixelSign::SGN_FILL_BLACK));
-	field->drawingArea()->setPixel(Pixel(AddressOnDrawingArea(2,7), pixelSign::SGN_FILL_BLACK));
-	field->columnsDescription()->updateBlockDescription(BlockDescription(AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, 2, 0), 1));
-	field->columnsDescription()->addDescriptionAtEnd(BlockDescription(AddressOnBlocksDescription(AddressOnBlocksDescription::VERTICAL, 2, 1), 1));
-	field->rowsDescription()->updateBlockDescription(BlockDescription(AddressOnBlocksDescription(AddressOnBlocksDescription::HORIZONTAL, 5, 0), 1));
-	field->rowsDescription()->updateBlockDescription(BlockDescription(AddressOnBlocksDescription(AddressOnBlocksDescription::HORIZONTAL, 7, 0), 1));
+	field->drawingArea()->setCell(Cell(AddressOfCell(2,5), cellSign::SGN_FILL_BLACK));
+	field->drawingArea()->setCell(Cell(AddressOfCell(2,7), cellSign::SGN_FILL_BLACK));
+	field->columnsDescription()->updateHint(Hint(AddressOfHint(AddressOfHint::VERTICAL, 2, 0), 1));
+	field->columnsDescription()->addHintAtEnd(Hint(AddressOfHint(AddressOfHint::VERTICAL, 2, 1), 1));
+	field->rowsDescription()->updateHint(Hint(AddressOfHint(AddressOfHint::HORIZONTAL, 5, 0), 1));
+	field->rowsDescription()->updateHint(Hint(AddressOfHint(AddressOfHint::HORIZONTAL, 7, 0), 1));
 }
 
 void FieldController::recreateField(int width, int height)

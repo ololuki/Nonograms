@@ -12,17 +12,17 @@ DrawingAreaField::~DrawingAreaField()
 	qDebug() << "DrawingAreaField d-tor";
 }
 
-Pixel DrawingAreaField::getPixel(AddressOnDrawingArea address) const
+Cell DrawingAreaField::getCell(AddressOfCell address) const
 {
 	int x = address.getX();
 	int y = address.getY();
 	return array.getPixelAt(x, y);
 }
 
-void DrawingAreaField::setPixel(Pixel pixel)
+void DrawingAreaField::setCell(Cell cell)
 {
-	int x = pixel.getAddress().getX();
-	int y = pixel.getAddress().getY();
-	array(x, y) = pixel;
-	emit pixelChanged(pixel.getAddress());
+	int x = cell.getAddress().getX();
+	int y = cell.getAddress().getY();
+	array(x, y) = cell;
+	emit cellChanged(cell.getAddress());
 }

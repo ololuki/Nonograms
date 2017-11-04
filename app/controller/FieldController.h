@@ -22,7 +22,7 @@
 #define FIELDCONTROLLER_H
 
 #include "field/WholeField.h"
-#include "widgets/DrawingAreaView.h"
+#include "widgets/CellsView.h"
 #include "widgets/HintsView.h"
 #include "controller/DrawingAreaController.h"
 #include "controller/BlocksDescriptionController.h"
@@ -33,7 +33,7 @@ class FieldController : public QObject
 {
 	Q_OBJECT
 public:
-	FieldController(DrawingAreaView *drawingAreaView, HintsView *columnsDescriptionView, HintsView *rowsDescriptionView);
+	FieldController(CellsView *cellsView, HintsView *columnsDescriptionView, HintsView *rowsDescriptionView);
 	void addDummyBlock();
 	
 	void onNew();
@@ -45,7 +45,7 @@ private:
 	
 	std::shared_ptr<WholeField> field;
 	
-	DrawingAreaView *drawingAreaView;
+	CellsView *cellsView;
 	HintsView *columnsDescriptionView;
 	HintsView *rowsDescriptionView;
 	

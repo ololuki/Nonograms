@@ -18,29 +18,25 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREACONTROLLER_H
-#define DRAWINGAREACONTROLLER_H
+#ifndef ADDRESSOFCELL_H
+#define ADDRESSOFCELL_H
 
-#include "field/WholeField.h"
-#include "widgets/CellsView.h"
-#include "action/CellAction.h"
 
-class DrawingAreaController : public QObject
+///
+/// \brief Contains address of every Cell (box) on drawing area in Cells (boxes)
+///
+class AddressOfCell
 {
-	Q_OBJECT
 public:
-	DrawingAreaController(std::shared_ptr<DrawingAreaField> newField, CellsView *cellsView);
-	~DrawingAreaController();
-	void replaceField(std::shared_ptr<DrawingAreaField> newField);
-	
-private slots:
-	void onAction(CellAction action, AddressOfCell address);
-	
-protected:
-	std::shared_ptr<DrawingAreaField> field;
-	
+	AddressOfCell(int x, int y) : x(x), y(y) {}
+	int getX() {return x;}
+	int getY() {return y;}
+	bool operator==(const AddressOfCell &address) const {
+		return (this->x == address.x && this->y == address.y);
+	}
 private:
-	CellsView *cellsView;
+	int x;
+	int y;
 };
 
-#endif // DRAWINGAREACONTROLLER_H
+#endif // ADDRESSOFCELL_H

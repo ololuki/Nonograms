@@ -18,41 +18,11 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREAVIEW_H
-#define DRAWINGAREAVIEW_H
-
-#include <memory>
-#include <QWidget>
-#include "field/DrawingAreaField.h"
-#include "common/FieldViewConstants.h"
-#include "common/DrawableView.h"
-#include "controller/action/CellAction.h"
+#include "AddressOfHint.h"
 
 
-class DrawingAreaView : public DrawableView
+AddressOfHint::AddressOfHint(orientation o, int line, int blockNumber)
+	: o(o), line(line), count(blockNumber)
 {
-	Q_OBJECT
-public:
-	explicit DrawingAreaView(QWidget *parent = 0);
-	virtual ~DrawingAreaView();
-	void setField(const std::shared_ptr<const DrawingAreaField> &field);
 	
-public slots:
-	void onPixelChanged(AddressOnDrawingArea address);
-	
-signals:
-	void action(CellAction action, AddressOnDrawingArea);
-	
-protected:
-	void mousePressEvent(QMouseEvent *event) override;
-	
-private:
-	FieldViewConstants constants;
-	void drawGrid();
-	void drawOnePixel(Pixel pixel);
-	void drawAllPixels();
-	
-	std::shared_ptr<const DrawingAreaField> field;
-};
-
-#endif // DRAWINGAREAVIEW_H
+}
