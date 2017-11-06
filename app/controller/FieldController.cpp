@@ -50,7 +50,7 @@ void FieldController::addDummyBlock()
 	field->rowsHints()->updateHint(Hint(AddressOfHint(AddressOfHint::HORIZONTAL, 7, 0), 1));
 }
 
-void FieldController::recreateField(int width, int height)
+void FieldController::replaceField(int width, int height)
 {
 	field.reset(new WholeField(width, height));
 	cellsController->replaceField(field->cells());
@@ -85,7 +85,7 @@ void FieldController::onNew()
 	delete d;
 	if (isConfirmed)
 	{
-		recreateField(width, height);
+		replaceField(width, height);
 		fileManager->setNewCreatedField(field);
 	}
 }
