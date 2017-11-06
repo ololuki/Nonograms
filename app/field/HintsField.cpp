@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include "BlocksDescriptionField.h"
+#include "HintsField.h"
 
 
-BlocksDescriptionField::BlocksDescriptionField(int numberOfLines, AddressOfHint::orientation o)
+HintsField::HintsField(int numberOfLines, AddressOfHint::orientation o)
 {
 	this->numberOfLines = numberOfLines;
 	this->orientation = o;
@@ -35,31 +35,31 @@ BlocksDescriptionField::BlocksDescriptionField(int numberOfLines, AddressOfHint:
 	}
 }
 
-BlocksDescriptionField::~BlocksDescriptionField()
+HintsField::~HintsField()
 {
 	
 }
 
-Hint BlocksDescriptionField::getHint(AddressOfHint address) const
+Hint HintsField::getHint(AddressOfHint address) const
 {
 	return linesOfHints[address.getLine()][address.getCount()];
 }
 
-void BlocksDescriptionField::updateHint(Hint hint)
+void HintsField::updateHint(Hint hint)
 {
 	int line = hint.getAddress().getLine();
 	linesOfHints[line].updateHint(hint);
 	emit hintChanged();
 }
 
-void BlocksDescriptionField::insertHintBefore(Hint hint)
+void HintsField::insertHintBefore(Hint hint)
 {
 	int line = hint.getAddress().getLine();
 	linesOfHints[line].insertHintBefore(hint);
 	emit hintChanged();
 }
 
-void BlocksDescriptionField::addHintAtEnd(Hint hint)
+void HintsField::addHintAtEnd(Hint hint)
 {
 	int line = hint.getAddress().getLine();
 	int count = hint.getAddress().getCount();
@@ -70,7 +70,7 @@ void BlocksDescriptionField::addHintAtEnd(Hint hint)
 	emit hintChanged();
 }
 
-void BlocksDescriptionField::deleteHint(Hint hint)
+void HintsField::deleteHint(Hint hint)
 {
 	int line = hint.getAddress().getLine();
 	int count = hint.getAddress().getCount();
@@ -84,17 +84,17 @@ void BlocksDescriptionField::deleteHint(Hint hint)
 	emit hintChanged();
 }
 
-int BlocksDescriptionField::numberOfBlocksInLine(int lineNumber) const
+int HintsField::numberOfBlocksInLine(int lineNumber) const
 {
 	return linesOfHints[lineNumber].size();
 }
 
-int BlocksDescriptionField::getNumberOfLines() const
+int HintsField::getNumberOfLines() const
 {
 	return numberOfLines;
 }
 
-int BlocksDescriptionField::allHintsLength() const
+int HintsField::allHintsLength() const
 {
 	int length = 0;
 	for (int i = 0; i < numberOfLines; i++)
@@ -104,12 +104,12 @@ int BlocksDescriptionField::allHintsLength() const
 	return length;
 }
 
-AddressOfHint::orientation BlocksDescriptionField::getOrientation() const
+AddressOfHint::orientation HintsField::getOrientation() const
 {
 	return orientation;
 }
 
-bool BlocksDescriptionField::isDefinedHintAt(AddressOfHint address) const
+bool HintsField::isDefinedHintAt(AddressOfHint address) const
 {
 	int line = address.getLine();
 	if (line >= linesOfHints.size()) return false;

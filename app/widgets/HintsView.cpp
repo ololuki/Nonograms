@@ -33,13 +33,13 @@ HintsView::HintsView(QWidget *parent)
 	initInsertingButton();
 }
 
-void HintsView::setField(const std::shared_ptr<const BlocksDescriptionField> &field)
+void HintsView::setField(const std::shared_ptr<const HintsField> &field)
 {
 	this->field = field;
 	orientation = this->field->getOrientation();
 	connect(
-		static_cast<const BlocksDescriptionField*>(this->field.get()),
-		&BlocksDescriptionField::hintChanged,
+		static_cast<const HintsField*>(this->field.get()),
+		&HintsField::hintChanged,
 		this,
 		&HintsView::onDataChanged
 	);
@@ -104,12 +104,12 @@ void HintsView::onLineOfHintsChanged(AddressOfHint address)
 /// \param	address of block description after plus button position.
 ///			Plus button will be inserted between this and previous address.
 ///
-void HintsView::showInsertingButtonBefore(AddressOfHint address)
+void HintsView::onShowInsertingButtonBefore(AddressOfHint address)
 {
 	moveAndShowInsertingButton(address);
 }
 
-void HintsView::showDescriptionEditingBox(AddressOfHint address)
+void HintsView::onShowHintEditingBox(AddressOfHint address)
 {
 	moveAndShowTextBox(address);
 }

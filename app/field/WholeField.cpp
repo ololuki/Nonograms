@@ -26,9 +26,9 @@ WholeField::WholeField(int width, int height)
 	: width(width),
 	  height(height)
 {
-	drawingAreaField = std::make_shared<DrawingAreaField>(width, height);
-	columnsDescriptionField = std::make_shared<BlocksDescriptionField>(width, AddressOfHint::VERTICAL);
-	rowsDescriptionField = std::make_shared<BlocksDescriptionField>(height, AddressOfHint::HORIZONTAL);
+	cellsField = std::make_shared<CellsField>(width, height);
+	columnsHintsField = std::make_shared<HintsField>(width, AddressOfHint::VERTICAL);
+	rowsHintsField = std::make_shared<HintsField>(height, AddressOfHint::HORIZONTAL);
 	qDebug() << "WholeField width height c-tor";
 }
 
@@ -36,9 +36,9 @@ WholeField::WholeField(const WholeField &field)
 	: width(field.width),
 	  height(field.height)
 {
-	drawingAreaField = field.drawingAreaField;
-	columnsDescriptionField = field.columnsDescriptionField;
-	rowsDescriptionField = field.rowsDescriptionField;
+	cellsField = field.cellsField;
+	columnsHintsField = field.columnsHintsField;
+	rowsHintsField = field.rowsHintsField;
 	qDebug() << "WholeField copy c-tor";
 }
 
@@ -57,19 +57,19 @@ int WholeField::getHeight() const
 	return height;
 }
 
-std::shared_ptr<DrawingAreaField> WholeField::drawingArea()
+std::shared_ptr<CellsField> WholeField::cells()
 {
-	return drawingAreaField;
+	return cellsField;
 }
 
-std::shared_ptr<BlocksDescriptionField> WholeField::columnsDescription()
+std::shared_ptr<HintsField> WholeField::columnsHints()
 {
-	return columnsDescriptionField;
+	return columnsHintsField;
 }
 
-std::shared_ptr<BlocksDescriptionField> WholeField::rowsDescription()
+std::shared_ptr<HintsField> WholeField::rowsHints()
 {
-	return rowsDescriptionField;
+	return rowsHintsField;
 }
 
 void WholeField::clearDrawingArea()
@@ -78,7 +78,7 @@ void WholeField::clearDrawingArea()
 	{
 		for (int j = 0; j < getHeight(); j++)
 		{
-			drawingArea()->setCell(Cell(AddressOfCell(i, j)));
+			cells()->setCell(Cell(AddressOfCell(i, j)));
 		}
 	}
 }

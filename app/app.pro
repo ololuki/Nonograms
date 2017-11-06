@@ -16,18 +16,14 @@ DEFINES += QT_DEPRECATED_WARNINGS #emit warning if any deprecated feature is use
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    field/DrawingAreaField.cpp \
     field/WholeField.cpp \
     field/ArrayOfPixels.cpp \
-    field/BlocksDescriptionField.cpp \
     field/LineOfHints.cpp \
     SizeDialog.cpp \
     file/FileManager.cpp \
     file/NonogramFileWriter.cpp \
     file/NonogramFileReader.cpp \
     controller/FieldController.cpp \
-    controller/DrawingAreaController.cpp \
-    controller/BlocksDescriptionController.cpp \
     widgets/common/DrawableView.cpp \
     widgets/HintsView.cpp \
     utils/NVector.cpp \
@@ -37,13 +33,15 @@ SOURCES += main.cpp\
     field/Cell.cpp \
     field/Hint.cpp \
     field/LineOfCells.cpp \
-    widgets/CellsView.cpp
+    widgets/CellsView.cpp \
+    controller/HintsController.cpp \
+    controller/CellsController.cpp \
+    field/CellsField.cpp \
+    field/HintsField.cpp
 
 HEADERS  += mainwindow.h \
-    field/DrawingAreaField.h \
     field/WholeField.h \
     field/ArrayOfPixels.h \
-    field/BlocksDescriptionField.h \
     field/LineOfHints.h \
     field/FieldMode.h \
     SizeDialog.h \
@@ -53,8 +51,6 @@ HEADERS  += mainwindow.h \
     file/FileReader.h \
     file/NonogramFileReader.h \
     controller/FieldController.h \
-    controller/DrawingAreaController.h \
-    controller/BlocksDescriptionController.h \
     widgets/common/FieldViewConstants.h \
     widgets/common/DrawableView.h \
     widgets/HintsView.h \
@@ -68,7 +64,11 @@ HEADERS  += mainwindow.h \
     field/cellSign.h \
     field/Hint.h \
     field/LineOfCells.h \
-    widgets/CellsView.h
+    widgets/CellsView.h \
+    controller/HintsController.h \
+    controller/CellsController.h \
+    field/CellsField.h \
+    field/HintsField.h
 
 FORMS    += mainwindow.ui \
     sizedialog.ui

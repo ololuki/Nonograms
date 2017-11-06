@@ -35,9 +35,9 @@ public:
 	int size();
 	
 	void updateHint(Hint hint);
-	void insertHintBefore(Hint blockDescription);
-	void addDescriptionAtEnd(Hint blockDescription);
-	void deleteDescription(Hint blockDescription);
+	void insertHintBefore(Hint hint);
+	void addHintAtEnd(Hint hint);
+	void deleteHint(Hint hint);
 	
 	Hint& operator[](const int count);
 	void push_back(Hint hint);

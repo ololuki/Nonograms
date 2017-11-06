@@ -40,12 +40,12 @@ void LineOfHints::updateHint(Hint hint)
 	hints[count] = hint;
 }
 
-void LineOfHints::insertHintBefore(Hint blockDescription)
+void LineOfHints::insertHintBefore(Hint hint)
 {
-	int line = blockDescription.getAddress().getLine();
-	int count = blockDescription.getAddress().getCount();
+	int line = hint.getAddress().getLine();
+	int count = hint.getAddress().getCount();
 	int length = hints.size();
-	AddressOfHint::orientation orientation = blockDescription.getAddress().getOrientation();
+	AddressOfHint::orientation orientation = hint.getAddress().getOrientation();
 	if (count >= length) return;
 	
 	AddressOfHint addressOfNewLast = AddressOfHint(orientation, line, length);
@@ -59,7 +59,7 @@ void LineOfHints::insertHintBefore(Hint blockDescription)
 	{
 		hints[i].setBlockSize(hints[i-1].getBlockSize());
 	}
-	hints[count] = blockDescription;
+	hints[count] = hint;
 }
 
 Hint &LineOfHints::operator[](const int count)

@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef BLOCKSDESCRIPTIONFIELD_H
-#define BLOCKSDESCRIPTIONFIELD_H
+#ifndef HINTSFIELD_H
+#define HINTSFIELD_H
 
 #include <QObject>
 #include "AddressOfHint.h"
@@ -29,18 +29,18 @@
 
 
 ///
-/// \brief BlocksDescriptionField class is model class of
-/// blocks description data (columns description and rows description)
-/// BlocksDescriptionFields are part of WholeField.
-/// WholeField contains two instances of BlocksDescriptionFields
+/// \brief HintsField class is model class of
+/// blocks description data (columns hints and rows hints)
+/// HintsFields are part of WholeField.
+/// WholeField contains two instances of HintsFields
 /// - one for columns and one for rows.
 ///
-class BlocksDescriptionField : public QObject
+class HintsField : public QObject
 {
 	Q_OBJECT
 public:
-	BlocksDescriptionField(int numberOfLines, AddressOfHint::orientation o);
-	virtual ~BlocksDescriptionField();
+	HintsField(int numberOfLines, AddressOfHint::orientation o);
+	virtual ~HintsField();
 	virtual Hint getHint(AddressOfHint address) const;
 	virtual void updateHint(Hint hint);
 	virtual void insertHintBefore(Hint hint);
@@ -61,4 +61,4 @@ private:
 	NVector<LineOfHints> linesOfHints;
 };
 
-#endif // BLOCKSDESCRIPTIONFIELD_H
+#endif // HINTSFIELD_H

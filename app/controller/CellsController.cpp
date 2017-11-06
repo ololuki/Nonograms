@@ -18,11 +18,11 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include "DrawingAreaController.h"
+#include "CellsController.h"
 #include <QDebug>
 
 
-DrawingAreaController::DrawingAreaController(std::shared_ptr<DrawingAreaField> newField, CellsView *cellsView)
+CellsController::CellsController(std::shared_ptr<CellsField> newField, CellsView *cellsView)
 	: field(newField)
 {
 	qDebug() << "DrawingAreaController constructor";
@@ -33,23 +33,23 @@ DrawingAreaController::DrawingAreaController(std::shared_ptr<DrawingAreaField> n
 		this->cellsView,
 		&CellsView::action,
 		this,
-		&DrawingAreaController::onAction
+		&CellsController::onAction
 	);
 }
 
-DrawingAreaController::~DrawingAreaController()
+CellsController::~CellsController()
 {
 	qDebug() << "DrawingAreaController destructor";
-	disconnect(this->cellsView, &CellsView::action, this, &DrawingAreaController::onAction);
+	disconnect(this->cellsView, &CellsView::action, this, &CellsController::onAction);
 }
 
-void DrawingAreaController::replaceField(std::shared_ptr<DrawingAreaField> newField)
+void CellsController::replaceField(std::shared_ptr<CellsField> newField)
 {
 	this->field = newField;
 	cellsView->setField(field);
 }
 
-void DrawingAreaController::onAction(CellAction action, AddressOfCell address)
+void CellsController::onAction(CellAction action, AddressOfCell address)
 {
 	Cell cell(address);
 	switch(action)

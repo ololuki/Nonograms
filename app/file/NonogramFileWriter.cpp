@@ -74,7 +74,7 @@ QJsonArray NonogramFileWriter::serializeDrawingArea()
 		for (int x = 0; x < field->getWidth(); x++)
 		{
 			AddressOfCell address(x, y);
-			Cell cell = field->drawingArea()->getCell(address);
+			Cell cell = field->cells()->getCell(address);
 			drawingArea.append(serializeCell(cell));
 		}
 	}
@@ -118,11 +118,11 @@ QJsonObject NonogramFileWriter::serializeLineDescription(int lineNumber, Address
 	switch (orientation)
 	{
 	case AddressOfHint::VERTICAL:
-		lineLength = field->columnsDescription()->numberOfBlocksInLine(lineNumber);
+		lineLength = field->columnsHints()->numberOfBlocksInLine(lineNumber);
 		lineDescription["lineLength"] = lineLength;
 		break;
 	case AddressOfHint::HORIZONTAL:
-		lineLength = field->rowsDescription()->numberOfBlocksInLine(lineNumber);
+		lineLength = field->rowsHints()->numberOfBlocksInLine(lineNumber);
 		lineDescription["lineLength"] = lineLength;
 		break;
 	}
@@ -148,14 +148,14 @@ QJsonObject NonogramFileWriter::serializeHint(AddressOfHint address)
 	switch (address.getOrientation())
 	{
 	case AddressOfHint::VERTICAL:
-		hint["blockSize"] = field->columnsDescription()->getHint(address).getBlockSize();
+		hint["blockSize"] = field->columnsHints()->getHint(address).getBlockSize();
 		hint["count"] = address.getCount();
-		hint["isBlack"] = field->columnsDescription()->getHint(address).isFilledBlack();
+		hint["isBlack"] = field->columnsHints()->getHint(address).isFilledBlack();
 		break;
 	case AddressOfHint::HORIZONTAL:
-		hint["blockSize"] = field->rowsDescription()->getHint(address).getBlockSize();
+		hint["blockSize"] = field->rowsHints()->getHint(address).getBlockSize();
 		hint["count"] = address.getCount();
-		hint["isBlack"] = field->rowsDescription()->getHint(address).isFilledBlack();
+		hint["isBlack"] = field->rowsHints()->getHint(address).isFilledBlack();
 		break;
 	}
 	return hint;

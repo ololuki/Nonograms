@@ -80,7 +80,7 @@ void NonogramFileReader::parseDrawingArea(QJsonArray drawingArea)
 	{
 		QJsonObject jsonCell = drawingArea[i].toObject();
 		Cell cell = parseCell(jsonCell);
-		field->drawingArea()->setCell(cell);
+		field->cells()->setCell(cell);
 	}
 }
 
@@ -122,10 +122,10 @@ void NonogramFileReader::parseLineDescription(QJsonObject jsonLineDescription, i
 	switch (orientation)
 	{
 	case AddressOfHint::VERTICAL:
-		field->columnsDescription()->deleteHint(Hint(AddressOfHint(orientation, lineNumber, lineLength), 0));
+		field->columnsHints()->deleteHint(Hint(AddressOfHint(orientation, lineNumber, lineLength), 0));
 		break;
 	case AddressOfHint::HORIZONTAL:
-		field->rowsDescription()->deleteHint(Hint(AddressOfHint(orientation, lineNumber, lineLength), 0));
+		field->rowsHints()->deleteHint(Hint(AddressOfHint(orientation, lineNumber, lineLength), 0));
 		break;
 	}
 }
@@ -146,10 +146,10 @@ void NonogramFileReader::parseHint(QJsonObject jsonHint, AddressOfHint address)
 	switch (address.getOrientation())
 	{
 	case AddressOfHint::VERTICAL:
-		field->columnsDescription()->insertHintBefore(Hint(address, blockSize));
+		field->columnsHints()->insertHintBefore(Hint(address, blockSize));
 		break;
 	case AddressOfHint::HORIZONTAL:
-		field->rowsDescription()->insertHintBefore(Hint(address, blockSize));
+		field->rowsHints()->insertHintBefore(Hint(address, blockSize));
 		break;
 	}
 }

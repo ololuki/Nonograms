@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef BLOCKSDESCRIPTIONCONTROLLER_H
-#define BLOCKSDESCRIPTIONCONTROLLER_H
+#ifndef HINTSCONTROLLER_H
+#define HINTSCONTROLLER_H
 
 #include <QObject>
 #include "field/AddressOfHint.h"
@@ -29,18 +29,18 @@
 #include "action/HintAction.h"
 
 
-class BlocksDescriptionController : public QObject
+class HintsController : public QObject
 {
 	Q_OBJECT
 public:
-	BlocksDescriptionController(std::shared_ptr<BlocksDescriptionField> field, HintsView *hintsView);
-	~BlocksDescriptionController();
-	void replaceField(std::shared_ptr<BlocksDescriptionField> newField);
+	HintsController(std::shared_ptr<HintsField> field, HintsView *hintsView);
+	~HintsController();
+	void replaceField(std::shared_ptr<HintsField> newField);
 	
 signals:
 	// invoked by controller
 	void showInsertingButtonBefore(AddressOfHint address);
-	void showDescriptionEditingBox(AddressOfHint address);
+	void showHintEditingBox(AddressOfHint address);
 	
 private slots:
 	// on signals emited to controller
@@ -51,8 +51,8 @@ private:
 	// when inserting button is clicked
 	void onHintInsertBefore(AddressOfHint address);
 	
-	std::shared_ptr<BlocksDescriptionField> field;
+	std::shared_ptr<HintsField> field;
 	HintsView *hintsView;
 };
 
-#endif // BLOCKSDESCRIPTIONCONTROLLER_H
+#endif // HINTSCONTROLLER_H

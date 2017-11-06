@@ -27,7 +27,7 @@
 #include "common/DrawableView.h"
 #include "common/FieldViewConstants.h"
 #include "common/InsertingButtonEventFilter.h"
-#include "field/BlocksDescriptionField.h"
+#include "field/HintsField.h"
 #include "controller/action/HintAction.h"
 
 
@@ -36,7 +36,7 @@ class HintsView : public DrawableView
 	Q_OBJECT
 public:
 	explicit HintsView(QWidget *parent = 0);
-	void setField(const std::shared_ptr<const BlocksDescriptionField> &field);
+	void setField(const std::shared_ptr<const HintsField> &field);
 	
 signals:
 	// signals emited to controller
@@ -49,9 +49,9 @@ public slots:
 	// invoked by model to inform about changes
 	void onLineOfHintsChanged(AddressOfHint address);
 	// invoked by controller
-	void showInsertingButtonBefore(AddressOfHint address);
+	void onShowInsertingButtonBefore(AddressOfHint address);
 	// invoked by controller
-	void showDescriptionEditingBox(AddressOfHint address);
+	void onShowHintEditingBox(AddressOfHint address);
 	
 private slots:
 	void onInsertingButtonClick();
@@ -62,7 +62,7 @@ protected:
 	std::shared_ptr<QPushButton> insertingButton;
 	const int insertingButtonHeight = constants.squareSize/2;
 	
-	std::shared_ptr<const BlocksDescriptionField> field;
+	std::shared_ptr<const HintsField> field;
 	
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;

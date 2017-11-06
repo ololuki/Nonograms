@@ -18,29 +18,33 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef DRAWINGAREACONTROLLER_H
-#define DRAWINGAREACONTROLLER_H
+#ifndef CELLSFIELD_H
+#define CELLSFIELD_H
 
-#include "field/WholeField.h"
-#include "widgets/CellsView.h"
-#include "action/CellAction.h"
+#include <QObject>
+#include "AddressOfCell.h"
+#include "Cell.h"
+#include "ArrayOfPixels.h"
 
-class DrawingAreaController : public QObject
+
+///
+/// \brief CellsField class is model class of drawing area data.
+/// CellsField is part of WholeField. WholeField contains CellsField.
+///
+class CellsField : public QObject
 {
 	Q_OBJECT
 public:
-	DrawingAreaController(std::shared_ptr<DrawingAreaField> newField, CellsView *cellsView);
-	~DrawingAreaController();
-	void replaceField(std::shared_ptr<DrawingAreaField> newField);
-	
-private slots:
-	void onAction(CellAction action, AddressOfCell address);
-	
+	CellsField(int width, int height);
+	virtual ~CellsField();
+	int getWidth() const {return array.width();}
+	int getHeight() const {return array.height();}
+	Cell getCell(AddressOfCell address) const;
+	void setCell(Cell cell);
+signals:
+	void cellChanged(AddressOfCell address);
 protected:
-	std::shared_ptr<DrawingAreaField> field;
-	
-private:
-	CellsView *cellsView;
+	ArrayOfPixels array;
 };
 
-#endif // DRAWINGAREACONTROLLER_H
+#endif // CELLSFIELD_H

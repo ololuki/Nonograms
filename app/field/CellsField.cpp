@@ -18,38 +18,31 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef WHOLEFIELD_H
-#define WHOLEFIELD_H
-
-#include <memory>
 #include "CellsField.h"
-#include "HintsField.h"
+#include <QDebug>
 
 
-///
-/// \brief WholeField class contains whole data about Field.
-/// It has models of field parts: drawing area, columns hints
-/// and rows hints.
-///
-class WholeField
+CellsField::CellsField(int width, int height) : array(width, height)
 {
-public:
-	WholeField(int width, int height);
-	WholeField(const WholeField &field);
-	virtual ~WholeField();
-	int getWidth() const;
-	int getHeight() const;
-	std::shared_ptr<CellsField> cells();
-	std::shared_ptr<HintsField> columnsHints();
-	std::shared_ptr<HintsField> rowsHints();
-	void clearDrawingArea();
-	void clearBlocksDescription();
-private:
-	int width;
-	int height;
-	std::shared_ptr<CellsField> cellsField;
-	std::shared_ptr<HintsField> columnsHintsField;
-	std::shared_ptr<HintsField> rowsHintsField;
-};
+	qDebug() << "DrawingAreaField width height c-tor";
+}
 
-#endif // WHOLEFIELD_H
+CellsField::~CellsField()
+{
+	qDebug() << "DrawingAreaField d-tor";
+}
+
+Cell CellsField::getCell(AddressOfCell address) const
+{
+	int x = address.getX();
+	int y = address.getY();
+	return array.getPixelAt(x, y);
+}
+
+void CellsField::setCell(Cell cell)
+{
+	int x = cell.getAddress().getX();
+	int y = cell.getAddress().getY();
+	array(x, y) = cell;
+	emit cellChanged(cell.getAddress());
+}

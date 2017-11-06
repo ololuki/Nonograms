@@ -39,12 +39,12 @@ CellsView::~CellsView()
 	
 }
 
-void CellsView::setField(const std::shared_ptr<const DrawingAreaField> &field)
+void CellsView::setField(const std::shared_ptr<const CellsField> &field)
 {
 	this->field = field;
 	connect(
-		static_cast<const DrawingAreaField*>(this->field.get()),
-		&DrawingAreaField::cellChanged,
+		static_cast<const CellsField*>(this->field.get()),
+		&CellsField::cellChanged,
 		this,
 		&CellsView::onCellChanged
 	);

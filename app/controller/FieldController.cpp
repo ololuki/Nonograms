@@ -23,18 +23,18 @@
 #include <QDebug>
 
 
-FieldController::FieldController(CellsView *cellsView, HintsView *columnsDescriptionView, HintsView *rowsDescriptionView)
+FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsView, HintsView *rowsHintsView)
 {
 	// create initial field
 	field.reset(new WholeField(14, 10));
 	
 	this->cellsView = cellsView;
-	this->columnsDescriptionView = columnsDescriptionView;
-	this->rowsDescriptionView = rowsDescriptionView;
+	this->columnsHintsView = columnsHintsView;
+	this->rowsHintsView = rowsHintsView;
 	
-	drawingAreaController = std::make_shared<DrawingAreaController>(field->drawingArea(), cellsView);
-	columnsHintsController = std::make_shared<BlocksDescriptionController>(field->columnsDescription(), columnsDescriptionView);
-	rowsHintsController = std::make_shared<BlocksDescriptionController>(field->rowsDescription(), rowsDescriptionView);
+	cellsController = std::make_shared<CellsController>(field->cells(), this->cellsView);
+	columnsHintsController = std::make_shared<HintsController>(field->columnsHints(), this->columnsHintsView);
+	rowsHintsController = std::make_shared<HintsController>(field->rowsHints(), this->rowsHintsView);
 	
 	fileManager = std::make_shared<FileManager>(field);
 }
@@ -42,20 +42,20 @@ FieldController::FieldController(CellsView *cellsView, HintsView *columnsDescrip
 void FieldController::addDummyBlock()
 {
 	if (field->getWidth() < 3 || field->getHeight() < 8) return;
-	field->drawingArea()->setCell(Cell(AddressOfCell(2,5), cellSign::SGN_FILL_BLACK));
-	field->drawingArea()->setCell(Cell(AddressOfCell(2,7), cellSign::SGN_FILL_BLACK));
-	field->columnsDescription()->updateHint(Hint(AddressOfHint(AddressOfHint::VERTICAL, 2, 0), 1));
-	field->columnsDescription()->addHintAtEnd(Hint(AddressOfHint(AddressOfHint::VERTICAL, 2, 1), 1));
-	field->rowsDescription()->updateHint(Hint(AddressOfHint(AddressOfHint::HORIZONTAL, 5, 0), 1));
-	field->rowsDescription()->updateHint(Hint(AddressOfHint(AddressOfHint::HORIZONTAL, 7, 0), 1));
+	field->cells()->setCell(Cell(AddressOfCell(2,5), cellSign::SGN_FILL_BLACK));
+	field->cells()->setCell(Cell(AddressOfCell(2,7), cellSign::SGN_FILL_BLACK));
+	field->columnsHints()->updateHint(Hint(AddressOfHint(AddressOfHint::VERTICAL, 2, 0), 1));
+	field->columnsHints()->addHintAtEnd(Hint(AddressOfHint(AddressOfHint::VERTICAL, 2, 1), 1));
+	field->rowsHints()->updateHint(Hint(AddressOfHint(AddressOfHint::HORIZONTAL, 5, 0), 1));
+	field->rowsHints()->updateHint(Hint(AddressOfHint(AddressOfHint::HORIZONTAL, 7, 0), 1));
 }
 
 void FieldController::recreateField(int width, int height)
 {
 	field.reset(new WholeField(width, height));
-	drawingAreaController->replaceField(field->drawingArea());
-	columnsHintsController->replaceField(field->columnsDescription());
-	rowsHintsController->replaceField(field->rowsDescription());
+	cellsController->replaceField(field->cells());
+	columnsHintsController->replaceField(field->columnsHints());
+	rowsHintsController->replaceField(field->rowsHints());
 }
 
 void FieldController::replaceField(std::shared_ptr<WholeField> newField)
@@ -67,9 +67,9 @@ void FieldController::replaceField(std::shared_ptr<WholeField> newField)
 	}
 	field = newField;
 	
-	drawingAreaController->replaceField(field->drawingArea());
-	columnsHintsController->replaceField(field->columnsDescription());
-	rowsHintsController->replaceField(field->rowsDescription());
+	cellsController->replaceField(field->cells());
+	columnsHintsController->replaceField(field->columnsHints());
+	rowsHintsController->replaceField(field->rowsHints());
 }
 
 void FieldController::onNew()

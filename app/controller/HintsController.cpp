@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include "BlocksDescriptionController.h"
+#include "HintsController.h"
 
 
-BlocksDescriptionController::BlocksDescriptionController(std::shared_ptr<BlocksDescriptionField> field, HintsView *hintsView)
+HintsController::HintsController(std::shared_ptr<HintsField> field, HintsView *hintsView)
 	: field(field)
 {
 	this->hintsView = hintsView;
@@ -31,41 +31,41 @@ BlocksDescriptionController::BlocksDescriptionController(std::shared_ptr<BlocksD
 		hintsView,
 		static_cast<void (HintsView::*)(HintAction, AddressOfHint)>(&HintsView::action),
 		this,
-		static_cast<void (BlocksDescriptionController::*)(HintAction, AddressOfHint)>(&BlocksDescriptionController::onAction)
+		static_cast<void (HintsController::*)(HintAction, AddressOfHint)>(&HintsController::onAction)
 	);
 	connect(
 		hintsView,
 		static_cast<void (HintsView::*)(HintAction, Hint)>(&HintsView::action),
 		this,
-		static_cast<void (BlocksDescriptionController::*)(HintAction, Hint)>(&BlocksDescriptionController::onAction)
+		static_cast<void (HintsController::*)(HintAction, Hint)>(&HintsController::onAction)
 	);
 	
 	connect(
 		this,
-		&BlocksDescriptionController::showInsertingButtonBefore,
+		&HintsController::showInsertingButtonBefore,
 		hintsView,
-		&HintsView::showInsertingButtonBefore
+		&HintsView::onShowInsertingButtonBefore
 	);
 	connect(
 		this,
-		&BlocksDescriptionController::showDescriptionEditingBox,
+		&HintsController::showHintEditingBox,
 		hintsView,
-		&HintsView::showDescriptionEditingBox
+		&HintsView::onShowHintEditingBox
 	);
 }
 
-BlocksDescriptionController::~BlocksDescriptionController()
+HintsController::~HintsController()
 {
 	
 }
 
-void BlocksDescriptionController::replaceField(std::shared_ptr<BlocksDescriptionField> newField)
+void HintsController::replaceField(std::shared_ptr<HintsField> newField)
 {
 	this->field = newField;
 	hintsView->setField(field);
 }
 
-void BlocksDescriptionController::onAction(HintAction action, AddressOfHint address)
+void HintsController::onAction(HintAction action, AddressOfHint address)
 {
 	switch(action)
 	{
@@ -73,7 +73,7 @@ void BlocksDescriptionController::onAction(HintAction action, AddressOfHint addr
 		showInsertingButtonBefore(address);
 		break;
 	case HintAction::ShowEditBox:
-		showDescriptionEditingBox(address);
+		showHintEditingBox(address);
 		break;
 	case HintAction::HintInsertBefore:
 		onHintInsertBefore(address);
@@ -86,7 +86,7 @@ void BlocksDescriptionController::onAction(HintAction action, AddressOfHint addr
 	}
 }
 
-void BlocksDescriptionController::onAction(HintAction action, Hint hint)
+void HintsController::onAction(HintAction action, Hint hint)
 {
 	switch(action)
 	{
@@ -98,7 +98,7 @@ void BlocksDescriptionController::onAction(HintAction action, Hint hint)
 	}
 }
 
-void BlocksDescriptionController::onHintInsertBefore(AddressOfHint address)
+void HintsController::onHintInsertBefore(AddressOfHint address)
 {
 	int line = address.getLine();
 	int count = address.getCount();
