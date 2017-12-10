@@ -18,32 +18,25 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
+#ifndef ADDRESSOFHINTTEST_H
+#define ADDRESSOFHINTTEST_H
+
 #include <QtTest>
-#include "AddressOfCellTest.h"
-#include "AddressOfHintTest.h"
-#include "CellTest.h"
-#include "ArrayOfCellsTest.h"
-#include "LineOfCellsTest.h"
-#include "HintsFieldTest.h"
+#include "field/AddressOfHint.h"
 
 
-int main()
+class AddressOfHintTest : public QObject
 {
-	QVector<QObject*> tests;
-	
-	tests.append(new AddressOfCellTest);
-	tests.append(new AddressOfHintTest);
-	tests.append(new CellTest);
-	tests.append(new ArrayOfCellsTest);
-	tests.append(new LineOfCellsTest);
-	tests.append(new HintsFieldTest);
-	
-	int result = 0;
-	for (int i = 0; i < tests.length(); i++)
-	{
-		result = QTest::qExec(tests[i]);
-		if (result) break;
-	}
-	qDeleteAll(tests);
-	return result;
-}
+	Q_OBJECT
+private slots:
+	void orientation_line_and_count_of_Address_should_be_same_as_given_in_constructor();
+	void Address_compared_with_itself_is_equal();
+	void Addresses_with_same_x_and_y_are_equal();
+	void Addresses_with_different_x_are_NOT_equal();
+	void Addresses_with_different_y_are_NOT_equal();
+	void Addresses_with_different_orientation_are_NOT_equal();
+	void isColumn_returns_true_only_for_vertical_orientation();
+	void isRow_returns_true_only_for_horizontal_orientation();
+};
+
+#endif // ADDRESSOFHINTTEST_H

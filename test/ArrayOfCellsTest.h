@@ -18,32 +18,22 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
+#ifndef ARRAYOFCELLSTEST_H
+#define ARRAYOFCELLSTEST_H
+
 #include <QtTest>
-#include "AddressOfCellTest.h"
-#include "AddressOfHintTest.h"
-#include "CellTest.h"
-#include "ArrayOfCellsTest.h"
-#include "LineOfCellsTest.h"
-#include "HintsFieldTest.h"
+#include "field/ArrayOfCells.h"
 
 
-int main()
+class ArrayOfCellsTest : public QObject
 {
-	QVector<QObject*> tests;
-	
-	tests.append(new AddressOfCellTest);
-	tests.append(new AddressOfHintTest);
-	tests.append(new CellTest);
-	tests.append(new ArrayOfCellsTest);
-	tests.append(new LineOfCellsTest);
-	tests.append(new HintsFieldTest);
-	
-	int result = 0;
-	for (int i = 0; i < tests.length(); i++)
-	{
-		result = QTest::qExec(tests[i]);
-		if (result) break;
-	}
-	qDeleteAll(tests);
-	return result;
-}
+	Q_OBJECT
+private slots:
+	void operator_parentheses_x_y_should_return_reference_to_Cell();
+	void operator_parentheses_x_y_should_return_Cell_with_suitable_Address();
+	void order_of_ctor_args_should_be_same_as_order_of_operator_parentheses_x_y(); //eg. array(x, y) <=> ArrayOfCells(x, y)
+	void width_and_height_should_return_width_and_height_of_array();
+	void width_and_height_for_empty_array_should_return_0_and_0();
+};
+
+#endif // ARRAYOFCELLSTEST_H

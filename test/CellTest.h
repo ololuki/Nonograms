@@ -18,32 +18,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
+#ifndef CELLTEST_H
+#define CELLTEST_H
+
 #include <QtTest>
-#include "AddressOfCellTest.h"
-#include "AddressOfHintTest.h"
-#include "CellTest.h"
-#include "ArrayOfCellsTest.h"
-#include "LineOfCellsTest.h"
-#include "HintsFieldTest.h"
+#include "field/Cell.h"
 
 
-int main()
+class CellTest : public QObject
 {
-	QVector<QObject*> tests;
-	
-	tests.append(new AddressOfCellTest);
-	tests.append(new AddressOfHintTest);
-	tests.append(new CellTest);
-	tests.append(new ArrayOfCellsTest);
-	tests.append(new LineOfCellsTest);
-	tests.append(new HintsFieldTest);
-	
-	int result = 0;
-	for (int i = 0; i < tests.length(); i++)
-	{
-		result = QTest::qExec(tests[i]);
-		if (result) break;
-	}
-	qDeleteAll(tests);
-	return result;
-}
+	Q_OBJECT
+private slots:
+	void x_and_y_of_Address_should_be_same_as_given_in_constructor();
+	void isFilledBlack_should_return_true_only_if_sign_FillBlack_was_given_in_constructor();
+	void isDot_should_return_true_only_if_sign_Dot_was_given_in_constructor();
+	void isEmpty_should_return_true_only_if_sign_Empty_was_given_in_constructor();
+	void defaultSignShouldBeEmpty();
+private:
+	AddressOfCell dummyAddress{0, 0};
+};
+
+#endif // CELLTEST_H

@@ -18,32 +18,45 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include <QtTest>
-#include "AddressOfCellTest.h"
-#include "AddressOfHintTest.h"
-#include "CellTest.h"
-#include "ArrayOfCellsTest.h"
-#include "LineOfCellsTest.h"
-#include "HintsFieldTest.h"
+#ifndef ARRAYOFCELLS_H
+#define ARRAYOFCELLS_H
+
+#include "utils/NVector.h"
+#include "Cell.h"
 
 
-int main()
+///
+/// \brief ArrayOfCells stores Cells in 2-dimensional array.
+/// Cells are accesible by operator(), use (x, y)
+/// Cells are stored in vector of columns vector of Cells to make sure
+/// that in operator[] first [] will be for x (column number)
+/// and second [] will be for y (row number)
+///
+class ArrayOfCells
 {
-	QVector<QObject*> tests;
-	
-	tests.append(new AddressOfCellTest);
-	tests.append(new AddressOfHintTest);
-	tests.append(new CellTest);
-	tests.append(new ArrayOfCellsTest);
-	tests.append(new LineOfCellsTest);
-	tests.append(new HintsFieldTest);
-	
-	int result = 0;
-	for (int i = 0; i < tests.length(); i++)
+public:
+	ArrayOfCells(int width, int height)
 	{
-		result = QTest::qExec(tests[i]);
-		if (result) break;
+		for (int i = 0; i < width; i++)
+		{
+			array.push_back(NVector<Cell>());
+			for (int j = 0; j < height; j++)
+			{
+				array[i].push_back(Cell(AddressOfCell(i, j)));
+			}
+		}
 	}
-	qDeleteAll(tests);
-	return result;
-}
+	Cell& operator()(int x, int y)
+	{
+		return array.at(x)[y];
+	}
+	Cell getPixelAt(int x, int y) const {
+		return array.at(x).at(y);
+	}
+	int width() const;
+	int height() const;
+private:
+	NVector<NVector<Cell>> array;
+};
+
+#endif // ARRAYOFCELLS_H

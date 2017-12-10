@@ -24,7 +24,7 @@
 #include <QObject>
 #include "AddressOfCell.h"
 #include "Cell.h"
-#include "ArrayOfPixels.h"
+#include "ArrayOfCells.h"
 
 
 ///
@@ -44,7 +44,7 @@ public:
 signals:
 	void cellChanged(AddressOfCell address);
 protected:
-	ArrayOfPixels array;
+	ArrayOfCells array;
 };
 
 #endif // CELLSFIELD_H

@@ -1,146 +1,161 @@
-#include "catch.hpp"
-#include "../app/field/HintsField.h"
-#include "../app/field/AddressOfHint.h"
+/**********************************************************************
+ * Copyright (C) 2017 Ololuki
+ * https://ololuki.pl
+ * 
+ * This file is part of Nonograms
+ * https://github.com/ololuki/nonograms
+ * 
+ * Nonograms is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Nonograms is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
+ *********************************************************************/
+#include "HintsFieldTest.h"
 
 
-TEST_CASE("HintsField insertHintBefore") {
-	int numberOfLines = 2;
-	int lineNumber = 1;
-	int blockValueDefault = 0;
-	int blockValueAtZero = 5;
-	int blockValueAtFirst = 10;
+void HintsFieldTest::default_value_of_hint_is_zero()
+{
 	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
-	AddressOfHint addressZero = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 0);
-	AddressOfHint addressFirst = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 1);
-	AddressOfHint addressSecond = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 2);
-	AddressOfHint addressThird = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 3);
-	Hint hintAtZero = Hint(addressZero, blockValueAtZero);
-	Hint hintAtFirst = Hint(addressFirst, blockValueAtFirst);
-	
-	SECTION( "number of lines should increase after insert" ) {
-		hintsField.insertHintBefore(hintAtZero);
-		REQUIRE( hintsField.numberOfBlocksInLine(lineNumber) == 2 );
-		hintsField.insertHintBefore(hintAtZero);
-		REQUIRE( hintsField.numberOfBlocksInLine(lineNumber) == 3 );
-	}
-	
-	SECTION( "adresses after increase should be same as count in line" ) {
-		hintsField.insertHintBefore(hintAtZero);
-		REQUIRE (hintsField.getHint(addressZero).getAddress() == addressZero);
-		REQUIRE (hintsField.getHint(addressFirst).getAddress() == addressFirst);
-		hintsField.insertHintBefore(hintAtFirst);
-		REQUIRE (hintsField.getHint(addressZero).getAddress() == addressZero);
-		REQUIRE (hintsField.getHint(addressFirst).getAddress() == addressFirst);
-		REQUIRE (hintsField.getHint(addressSecond).getAddress() == addressSecond);
-		hintsField.insertHintBefore(hintAtZero);
-		REQUIRE (hintsField.getHint(addressZero).getAddress() == addressZero);
-		REQUIRE (hintsField.getHint(addressFirst).getAddress() == addressFirst);
-		REQUIRE (hintsField.getHint(addressSecond).getAddress() == addressSecond);
-		REQUIRE (hintsField.getHint(addressThird).getAddress() == addressThird);
-	}
-	
-	SECTION( "value after increase should be shifted properly" ) {
-		hintsField.insertHintBefore(hintAtZero);
-		REQUIRE (hintsField.getHint(addressZero).getBlockSize() == blockValueAtZero);
-		REQUIRE (hintsField.getHint(addressFirst).getBlockSize() == blockValueDefault);
-		hintsField.insertHintBefore(hintAtFirst);
-		REQUIRE (hintsField.getHint(addressZero).getBlockSize() == blockValueAtZero);
-		REQUIRE (hintsField.getHint(addressFirst).getBlockSize() == blockValueAtFirst);
-		REQUIRE (hintsField.getHint(addressSecond).getBlockSize() == blockValueDefault);
-		hintsField.insertHintBefore(hintAtFirst);
-		REQUIRE (hintsField.getHint(addressZero).getBlockSize() == blockValueAtZero);
-		REQUIRE (hintsField.getHint(addressFirst).getBlockSize() == blockValueAtFirst);
-		REQUIRE (hintsField.getHint(addressSecond).getBlockSize() == blockValueAtFirst);
-		REQUIRE (hintsField.getHint(addressThird).getBlockSize() == blockValueDefault);
-	}
+	QCOMPARE(hintsField.getHint(addressZero).getBlockSize(), 0);
+	QCOMPARE(blockValueDefault, 0);
 }
 
-
-TEST_CASE("HintsField updateHint") {
-	int numberOfLines = 3;
-	int firstLine = 1;
-	int blockSizeValue = 5;
+void HintsFieldTest::number_of_lines_should_increase_after_insert()
+{
 	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
-	AddressOfHint addressCountZeroLineFirst = AddressOfHint(AddressOfHint::VERTICAL, firstLine, 0);
-	Hint hintAtCountZeroLineFirst = Hint(addressCountZeroLineFirst, blockSizeValue);
-	
-	SECTION( "number of lines should not change after update" ) {
-		int namberOfBlocksInFirstLine = hintsField.numberOfBlocksInLine(firstLine);
-		hintsField.updateHint(hintAtCountZeroLineFirst);
-		REQUIRE( hintsField.numberOfBlocksInLine(firstLine) == namberOfBlocksInFirstLine );
-	}
-	
-	SECTION( "address should not change after update" ) {
-		hintsField.updateHint(hintAtCountZeroLineFirst);
-		REQUIRE( hintsField.getHint(addressCountZeroLineFirst).getAddress() == addressCountZeroLineFirst );
-	}
-	
-	SECTION( "block size value should change after update" ) {
-		hintsField.updateHint(hintAtCountZeroLineFirst);
-		REQUIRE( hintsField.getHint(addressCountZeroLineFirst).getBlockSize() == blockSizeValue );
-	}
+	hintsField.insertHintBefore(hintAtZero);
+	QCOMPARE(hintsField.numberOfBlocksInLine(lineNumber), 2);
+	hintsField.insertHintBefore(hintAtZero);
+	QCOMPARE(hintsField.numberOfBlocksInLine(lineNumber), 3);
 }
 
-
-TEST_CASE("HintsField deleteHint") {
-	int numberOfLines = 2;
-	int lineNumber = 1;
-	int blockValueDefault = 0;
-	int blockValueAtZero = 5;
-	int blockValueAtFirst = 10;
+void HintsFieldTest::adresses_after_insert_should_be_same_as_count_in_line()
+{
 	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
-	AddressOfHint addressZero = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 0);
-	AddressOfHint addressFirst = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 1);
-	AddressOfHint addressSecond = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 2);
-	AddressOfHint addressThird = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 3);
-	Hint hintAtZero = Hint(addressZero, blockValueAtZero);
-	Hint hintAtFirst = Hint(addressFirst, blockValueAtFirst);
+	hintsField.insertHintBefore(hintAtZero);
+	QVERIFY(hintsField.getHint(addressZero).getAddress() == addressZero);
+	QVERIFY(hintsField.getHint(addressFirst).getAddress() == addressFirst);
+	hintsField.insertHintBefore(hintAtFirst);
+	QVERIFY(hintsField.getHint(addressZero).getAddress() == addressZero);
+	QVERIFY(hintsField.getHint(addressFirst).getAddress() == addressFirst);
+	QVERIFY(hintsField.getHint(addressSecond).getAddress() == addressSecond);
+	hintsField.insertHintBefore(hintAtZero);
+	QVERIFY(hintsField.getHint(addressZero).getAddress() == addressZero);
+	QVERIFY(hintsField.getHint(addressFirst).getAddress() == addressFirst);
+	QVERIFY(hintsField.getHint(addressSecond).getAddress() == addressSecond);
+	QVERIFY(hintsField.getHint(addressThird).getAddress() == addressThird);
+}
+
+void HintsFieldTest::value_after_insert_should_be_shifted_properly()
+{
+	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	hintsField.insertHintBefore(hintAtZero);
+	QVERIFY(hintsField.getHint(addressZero).getBlockSize() == blockValueAtZero);
+	QVERIFY(hintsField.getHint(addressFirst).getBlockSize() == blockValueDefault);
+	hintsField.insertHintBefore(hintAtFirst);
+	QVERIFY(hintsField.getHint(addressZero).getBlockSize() == blockValueAtZero);
+	QVERIFY(hintsField.getHint(addressFirst).getBlockSize() == blockValueAtFirst);
+	QVERIFY(hintsField.getHint(addressSecond).getBlockSize() == blockValueDefault);
+	hintsField.insertHintBefore(hintAtFirst);
+	QVERIFY(hintsField.getHint(addressZero).getBlockSize() == blockValueAtZero);
+	QVERIFY(hintsField.getHint(addressFirst).getBlockSize() == blockValueAtFirst);
+	QVERIFY(hintsField.getHint(addressSecond).getBlockSize() == blockValueAtFirst);
+	QVERIFY(hintsField.getHint(addressThird).getBlockSize() == blockValueDefault);
+}
+
+void HintsFieldTest::number_of_lines_should_not_change_after_update()
+{
+	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	int nuberOfLinesBefore = hintsField.numberOfBlocksInLine(lineNumber);
+	hintsField.updateHint(hintAtZero);
+	int nuberOfLinesAfter = hintsField.numberOfBlocksInLine(lineNumber);
+	QVERIFY(nuberOfLinesBefore == nuberOfLinesAfter);
+}
+
+void HintsFieldTest::address_should_not_change_after_update()
+{
+	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	Hint hint(addressZero, 555);
+	hintsField.updateHint(hint);
+	QVERIFY(hintsField.getHint(addressZero).getAddress() == addressZero);
+}
+
+void HintsFieldTest::block_size_value_should_change_after_update()
+{
+	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	Hint hint(addressZero, 555);
+	hintsField.updateHint(hint);
+	QCOMPARE(hintsField.getHint(addressZero).getBlockSize(), 555);
+}
+
+void HintsFieldTest::number_of_hints_in_line_should_decrease_after_delete()
+{
+	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
 	hintsField.insertHintBefore(hintAtZero);
 	hintsField.insertHintBefore(hintAtFirst);
 	hintsField.insertHintBefore(hintAtFirst);
 	
-	SECTION( "number of hints in line should decrease after delete" ) {
-		REQUIRE( hintsField.numberOfBlocksInLine(lineNumber) == 4 );
-		hintsField.deleteHint(hintAtFirst);
-		REQUIRE( hintsField.numberOfBlocksInLine(lineNumber) == 3 );
-		hintsField.deleteHint(hintAtZero);
-		REQUIRE( hintsField.numberOfBlocksInLine(lineNumber) == 2 );
-	}
+	QCOMPARE(hintsField.numberOfBlocksInLine(lineNumber), 4);
+	hintsField.deleteHint(hintAtFirst);
+	QCOMPARE(hintsField.numberOfBlocksInLine(lineNumber), 3);
+	hintsField.deleteHint(hintAtZero);
+	QCOMPARE(hintsField.numberOfBlocksInLine(lineNumber), 2);
+}
+
+void HintsFieldTest::adresses_after_delete_should_be_same_as_count_in_line()
+{
+	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	hintsField.insertHintBefore(hintAtZero);
+	hintsField.insertHintBefore(hintAtFirst);
+	hintsField.insertHintBefore(hintAtFirst);
 	
-	SECTION( "adresses after delete should be same as count in line" ) {
-		REQUIRE (hintsField.getHint(addressZero).getAddress() == addressZero);
-		REQUIRE (hintsField.getHint(addressFirst).getAddress() == addressFirst);
-		REQUIRE (hintsField.getHint(addressSecond).getAddress() == addressSecond);
-		REQUIRE (hintsField.getHint(addressThird).getAddress() == addressThird);
-		hintsField.deleteHint(hintAtZero);
-		REQUIRE (hintsField.getHint(addressZero).getAddress() == addressZero);
-		REQUIRE (hintsField.getHint(addressFirst).getAddress() == addressFirst);
-		REQUIRE (hintsField.getHint(addressSecond).getAddress() == addressSecond);
-		hintsField.deleteHint(hintAtZero);
-		REQUIRE (hintsField.getHint(addressZero).getAddress() == addressZero);
-		REQUIRE (hintsField.getHint(addressFirst).getAddress() == addressFirst);
-	}
+	QVERIFY(hintsField.getHint(addressZero).getAddress() == addressZero);
+	QVERIFY(hintsField.getHint(addressFirst).getAddress() == addressFirst);
+	QVERIFY(hintsField.getHint(addressSecond).getAddress() == addressSecond);
+	QVERIFY(hintsField.getHint(addressThird).getAddress() == addressThird);
+	hintsField.deleteHint(hintAtZero);
+	QVERIFY(hintsField.getHint(addressZero).getAddress() == addressZero);
+	QVERIFY(hintsField.getHint(addressFirst).getAddress() == addressFirst);
+	QVERIFY(hintsField.getHint(addressSecond).getAddress() == addressSecond);
+	hintsField.deleteHint(hintAtZero);
+	QVERIFY(hintsField.getHint(addressZero).getAddress() == addressZero);
+	QVERIFY(hintsField.getHint(addressFirst).getAddress() == addressFirst);
+}
+
+void HintsFieldTest::hint_can_NOT_be_deleted_if_there_is_only_one_left()
+{
+	HintsField containOneHint(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	QCOMPARE(containOneHint.numberOfBlocksInLine(lineNumber), 1);
+	containOneHint.deleteHint(hintAtZero);
+	QCOMPARE(containOneHint.numberOfBlocksInLine(lineNumber), 1);
+}
+
+void HintsFieldTest::values_after_delete_should_be_shifted_properly()
+{
+	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	hintsField.insertHintBefore(hintAtZero);
+	hintsField.insertHintBefore(hintAtFirst);
+	hintsField.insertHintBefore(hintAtFirst);
 	
-	SECTION( "hint can NOT be deleted if there is only ONE left") {
-		HintsField containOneHint(numberOfLines, AddressOfHint::orientation::VERTICAL);
-		REQUIRE( containOneHint.numberOfBlocksInLine(lineNumber) == 1 );
-		containOneHint.deleteHint(hintAtZero);
-		REQUIRE( containOneHint.numberOfBlocksInLine(lineNumber) == 1 );
-	}
-	
-	SECTION( "values after delete should be shifted properly" ) {
-		REQUIRE (hintsField.getHint(addressZero).getBlockSize() == blockValueAtZero);
-		REQUIRE (hintsField.getHint(addressFirst).getBlockSize() == blockValueAtFirst);
-		REQUIRE (hintsField.getHint(addressSecond).getBlockSize() == blockValueAtFirst);
-		REQUIRE (hintsField.getHint(addressThird).getBlockSize() == blockValueDefault);
-		hintsField.deleteHint(hintAtZero);
-		REQUIRE (hintsField.getHint(addressZero).getBlockSize() == blockValueAtFirst);
-		REQUIRE (hintsField.getHint(addressFirst).getBlockSize() == blockValueAtFirst);
-		REQUIRE (hintsField.getHint(addressSecond).getBlockSize() == blockValueDefault);
-		hintsField.deleteHint(hintAtZero);
-		REQUIRE (hintsField.getHint(addressZero).getBlockSize() == blockValueAtFirst);
-		REQUIRE (hintsField.getHint(addressFirst).getBlockSize() == blockValueDefault);
-		hintsField.deleteHint(hintAtFirst);
-		REQUIRE (hintsField.getHint(addressZero).getBlockSize() == blockValueAtFirst);
-	}
+	QCOMPARE(hintsField.getHint(addressZero).getBlockSize(), blockValueAtZero);
+	QCOMPARE(hintsField.getHint(addressFirst).getBlockSize(), blockValueAtFirst);
+	QCOMPARE(hintsField.getHint(addressSecond).getBlockSize(), blockValueAtFirst);
+	QCOMPARE(hintsField.getHint(addressThird).getBlockSize(), blockValueDefault);
+	hintsField.deleteHint(hintAtZero);
+	QCOMPARE(hintsField.getHint(addressZero).getBlockSize(), blockValueAtFirst);
+	QCOMPARE(hintsField.getHint(addressFirst).getBlockSize(), blockValueAtFirst);
+	QCOMPARE(hintsField.getHint(addressSecond).getBlockSize(), blockValueDefault);
+	hintsField.deleteHint(hintAtZero);
+	QCOMPARE(hintsField.getHint(addressZero).getBlockSize(), blockValueAtFirst);
+	QCOMPARE(hintsField.getHint(addressFirst).getBlockSize(), blockValueDefault);
+	hintsField.deleteHint(hintAtFirst);
+	QCOMPARE(hintsField.getHint(addressZero).getBlockSize(), blockValueAtFirst);
 }

@@ -18,45 +18,29 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef ARRAYOFPIXELS_H
-#define ARRAYOFPIXELS_H
+#ifndef LINEOFCELLSTEST_H
+#define LINEOFCELLSTEST_H
 
-#include "utils/NVector.h"
-#include "Cell.h"
+#include <QtTest>
+#include "field/LineOfCells.h"
 
 
-///
-/// \brief ArrayOfPixels stores Pixels in 2-dimensional array.
-/// Pixels are accesible by operator(), use (x, y)
-/// Pixels are stored in vector of columns vector of Pixels to make sure
-/// that in operator[] first [] will be for x (column number)
-/// and second [] will be for y (row number)
-///
-class ArrayOfPixels
+class LineOfCellsTest : public QObject
 {
-public:
-	ArrayOfPixels(int width, int height)
-	{
-		for (int i = 0; i < width; i++)
-		{
-			array.push_back(NVector<Cell>());
-			for (int j = 0; j < height; j++)
-			{
-				array[i].push_back(Cell(AddressOfCell(i, j)));
-			}
-		}
-	}
-	Cell& operator()(int x, int y)
-	{
-		return array.at(x)[y];
-	}
-	Cell getPixelAt(int x, int y) const {
-		return array.at(x).at(y);
-	}
-	int width() const;
-	int height() const;
+	Q_OBJECT
+private slots:
+	void size_should_return_size();
+	void implicit_Cells_should_be_empty();
+	void operator_square_brackets_should_return_reference_to_Cell();
+	void getCellAt_should_return_reference_to_Cell();
+	void max_size_should_be_at_least_10000();
+	void addresses_passed_in_constructor_stay_unchanged_check_for_x();
+	void addresses_passed_in_constructor_stay_unchanged_check_for_y();
+	void address_should_stay_unchanged_after_makeFilledBlack_makeDot_and_makeEmpty();
+	void Cells_are_filled_black_after_setting_them();
+	void Cells_are_dot_after_setting_them();
 private:
-	NVector<NVector<Cell>> array;
+	AddressOfCell dummyAddress{0, 0};
 };
 
-#endif // ARRAYOFPIXELS_H
+#endif // LINEOFCELLSTEST_H

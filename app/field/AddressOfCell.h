@@ -34,6 +34,9 @@ public:
 	bool operator==(const AddressOfCell &address) const {
 		return (this->x == address.x && this->y == address.y);
 	}
+	bool operator!=(const AddressOfCell &address) const {
+		return (this->x != address.x || this->y != address.y);
+	}
 private:
 	int x;
 	int y;

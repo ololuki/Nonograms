@@ -18,15 +18,22 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include "ArrayOfPixels.h"
+#ifndef ADDRESSOFCELLTEST_H
+#define ADDRESSOFCELLTEST_H
 
-int ArrayOfPixels::width() const
-{
-	return array.size();
-}
+#include <QtTest>
+#include "field/AddressOfCell.h"
 
-int ArrayOfPixels::height() const
+
+class AddressOfCellTest : public QObject
 {
-	if (array.size() == 0) return 0;
-	return array.at(0).size();
-}
+	Q_OBJECT
+private slots:
+	void x_and_y_of_Address_should_be_same_as_given_in_constructor();
+	void Address_compared_with_itself_is_equal();
+	void Addresses_with_same_x_and_y_are_equal();
+	void Addresses_with_different_x_and_y_are_NOT_equal();
+	void max_x_and_y_should_be_at_least_10000();
+};
+
+#endif // ADDRESSOFCELLTEST_H

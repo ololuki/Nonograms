@@ -17,7 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS #emit warning if any deprecated feature is use
 SOURCES += main.cpp\
         mainwindow.cpp \
     field/WholeField.cpp \
-    field/ArrayOfPixels.cpp \
+    field/ArrayOfCells.cpp \
     field/LineOfHints.cpp \
     SizeDialog.cpp \
     file/FileManager.cpp \
@@ -41,7 +41,7 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     field/WholeField.h \
-    field/ArrayOfPixels.h \
+    field/ArrayOfCells.h \
     field/LineOfHints.h \
     field/FieldMode.h \
     SizeDialog.h \

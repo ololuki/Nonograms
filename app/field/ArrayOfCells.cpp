@@ -18,32 +18,15 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include <QtTest>
-#include "AddressOfCellTest.h"
-#include "AddressOfHintTest.h"
-#include "CellTest.h"
-#include "ArrayOfCellsTest.h"
-#include "LineOfCellsTest.h"
-#include "HintsFieldTest.h"
+#include "ArrayOfCells.h"
 
-
-int main()
+int ArrayOfCells::width() const
 {
-	QVector<QObject*> tests;
-	
-	tests.append(new AddressOfCellTest);
-	tests.append(new AddressOfHintTest);
-	tests.append(new CellTest);
-	tests.append(new ArrayOfCellsTest);
-	tests.append(new LineOfCellsTest);
-	tests.append(new HintsFieldTest);
-	
-	int result = 0;
-	for (int i = 0; i < tests.length(); i++)
-	{
-		result = QTest::qExec(tests[i]);
-		if (result) break;
-	}
-	qDeleteAll(tests);
-	return result;
+	return array.size();
+}
+
+int ArrayOfCells::height() const
+{
+	if (array.size() == 0) return 0;
+	return array.at(0).size();
 }
