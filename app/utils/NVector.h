@@ -38,6 +38,8 @@ public:
 	NVector() {}
 	NVector(int count, const T& element = T())
 		: vect(count, element) {}
+	NVector(std::initializer_list<T> list)
+		: vect(list) {}
 	
 	void operator=(const std::vector<T>& right) {
 		vect = right;
