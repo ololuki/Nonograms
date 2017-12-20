@@ -101,7 +101,7 @@ void NonogramFileReader::parseColumnsDescription(QJsonArray columnsDescription)
 	for (int i = 0; i < columnsDescription.size(); i++)
 	{
 		QJsonObject jsonLineDescription = columnsDescription[i].toObject();
-		parseLineDescription(jsonLineDescription, i, AddressOfHint::VERTICAL);
+		parseLineDescription(jsonLineDescription, i, Orientation::VERTICAL);
 	}
 }
 
@@ -110,27 +110,27 @@ void NonogramFileReader::parseRowsDescription(QJsonArray rowsDescription)
 	for (int i = 0; i < rowsDescription.size(); i++)
 	{
 		QJsonObject jsonLineDescription = rowsDescription[i].toObject();
-		parseLineDescription(jsonLineDescription, i, AddressOfHint::HORIZONTAL);
+		parseLineDescription(jsonLineDescription, i, Orientation::HORIZONTAL);
 	}
 }
 
-void NonogramFileReader::parseLineDescription(QJsonObject jsonLineDescription, int lineNumber, AddressOfHint::orientation orientation)
+void NonogramFileReader::parseLineDescription(QJsonObject jsonLineDescription, int lineNumber, Orientation orientation)
 {
 	int lineLength = jsonLineDescription["lineLength"].toInt();
 	QJsonArray jsonLineOfHints = jsonLineDescription["lineDescription"].toArray();
 	parseHintsInLine(jsonLineOfHints, lineNumber, lineLength, orientation);
 	switch (orientation)
 	{
-	case AddressOfHint::VERTICAL:
+	case Orientation::VERTICAL:
 		field->columnsHints()->deleteHint(Hint(AddressOfHint(orientation, lineNumber, lineLength), 0));
 		break;
-	case AddressOfHint::HORIZONTAL:
+	case Orientation::HORIZONTAL:
 		field->rowsHints()->deleteHint(Hint(AddressOfHint(orientation, lineNumber, lineLength), 0));
 		break;
 	}
 }
 
-void NonogramFileReader::parseHintsInLine(QJsonArray jsonLineOfHints, int lineNumber, int lineLength, AddressOfHint::orientation orientation)
+void NonogramFileReader::parseHintsInLine(QJsonArray jsonLineOfHints, int lineNumber, int lineLength, Orientation orientation)
 {
 	for (int i = 0; i < lineLength; i++)
 	{
@@ -145,10 +145,10 @@ void NonogramFileReader::parseHint(QJsonObject jsonHint, AddressOfHint address)
 	int blockSize = jsonHint["blockSize"].toInt();
 	switch (address.getOrientation())
 	{
-	case AddressOfHint::VERTICAL:
+	case Orientation::VERTICAL:
 		field->columnsHints()->insertHintBefore(Hint(address, blockSize));
 		break;
-	case AddressOfHint::HORIZONTAL:
+	case Orientation::HORIZONTAL:
 		field->rowsHints()->insertHintBefore(Hint(address, blockSize));
 		break;
 	}

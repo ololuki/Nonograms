@@ -51,8 +51,8 @@ private:
 	
 	QJsonArray serializeColumnsDescription();
 	QJsonArray serializeRowsDescription();
-	QJsonObject serializeLineDescription(int lineNumber, AddressOfHint::orientation orientation);
-	QJsonArray serializeHintsInLine(int lineNumber, int lineLength, AddressOfHint::orientation orientation);
+	QJsonObject serializeLineDescription(int lineNumber, Orientation orientation);
+	QJsonArray serializeHintsInLine(int lineNumber, int lineLength, Orientation orientation);
 	QJsonObject serializeHint(AddressOfHint address);
 };
 

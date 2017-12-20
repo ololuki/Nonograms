@@ -47,7 +47,7 @@ void HintsView::setField(const std::shared_ptr<const HintsField> &field)
 	int initialLengthInSquares = 3;
 	int screenX;
 	int screenY;
-	if (orientation == AddressOfHint::VERTICAL)
+	if (orientation == Orientation::VERTICAL)
 	{
 		screenX = this->field->getNumberOfLines() * constants.squareSize + constants.myPenWidth;
 		screenY = initialLengthInSquares * constants.squareSize + constants.myPenWidth;
@@ -64,7 +64,7 @@ void HintsView::setField(const std::shared_ptr<const HintsField> &field)
 
 void HintsView::onDataChanged()
 {
-	if (orientation == AddressOfHint::VERTICAL)
+	if (orientation == Orientation::VERTICAL)
 	{
 		int currentHeight = minimumHeight() / constants.squareSize;
 		if (field->allHintsLength() > currentHeight)
@@ -118,7 +118,7 @@ void HintsView::onInsertingButtonClick()
 {
 	int line;
 	int count;
-	if (orientation == AddressOfHint::VERTICAL)
+	if (orientation == Orientation::VERTICAL)
 	{
 		line = insertingButton->pos().x() / constants.squareSize;
 		count = (insertingButton->pos().y() + constants.squareSize) / constants.squareSize;
@@ -138,7 +138,7 @@ void HintsView::mousePressEvent(QMouseEvent *event)
 	{
 		int hintLine;
 		int hintCount;
-		if (orientation == AddressOfHint::VERTICAL)
+		if (orientation == Orientation::VERTICAL)
 		{
 			hintLine = screenPoint.x() / constants.squareSize;
 			hintCount = screenPoint.y() / constants.squareSize;
@@ -169,7 +169,7 @@ void HintsView::mouseMoveEvent(QMouseEvent *event)
 	int halfSquareSize = constants.squareSize/2;
 	int hintLine;
 	int hintCount;
-	if(orientation == AddressOfHint::VERTICAL)
+	if(orientation == Orientation::VERTICAL)
 	{
 		hintLine = screenPoint.x() / constants.squareSize;
 		hintCount = (screenPoint.y() + halfSquareSize) / constants.squareSize;
@@ -179,7 +179,7 @@ void HintsView::mouseMoveEvent(QMouseEvent *event)
 	}
 	
 	AddressOfHint address(orientation, hintLine, hintCount);
-	if(orientation == AddressOfHint::VERTICAL)
+	if(orientation == Orientation::VERTICAL)
 	{
 		if ((screenPoint.y() + insertingButtonHeight/2) % constants.squareSize < insertingButtonHeight)
 		{
@@ -213,7 +213,7 @@ bool HintsView::isPointOnDefinedHint(QPoint screenPoint)
 {
 	int line;
 	int count;
-	if(orientation == AddressOfHint::VERTICAL)
+	if(orientation == Orientation::VERTICAL)
 	{
 		line = screenPoint.x() / constants.squareSize;
 		count = screenPoint.y() / constants.squareSize;
@@ -251,7 +251,7 @@ void HintsView::drawOneHint(Hint hint)
 	AddressOfHint address = hint.getAddress();
 	int screenX;
 	int screenY;
-	if (orientation == AddressOfHint::VERTICAL)
+	if (orientation == Orientation::VERTICAL)
 	{
 		screenX = address.getLine() * constants.squareSize;
 		screenY = address.getCount() * constants.squareSize;
@@ -284,7 +284,7 @@ void HintsView::undrawOneHint(AddressOfHint address)
 {
 	int screenX;
 	int screenY;
-	if(orientation == AddressOfHint::VERTICAL)
+	if(orientation == Orientation::VERTICAL)
 	{
 		screenX = address.getLine() * constants.squareSize;
 		screenY = address.getCount() * constants.squareSize;
@@ -323,7 +323,7 @@ void HintsView::saveTextBoxToHint()
 	{
 		int line;
 		int count;
-		if (orientation == AddressOfHint::VERTICAL)
+		if (orientation == Orientation::VERTICAL)
 		{
 			line = qTextEdit->pos().x() / constants.squareSize;
 			count = qTextEdit->pos().y() / constants.squareSize;
@@ -343,7 +343,7 @@ void HintsView::moveAndShowTextBox(AddressOfHint address)
 {
 	int screenX;
 	int screenY;
-	if (orientation == AddressOfHint::VERTICAL)
+	if (orientation == Orientation::VERTICAL)
 	{
 		screenX = address.getLine() * constants.squareSize;
 		screenY = address.getCount() * constants.squareSize;
@@ -361,7 +361,7 @@ void HintsView::initInsertingButton()
 {
 	insertingButton = std::make_shared<QPushButton>("+", this);
 	insertingButton->installEventFilter(&insertingButtonEventFilter);
-	if(orientation == AddressOfHint::VERTICAL)
+	if(orientation == Orientation::VERTICAL)
 	{
 		insertingButton->setFixedWidth(constants.squareSize);
 		insertingButton->setFixedHeight(insertingButtonHeight);
@@ -390,7 +390,7 @@ void HintsView::moveAndShowInsertingButton(AddressOfHint address)
 {
 	int screenX;
 	int screenY;
-	if (orientation == AddressOfHint::VERTICAL)
+	if (orientation == Orientation::VERTICAL)
 	{
 		screenX = address.getLine() * constants.squareSize;
 		screenY = address.getCount() * constants.squareSize - (insertingButtonHeight/2);

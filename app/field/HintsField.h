@@ -39,7 +39,7 @@ class HintsField : public QObject
 {
 	Q_OBJECT
 public:
-	HintsField(int numberOfLines, AddressOfHint::orientation o);
+	HintsField(int numberOfLines, Orientation o);
 	virtual ~HintsField();
 	virtual Hint getHint(AddressOfHint address) const;
 	virtual void updateHint(Hint hint);
@@ -50,14 +50,14 @@ public:
 	virtual int numberOfBlocksInLine(int lineNumber) const;
 	virtual int getNumberOfLines() const;
 	virtual int allHintsLength() const;
-	virtual AddressOfHint::orientation getOrientation() const;
+	virtual Orientation getOrientation() const;
 	
 	virtual bool isDefinedHintAt(AddressOfHint address) const;
 signals:
 	void hintChanged();
 private:
 	int numberOfLines;
-	AddressOfHint::orientation orientation;
+	Orientation orientation;
 	NVector<LineOfHints> linesOfHints;
 };
 

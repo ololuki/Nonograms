@@ -21,7 +21,7 @@
 #include "HintsField.h"
 
 
-HintsField::HintsField(int numberOfLines, AddressOfHint::orientation o)
+HintsField::HintsField(int numberOfLines, Orientation o)
 {
 	this->numberOfLines = numberOfLines;
 	this->orientation = o;
@@ -104,7 +104,7 @@ int HintsField::allHintsLength() const
 	return length;
 }
 
-AddressOfHint::orientation HintsField::getOrientation() const
+Orientation HintsField::getOrientation() const
 {
 	return orientation;
 }

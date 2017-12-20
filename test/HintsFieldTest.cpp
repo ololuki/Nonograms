@@ -23,14 +23,14 @@
 
 void HintsFieldTest::default_value_of_hint_is_zero()
 {
-	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	HintsField hintsField(numberOfLines, Orientation::VERTICAL);
 	QCOMPARE(hintsField.getHint(addressZero).getBlockSize(), 0);
 	QCOMPARE(blockValueDefault, 0);
 }
 
 void HintsFieldTest::number_of_lines_should_increase_after_insert()
 {
-	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	HintsField hintsField(numberOfLines, Orientation::VERTICAL);
 	hintsField.insertHintBefore(hintAtZero);
 	QCOMPARE(hintsField.numberOfBlocksInLine(lineNumber), 2);
 	hintsField.insertHintBefore(hintAtZero);
@@ -39,7 +39,7 @@ void HintsFieldTest::number_of_lines_should_increase_after_insert()
 
 void HintsFieldTest::adresses_after_insert_should_be_same_as_count_in_line()
 {
-	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	HintsField hintsField(numberOfLines, Orientation::VERTICAL);
 	hintsField.insertHintBefore(hintAtZero);
 	QVERIFY(hintsField.getHint(addressZero).getAddress() == addressZero);
 	QVERIFY(hintsField.getHint(addressFirst).getAddress() == addressFirst);
@@ -56,7 +56,7 @@ void HintsFieldTest::adresses_after_insert_should_be_same_as_count_in_line()
 
 void HintsFieldTest::value_after_insert_should_be_shifted_properly()
 {
-	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	HintsField hintsField(numberOfLines, Orientation::VERTICAL);
 	hintsField.insertHintBefore(hintAtZero);
 	QVERIFY(hintsField.getHint(addressZero).getBlockSize() == blockValueAtZero);
 	QVERIFY(hintsField.getHint(addressFirst).getBlockSize() == blockValueDefault);
@@ -73,7 +73,7 @@ void HintsFieldTest::value_after_insert_should_be_shifted_properly()
 
 void HintsFieldTest::number_of_lines_should_not_change_after_update()
 {
-	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	HintsField hintsField(numberOfLines, Orientation::VERTICAL);
 	int nuberOfLinesBefore = hintsField.numberOfBlocksInLine(lineNumber);
 	hintsField.updateHint(hintAtZero);
 	int nuberOfLinesAfter = hintsField.numberOfBlocksInLine(lineNumber);
@@ -82,7 +82,7 @@ void HintsFieldTest::number_of_lines_should_not_change_after_update()
 
 void HintsFieldTest::address_should_not_change_after_update()
 {
-	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	HintsField hintsField(numberOfLines, Orientation::VERTICAL);
 	Hint hint(addressZero, 555);
 	hintsField.updateHint(hint);
 	QVERIFY(hintsField.getHint(addressZero).getAddress() == addressZero);
@@ -90,7 +90,7 @@ void HintsFieldTest::address_should_not_change_after_update()
 
 void HintsFieldTest::block_size_value_should_change_after_update()
 {
-	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	HintsField hintsField(numberOfLines, Orientation::VERTICAL);
 	Hint hint(addressZero, 555);
 	hintsField.updateHint(hint);
 	QCOMPARE(hintsField.getHint(addressZero).getBlockSize(), 555);
@@ -98,7 +98,7 @@ void HintsFieldTest::block_size_value_should_change_after_update()
 
 void HintsFieldTest::number_of_hints_in_line_should_decrease_after_delete()
 {
-	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	HintsField hintsField(numberOfLines, Orientation::VERTICAL);
 	hintsField.insertHintBefore(hintAtZero);
 	hintsField.insertHintBefore(hintAtFirst);
 	hintsField.insertHintBefore(hintAtFirst);
@@ -112,7 +112,7 @@ void HintsFieldTest::number_of_hints_in_line_should_decrease_after_delete()
 
 void HintsFieldTest::adresses_after_delete_should_be_same_as_count_in_line()
 {
-	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	HintsField hintsField(numberOfLines, Orientation::VERTICAL);
 	hintsField.insertHintBefore(hintAtZero);
 	hintsField.insertHintBefore(hintAtFirst);
 	hintsField.insertHintBefore(hintAtFirst);
@@ -132,7 +132,7 @@ void HintsFieldTest::adresses_after_delete_should_be_same_as_count_in_line()
 
 void HintsFieldTest::hint_can_NOT_be_deleted_if_there_is_only_one_left()
 {
-	HintsField containOneHint(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	HintsField containOneHint(numberOfLines, Orientation::VERTICAL);
 	QCOMPARE(containOneHint.numberOfBlocksInLine(lineNumber), 1);
 	containOneHint.deleteHint(hintAtZero);
 	QCOMPARE(containOneHint.numberOfBlocksInLine(lineNumber), 1);
@@ -140,7 +140,7 @@ void HintsFieldTest::hint_can_NOT_be_deleted_if_there_is_only_one_left()
 
 void HintsFieldTest::values_after_delete_should_be_shifted_properly()
 {
-	HintsField hintsField(numberOfLines, AddressOfHint::orientation::VERTICAL);
+	HintsField hintsField(numberOfLines, Orientation::VERTICAL);
 	hintsField.insertHintBefore(hintAtZero);
 	hintsField.insertHintBefore(hintAtFirst);
 	hintsField.insertHintBefore(hintAtFirst);

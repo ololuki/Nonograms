@@ -80,7 +80,7 @@ protected:
 	void moveAndShowInsertingButton(AddressOfHint address);
 	
 private:
-	AddressOfHint::orientation orientation;
+	Orientation orientation;
 	InsertingButtonEventFilter insertingButtonEventFilter;
 };
 

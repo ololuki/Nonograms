@@ -18,36 +18,14 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef ADDRESSOFHINT_H
-#define ADDRESSOFHINT_H
-
-#include "Orientation.h"
+#ifndef ORIENTATION_H
+#define ORIENTATION_H
 
 
-///
-/// \brief Contains address of every Block Description (hint) on BlocksDescriptionField
-/// address counts from top do bottom
-/// and from left to right
-///
-class AddressOfHint
+enum class Orientation
 {
-public:
-	AddressOfHint(Orientation o, int line, int count);
-	int getLine() {return line;}
-	int getCount() {return count;}
-	Orientation getOrientation() {return o;}
-	bool isColumn() {return o == Orientation::VERTICAL;}
-	bool isRow() {return o == Orientation::HORIZONTAL;}
-	bool operator==(const AddressOfHint &address) const {
-		return (this->line == address.line && this->count == address.count && this->o == address.o);
-	}
-	bool operator!=(const AddressOfHint &address) const {
-		return (this->line != address.line || this->count != address.count || this->o != address.o);
-	}
-private:
-	Orientation o;
-	int line;
-	int count;
+	HORIZONTAL,
+	VERTICAL
 };
 
-#endif // ADDRESSOFHINT_H
+#endif // ORIENTATION_H

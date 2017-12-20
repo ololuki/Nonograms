@@ -27,8 +27,8 @@ WholeField::WholeField(int width, int height)
 	  height(height)
 {
 	cellsField = std::make_shared<CellsField>(width, height);
-	columnsHintsField = std::make_shared<HintsField>(width, AddressOfHint::VERTICAL);
-	rowsHintsField = std::make_shared<HintsField>(height, AddressOfHint::HORIZONTAL);
+	columnsHintsField = std::make_shared<HintsField>(width, Orientation::VERTICAL);
+	rowsHintsField = std::make_shared<HintsField>(height, Orientation::HORIZONTAL);
 	qDebug() << "WholeField width height c-tor";
 }
 

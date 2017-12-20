@@ -44,10 +44,10 @@ void FieldController::addDummyBlock()
 	if (field->getWidth() < 3 || field->getHeight() < 8) return;
 	field->cells()->setCell(Cell(AddressOfCell(2,5), cellSign::SGN_FILL_BLACK));
 	field->cells()->setCell(Cell(AddressOfCell(2,7), cellSign::SGN_FILL_BLACK));
-	field->columnsHints()->updateHint(Hint(AddressOfHint(AddressOfHint::VERTICAL, 2, 0), 1));
-	field->columnsHints()->addHintAtEnd(Hint(AddressOfHint(AddressOfHint::VERTICAL, 2, 1), 1));
-	field->rowsHints()->updateHint(Hint(AddressOfHint(AddressOfHint::HORIZONTAL, 5, 0), 1));
-	field->rowsHints()->updateHint(Hint(AddressOfHint(AddressOfHint::HORIZONTAL, 7, 0), 1));
+	field->columnsHints()->updateHint(Hint(AddressOfHint(Orientation::VERTICAL, 2, 0), 1));
+	field->columnsHints()->addHintAtEnd(Hint(AddressOfHint(Orientation::VERTICAL, 2, 1), 1));
+	field->rowsHints()->updateHint(Hint(AddressOfHint(Orientation::HORIZONTAL, 5, 0), 1));
+	field->rowsHints()->updateHint(Hint(AddressOfHint(Orientation::HORIZONTAL, 7, 0), 1));
 }
 
 void FieldController::replaceField(int width, int height)

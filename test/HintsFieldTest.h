@@ -46,10 +46,10 @@ private:
 	int blockValueDefault = 0;
 	int blockValueAtZero = 5;
 	int blockValueAtFirst = 10;
-	AddressOfHint addressZero = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 0);
-	AddressOfHint addressFirst = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 1);
-	AddressOfHint addressSecond = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 2);
-	AddressOfHint addressThird = AddressOfHint(AddressOfHint::VERTICAL, lineNumber, 3);
+	AddressOfHint addressZero = AddressOfHint(Orientation::VERTICAL, lineNumber, 0);
+	AddressOfHint addressFirst = AddressOfHint(Orientation::VERTICAL, lineNumber, 1);
+	AddressOfHint addressSecond = AddressOfHint(Orientation::VERTICAL, lineNumber, 2);
+	AddressOfHint addressThird = AddressOfHint(Orientation::VERTICAL, lineNumber, 3);
 	Hint hintAtZero = Hint(addressZero, blockValueAtZero);
 	Hint hintAtFirst = Hint(addressFirst, blockValueAtFirst);
 };

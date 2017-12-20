@@ -49,8 +49,8 @@ private:
 	
 	void parseColumnsDescription(QJsonArray columnsDescription);
 	void parseRowsDescription(QJsonArray rowsDescription);
-	void parseLineDescription(QJsonObject jsonLineDescription, int lineNumber, AddressOfHint::orientation orientation);
-	void parseHintsInLine(QJsonArray jsonLineOfHints, int lineNumber, int lineLength, AddressOfHint::orientation orientation);
+	void parseLineDescription(QJsonObject jsonLineDescription, int lineNumber, Orientation orientation);
+	void parseHintsInLine(QJsonArray jsonLineOfHints, int lineNumber, int lineLength, Orientation orientation);
 	void parseHint(QJsonObject jsonHint, AddressOfHint address);
 };
 

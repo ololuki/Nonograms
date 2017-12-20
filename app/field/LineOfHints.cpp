@@ -45,7 +45,7 @@ void LineOfHints::insertHintBefore(Hint hint)
 	int line = hint.getAddress().getLine();
 	int count = hint.getAddress().getCount();
 	int length = hints.size();
-	AddressOfHint::orientation orientation = hint.getAddress().getOrientation();
+	Orientation orientation = hint.getAddress().getOrientation();
 	if (count >= length) return;
 	
 	AddressOfHint addressOfNewLast = AddressOfHint(orientation, line, length);

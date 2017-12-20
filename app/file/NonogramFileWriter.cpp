@@ -95,7 +95,7 @@ QJsonArray NonogramFileWriter::serializeColumnsDescription()
 	QJsonArray columnsDescription;
 	for (int i = 0; i < field->getWidth(); i++)
 	{
-		columnsDescription.append(serializeLineDescription(i, AddressOfHint::VERTICAL));
+		columnsDescription.append(serializeLineDescription(i, Orientation::VERTICAL));
 	}
 	return columnsDescription;
 }
@@ -105,23 +105,23 @@ QJsonArray NonogramFileWriter::serializeRowsDescription()
 	QJsonArray rowsDescription;
 	for (int i = 0; i < field->getHeight(); i++)
 	{
-		rowsDescription.append(serializeLineDescription(i, AddressOfHint::HORIZONTAL));
+		rowsDescription.append(serializeLineDescription(i, Orientation::HORIZONTAL));
 	}
 	return rowsDescription;
 }
 
-QJsonObject NonogramFileWriter::serializeLineDescription(int lineNumber, AddressOfHint::orientation orientation)
+QJsonObject NonogramFileWriter::serializeLineDescription(int lineNumber, Orientation orientation)
 {
 	QJsonObject lineDescription;
 	lineDescription["lineNumber"] = lineNumber;
 	int lineLength;
 	switch (orientation)
 	{
-	case AddressOfHint::VERTICAL:
+	case Orientation::VERTICAL:
 		lineLength = field->columnsHints()->numberOfBlocksInLine(lineNumber);
 		lineDescription["lineLength"] = lineLength;
 		break;
-	case AddressOfHint::HORIZONTAL:
+	case Orientation::HORIZONTAL:
 		lineLength = field->rowsHints()->numberOfBlocksInLine(lineNumber);
 		lineDescription["lineLength"] = lineLength;
 		break;
@@ -131,7 +131,7 @@ QJsonObject NonogramFileWriter::serializeLineDescription(int lineNumber, Address
 	return lineDescription;
 }
 
-QJsonArray NonogramFileWriter::serializeHintsInLine(int lineNumber, int lineLength, AddressOfHint::orientation orientation)
+QJsonArray NonogramFileWriter::serializeHintsInLine(int lineNumber, int lineLength, Orientation orientation)
 {
 	QJsonArray lineOfHints;
 	for (int i = 0; i < lineLength; i++)
@@ -147,12 +147,12 @@ QJsonObject NonogramFileWriter::serializeHint(AddressOfHint address)
 	QJsonObject hint;
 	switch (address.getOrientation())
 	{
-	case AddressOfHint::VERTICAL:
+	case Orientation::VERTICAL:
 		hint["blockSize"] = field->columnsHints()->getHint(address).getBlockSize();
 		hint["count"] = address.getCount();
 		hint["isBlack"] = field->columnsHints()->getHint(address).isFilledBlack();
 		break;
-	case AddressOfHint::HORIZONTAL:
+	case Orientation::HORIZONTAL:
 		hint["blockSize"] = field->rowsHints()->getHint(address).getBlockSize();
 		hint["count"] = address.getCount();
 		hint["isBlack"] = field->rowsHints()->getHint(address).isFilledBlack();

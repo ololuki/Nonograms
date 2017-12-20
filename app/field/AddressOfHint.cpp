@@ -21,7 +21,7 @@
 #include "AddressOfHint.h"
 
 
-AddressOfHint::AddressOfHint(orientation o, int line, int blockNumber)
+AddressOfHint::AddressOfHint(Orientation o, int line, int blockNumber)
 	: o(o), line(line), count(blockNumber)
 {
 	
