@@ -40,6 +40,12 @@ public:
 	void makeDot(){sign = cellSign::SGN_DOT;}
 	void makeEmpty(){sign = cellSign::SGN_EMPTY;}
 	AddressOfCell getAddress() {return address;}
+	bool operator==(const Cell &cell) const {
+		return (this->sign == cell.sign);
+	}
+	bool operator!=(const Cell &cell) const {
+		return (this->sign != cell.sign);
+	}
 private:
 	AddressOfCell address;
 	cellSign sign;

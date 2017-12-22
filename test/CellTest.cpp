@@ -74,3 +74,27 @@ void CellTest::defaultSignShouldBeEmpty()
 	QCOMPARE(cell.isDot(), false);
 	QCOMPARE(cell.isFilledBlack(), false);
 }
+
+void CellTest::cells_are_equal_if_have_same_signs()
+{
+	Cell cellA = Cell(dummyAddress, cellSign::SGN_DOT);
+	Cell cellB = Cell(dummyAddress, cellSign::SGN_DOT);
+	QVERIFY(cellA == cellB);
+	QCOMPARE(cellA != cellB, false);
+}
+
+void CellTest::cells_are_equal_if_have_same_signs_and_different_addresses()
+{
+	Cell cellA = Cell(AddressOfCell(1, 2), cellSign::SGN_DOT);
+	Cell cellB = Cell(AddressOfCell(18, 34), cellSign::SGN_DOT);
+	QVERIFY(cellA == cellB);
+	QCOMPARE(cellA != cellB, false);
+}
+
+void CellTest::cells_are_not_equal_if_have_different_signs()
+{
+	Cell cellA = Cell(dummyAddress, cellSign::SGN_EMPTY);
+	Cell cellB = Cell(dummyAddress, cellSign::SGN_FILL_BLACK);
+	QVERIFY(cellA != cellB);
+	QCOMPARE(cellA == cellB, false);
+}
