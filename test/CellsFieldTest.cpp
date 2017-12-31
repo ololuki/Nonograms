@@ -63,7 +63,6 @@ void CellsFieldTest::signals_cellChanged_should_be_emited_only_for_cells_changed
 {
 	QSharedPointer<CellsField> field = makeFilledCellsField();
 	
-	qRegisterMetaType<AddressOfCell>();
 	QSignalSpy spy(field.data(), &CellsField::cellChanged);
 	
 	LineOfCells line = field->getLineOfCells(lineNumber, Orientation::HORIZONTAL);
