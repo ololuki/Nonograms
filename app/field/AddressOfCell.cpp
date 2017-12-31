@@ -19,3 +19,12 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "AddressOfCell.h"
+
+
+/// Makes invalid address - Do not use.
+/// This c-tor exists only to support
+/// passing as queued Signal-Slot parameter and QSignalSpy
+AddressOfCell::AddressOfCell()
+{
+	qDebug("DO NOT USE - default AddressOfCell c-tor");
+}

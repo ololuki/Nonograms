@@ -21,6 +21,8 @@
 #ifndef ADDRESSOFCELL_H
 #define ADDRESSOFCELL_H
 
+#include <QObject>
+
 
 ///
 /// \brief Contains address of every Cell (box) on drawing area in Cells (boxes)
@@ -28,6 +30,7 @@
 class AddressOfCell
 {
 public:
+	AddressOfCell();
 	AddressOfCell(int x, int y) : x(x), y(y) {}
 	int getX() {return x;}
 	int getY() {return y;}
@@ -41,5 +44,7 @@ private:
 	int x;
 	int y;
 };
+
+Q_DECLARE_METATYPE(AddressOfCell)
 
 #endif // ADDRESSOFCELL_H

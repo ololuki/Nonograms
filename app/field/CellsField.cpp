@@ -24,12 +24,12 @@
 
 CellsField::CellsField(int width, int height) : array(width, height)
 {
-	qDebug() << "DrawingAreaField width height c-tor";
+	qDebug() << "CellsField width height c-tor";
 }
 
 CellsField::~CellsField()
 {
-	qDebug() << "DrawingAreaField d-tor";
+	qDebug() << "CellsField d-tor";
 }
 
 Cell CellsField::getCell(AddressOfCell address) const
@@ -43,6 +43,45 @@ void CellsField::setCell(Cell cell)
 {
 	int x = cell.getAddress().getX();
 	int y = cell.getAddress().getY();
-	array(x, y) = cell;
-	emit cellChanged(cell.getAddress());
+	if (array(x, y) != cell)
+	{
+		array(x, y) = cell;
+		emit cellChanged(cell.getAddress());
+	}
+}
+
+LineOfCells CellsField::getLineOfCells(int lineNumber, Orientation orientation) const
+{
+	NVector<Cell> line = NVector<Cell>();
+	int lineLength;
+	switch(orientation)
+	{
+	case Orientation::HORIZONTAL:
+		lineLength = getWidth();
+		break;
+	case Orientation::VERTICAL:
+		lineLength = getHeight();
+		break;
+	}
+	for (int i = 0; i < lineLength; i++)
+	{
+		switch(orientation)
+		{
+		case Orientation::HORIZONTAL:
+			line.push_back(getCell(AddressOfCell(i, lineNumber)));
+			break;
+		case Orientation::VERTICAL:
+			line.push_back(getCell(AddressOfCell(lineNumber, i)));
+			break;
+		}
+	}
+	return line;
+}
+
+void CellsField::setLineOfCells(LineOfCells lineOfCells)
+{
+	for (int i = 0; i < lineOfCells.size(); i++)
+	{
+		setCell(lineOfCells[i]);
+	}
 }

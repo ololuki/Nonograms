@@ -25,6 +25,7 @@
 #include "ArrayOfCellsTest.h"
 #include "LineOfCellsTest.h"
 #include "HintsFieldTest.h"
+#include "CellsFieldTest.h"
 
 
 int main()
@@ -37,6 +38,7 @@ int main()
 	tests.append(new ArrayOfCellsTest);
 	tests.append(new LineOfCellsTest);
 	tests.append(new HintsFieldTest);
+	tests.append(new CellsFieldTest);
 	
 	int result = 0;
 	for (int i = 0; i < tests.length(); i++)

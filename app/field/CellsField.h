@@ -23,8 +23,10 @@
 
 #include <QObject>
 #include "AddressOfCell.h"
+#include "Orientation.h"
 #include "Cell.h"
 #include "ArrayOfCells.h"
+#include "LineOfCells.h"
 
 
 ///
@@ -41,6 +43,8 @@ public:
 	int getHeight() const {return array.height();}
 	Cell getCell(AddressOfCell address) const;
 	void setCell(Cell cell);
+	LineOfCells getLineOfCells(int lineNumber, Orientation orientation) const;
+	void setLineOfCells(LineOfCells lineOfCells);
 signals:
 	void cellChanged(AddressOfCell address);
 protected:
