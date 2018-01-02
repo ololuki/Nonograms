@@ -21,11 +21,15 @@
 #ifndef ORIENTATION_H
 #define ORIENTATION_H
 
+#include <QObject>
+
 
 enum class Orientation
 {
 	HORIZONTAL,
 	VERTICAL
 };
+
+Q_DECLARE_METATYPE(Orientation)
 
 #endif // ORIENTATION_H

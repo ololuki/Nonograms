@@ -33,11 +33,11 @@ class AddressOfHint
 {
 public:
 	AddressOfHint(Orientation o, int line, int count);
-	int getLine() {return line;}
-	int getCount() {return count;}
-	Orientation getOrientation() {return o;}
-	bool isColumn() {return o == Orientation::VERTICAL;}
-	bool isRow() {return o == Orientation::HORIZONTAL;}
+	int getLine() const {return line;}
+	int getCount() const {return count;}
+	Orientation getOrientation() const {return o;}
+	bool isColumn() const {return o == Orientation::VERTICAL;}
+	bool isRow() const {return o == Orientation::HORIZONTAL;}
 	bool operator==(const AddressOfHint &address) const {
 		return (this->line == address.line && this->count == address.count && this->o == address.o);
 	}

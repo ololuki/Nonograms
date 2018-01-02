@@ -159,3 +159,48 @@ void HintsFieldTest::values_after_delete_should_be_shifted_properly()
 	hintsField.deleteHint(hintAtFirst);
 	QCOMPARE(hintsField.getHint(addressZero).getBlockSize(), blockValueAtFirst);
 }
+
+void HintsFieldTest::getLineOfHints_should_return_valid_line()
+{
+	HintsField hintsField(numberOfLines, orientation);
+	hintsField.insertHintBefore(hintAtZero);
+	hintsField.insertHintBefore(hintAtFirst);
+	
+	LineOfHints line = hintsField.getLineOfHints(lineNumber);
+	QCOMPARE(line[0].getBlockSize(), blockValueAtZero);
+	QCOMPARE(line[1].getBlockSize(), blockValueAtFirst);
+	QCOMPARE(line[2].getBlockSize(), blockValueDefault);
+	QCOMPARE(line[0].getAddress(), addressZero);
+	QCOMPARE(line[1].getAddress(), addressFirst);
+	QCOMPARE(line[2].getAddress(), addressSecond);
+}
+
+void HintsFieldTest::setLineOfHints_should_change_hints()
+{
+	HintsField hintsField(numberOfLines, orientation);
+	LineOfHints line = LineOfHints({hintAtZero, hintAtFirst});
+	
+	hintsField.setLineOfHints(line);
+	QCOMPARE(hintsField.getHint(addressZero).getBlockSize(), blockValueAtZero);
+	QCOMPARE(hintsField.getHint(addressFirst).getBlockSize(), blockValueAtFirst);
+	QCOMPARE(hintsField.getHint(addressZero).getAddress(), addressZero);
+	QCOMPARE(hintsField.getHint(addressFirst).getAddress(), addressFirst);
+}
+
+void HintsFieldTest::signal_lineOfHintsChanged_should_be_emited_if_hints_was_changed_by_setLineOfHints()
+{
+	HintsField hintsField(numberOfLines, orientation);
+	hintsField.insertHintBefore(hintAtZero);
+	
+	QSignalSpy spy(&hintsField, &HintsField::lineOfHintsChanged);
+	
+	LineOfHints line = hintsField.getLineOfHints(lineNumber);
+	QVERIFY2(line[0].getBlockSize() != anotherBlockValue, "Ensure Hint will be changed");
+	line[0].setBlockSize(anotherBlockValue);
+	hintsField.setLineOfHints(line);
+	
+	const int NUMBER_OF_LINES_CHANGED = 1;
+	QCOMPARE(spy.count(), NUMBER_OF_LINES_CHANGED);
+	QCOMPARE(qvariant_cast<int>(spy.at(0).at(0)), lineNumber);
+	QCOMPARE(qvariant_cast<Orientation>(spy.at(0).at(1)), orientation);
+}

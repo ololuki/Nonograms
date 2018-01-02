@@ -40,18 +40,24 @@ private slots:
 	void adresses_after_delete_should_be_same_as_count_in_line();
 	void hint_can_NOT_be_deleted_if_there_is_only_one_left();
 	void values_after_delete_should_be_shifted_properly();
+	
+	void getLineOfHints_should_return_valid_line();
+	void setLineOfHints_should_change_hints();
+	void signal_lineOfHintsChanged_should_be_emited_if_hints_was_changed_by_setLineOfHints();
 private:
-	int numberOfLines = 2;
-	int lineNumber = 1;
-	int blockValueDefault = 0;
-	int blockValueAtZero = 5;
-	int blockValueAtFirst = 10;
-	AddressOfHint addressZero = AddressOfHint(Orientation::VERTICAL, lineNumber, 0);
-	AddressOfHint addressFirst = AddressOfHint(Orientation::VERTICAL, lineNumber, 1);
-	AddressOfHint addressSecond = AddressOfHint(Orientation::VERTICAL, lineNumber, 2);
-	AddressOfHint addressThird = AddressOfHint(Orientation::VERTICAL, lineNumber, 3);
-	Hint hintAtZero = Hint(addressZero, blockValueAtZero);
-	Hint hintAtFirst = Hint(addressFirst, blockValueAtFirst);
+	const Orientation orientation = Orientation::VERTICAL;
+	const int numberOfLines = 2;
+	const int lineNumber = 1;
+	const int blockValueDefault = 0;
+	const int blockValueAtZero = 5;
+	const int blockValueAtFirst = 10;
+	const int anotherBlockValue = 22;
+	const AddressOfHint addressZero = {orientation, lineNumber, 0};
+	const AddressOfHint addressFirst = {orientation, lineNumber, 1};
+	const AddressOfHint addressSecond = {orientation, lineNumber, 2};
+	const AddressOfHint addressThird = {orientation, lineNumber, 3};
+	const Hint hintAtZero = {addressZero, blockValueAtZero};
+	const Hint hintAtFirst = {addressFirst, blockValueAtFirst};
 };
 
 #endif // HINTSFIELDTEST_H

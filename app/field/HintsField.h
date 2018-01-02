@@ -53,8 +53,11 @@ public:
 	virtual Orientation getOrientation() const;
 	
 	virtual bool isDefinedHintAt(AddressOfHint address) const;
+	
+	LineOfHints getLineOfHints(int lineNumber);
+	void setLineOfHints(LineOfHints line);
 signals:
-	void hintChanged();
+	void lineOfHintsChanged(int lineNumber, Orientation orientation);
 private:
 	int numberOfLines;
 	Orientation orientation;

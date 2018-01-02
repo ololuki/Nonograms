@@ -39,7 +39,7 @@ void HintsView::setField(const std::shared_ptr<const HintsField> &field)
 	orientation = this->field->getOrientation();
 	connect(
 		static_cast<const HintsField*>(this->field.get()),
-		&HintsField::hintChanged,
+		&HintsField::lineOfHintsChanged,
 		this,
 		&HintsView::onDataChanged
 	);

@@ -49,14 +49,14 @@ void HintsField::updateHint(Hint hint)
 {
 	int line = hint.getAddress().getLine();
 	linesOfHints[line].updateHint(hint);
-	emit hintChanged();
+	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
 }
 
 void HintsField::insertHintBefore(Hint hint)
 {
 	int line = hint.getAddress().getLine();
 	linesOfHints[line].insertHintBefore(hint);
-	emit hintChanged();
+	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
 }
 
 void HintsField::addHintAtEnd(Hint hint)
@@ -67,7 +67,7 @@ void HintsField::addHintAtEnd(Hint hint)
 	{
 		linesOfHints[line].push_back(hint);
 	}
-	emit hintChanged();
+	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
 }
 
 void HintsField::deleteHint(Hint hint)
@@ -81,7 +81,7 @@ void HintsField::deleteHint(Hint hint)
 		linesOfHints[line][i].setBlockSize(linesOfHints[line][i+1].getBlockSize());
 	}
 	linesOfHints[line].pop_back();
-	emit hintChanged();
+	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
 }
 
 int HintsField::numberOfBlocksInLine(int lineNumber) const
@@ -115,4 +115,17 @@ bool HintsField::isDefinedHintAt(AddressOfHint address) const
 	if (line >= linesOfHints.size()) return false;
 	if (address.getCount() >= linesOfHints[line].size()) return false;
 	return true;
+}
+
+LineOfHints HintsField::getLineOfHints(int lineNumber)
+{
+	return linesOfHints[lineNumber];
+}
+
+void HintsField::setLineOfHints(LineOfHints line)
+{
+	if (line.size() < 1) return;
+	int lineNumber = line[0].getAddress().getLine();
+	linesOfHints[lineNumber] = line;
+	emit lineOfHintsChanged(lineNumber, line[0].getAddress().getOrientation());
 }
