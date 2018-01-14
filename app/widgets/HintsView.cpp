@@ -41,61 +41,27 @@ void HintsView::setField(const std::shared_ptr<const HintsField> &field)
 		static_cast<const HintsField*>(this->field.get()),
 		&HintsField::lineOfHintsChanged,
 		this,
-		&HintsView::onDataChanged
+		&HintsView::onLineOfHintsChanged
 	);
 	
-	int initialLengthInSquares = 3;
-	int screenX;
-	int screenY;
-	if (orientation == Orientation::VERTICAL)
-	{
-		screenX = this->field->getNumberOfLines() * constants.squareSize + constants.myPenWidth;
-		screenY = initialLengthInSquares * constants.squareSize + constants.myPenWidth;
-	} else {
-		screenX = initialLengthInSquares * constants.squareSize + constants.myPenWidth;
-		screenY = this->field->getNumberOfLines() * constants.squareSize + constants.myPenWidth;
-	}
-	
-	QSize size(screenX, screenY);
+	QSize size = calculateSize();
 	resize(size);
 	initInsertingButton();
-	onDataChanged();
-}
-
-void HintsView::onDataChanged()
-{
-	if (orientation == Orientation::VERTICAL)
-	{
-		int currentHeight = minimumHeight() / constants.squareSize;
-		if (field->allHintsLength() > currentHeight)
-		{
-			int screenX = field->getNumberOfLines() * constants.squareSize + constants.myPenWidth;
-			int newHeightInSquares = field->allHintsLength();
-			int screenY = newHeightInSquares * constants.squareSize + constants.myPenWidth;
-			QSize size(screenX, screenY);
-			resize(size);
-		}
-	} else {
-		int currentWidth = minimumWidth() / constants.squareSize;
-		if (field->allHintsLength() > currentWidth)
-		{
-			int newWidthInSquares = field->allHintsLength();
-			int screenX = newWidthInSquares * constants.squareSize + constants.myPenWidth;
-			int screenY = field->getNumberOfLines() * constants.squareSize + constants.myPenWidth;
-			QSize size(screenX, screenY);
-			resize(size);
-		}
-	}
 	redrawAll();
 }
 
 ///
-/// \brief	invoke when one block description is changed
-/// \param	address lying on edited (changed) line of blocks descriptions
+/// \brief Invoked when hint or hints in line changed.
+/// Invoked by model to inform about changes.
+/// \param lineNumber - number (address) of changed line
+/// \param orientation - orientation (address) of changed line
 ///
-void HintsView::onLineOfHintsChanged(AddressOfHint address)
+void HintsView::onLineOfHintsChanged(int lineNumber, Orientation orientation)
 {
-	
+	// TODO: Redraw only one line
+	QSize size = calculateSize();
+	resize(size);
+	redrawAll();
 }
 
 ///
@@ -400,4 +366,26 @@ void HintsView::moveAndShowInsertingButton(AddressOfHint address)
 	}
 	insertingButton->move(screenX, screenY);
 	insertingButton->show();
+}
+
+///
+/// \brief Calculate size of screen in pixels.
+/// \return current size of screen in pixels as QSize.
+///
+QSize HintsView::calculateSize()
+{
+	int additionalLengthInSquares = 1;
+	int screenX;
+	int screenY;
+	if (orientation == Orientation::VERTICAL)
+	{
+		screenX = field->getNumberOfLines() * constants.squareSize + constants.myPenWidth;
+		int newHeightInSquares = field->allHintsLength() + additionalLengthInSquares;
+		screenY = newHeightInSquares * constants.squareSize + constants.myPenWidth;
+	} else {
+		int newWidthInSquares = field->allHintsLength() + additionalLengthInSquares;
+		screenX = newWidthInSquares * constants.squareSize + constants.myPenWidth;
+		screenY = field->getNumberOfLines() * constants.squareSize + constants.myPenWidth;
+	}
+	return QSize(screenX, screenY);
 }

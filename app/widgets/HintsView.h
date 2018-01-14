@@ -45,9 +45,7 @@ signals:
 	
 public slots:
 	// invoked by model to inform about changes
-	void onDataChanged();
-	// invoked by model to inform about changes
-	void onLineOfHintsChanged(AddressOfHint address);
+	void onLineOfHintsChanged(int lineNumber, Orientation orientation);
 	// invoked by controller
 	void onShowInsertingButtonBefore(AddressOfHint address);
 	// invoked by controller
@@ -80,6 +78,7 @@ protected:
 	void moveAndShowInsertingButton(AddressOfHint address);
 	
 private:
+	QSize calculateSize();
 	Orientation orientation;
 	InsertingButtonEventFilter insertingButtonEventFilter;
 };
