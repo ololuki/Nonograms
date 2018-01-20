@@ -59,6 +59,23 @@ void CellsFieldTest::setLineOfCells_should_change_cells_check_horizontal()
 	QVERIFY(field->getCell(address21) == cell21);
 }
 
+void CellsFieldTest::setCell_with_empty_address_should_not_change_any_Cell()
+{
+	QSharedPointer<CellsField> field = makeEmptyCellsField();
+	Cell cellFilledWithoutAddress;
+	cellFilledWithoutAddress.makeFilledBlack();
+	
+	field->setCell(cellFilledWithoutAddress);
+	
+	Cell emptyCell;
+	QVERIFY(field->getCell(address00) == emptyCell);
+	QVERIFY(field->getCell(address01) == emptyCell);
+	QVERIFY(field->getCell(address10) == emptyCell);
+	QVERIFY(field->getCell(address11) == emptyCell);
+	QVERIFY(field->getCell(address20) == emptyCell);
+	QVERIFY(field->getCell(address21) == emptyCell);
+}
+
 void CellsFieldTest::setCell_with_empty_address_should_not_emit_cellChanged()
 {
 	QSharedPointer<CellsField> field = makeFilledCellsField();
