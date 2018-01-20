@@ -31,7 +31,7 @@ int LineOfCells::size()
 	return cells.size();
 }
 
-Cell &LineOfCells::getCellAt(const int cellNumber)
+Cell &LineOfCells::at(const int cellNumber)
 {
 	return cells.operator[](cellNumber);
 }

@@ -27,12 +27,12 @@ void CellsFieldTest::getLineOfCells_should_return_valid_line_check_horizontal()
 	
 	LineOfCells line = field->getLineOfCells(lineNumber, Orientation::HORIZONTAL);
 	
-	QVERIFY(line.getCellAt(0) == cell01);
-	QVERIFY(line.getCellAt(1) == cell11);
-	QVERIFY(line.getCellAt(2) == cell21);
-	QVERIFY(line.getCellAt(0).getAddress() == address01);
-	QVERIFY(line.getCellAt(1).getAddress() == address11);
-	QVERIFY(line.getCellAt(2).getAddress() == address21);
+	QVERIFY(line.at(0) == cell01);
+	QVERIFY(line.at(1) == cell11);
+	QVERIFY(line.at(2) == cell21);
+	QVERIFY(line.at(0).getAddress() == address01);
+	QVERIFY(line.at(1).getAddress() == address11);
+	QVERIFY(line.at(2).getAddress() == address21);
 }
 
 void CellsFieldTest::getLineOfCells_should_return_valid_line_check_vertical()
@@ -41,10 +41,10 @@ void CellsFieldTest::getLineOfCells_should_return_valid_line_check_vertical()
 	
 	LineOfCells line = field->getLineOfCells(lineNumber, Orientation::VERTICAL);
 	
-	QVERIFY(line.getCellAt(0) == cell10);
-	QVERIFY(line.getCellAt(1) == cell11);
-	QVERIFY(line.getCellAt(0).getAddress() == address10);
-	QVERIFY(line.getCellAt(1).getAddress() == address11);
+	QVERIFY(line.at(0) == cell10);
+	QVERIFY(line.at(1) == cell11);
+	QVERIFY(line.at(0).getAddress() == address10);
+	QVERIFY(line.at(1).getAddress() == address11);
 }
 
 void CellsFieldTest::setLineOfCells_should_change_cells_check_horizontal()
@@ -57,6 +57,18 @@ void CellsFieldTest::setLineOfCells_should_change_cells_check_horizontal()
 	QVERIFY(field->getCell(address01) == cell01);
 	QVERIFY(field->getCell(address11) == cell11);
 	QVERIFY(field->getCell(address21) == cell21);
+}
+
+void CellsFieldTest::setCell_with_empty_address_should_not_emit_cellChanged()
+{
+	QSharedPointer<CellsField> field = makeFilledCellsField();
+	
+	QSignalSpy spy(field.data(), &CellsField::cellChanged);
+	
+	field->setCell(Cell());
+	
+	const int NUMBER_OF_CELLS_CHANGED = 0;
+	QCOMPARE(spy.count(), NUMBER_OF_CELLS_CHANGED);
 }
 
 void CellsFieldTest::signals_cellChanged_should_be_emited_only_for_cells_changed_by_setLineOfCells()

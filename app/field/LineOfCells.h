@@ -37,7 +37,7 @@ public:
 	LineOfCells(NVector<Cell> vectorToCopy);
 	int size();
 	
-	Cell& getCellAt(const int cellNumber);
+	Cell& at(const int cellNumber);
 	Cell& operator[](const int cellNumber);
 private:
 	NVector<Cell> cells;

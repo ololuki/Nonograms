@@ -21,8 +21,17 @@
 #include "Cell.h"
 
 
+///
+/// \brief Creates Cell with invalid Address.
+/// Used mainly for testing.
+/// \param sign
+///
+Cell::Cell(cellSign sign)
+	: sign(sign)
+{
+}
+
 Cell::Cell(AddressOfCell address, cellSign sign)
 	: address(address), sign(sign)
 {
-	
 }

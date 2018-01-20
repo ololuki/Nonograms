@@ -41,12 +41,15 @@ Cell CellsField::getCell(AddressOfCell address) const
 
 void CellsField::setCell(Cell cell)
 {
-	int x = cell.getAddress().getX();
-	int y = cell.getAddress().getY();
-	if (array(x, y) != cell)
+	if (cell.getAddress().isValid())
 	{
-		array(x, y) = cell;
-		emit cellChanged(cell.getAddress());
+		int x = cell.getAddress().getX();
+		int y = cell.getAddress().getY();
+		if (array(x, y) != cell)
+		{
+			array(x, y) = cell;
+			emit cellChanged(cell.getAddress());
+		}
 	}
 }
 

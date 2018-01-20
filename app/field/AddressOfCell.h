@@ -25,15 +25,16 @@
 
 
 ///
-/// \brief Contains address of every Cell (box) on drawing area in Cells (boxes)
+/// \brief Contains address of every Cell (box) on drawing area measured in Cells (boxes)
 ///
 class AddressOfCell
 {
 public:
 	AddressOfCell();
 	AddressOfCell(int x, int y) : x(x), y(y) {}
-	int getX() {return x;}
-	int getY() {return y;}
+	bool isValid() const;
+	int getX() const {return x;}
+	int getY() const {return y;}
 	bool operator==(const AddressOfCell &address) const {
 		return (this->x == address.x && this->y == address.y);
 	}

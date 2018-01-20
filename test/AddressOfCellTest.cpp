@@ -28,6 +28,24 @@ void AddressOfCellTest::x_and_y_of_Address_should_be_same_as_given_in_constructo
 	QCOMPARE( address.getY(), 2 );
 }
 
+void AddressOfCellTest::default_constructor_makes_invalid_Address()
+{
+	AddressOfCell address{};
+	QCOMPARE(address.isValid(), false);
+}
+
+void AddressOfCellTest::Address_is_invalid_for_negative_x_or_y()
+{
+	QCOMPARE(AddressOfCell(3, -1).isValid(), false);
+	QCOMPARE(AddressOfCell(-5, -6).isValid(), false);
+	QCOMPARE(AddressOfCell(-1, 2).isValid(), false);
+	
+	QCOMPARE(AddressOfCell(0, 0).isValid(), true);
+	QCOMPARE(AddressOfCell(6, 5).isValid(), true);
+	QCOMPARE(AddressOfCell(0, 5).isValid(), true);
+	QCOMPARE(AddressOfCell(6, 0).isValid(), true);
+}
+
 void AddressOfCellTest::Address_compared_with_itself_is_equal()
 {
 	AddressOfCell address(1, 2);
@@ -47,7 +65,7 @@ void AddressOfCellTest::Addresses_with_different_x_and_y_are_NOT_equal()
 	AddressOfCell addressB(1, 3);
 	QCOMPARE( (addressA == addressB), false );
 	QVERIFY( addressA != addressB );
-	unsigned int a = 1;
+	int a = 1;
 	QCOMPARE( (AddressOfCell(a, a) == AddressOfCell(a, a+1)), false );
 	QCOMPARE( (AddressOfCell(a, a) == AddressOfCell(a+1, a)), false );
 	QVERIFY( AddressOfCell(a, a) != AddressOfCell(a, a+1) );

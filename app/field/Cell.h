@@ -27,11 +27,12 @@
 
 ///
 /// \brief Cell class contains one pixel (box) of picture (field).
-/// It has address in cells (boxes) and sign to draw.
+/// It has address measured in cells (boxes) and sign to draw.
 ///
 class Cell
 {
 public:
+	Cell(cellSign sign = cellSign::SGN_EMPTY);
 	Cell(AddressOfCell address, cellSign sign = cellSign::SGN_EMPTY);
 	bool isFilledBlack(){return sign == cellSign::SGN_FILL_BLACK;}
 	bool isDot(){return sign == cellSign::SGN_DOT;}

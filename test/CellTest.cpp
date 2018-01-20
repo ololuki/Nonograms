@@ -67,9 +67,17 @@ void CellTest::isEmpty_should_return_true_only_if_sign_Empty_was_given_in_constr
 	QCOMPARE(cell.isEmpty(), false);
 }
 
-void CellTest::defaultSignShouldBeEmpty()
+void CellTest::default_sign_should_be_empty_for_Address_in_constructor()
 {
 	Cell cell = Cell(dummyAddress);
+	QCOMPARE(cell.isEmpty(), true);
+	QCOMPARE(cell.isDot(), false);
+	QCOMPARE(cell.isFilledBlack(), false);
+}
+
+void CellTest::default_sign_should_be_empty_for_default_constructor()
+{
+	Cell cell = Cell();
 	QCOMPARE(cell.isEmpty(), true);
 	QCOMPARE(cell.isDot(), false);
 	QCOMPARE(cell.isFilledBlack(), false);

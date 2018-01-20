@@ -30,6 +30,8 @@ class AddressOfCellTest : public QObject
 	Q_OBJECT
 private slots:
 	void x_and_y_of_Address_should_be_same_as_given_in_constructor();
+	void default_constructor_makes_invalid_Address();
+	void Address_is_invalid_for_negative_x_or_y();
 	void Address_compared_with_itself_is_equal();
 	void Addresses_with_same_x_and_y_are_equal();
 	void Addresses_with_different_x_and_y_are_NOT_equal();

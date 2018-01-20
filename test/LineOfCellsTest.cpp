@@ -65,9 +65,9 @@ void LineOfCellsTest::addresses_passed_in_constructor_stay_unchanged_check_for_x
 	cellVector.push_back(Cell(AddressOfCell(1, 0)));
 	cellVector.push_back(Cell(AddressOfCell(2, 0)));
 	LineOfCells lineOfCells(cellVector);
-	QCOMPARE(lineOfCells[0].getAddress().getX(), 0);
-	QCOMPARE(lineOfCells[1].getAddress().getX(), 1);
-	QCOMPARE(lineOfCells[2].getAddress().getX(), 2);
+	QCOMPARE(lineOfCells.at(0).getAddress().getX(), 0);
+	QCOMPARE(lineOfCells.at(1).getAddress().getX(), 1);
+	QCOMPARE(lineOfCells.at(2).getAddress().getX(), 2);
 }
 
 /// Check only for valid address values passed to c-tor, do not check for invalid
@@ -78,9 +78,9 @@ void LineOfCellsTest::addresses_passed_in_constructor_stay_unchanged_check_for_y
 	cellVector.push_back(Cell(AddressOfCell(0, 1)));
 	cellVector.push_back(Cell(AddressOfCell(0, 2)));
 	LineOfCells lineOfCells(cellVector);
-	QCOMPARE(lineOfCells[0].getAddress().getY(), 0);
-	QCOMPARE(lineOfCells[1].getAddress().getY(), 1);
-	QCOMPARE(lineOfCells[2].getAddress().getY(), 2);
+	QCOMPARE(lineOfCells.at(0).getAddress().getY(), 0);
+	QCOMPARE(lineOfCells.at(1).getAddress().getY(), 1);
+	QCOMPARE(lineOfCells.at(2).getAddress().getY(), 2);
 }
 
 void LineOfCellsTest::address_should_stay_unchanged_after_makeFilledBlack_makeDot_and_makeEmpty()
@@ -89,12 +89,12 @@ void LineOfCellsTest::address_should_stay_unchanged_after_makeFilledBlack_makeDo
 	cellVector.push_back(Cell(AddressOfCell(0, 0)));
 	LineOfCells lineOfCells(cellVector);
 	
-	lineOfCells[0].makeFilledBlack();
-	QVERIFY(lineOfCells[0].getAddress() == AddressOfCell(0, 0));
-	lineOfCells[0].makeDot();
-	QVERIFY(lineOfCells[0].getAddress() == AddressOfCell(0, 0));
-	lineOfCells[0].makeEmpty();
-	QVERIFY(lineOfCells[0].getAddress() == AddressOfCell(0, 0));
+	lineOfCells.at(0).makeFilledBlack();
+	QVERIFY(lineOfCells.at(0).getAddress() == AddressOfCell(0, 0));
+	lineOfCells.at(0).makeDot();
+	QVERIFY(lineOfCells.at(0).getAddress() == AddressOfCell(0, 0));
+	lineOfCells.at(0).makeEmpty();
+	QVERIFY(lineOfCells.at(0).getAddress() == AddressOfCell(0, 0));
 }
 
 void LineOfCellsTest::Cells_are_filled_black_after_setting_them()
@@ -102,8 +102,8 @@ void LineOfCellsTest::Cells_are_filled_black_after_setting_them()
 	NVector<Cell> cellVector;
 	cellVector.push_back(Cell(AddressOfCell(0, 0)));
 	LineOfCells lineOfCells(cellVector);
-	lineOfCells[0].makeFilledBlack();
-	QCOMPARE(lineOfCells[0].isFilledBlack(), true);
+	lineOfCells.at(0).makeFilledBlack();
+	QCOMPARE(lineOfCells.at(0).isFilledBlack(), true);
 }
 
 void LineOfCellsTest::Cells_are_dot_after_setting_them()

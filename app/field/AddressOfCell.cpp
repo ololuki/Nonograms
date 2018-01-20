@@ -21,10 +21,15 @@
 #include "AddressOfCell.h"
 
 
-/// Makes invalid address - Do not use.
-/// This c-tor exists only to support
+/// Makes invalid address.
+/// This c-tor is used in tests and to support
 /// passing as queued Signal-Slot parameter and QSignalSpy
-AddressOfCell::AddressOfCell()
+AddressOfCell::AddressOfCell() : x(-1), y(-1)
 {
-	qDebug("DO NOT USE - default AddressOfCell c-tor");
+	qDebug("default AddressOfCell c-tor");
+}
+
+bool AddressOfCell::isValid() const
+{
+	return (x >= 0 && y >= 0);
 }
