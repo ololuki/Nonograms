@@ -28,6 +28,12 @@ void CellTest::x_and_y_of_Address_should_be_same_as_given_in_constructor()
 	QCOMPARE(cell.getAddress().getY(), 5);
 }
 
+void CellTest::address_should_be_invalid_for_default_constructor()
+{
+	Cell cell = Cell();
+	QCOMPARE(cell.getAddress().isValid(), false);
+}
+
 void CellTest::isFilledBlack_should_return_true_only_if_sign_FillBlack_was_given_in_constructor()
 {
 	Cell cell = Cell(dummyAddress, cellSign::SGN_FILL_BLACK);

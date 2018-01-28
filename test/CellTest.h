@@ -30,6 +30,7 @@ class CellTest : public QObject
 	Q_OBJECT
 private slots:
 	void x_and_y_of_Address_should_be_same_as_given_in_constructor();
+	void address_should_be_invalid_for_default_constructor();
 	void isFilledBlack_should_return_true_only_if_sign_FillBlack_was_given_in_constructor();
 	void isDot_should_return_true_only_if_sign_Dot_was_given_in_constructor();
 	void isEmpty_should_return_true_only_if_sign_Empty_was_given_in_constructor();
