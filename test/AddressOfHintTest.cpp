@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -30,6 +30,24 @@ void AddressOfHintTest::orientation_line_and_count_of_Address_should_be_same_as_
 	QVERIFY(address.getLine() == line);
 	QVERIFY(address.getCount() == count);
 	QVERIFY(address.getOrientation() == o);
+}
+
+void AddressOfHintTest::default_constructor_makes_invalid_Address()
+{
+	AddressOfHint address{};
+	QCOMPARE(address.isValid(), false);
+}
+
+void AddressOfHintTest::Address_is_invalid_for_negative_line_or_count()
+{
+	QCOMPARE(AddressOfHint(Orientation::HORIZONTAL, 3, -1).isValid(), false);
+	QCOMPARE(AddressOfHint(Orientation::HORIZONTAL, -5, -6).isValid(), false);
+	QCOMPARE(AddressOfHint(Orientation::HORIZONTAL, -1, 2).isValid(), false);
+	
+	QCOMPARE(AddressOfHint(Orientation::HORIZONTAL, 0, 0).isValid(), true);
+	QCOMPARE(AddressOfHint(Orientation::HORIZONTAL, 6, 5).isValid(), true);
+	QCOMPARE(AddressOfHint(Orientation::HORIZONTAL, 0, 5).isValid(), true);
+	QCOMPARE(AddressOfHint(Orientation::HORIZONTAL, 6, 0).isValid(), true);
 }
 
 void AddressOfHintTest::Address_compared_with_itself_is_equal()

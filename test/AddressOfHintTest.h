@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -30,6 +30,8 @@ class AddressOfHintTest : public QObject
 	Q_OBJECT
 private slots:
 	void orientation_line_and_count_of_Address_should_be_same_as_given_in_constructor();
+	void default_constructor_makes_invalid_Address();
+	void Address_is_invalid_for_negative_line_or_count();
 	void Address_compared_with_itself_is_equal();
 	void Addresses_with_same_x_and_y_are_equal();
 	void Addresses_with_different_x_are_NOT_equal();

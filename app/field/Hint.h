@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -32,8 +32,8 @@
 class Hint
 {
 public:
-	Hint(AddressOfHint address, int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK)
-		: address(address), blockSize(blockSize), sign(sign) {}
+	Hint(int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
+	Hint(AddressOfHint address, int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
 	int getBlockSize() {return blockSize;}
 	void setBlockSize(int blockSize) {this->blockSize = blockSize;}
 	bool isFilledBlack() {return sign == cellSign::SGN_FILL_BLACK;}

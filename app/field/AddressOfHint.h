@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -32,7 +32,9 @@
 class AddressOfHint
 {
 public:
+	AddressOfHint();
 	AddressOfHint(Orientation o, int line, int count);
+	bool isValid() const;
 	int getLine() const {return line;}
 	int getCount() const {return count;}
 	Orientation getOrientation() const {return o;}

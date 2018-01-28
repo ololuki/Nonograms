@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -21,8 +21,21 @@
 #include "AddressOfHint.h"
 
 
+/// Makes invalid address.
+/// This c-tor is used in tests.
+AddressOfHint::AddressOfHint()
+	: o(Orientation::HORIZONTAL), line(-1), count(-1)
+{
+	
+}
+
 AddressOfHint::AddressOfHint(Orientation o, int line, int blockNumber)
 	: o(o), line(line), count(blockNumber)
 {
 	
+}
+
+bool AddressOfHint::isValid() const
+{
+	return (line >= 0 && count >= 0);
 }

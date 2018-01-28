@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -19,3 +19,22 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "Hint.h"
+
+
+///
+/// \brief Creates Hint with invalid Address.
+/// Used mainly for testing.
+/// \param blockSize - number of Cells in one block
+/// \param sign - sign of Cells group
+///
+Hint::Hint(int blockSize, cellSign sign)
+	: blockSize(blockSize), sign(sign)
+{
+	
+}
+
+Hint::Hint(AddressOfHint address, int blockSize, cellSign sign)
+	: address(address), blockSize(blockSize), sign(sign)
+{
+	
+}
