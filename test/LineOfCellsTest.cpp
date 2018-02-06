@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -43,12 +43,12 @@ void LineOfCellsTest::operator_square_brackets_should_return_reference_to_Cell()
 	QCOMPARE(lineOfCells[0].isDot(), true);
 }
 
-void LineOfCellsTest::getCellAt_should_return_reference_to_Cell()
+void LineOfCellsTest::at_should_return_reference_to_Cell()
 {
 	LineOfCells lineOfCells(NVector<Cell>(2, Cell(dummyAddress)));
-	QCOMPARE(lineOfCells[0].isDot(), false);
-	lineOfCells[0].makeDot();
-	QCOMPARE(lineOfCells[0].isDot(), true);
+	QCOMPARE(lineOfCells.at(0).isDot(), false);
+	lineOfCells.at(0).makeDot();
+	QCOMPARE(lineOfCells.at(0).isDot(), true);
 }
 
 void LineOfCellsTest::max_size_should_be_at_least_10000()
