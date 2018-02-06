@@ -18,32 +18,26 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef HINT_H
-#define HINT_H
-
-#include "AddressOfHint.h"
-#include "CellSign.h"
+#include "CellSignTest.h"
 
 
-///
-/// \brief Hint class contains one block description (number) of picture (field).
-/// Sign is for future use - every block is currently black.
-///
-class Hint
+Q_DECLARE_METATYPE(cellSign)
+
+void CellSignTest::utils_from_char_and_to_char_conversion_test_data()
 {
-public:
-	Hint(int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
-	Hint(AddressOfHint address, int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
-	int getBlockSize() {return blockSize;}
-	void setBlockSize(int blockSize) {this->blockSize = blockSize;}
-	bool isFilledBlack() {return sign == cellSign::SGN_FILL_BLACK;}
-	void makeFilledBlack() {sign = cellSign::SGN_FILL_BLACK;}
-	AddressOfHint getAddress() {return address;}
-	void updateAddress(AddressOfHint newAddress) {address = newAddress;}
-private:
-	AddressOfHint address;
-	int blockSize;
-	cellSign sign;
-};
+	QTest::addColumn<cellSign>("d_cellSign");
+	QTest::addColumn<char>("d_char");
+	
+	QTest::newRow("empty")      << cellSign::SGN_EMPTY      << '-';
+	QTest::newRow("dot")        << cellSign::SGN_DOT        << '.';
+	QTest::newRow("fill black") << cellSign::SGN_FILL_BLACK << '#';
+}
 
-#endif // HINT_H
+void CellSignTest::utils_from_char_and_to_char_conversion_test()
+{
+	QFETCH(cellSign, d_cellSign);
+	QFETCH(char, d_char);
+	
+	QCOMPARE(CellSignUtils::fromChar(d_char), d_cellSign);
+	QCOMPARE(CellSignUtils::toChar(d_cellSign), d_char);
+}

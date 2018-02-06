@@ -18,32 +18,19 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef HINT_H
-#define HINT_H
+#ifndef CELLSIGNTEST_H
+#define CELLSIGNTEST_H
 
-#include "AddressOfHint.h"
-#include "CellSign.h"
+#include <QtTest>
+#include "field/CellSign.h"
 
 
-///
-/// \brief Hint class contains one block description (number) of picture (field).
-/// Sign is for future use - every block is currently black.
-///
-class Hint
+class CellSignTest : public QObject
 {
-public:
-	Hint(int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
-	Hint(AddressOfHint address, int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
-	int getBlockSize() {return blockSize;}
-	void setBlockSize(int blockSize) {this->blockSize = blockSize;}
-	bool isFilledBlack() {return sign == cellSign::SGN_FILL_BLACK;}
-	void makeFilledBlack() {sign = cellSign::SGN_FILL_BLACK;}
-	AddressOfHint getAddress() {return address;}
-	void updateAddress(AddressOfHint newAddress) {address = newAddress;}
-private:
-	AddressOfHint address;
-	int blockSize;
-	cellSign sign;
+	Q_OBJECT
+private slots:
+	void utils_from_char_and_to_char_conversion_test_data();
+	void utils_from_char_and_to_char_conversion_test();
 };
 
-#endif // HINT_H
+#endif // CELLSIGNTEST_H

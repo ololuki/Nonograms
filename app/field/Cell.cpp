@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -31,7 +31,22 @@ Cell::Cell(cellSign sign)
 {
 }
 
+///
+/// \brief Creates Cell with invalid Address.
+/// Used mainly for testing.
+/// \param symbol - char used in String that describes LineOfCells
+///
+Cell::Cell(char symbol)
+{
+	sign = CellSignUtils::fromChar(symbol);
+}
+
 Cell::Cell(AddressOfCell address, cellSign sign)
 	: address(address), sign(sign)
 {
+}
+
+cellSign Cell::getSign()
+{
+	return sign;
 }

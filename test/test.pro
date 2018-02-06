@@ -9,6 +9,7 @@ CONFIG += console
 
 # Headers of Test classes
 HEADERS += \
+    CellSignTest.h \
     AddressOfCellTest.h \
     AddressOfHintTest.h \
     CellTest.h \
@@ -20,6 +21,7 @@ HEADERS += \
 
 # Sources of Test classes
 SOURCES += TestMain.cpp \
+    CellSignTest.cpp \
     AddressOfCellTest.cpp \
     AddressOfHintTest.cpp \
     CellTest.cpp \
@@ -35,7 +37,9 @@ HEADERS += ../app/field/HintsField.h \
 
 
 # Sources of Application classes (classes under tests)
-SOURCES += ../app/field/AddressOfCell.cpp \
+SOURCES += \
+    ../app/field/CellSign.cpp \
+    ../app/field/AddressOfCell.cpp \
     ../app/field/AddressOfHint.cpp \
     ../app/field/Hint.cpp \
     ../app/field/HintsField.cpp \

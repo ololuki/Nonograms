@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -19,6 +19,7 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include <QtTest>
+#include "CellSignTest.h"
 #include "AddressOfCellTest.h"
 #include "AddressOfHintTest.h"
 #include "CellTest.h"
@@ -32,6 +33,7 @@ int main()
 {
 	QVector<QObject*> tests;
 	
+	tests.append(new CellSignTest);
 	tests.append(new AddressOfCellTest);
 	tests.append(new AddressOfHintTest);
 	tests.append(new CellTest);

@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -34,6 +34,8 @@ private slots:
 	void isFilledBlack_should_return_true_only_if_sign_FillBlack_was_given_in_constructor();
 	void isDot_should_return_true_only_if_sign_Dot_was_given_in_constructor();
 	void isEmpty_should_return_true_only_if_sign_Empty_was_given_in_constructor();
+	void getSign_should_return_sign_same_as_given_in_constructor();
+	void getSign_should_return_sign_same_as_given_in_constructor_with_char_param();
 	void default_sign_should_be_empty_for_Address_in_constructor();
 	void default_sign_should_be_empty_for_default_constructor();
 	void cells_are_equal_if_have_same_signs();

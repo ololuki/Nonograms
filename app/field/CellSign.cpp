@@ -18,32 +18,33 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef HINT_H
-#define HINT_H
-
-#include "AddressOfHint.h"
 #include "CellSign.h"
 
 
-///
-/// \brief Hint class contains one block description (number) of picture (field).
-/// Sign is for future use - every block is currently black.
-///
-class Hint
+cellSign CellSignUtils::fromChar(char symbol)
 {
-public:
-	Hint(int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
-	Hint(AddressOfHint address, int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
-	int getBlockSize() {return blockSize;}
-	void setBlockSize(int blockSize) {this->blockSize = blockSize;}
-	bool isFilledBlack() {return sign == cellSign::SGN_FILL_BLACK;}
-	void makeFilledBlack() {sign = cellSign::SGN_FILL_BLACK;}
-	AddressOfHint getAddress() {return address;}
-	void updateAddress(AddressOfHint newAddress) {address = newAddress;}
-private:
-	AddressOfHint address;
-	int blockSize;
-	cellSign sign;
-};
+	switch (symbol)
+	{
+	case '#':
+		return cellSign::SGN_FILL_BLACK;
+	case '.':
+		return cellSign::SGN_DOT;
+	case '-':
+	default:
+		return cellSign::SGN_EMPTY;
+	}
+}
 
-#endif // HINT_H
+char CellSignUtils::toChar(cellSign sign)
+{
+	switch (sign)
+	{
+	case cellSign::SGN_FILL_BLACK:
+		return '#';
+	case cellSign::SGN_DOT:
+		return '.';
+	case cellSign::SGN_EMPTY:
+	default:
+		return '-';
+	}
+}

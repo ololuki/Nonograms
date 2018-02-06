@@ -31,6 +31,7 @@ SOURCES += main.cpp\
     field/AddressOfHint.cpp \
     field/AddressOfCell.cpp \
     field/Cell.cpp \
+    field/CellSign.cpp \
     field/Hint.cpp \
     field/LineOfCells.cpp \
     widgets/CellsView.cpp \
@@ -62,7 +63,7 @@ HEADERS  += mainwindow.h \
     field/AddressOfHint.h \
     field/AddressOfCell.h \
     field/Cell.h \
-    field/cellSign.h \
+    field/CellSign.h \
     field/Hint.h \
     field/LineOfCells.h \
     widgets/CellsView.h \

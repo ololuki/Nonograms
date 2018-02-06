@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -22,7 +22,7 @@
 #define CELL_H
 
 #include "AddressOfCell.h"
-#include "cellSign.h"
+#include "CellSign.h"
 
 
 ///
@@ -33,6 +33,7 @@ class Cell
 {
 public:
 	Cell(cellSign sign = cellSign::SGN_EMPTY);
+	Cell(char symbol);
 	Cell(AddressOfCell address, cellSign sign = cellSign::SGN_EMPTY);
 	bool isFilledBlack(){return sign == cellSign::SGN_FILL_BLACK;}
 	bool isDot(){return sign == cellSign::SGN_DOT;}
@@ -40,6 +41,7 @@ public:
 	void makeFilledBlack() {sign = cellSign::SGN_FILL_BLACK;}
 	void makeDot(){sign = cellSign::SGN_DOT;}
 	void makeEmpty(){sign = cellSign::SGN_EMPTY;}
+	cellSign getSign();
 	AddressOfCell getAddress() {return address;}
 	bool operator==(const Cell &cell) const {
 		return (this->sign == cell.sign);

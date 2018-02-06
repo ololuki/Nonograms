@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -27,11 +27,17 @@
 ///
 enum class cellSign
 {
-	SGN_EMPTY = -1,			// '-' unresolved
-	SGN_FILLED = -2,		// '#' filled cell (not used, filled black will be used)
-	SGN_DOT = -3,			// '.' cell with no block (white)
-	SGN_FILL_BLACK = -4,	// '#' filled with black color
+	SGN_EMPTY = -1,      // '-' unresolved
+	SGN_FILLED = -2,     // '#' filled cell (not used, filled black will be used)
+	SGN_DOT = -3,        // '.' cell with no block (white)
+	SGN_FILL_BLACK = -4, // '#' filled with black color
 	// numbers 0 to max-int will be used by solver to name cells by number of current block
 };
+
+namespace CellSignUtils
+{
+	cellSign fromChar(char symbol);
+	char toChar(cellSign sign);
+}
 
 #endif // CELLSIGN_H

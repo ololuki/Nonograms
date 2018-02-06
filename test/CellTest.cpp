@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -71,6 +71,26 @@ void CellTest::isEmpty_should_return_true_only_if_sign_Empty_was_given_in_constr
 	QCOMPARE(cell.isEmpty(), false);
 	cell = Cell(dummyAddress, cellSign::SGN_FILL_BLACK);
 	QCOMPARE(cell.isEmpty(), false);
+}
+
+void CellTest::getSign_should_return_sign_same_as_given_in_constructor()
+{
+	Cell cell = Cell(cellSign::SGN_EMPTY);
+	QCOMPARE(cell.getSign(), cellSign::SGN_EMPTY);
+	cell = Cell(cellSign::SGN_FILL_BLACK);
+	QCOMPARE(cell.getSign(), cellSign::SGN_FILL_BLACK);
+	cell = Cell(cellSign::SGN_DOT);
+	QCOMPARE(cell.getSign(), cellSign::SGN_DOT);
+}
+
+void CellTest::getSign_should_return_sign_same_as_given_in_constructor_with_char_param()
+{
+	Cell cell = Cell(CellSignUtils::toChar(cellSign::SGN_EMPTY));
+	QCOMPARE(cell.getSign(), cellSign::SGN_EMPTY);
+	cell = Cell(CellSignUtils::toChar(cellSign::SGN_FILL_BLACK));
+	QCOMPARE(cell.getSign(), cellSign::SGN_FILL_BLACK);
+	cell = Cell(CellSignUtils::toChar(cellSign::SGN_DOT));
+	QCOMPARE(cell.getSign(), cellSign::SGN_DOT);
 }
 
 void CellTest::default_sign_should_be_empty_for_Address_in_constructor()
