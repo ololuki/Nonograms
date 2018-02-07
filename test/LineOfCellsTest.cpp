@@ -114,3 +114,20 @@ void LineOfCellsTest::Cells_are_dot_after_setting_them()
 	lineOfCells[0].makeDot();
 	QCOMPARE(lineOfCells[0].isDot(), true);
 }
+
+void LineOfCellsTest::constructor_from_string_test()
+{
+	LineOfCells lineOfCells = LineOfCells("--#.-");
+	QCOMPARE(lineOfCells.size(), 5);
+	QVERIFY(lineOfCells.at(0) == CellSignUtils::fromChar('-'));
+	QVERIFY(lineOfCells.at(1) == CellSignUtils::fromChar('-'));
+	QVERIFY(lineOfCells.at(2) == CellSignUtils::fromChar('#'));
+	QVERIFY(lineOfCells.at(3) == CellSignUtils::fromChar('.'));
+	QVERIFY(lineOfCells.at(4) == CellSignUtils::fromChar('-'));
+}
+
+void LineOfCellsTest::constructor_from_empty_string_makes_zero_length_line()
+{
+	LineOfCells lineOfCells = LineOfCells("");
+	QCOMPARE(lineOfCells.size(), 0);
+}

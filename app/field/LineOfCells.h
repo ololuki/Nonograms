@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -34,6 +34,7 @@
 class LineOfCells
 {
 public:
+	LineOfCells(QString str);
 	LineOfCells(NVector<Cell> vectorToCopy);
 	int size();
 	

@@ -39,6 +39,8 @@ private slots:
 	void address_should_stay_unchanged_after_makeFilledBlack_makeDot_and_makeEmpty();
 	void Cells_are_filled_black_after_setting_them();
 	void Cells_are_dot_after_setting_them();
+	void constructor_from_string_test();
+	void constructor_from_empty_string_makes_zero_length_line();
 private:
 	AddressOfCell dummyAddress{0, 0};
 };

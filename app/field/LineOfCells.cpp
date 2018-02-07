@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -20,6 +20,20 @@
  *********************************************************************/
 #include "LineOfCells.h"
 
+
+///
+/// \brief Makes valid line of Cells from String.
+/// One char in str is one Cell. Chars are defined in CellSign.
+/// Used mainly for tests.
+/// \param str - line as string
+///
+LineOfCells::LineOfCells(QString str)
+{
+	for (int i = 0; i < str.size(); i++)
+	{
+		cells.push_back(Cell(str[i].toLatin1()));
+	}
+}
 
 LineOfCells::LineOfCells(NVector<Cell> vectorToCopy)
 	: cells(vectorToCopy)
