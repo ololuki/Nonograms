@@ -33,6 +33,12 @@ Hint::Hint(int blockSize, cellSign sign)
 	
 }
 
+Hint::Hint(int blockSize, char symbol)
+	: blockSize(blockSize), sign(CellSignUtils::fromChar(symbol))
+{
+	
+}
+
 Hint::Hint(AddressOfHint address, int blockSize, cellSign sign)
 	: address(address), blockSize(blockSize), sign(sign)
 {

@@ -33,6 +33,7 @@ class Hint
 {
 public:
 	Hint(int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
+	Hint(int blockSize, char symbol);
 	Hint(AddressOfHint address, int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
 	int getBlockSize() {return blockSize;}
 	void setBlockSize(int blockSize) {this->blockSize = blockSize;}

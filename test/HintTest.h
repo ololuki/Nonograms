@@ -18,38 +18,31 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
+#ifndef HINTTEST_H
+#define HINTTEST_H
+
 #include <QtTest>
-#include "CellSignTest.h"
-#include "AddressOfCellTest.h"
-#include "AddressOfHintTest.h"
-#include "CellTest.h"
-#include "HintTest.h"
-#include "ArrayOfCellsTest.h"
-#include "LineOfCellsTest.h"
-#include "HintsFieldTest.h"
-#include "CellsFieldTest.h"
+#include "field/Hint.h"
 
 
-int main()
+class HintTest : public QObject
 {
-	QVector<QObject*> tests;
+	Q_OBJECT
+private slots:
+	void default_hint_should_be_filled_black_for_block_size_only_param_in_constructor();
+	void default_hint_should_be_filled_black_for_Address_in_constructor();
 	
-	tests.append(new CellSignTest);
-	tests.append(new AddressOfCellTest);
-	tests.append(new AddressOfHintTest);
-	tests.append(new CellTest);
-	tests.append(new HintTest);
-	tests.append(new ArrayOfCellsTest);
-	tests.append(new LineOfCellsTest);
-	tests.append(new HintsFieldTest);
-	tests.append(new CellsFieldTest);
+	void getBlockSize_should_return_size_given_in_constructor();
+	void getBlockSize_should_return_size_given_in_setBlockSize();
 	
-	int result = 0;
-	for (int i = 0; i < tests.length(); i++)
-	{
-		result = QTest::qExec(tests[i]);
-		if (result) break;
-	}
-	qDeleteAll(tests);
-	return result;
-}
+	void isFilledBlack_should_be_true_for_cell_sign_fill_black_given_in_constructor();
+	void isFilledBlack_should_be_true_after_make_fill_black();
+	void isFilledBlack_should_be_true_for_char_filled_black_given_in_constructor();
+	void isFilledBlack_should_be_false_for_other_cell_sign_given_in_constructor();
+	void isFilledBlack_should_be_false_for_other_char_given_in_constructor();
+	
+	void address_should_be_invalid_for_constructors_without_address();
+	void getAddress_should_give_same_address_as_given_in_constructor();
+};
+
+#endif // HINTTEST_H

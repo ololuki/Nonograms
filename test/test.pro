@@ -13,6 +13,7 @@ HEADERS += \
     AddressOfCellTest.h \
     AddressOfHintTest.h \
     CellTest.h \
+    HintTest.h \
     ArrayOfCellsTest.h \
     LineOfCellsTest.h \
     HintsFieldTest.h \
@@ -25,6 +26,7 @@ SOURCES += TestMain.cpp \
     AddressOfCellTest.cpp \
     AddressOfHintTest.cpp \
     CellTest.cpp \
+    HintTest.cpp \
     ArrayOfCellsTest.cpp \
     LineOfCellsTest.cpp \
     HintsFieldTest.cpp \
