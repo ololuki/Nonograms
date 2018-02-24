@@ -52,10 +52,8 @@ void FieldController::addDummyBlock()
 
 void FieldController::replaceField(int width, int height)
 {
-	field.reset(new WholeField(width, height));
-	cellsController->replaceField(field->cells());
-	columnsHintsController->replaceField(field->columnsHints());
-	rowsHintsController->replaceField(field->rowsHints());
+	std::shared_ptr<WholeField> newField = std::make_shared<WholeField>(width, height);
+	replaceField(newField);
 }
 
 void FieldController::replaceField(std::shared_ptr<WholeField> newField)
