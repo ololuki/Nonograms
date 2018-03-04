@@ -89,6 +89,8 @@
     <addaction name="actionField_defining"/>
     <addaction name="actionHuman_solving"/>
     <addaction name="actionAuto_solving"/>
+    <addaction name="separator"/>
+    <addaction name="actionSolve"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -167,6 +169,11 @@
    </property>
    <property name="text">
     <string>Auto solving</string>
+   </property>
+  </action>
+  <action name="actionSolve">
+   <property name="text">
+    <string>Solve</string>
    </property>
   </action>
  </widget>
