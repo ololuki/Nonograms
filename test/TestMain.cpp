@@ -30,8 +30,10 @@
 #include "CellsFieldTest.h"
 
 
-int main()
+int main(int argc, char **argv)
 {
+	QGuiApplication app(argc, argv);
+	
 	QVector<QObject*> tests;
 	
 	tests.append(new CellSignTest);
