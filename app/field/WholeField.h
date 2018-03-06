@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017-2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -24,6 +24,7 @@
 #include <memory>
 #include "CellsField.h"
 #include "HintsField.h"
+#include <QMetaType>
 
 
 ///
@@ -51,5 +52,7 @@ private:
 	std::shared_ptr<HintsField> columnsHintsField;
 	std::shared_ptr<HintsField> rowsHintsField;
 };
+
+Q_DECLARE_METATYPE(std::shared_ptr<const WholeField>)
 
 #endif // WHOLEFIELD_H

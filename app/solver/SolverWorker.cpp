@@ -18,44 +18,40 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
-#include <QMainWindow>
-#include <memory>
-#include "controller/FieldController.h"
+#include "SolverWorker.h"
 
 
-namespace Ui {
-class MainWindow;
+SolverWorker::SolverWorker()
+{
+	connect(this,
+		&SolverWorker::queueNextJob,
+		this,
+		&SolverWorker::doJob,
+		Qt::QueuedConnection
+	);
 }
 
-
-class MainWindow : public QMainWindow
+void SolverWorker::solve(std::shared_ptr<const WholeField> wholeField)
 {
-	Q_OBJECT
-	
-public:
-	explicit MainWindow(QWidget *parent = 0);
-	
-private slots:
-	void on_actionNew_triggered();
-	void on_actionOpen_triggered();
-	void on_actionSave_as_triggered();
-	
-	void on_actionSolve_triggered();
-	
-	void on_actionAdd_blocks_triggered();
-	
-	void on_actionAbout_triggered();
-	void on_actionAbout_Qt_triggered();
-	
-private:
-	std::shared_ptr<Ui::MainWindow> ui;
-	std::shared_ptr<FieldController> fieldController;
-	
-	const QString textStopSolving = "Stop";
-	const QString textSolve = "Solve";
-};
+	solving = true;
+	emit isSolvingChanged(solving);
+	emit queueNextJob();
+}
 
-#endif // MAINWINDOW_H
+void SolverWorker::stop()
+{
+	solving = false;
+	emit isSolvingChanged(solving);
+}
+
+void SolverWorker::doJob()
+{
+	if (!solving)
+		return;
+	
+	// TODO
+	solving = false;
+	emit isSolvingChanged(solving);
+	
+	emit queueNextJob();
+}

@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017-2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -27,6 +27,9 @@
 #include "controller/CellsController.h"
 #include "controller/HintsController.h"
 #include "file/FileManager.h"
+#include "../solver/SolverWorker.h"
+
+#include <QThread>
 
 
 class FieldController : public QObject
@@ -34,11 +37,23 @@ class FieldController : public QObject
 	Q_OBJECT
 public:
 	FieldController(CellsView *cellsView, HintsView *columnsHintsView, HintsView *rowsHintsView);
+	~FieldController();
 	void addDummyBlock();
 	
 	void onNew();
 	void onOpen();
 	void onSaveAs();
+	
+	void onSolve(bool start);
+	
+signals:
+	/// emited to worker to start solving
+	void solve(std::shared_ptr<const WholeField> wholeField);
+	/// emited by worker when state (is solving or stopped) changed
+	void isSolvingChanged(bool isSolving);
+	/// emited to worker to stop jobs
+	void stopWorker();
+	
 private:
 	void replaceField(int width, int height);
 	void replaceField(std::shared_ptr<WholeField> newField);
@@ -53,6 +68,9 @@ private:
 	std::shared_ptr<HintsController> columnsHintsController;
 	std::shared_ptr<HintsController> rowsHintsController;
 	std::shared_ptr<FileManager> fileManager;
+	
+	SolverWorker solverWorker;
+	QThread thread;
 };
 
 #endif // FIELDCONTROLLER_H

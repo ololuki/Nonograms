@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017-2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -46,11 +46,14 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->actionAuto_solving->setActionGroup(group);
 	
 	fieldController = std::make_shared<FieldController>(ui->cells, ui->columnsHints, ui->rowsHints);
-}
-
-MainWindow::~MainWindow()
-{
-	delete ui;
+	connect(static_cast<const FieldController*>(this->fieldController.get()),
+		&FieldController::isSolvingChanged,
+		this,
+		[=](bool isSolving)
+		{
+			ui->actionSolve->setText(isSolving ? textStopSolving : textSolve);
+		}
+	);
 }
 
 void MainWindow::on_actionNew_triggered()
@@ -68,6 +71,12 @@ void MainWindow::on_actionSave_as_triggered()
 	fieldController->onSaveAs();
 }
 
+void MainWindow::on_actionSolve_triggered()
+{
+	bool start = ui->actionSolve->text() == textSolve;
+	fieldController->onSolve(start);
+}
+
 void MainWindow::on_actionAdd_blocks_triggered()
 {
 	fieldController->addDummyBlock();
@@ -82,10 +91,10 @@ void MainWindow::on_actionAbout_triggered()
 	msgBox.setWindowTitle("About nonograms");
 	msgBox.setTextFormat(Qt::RichText);
 	msgBox.setText(textAbout);
-	msgBox.exec();	
+	msgBox.exec();
 }
 
 void MainWindow::on_actionAbout_Qt_triggered()
 {
-    QMessageBox::aboutQt(this);
+	QMessageBox::aboutQt(this);
 }

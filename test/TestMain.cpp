@@ -28,6 +28,7 @@
 #include "LineOfCellsTest.h"
 #include "HintsFieldTest.h"
 #include "CellsFieldTest.h"
+#include "solver/SolverWorkerTest.h"
 
 
 int main(int argc, char **argv)
@@ -45,6 +46,7 @@ int main(int argc, char **argv)
 	tests.append(new LineOfCellsTest);
 	tests.append(new HintsFieldTest);
 	tests.append(new CellsFieldTest);
+	tests.append(new SolverWorkerTest);
 	
 	int result = 0;
 	for (int i = 0; i < tests.length(); i++)

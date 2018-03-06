@@ -18,44 +18,33 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SOLVERWORKER_H
+#define SOLVERWORKER_H
 
-#include <QMainWindow>
+#include "../field/WholeField.h"
+#include <QObject>
 #include <memory>
-#include "controller/FieldController.h"
 
 
-namespace Ui {
-class MainWindow;
-}
-
-
-class MainWindow : public QMainWindow
+class SolverWorker : public QObject
 {
 	Q_OBJECT
-	
 public:
-	explicit MainWindow(QWidget *parent = 0);
+	SolverWorker();
 	
-private slots:
-	void on_actionNew_triggered();
-	void on_actionOpen_triggered();
-	void on_actionSave_as_triggered();
+	void solve(std::shared_ptr<const WholeField> wholeField);
+	void stop();
 	
-	void on_actionSolve_triggered();
-	
-	void on_actionAdd_blocks_triggered();
-	
-	void on_actionAbout_triggered();
-	void on_actionAbout_Qt_triggered();
+signals:
+	void queueNextJob();
+	void cellChanged(Cell cell);
+	void isSolvingChanged(bool isSolving);
 	
 private:
-	std::shared_ptr<Ui::MainWindow> ui;
-	std::shared_ptr<FieldController> fieldController;
-	
-	const QString textStopSolving = "Stop";
-	const QString textSolve = "Solve";
+	void doJob();
+	bool solving = false;
+	int x = 0;
+	int y = 0;
 };
 
-#endif // MAINWINDOW_H
+#endif // SOLVERWORKER_H

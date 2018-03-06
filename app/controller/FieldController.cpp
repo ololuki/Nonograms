@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017-2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -37,6 +37,23 @@ FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsVi
 	rowsHintsController = std::make_shared<HintsController>(field->rowsHints(), this->rowsHintsView);
 	
 	fileManager = std::make_shared<FileManager>(field);
+	
+	qRegisterMetaType<Cell>();
+	qRegisterMetaType<std::shared_ptr<const WholeField>>();
+	
+	connect(&solverWorker, &SolverWorker::cellChanged, static_cast<const CellsField*>(this->field->cells().get()), &CellsField::setCell);
+	connect(this, &FieldController::solve, &solverWorker, &SolverWorker::solve);
+	connect(&solverWorker, &SolverWorker::isSolvingChanged, this, &FieldController::isSolvingChanged);
+	connect(this, &FieldController::stopWorker, &solverWorker, &SolverWorker::stop);
+	thread.start();
+	solverWorker.moveToThread(&thread);
+}
+
+FieldController::~FieldController()
+{
+	emit stopWorker();
+	thread.quit();
+	thread.wait();
 }
 
 void FieldController::addDummyBlock()
@@ -68,6 +85,8 @@ void FieldController::replaceField(std::shared_ptr<WholeField> newField)
 	cellsController->replaceField(field->cells());
 	columnsHintsController->replaceField(field->columnsHints());
 	rowsHintsController->replaceField(field->rowsHints());
+	
+	connect(&solverWorker, &SolverWorker::cellChanged, static_cast<const CellsField*>(this->field->cells().get()), &CellsField::setCell);
 }
 
 void FieldController::onNew()
@@ -98,4 +117,17 @@ void FieldController::onOpen()
 void FieldController::onSaveAs()
 {
 	fileManager->trySaveAs(field);
+}
+
+///
+/// \brief Used when user clicks "Solve" button.
+/// \param start - if true button starts solving
+/// if false stops solving
+///
+void FieldController::onSolve(bool start)
+{
+	if (start)
+		emit solve(field);
+	else
+		emit stopWorker();
 }

@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     controller/CellsController.cpp \
     field/CellsField.cpp \
     field/HintsField.cpp \
-    field/Orientation.cpp
+    field/Orientation.cpp \
+    solver/SolverWorker.cpp
 
 HEADERS  += mainwindow.h \
     field/WholeField.h \
@@ -71,7 +72,8 @@ HEADERS  += mainwindow.h \
     controller/CellsController.h \
     field/CellsField.h \
     field/HintsField.h \
-    field/Orientation.h
+    field/Orientation.h \
+    solver/SolverWorker.h
 
 FORMS    += mainwindow.ui \
     sizedialog.ui

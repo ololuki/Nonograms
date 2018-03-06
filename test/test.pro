@@ -17,7 +17,8 @@ HEADERS += \
     ArrayOfCellsTest.h \
     LineOfCellsTest.h \
     HintsFieldTest.h \
-    CellsFieldTest.h
+    CellsFieldTest.h \
+    solver/SolverWorkerTest.h
 
 
 # Sources of Test classes
@@ -30,12 +31,15 @@ SOURCES += TestMain.cpp \
     ArrayOfCellsTest.cpp \
     LineOfCellsTest.cpp \
     HintsFieldTest.cpp \
-    CellsFieldTest.cpp
+    CellsFieldTest.cpp \
+    solver/SolverWorkerTest.cpp
 
 
 # Headers of Application classes (classes under tests)
 HEADERS += ../app/field/HintsField.h \
-    ../app/field/CellsField.h
+    ../app/field/CellsField.h \
+    ../app/field/WholeField.h \
+    ../app/solver/SolverWorker.h
 
 
 # Sources of Application classes (classes under tests)
@@ -49,7 +53,9 @@ SOURCES += \
     ../app/field/ArrayOfCells.cpp \
     ../app/field/LineOfCells.cpp \
     ../app/field/Cell.cpp \
-    ../app/field/CellsField.cpp
+    ../app/field/CellsField.cpp \
+    ../app/field/WholeField.cpp \
+    ../app/solver/SolverWorker.cpp
 
 
 INCLUDEPATH += \

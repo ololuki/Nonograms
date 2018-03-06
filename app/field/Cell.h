@@ -54,4 +54,6 @@ private:
 	cellSign sign;
 };
 
+Q_DECLARE_METATYPE(Cell)
+
 #endif // CELL_H
