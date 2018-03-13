@@ -26,7 +26,7 @@ LineOfHints::LineOfHints(NVector<Hint> vectorToCopy)
 {
 }
 
-int LineOfHints::size()
+int LineOfHints::size() const
 {
 	return static_cast<int>(hints.size());
 }
@@ -62,7 +62,12 @@ void LineOfHints::insertHintBefore(Hint hint)
 	hints[count] = hint;
 }
 
-Hint &LineOfHints::operator[](const int count)
+Hint &LineOfHints::operator[](int count)
+{
+	return hints.operator[](static_cast<size_t>(count));
+}
+
+const Hint &LineOfHints::operator[](int count) const
 {
 	return hints.operator[](static_cast<size_t>(count));
 }

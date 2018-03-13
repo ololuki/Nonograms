@@ -32,14 +32,15 @@ class LineOfHints
 {
 public:
 	LineOfHints(NVector<Hint> vectorToCopy);
-	int size();
+	int size() const;
 	
 	void updateHint(Hint hint);
 	void insertHintBefore(Hint hint);
 	void addHintAtEnd(Hint hint);
 	void deleteHint(Hint hint);
 	
-	Hint& operator[](const int count);
+	Hint& operator[](int count);
+	const Hint& operator[](int count) const;
 	void push_back(Hint hint);
 	void pop_back();
 private:
