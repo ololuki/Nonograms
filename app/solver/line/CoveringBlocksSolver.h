@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2018 Ololuki
+ * Copyright (C) 2017-2018 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -18,33 +18,19 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef LINEOFCELLS_H
-#define LINEOFCELLS_H
+#ifndef COVERINGBLOCKSSOLVER_H
+#define COVERINGBLOCKSSOLVER_H
 
-#include "Cell.h"
-#include "vector"
-#include "utils/NVector.h"
+#include "AbstractLineSolver.h"
 
 
-///
-/// \brief LineOfCells stores one line of Cells.
-/// Orientation of the line (horizontal or vertical) is arbitrary.
-/// Cells are accesible by operator[].
-///
-class LineOfCells
+class CoveringBlocksSolver : public AbstractLineSolver
 {
 public:
-	LineOfCells();
-	LineOfCells(QString str);
-	LineOfCells(NVector<Cell> vectorToCopy);
-	int size();
+	void solve(const LineOfHints &hints, LineOfCells &cells) override;
 	
-	Cell& at(const int cellNumber);
-	Cell& operator[](const int cellNumber);
 private:
-	NVector<Cell> cells;
+	int maxBlockSize(const LineOfHints &hints);
 };
 
-Q_DECLARE_METATYPE(LineOfCells)
-
-#endif // LINEOFCELLS_H
+#endif // COVERINGBLOCKSSOLVER_H

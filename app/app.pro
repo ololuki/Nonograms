@@ -40,7 +40,9 @@ SOURCES += main.cpp\
     field/CellsField.cpp \
     field/HintsField.cpp \
     field/Orientation.cpp \
-    solver/SolverWorker.cpp
+    solver/SolverWorker.cpp \
+    solver/line/AbstractLineSolver.cpp \
+    solver/line/CoveringBlocksSolver.cpp \
 
 HEADERS  += mainwindow.h \
     field/WholeField.h \
@@ -73,7 +75,9 @@ HEADERS  += mainwindow.h \
     field/CellsField.h \
     field/HintsField.h \
     field/Orientation.h \
-    solver/SolverWorker.h
+    solver/SolverWorker.h \
+    solver/line/AbstractLineSolver.h \
+    solver/line/CoveringBlocksSolver.h \
 
 FORMS    += mainwindow.ui \
     sizedialog.ui

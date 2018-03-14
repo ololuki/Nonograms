@@ -29,6 +29,7 @@
 #include "HintsFieldTest.h"
 #include "CellsFieldTest.h"
 #include "solver/SolverWorkerTest.h"
+#include "solver/line/CoveringBlocksSolverTest.h"
 
 
 int main(int argc, char **argv)
@@ -47,6 +48,7 @@ int main(int argc, char **argv)
 	tests.append(new HintsFieldTest);
 	tests.append(new CellsFieldTest);
 	tests.append(new SolverWorkerTest);
+	tests.append(new CoveringBlocksSolverTest);
 	
 	int result = 0;
 	for (int i = 0; i < tests.length(); i++)

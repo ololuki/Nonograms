@@ -22,6 +22,15 @@
 
 
 ///
+/// \brief Makes invalid, empty vector of Cells.
+/// Used to support data driven tests.
+///
+LineOfCells::LineOfCells()
+{
+	
+}
+
+///
 /// \brief Makes valid line of Cells from String.
 /// One char in str is one Cell. Chars are defined in CellSign.
 /// Used mainly for tests.

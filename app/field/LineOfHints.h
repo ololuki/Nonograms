@@ -31,6 +31,7 @@
 class LineOfHints
 {
 public:
+	LineOfHints();
 	LineOfHints(NVector<Hint> vectorToCopy);
 	int size() const;
 	
@@ -46,5 +47,7 @@ public:
 private:
 	NVector<Hint> hints;
 };
+
+Q_DECLARE_METATYPE(LineOfHints)
 
 #endif // LINEOFHINTS_H

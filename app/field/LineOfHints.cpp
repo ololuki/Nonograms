@@ -21,6 +21,15 @@
 #include "LineOfHints.h"
 
 
+///
+/// \brief Makes invalid, empty vector of Hints.
+/// Used to support data driven tests.
+///
+LineOfHints::LineOfHints()
+{
+	
+}
+
 LineOfHints::LineOfHints(NVector<Hint> vectorToCopy)
 	: hints(vectorToCopy)
 {
