@@ -27,9 +27,9 @@
 
 void CoveringBlocksSolverTest::coveringBlocksSolver_is_type_of_abstractLineSolver()
 {
-	AbstractLineSolver *solver = nullptr;
-	solver = new CoveringBlocksSolver();
+	AbstractLineSolver *solver = new CoveringBlocksSolver();
 	QVERIFY(solver);
+	delete solver;
 }
 
 void CoveringBlocksSolverTest::solving_test_data()
@@ -54,6 +54,7 @@ void CoveringBlocksSolverTest::solving_test()
 	
 	AbstractLineSolver *solver = new CoveringBlocksSolver();
 	solver->solve(d_lineOfHints, d_startingLineOfCells);
+	delete solver;
 	
 	QVERIFY(areLineOfCellsEqualByCellSign(d_startingLineOfCells, d_expectedLineOfCells));
 }
