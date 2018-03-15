@@ -28,6 +28,7 @@
 class AbstractLineSolver
 {
 public:
+	virtual ~AbstractLineSolver() = default;
 	virtual void solve(const LineOfHints&, LineOfCells&) = 0;
 };
 
