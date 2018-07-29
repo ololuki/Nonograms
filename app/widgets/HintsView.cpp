@@ -235,7 +235,7 @@ void HintsView::drawOneHint(Hint hint)
 	painter.drawRect(rectangle);
 	
 	//malowanie tekstu z textBoxa na rysunku:
-	QStaticText text = QString::number(hint.getBlockSize());
+	QStaticText text = QStaticText(QString::number(hint.getBlockSize()));
 	QFont font("Times", 14);
 	font.setStyleStrategy(QFont::ForceOutline);
 	painter.setFont(font);
