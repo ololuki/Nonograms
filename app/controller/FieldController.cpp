@@ -39,7 +39,7 @@ FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsVi
 	fileManager = std::make_shared<FileManager>(field);
 	
 	qRegisterMetaType<Cell>();
-	qRegisterMetaType<std::shared_ptr<const WholeField>>();
+	qRegisterMetaType<std::shared_ptr</*const*/ WholeField>>();
 	
 	connect(&solverWorker, &SolverWorker::cellChanged, static_cast<const CellsField*>(this->field->cells().get()), &CellsField::setCell);
 	connect(this, &FieldController::solve, &solverWorker, &SolverWorker::solve);

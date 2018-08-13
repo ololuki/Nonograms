@@ -32,7 +32,7 @@ class SolverWorker : public QObject
 public:
 	SolverWorker();
 	
-	void solve(std::shared_ptr<const WholeField> wholeField);
+	void solve(std::shared_ptr</*const*/ WholeField> wholeField);
 	void stop();
 	
 signals:
@@ -42,6 +42,7 @@ signals:
 	
 private:
 	void doJob();
+	std::shared_ptr</*const*/ WholeField> wholeField;
 	bool solving = false;
 	int x = 0;
 	int y = 0;

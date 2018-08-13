@@ -53,6 +53,6 @@ private:
 	std::shared_ptr<HintsField> rowsHintsField;
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<const WholeField>)
+Q_DECLARE_METATYPE(std::shared_ptr</*const*/ WholeField>)
 
 #endif // WHOLEFIELD_H
