@@ -45,12 +45,44 @@ void SolverWorker::stop()
 	emit isSolvingChanged(solving);
 }
 
+void SolverWorker::addLineSolver(std::shared_ptr<AbstractLineSolver> solver)
+{
+	lineSolvers.push_back(solver);
+}
+
 void SolverWorker::doJob()
 {
 	if (!solving)
 		return;
 	
-	// TODO
+	for (int row = 0; row < wholeField->getHeight(); row++)
+	{
+		LineOfHints hints = wholeField->rowsHints()->getLineOfHints(row);
+		LineOfCells lineOfCells = wholeField->cells()->getLineOfCells(row, Orientation::HORIZONTAL);
+		for (std::shared_ptr<AbstractLineSolver> s : lineSolvers)
+		{
+			s->solve(hints, lineOfCells);
+			for (int i = 0; i < lineOfCells.size(); i++)
+			{
+				emit cellChanged(Cell(lineOfCells.at(i)));
+			}
+		}
+	}
+	
+	for (int col = 0; col < wholeField->getWidth(); col++)
+	{
+		LineOfHints hints = wholeField->columnsHints()->getLineOfHints(col);
+		LineOfCells lineOfCells = wholeField->cells()->getLineOfCells(col, Orientation::VERTICAL);
+		for (std::shared_ptr<AbstractLineSolver> s : lineSolvers)
+		{
+			s->solve(hints, lineOfCells);
+			for (int i = 0; i < lineOfCells.size(); i++)
+			{
+				emit cellChanged(Cell(lineOfCells.at(i)));
+			}
+		}
+	}
+	
 	solving = false;
 	emit isSolvingChanged(solving);
 	

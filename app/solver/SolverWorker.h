@@ -22,7 +22,9 @@
 #define SOLVERWORKER_H
 
 #include "../field/WholeField.h"
+#include "line/AbstractLineSolver.h"
 #include <QObject>
+#include <QVector>
 #include <memory>
 
 
@@ -34,6 +36,7 @@ public:
 	
 	void solve(std::shared_ptr</*const*/ WholeField> wholeField);
 	void stop();
+	void addLineSolver(std::shared_ptr<AbstractLineSolver> solver);
 	
 signals:
 	void queueNextJob();
@@ -43,6 +46,7 @@ signals:
 private:
 	void doJob();
 	std::shared_ptr</*const*/ WholeField> wholeField;
+	QVector<std::shared_ptr<AbstractLineSolver>> lineSolvers;
 	bool solving = false;
 	int x = 0;
 	int y = 0;

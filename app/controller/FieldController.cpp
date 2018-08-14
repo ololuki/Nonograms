@@ -21,6 +21,7 @@
 #include "FieldController.h"
 #include "SizeDialog.h"
 #include <QDebug>
+#include "../solver/line/CoveringBlocksSolver.h"
 
 
 FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsView, HintsView *rowsHintsView)
@@ -46,6 +47,10 @@ FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsVi
 	connect(&solverWorker, &SolverWorker::isSolvingChanged, this, &FieldController::isSolvingChanged);
 	connect(this, &FieldController::stopWorker, &solverWorker, &SolverWorker::stop);
 	thread.start();
+	
+	std::shared_ptr<AbstractLineSolver> solver = std::make_shared<CoveringBlocksSolver>();
+	solverWorker.addLineSolver(solver);
+	
 	solverWorker.moveToThread(&thread);
 }
 
