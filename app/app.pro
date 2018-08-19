@@ -12,72 +12,20 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = nonograms
 TEMPLATE = app
 
+# put binaries in common directory
+DESTDIR = $$OUT_PWD/../bin
+
+# add lib binary for linking
+unix|win32: LIBS += -L$$OUT_PWD/../bin -lcore
+
+# add path to lib headers
+INCLUDEPATH += $$PWD/../core
+DEPENDPATH += $$PWD/../core
+
+# force relink if sources in core lib change
+win32:!win32-g++: PRE_TARGETDEPS += $$OUT_PWD/../bin/core.lib
+else:unix|win32-g++: PRE_TARGETDEPS += $$OUT_PWD/../bin/libcore.a
+
 DEFINES += QT_DEPRECATED_WARNINGS #emit warning if any deprecated feature is used
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    field/WholeField.cpp \
-    field/ArrayOfCells.cpp \
-    field/LineOfHints.cpp \
-    SizeDialog.cpp \
-    file/FileManager.cpp \
-    file/NonogramFileWriter.cpp \
-    file/NonogramFileReader.cpp \
-    controller/FieldController.cpp \
-    widgets/common/DrawableView.cpp \
-    widgets/HintsView.cpp \
-    utils/NVector.cpp \
-    widgets/common/InsertingButtonEventFilter.cpp \
-    field/AddressOfHint.cpp \
-    field/AddressOfCell.cpp \
-    field/Cell.cpp \
-    field/CellSign.cpp \
-    field/Hint.cpp \
-    field/LineOfCells.cpp \
-    widgets/CellsView.cpp \
-    controller/HintsController.cpp \
-    controller/CellsController.cpp \
-    field/CellsField.cpp \
-    field/HintsField.cpp \
-    field/Orientation.cpp \
-    solver/SolverWorker.cpp \
-    solver/line/AbstractLineSolver.cpp \
-    solver/line/CoveringBlocksSolver.cpp \
-
-HEADERS  += mainwindow.h \
-    field/WholeField.h \
-    field/ArrayOfCells.h \
-    field/LineOfHints.h \
-    field/FieldMode.h \
-    SizeDialog.h \
-    file/FileManager.h \
-    file/FileWriter.h \
-    file/NonogramFileWriter.h \
-    file/FileReader.h \
-    file/NonogramFileReader.h \
-    controller/FieldController.h \
-    widgets/common/FieldViewConstants.h \
-    widgets/common/DrawableView.h \
-    widgets/HintsView.h \
-    utils/NVector.h \
-    widgets/common/InsertingButtonEventFilter.h \
-    controller/action/CellAction.h \
-    controller/action/HintAction.h \
-    field/AddressOfHint.h \
-    field/AddressOfCell.h \
-    field/Cell.h \
-    field/CellSign.h \
-    field/Hint.h \
-    field/LineOfCells.h \
-    widgets/CellsView.h \
-    controller/HintsController.h \
-    controller/CellsController.h \
-    field/CellsField.h \
-    field/HintsField.h \
-    field/Orientation.h \
-    solver/SolverWorker.h \
-    solver/line/AbstractLineSolver.h \
-    solver/line/CoveringBlocksSolver.h \
-
-FORMS    += mainwindow.ui \
-    sizedialog.ui
+SOURCES += main.cpp
