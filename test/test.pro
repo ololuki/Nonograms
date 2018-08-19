@@ -64,4 +64,3 @@ SOURCES += \
 
 INCLUDEPATH += \
     ../app \
-    ../lib
