@@ -46,7 +46,8 @@ void CellsView::setField(const std::shared_ptr<const CellsField> &field)
 		static_cast<const CellsField*>(this->field.get()),
 		&CellsField::cellChanged,
 		this,
-		&CellsView::onCellChanged
+		&CellsView::onCellChanged,
+		Qt::QueuedConnection
 	);
 	
 	int sizeX = field->getWidth() * constants.squareSize + 1;

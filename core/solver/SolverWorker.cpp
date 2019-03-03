@@ -62,10 +62,11 @@ void SolverWorker::doJob()
 		for (std::shared_ptr<AbstractLineSolver> s : lineSolvers)
 		{
 			s->solve(hints, lineOfCells);
-			for (int i = 0; i < lineOfCells.size(); i++)
-			{
-				emit cellChanged(Cell(lineOfCells.at(i)));
-			}
+			wholeField->cells()->setLineOfCells(lineOfCells);
+//			for (int i = 0; i < lineOfCells.size(); i++)
+//			{
+//				emit cellChanged(Cell(lineOfCells.at(i)));
+//			}
 		}
 	}
 	
@@ -76,10 +77,11 @@ void SolverWorker::doJob()
 		for (std::shared_ptr<AbstractLineSolver> s : lineSolvers)
 		{
 			s->solve(hints, lineOfCells);
-			for (int i = 0; i < lineOfCells.size(); i++)
-			{
-				emit cellChanged(Cell(lineOfCells.at(i)));
-			}
+			wholeField->cells()->setLineOfCells(lineOfCells);
+//			for (int i = 0; i < lineOfCells.size(); i++)
+//			{
+//				emit cellChanged(Cell(lineOfCells.at(i)));
+//			}
 		}
 	}
 	
