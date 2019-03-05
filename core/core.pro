@@ -41,6 +41,7 @@ SOURCES += \
     solver/SolverWorker.cpp \
     solver/line/AbstractLineSolver.cpp \
     solver/line/CoveringBlocksSolver.cpp \
+    utils/TimeMeasure.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -77,6 +78,7 @@ HEADERS += \
     solver/SolverWorker.h \
     solver/line/AbstractLineSolver.h \
     solver/line/CoveringBlocksSolver.h \
+    utils/TimeMeasure.h
 
 FORMS += \
     mainwindow.ui \
