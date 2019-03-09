@@ -2,7 +2,7 @@
 #define FILEWRITER_H
 
 #include <memory>
-#include "field/WholeField.h"
+#include "field/WholeFieldModel.h"
 
 
 ///
@@ -13,7 +13,7 @@ class FileWriter
 public:
 	virtual ~FileWriter() {}
 	
-	virtual void setField(std::shared_ptr<WholeField> field) = 0;
+	virtual void setField(std::shared_ptr<WholeFieldModel> field) = 0;
 	virtual bool write(const std::string &fileDir) = 0;
 };
 

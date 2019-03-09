@@ -27,7 +27,7 @@
 FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsView, HintsView *rowsHintsView)
 {
 	// create initial field
-	field.reset(new WholeField(14, 10));
+	field.reset(new WholeFieldModel(14, 10));
 	
 	this->cellsView = cellsView;
 	this->columnsHintsView = columnsHintsView;
@@ -40,7 +40,7 @@ FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsVi
 	fileManager = std::make_shared<FileManager>(field);
 	
 	qRegisterMetaType<Cell>();
-	qRegisterMetaType<std::shared_ptr</*const*/ WholeField>>();
+	qRegisterMetaType<std::shared_ptr</*const*/ WholeFieldModel>>();
 	
 	connect(&solverWorker, &SolverWorker::cellChanged, static_cast<const CellsFieldModel*>(this->field->cells().get()), &CellsFieldModel::setCell);
 	connect(this, &FieldController::solve, &solverWorker, &SolverWorker::solve);
@@ -74,11 +74,11 @@ void FieldController::addDummyBlock()
 
 void FieldController::replaceField(int width, int height)
 {
-	std::shared_ptr<WholeField> newField = std::make_shared<WholeField>(width, height);
+	std::shared_ptr<WholeFieldModel> newField = std::make_shared<WholeFieldModel>(width, height);
 	replaceField(newField);
 }
 
-void FieldController::replaceField(std::shared_ptr<WholeField> newField)
+void FieldController::replaceField(std::shared_ptr<WholeFieldModel> newField)
 {
 	if (newField == nullptr)
 	{

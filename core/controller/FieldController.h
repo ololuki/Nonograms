@@ -21,7 +21,7 @@
 #ifndef FIELDCONTROLLER_H
 #define FIELDCONTROLLER_H
 
-#include "field/WholeField.h"
+#include "field/WholeFieldModel.h"
 #include "widgets/CellsView.h"
 #include "widgets/HintsView.h"
 #include "controller/CellsController.h"
@@ -48,7 +48,7 @@ public:
 	
 signals:
 	/// emited to worker to start solving
-	void solve(std::shared_ptr</*const*/ WholeField> wholeField);
+	void solve(std::shared_ptr</*const*/ WholeFieldModel> wholeField);
 	/// emited by worker when state (is solving or stopped) changed
 	void isSolvingChanged(bool isSolving);
 	/// emited to worker to stop jobs
@@ -56,9 +56,9 @@ signals:
 	
 private:
 	void replaceField(int width, int height);
-	void replaceField(std::shared_ptr<WholeField> newField);
+	void replaceField(std::shared_ptr<WholeFieldModel> newField);
 	
-	std::shared_ptr<WholeField> field;
+	std::shared_ptr<WholeFieldModel> field;
 	
 	CellsView *cellsView;
 	HintsView *columnsHintsView;

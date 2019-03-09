@@ -35,7 +35,7 @@ NonogramFileWriter::~NonogramFileWriter()
 	
 }
 
-void NonogramFileWriter::setField(std::shared_ptr<WholeField> field)
+void NonogramFileWriter::setField(std::shared_ptr<WholeFieldModel> field)
 {
 	this->field = field;
 }

@@ -21,7 +21,7 @@
 #ifndef CELLSCONTROLLER_H
 #define CELLSCONTROLLER_H
 
-#include "field/WholeField.h"
+#include "field/WholeFieldModel.h"
 #include "widgets/CellsView.h"
 #include "action/CellAction.h"
 

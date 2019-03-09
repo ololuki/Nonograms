@@ -31,7 +31,7 @@
 
 ///
 /// \brief CellsFieldModel class is model class of drawing area data.
-/// CellsFieldModel is part of WholeField. WholeField contains CellsFieldModel.
+/// CellsFieldModel is part of WholeFieldModel. WholeFieldModel contains CellsFieldModel.
 ///
 class CellsFieldModel : public QObject
 {

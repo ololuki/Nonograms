@@ -31,7 +31,7 @@ SolverWorker::SolverWorker()
 	);
 }
 
-void SolverWorker::solve(std::shared_ptr</*const*/ WholeField> wholeField)
+void SolverWorker::solve(std::shared_ptr</*const*/ WholeFieldModel> wholeField)
 {
 	this->wholeField = wholeField;
 	solving = true;

@@ -2,7 +2,7 @@
 #define FILEREADER_H
 
 #include <memory>
-#include "field/WholeField.h"
+#include "field/WholeFieldModel.h"
 
 
 ///
@@ -13,7 +13,7 @@ class FileReader
 public:
 	virtual ~FileReader() {}
 	
-	virtual std::shared_ptr<WholeField> getField() = 0;
+	virtual std::shared_ptr<WholeFieldModel> getField() = 0;
 	virtual bool read(const std::string &fileDir) = 0;
 };
 

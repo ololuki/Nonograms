@@ -1,25 +1,25 @@
 /**********************************************************************
- * Copyright (C) 2017-2018 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
- * 
+ *
  * This file is part of Nonograms
  * https://github.com/ololuki/nonograms
- * 
+ *
  * Nonograms is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Nonograms is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef WHOLEFIELD_H
-#define WHOLEFIELD_H
+#ifndef WHOLEFIELDMODEL_H
+#define WHOLEFIELDMODEL_H
 
 #include <memory>
 #include "CellsFieldModel.h"
@@ -28,16 +28,16 @@
 
 
 ///
-/// \brief WholeField class contains whole data about Field.
+/// \brief WholeFieldModel class contains whole data about Field.
 /// It has models of field parts: drawing area, columns hints
 /// and rows hints.
 ///
-class WholeField
+class WholeFieldModel
 {
 public:
-	WholeField(int width, int height);
-	WholeField(const WholeField &field);
-	virtual ~WholeField();
+	WholeFieldModel(int width, int height);
+	WholeFieldModel(const WholeFieldModel &field);
+	virtual ~WholeFieldModel();
 	int getWidth() const;
 	int getHeight() const;
 	std::shared_ptr<CellsFieldModel> cells();
@@ -53,6 +53,6 @@ private:
 	std::shared_ptr<HintsFieldModel> rowsHintsField;
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr</*const*/ WholeField>)
+Q_DECLARE_METATYPE(std::shared_ptr</*const*/ WholeFieldModel>)
 
-#endif // WHOLEFIELD_H
+#endif // WHOLEFIELDMODEL_H

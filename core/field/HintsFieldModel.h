@@ -31,8 +31,8 @@
 ///
 /// \brief HintsFieldModel class is model class of
 /// blocks description data (columns hints and rows hints)
-/// HintsFieldModels are part of WholeField.
-/// WholeField contains two instances of HintsFieldModels
+/// HintsFieldModels are part of WholeFieldModel.
+/// WholeFieldModel contains two instances of HintsFieldModels
 /// - one for columns and one for rows.
 ///
 class HintsFieldModel : public QObject
