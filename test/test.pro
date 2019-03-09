@@ -31,7 +31,7 @@ HEADERS += \
     ArrayOfCellsTest.h \
     LineOfCellsTest.h \
     HintsFieldTest.h \
-    CellsFieldTest.h \
+    CellsFieldModelTest.h \
     solver/SolverWorkerTest.h \
     solver/line/CoveringBlocksSolverTest.h
 
@@ -46,6 +46,6 @@ SOURCES += TestMain.cpp \
     ArrayOfCellsTest.cpp \
     LineOfCellsTest.cpp \
     HintsFieldTest.cpp \
-    CellsFieldTest.cpp \
+    CellsFieldModelTest.cpp \
     solver/SolverWorkerTest.cpp \
     solver/line/CoveringBlocksSolverTest.cpp

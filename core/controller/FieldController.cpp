@@ -42,7 +42,7 @@ FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsVi
 	qRegisterMetaType<Cell>();
 	qRegisterMetaType<std::shared_ptr</*const*/ WholeField>>();
 	
-	connect(&solverWorker, &SolverWorker::cellChanged, static_cast<const CellsField*>(this->field->cells().get()), &CellsField::setCell);
+	connect(&solverWorker, &SolverWorker::cellChanged, static_cast<const CellsFieldModel*>(this->field->cells().get()), &CellsFieldModel::setCell);
 	connect(this, &FieldController::solve, &solverWorker, &SolverWorker::solve);
 	connect(&solverWorker, &SolverWorker::isSolvingChanged, this, &FieldController::isSolvingChanged);
 	connect(this, &FieldController::stopWorker, &solverWorker, &SolverWorker::stop);
@@ -91,7 +91,7 @@ void FieldController::replaceField(std::shared_ptr<WholeField> newField)
 	columnsHintsController->replaceField(field->columnsHints());
 	rowsHintsController->replaceField(field->rowsHints());
 	
-	connect(&solverWorker, &SolverWorker::cellChanged, static_cast<const CellsField*>(this->field->cells().get()), &CellsField::setCell);
+	connect(&solverWorker, &SolverWorker::cellChanged, static_cast<const CellsFieldModel*>(this->field->cells().get()), &CellsFieldModel::setCell);
 }
 
 void FieldController::onNew()

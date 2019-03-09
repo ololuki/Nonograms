@@ -39,12 +39,12 @@ CellsView::~CellsView()
 	
 }
 
-void CellsView::setField(const std::shared_ptr<const CellsField> &field)
+void CellsView::setField(const std::shared_ptr<const CellsFieldModel> &field)
 {
 	this->field = field;
 	connect(
-		static_cast<const CellsField*>(this->field.get()),
-		&CellsField::cellChanged,
+		static_cast<const CellsFieldModel*>(this->field.get()),
+		&CellsFieldModel::cellChanged,
 		this,
 		&CellsView::onCellChanged,
 		Qt::QueuedConnection

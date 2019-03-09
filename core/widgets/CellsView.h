@@ -23,7 +23,7 @@
 
 #include <memory>
 #include <QWidget>
-#include "field/CellsField.h"
+#include "field/CellsFieldModel.h"
 #include "common/FieldViewConstants.h"
 #include "common/DrawableView.h"
 #include "controller/action/CellAction.h"
@@ -35,7 +35,7 @@ class CellsView : public DrawableView
 public:
 	explicit CellsView(QWidget *parent = 0);
 	virtual ~CellsView();
-	void setField(const std::shared_ptr<const CellsField> &field);
+	void setField(const std::shared_ptr<const CellsFieldModel> &field);
 	
 public slots:
 	void onCellChanged(AddressOfCell address);
@@ -52,7 +52,7 @@ private:
 	void drawOneCell(Cell cell);
 	void drawAllCells();
 	
-	std::shared_ptr<const CellsField> field;
+	std::shared_ptr<const CellsFieldModel> field;
 };
 
 #endif // CELLSVIEW_H

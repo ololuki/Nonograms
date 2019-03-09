@@ -22,7 +22,7 @@
 #define WHOLEFIELD_H
 
 #include <memory>
-#include "CellsField.h"
+#include "CellsFieldModel.h"
 #include "HintsField.h"
 #include <QMetaType>
 
@@ -40,7 +40,7 @@ public:
 	virtual ~WholeField();
 	int getWidth() const;
 	int getHeight() const;
-	std::shared_ptr<CellsField> cells();
+	std::shared_ptr<CellsFieldModel> cells();
 	std::shared_ptr<HintsField> columnsHints();
 	std::shared_ptr<HintsField> rowsHints();
 	void clearDrawingArea();
@@ -48,7 +48,7 @@ public:
 private:
 	int width;
 	int height;
-	std::shared_ptr<CellsField> cellsField;
+	std::shared_ptr<CellsFieldModel> cellsField;
 	std::shared_ptr<HintsField> columnsHintsField;
 	std::shared_ptr<HintsField> rowsHintsField;
 };

@@ -30,15 +30,15 @@ class CellsController : public QObject
 {
 	Q_OBJECT
 public:
-	CellsController(std::shared_ptr<CellsField> newField, CellsView *cellsView);
+	CellsController(std::shared_ptr<CellsFieldModel> newField, CellsView *cellsView);
 	~CellsController();
-	void replaceField(std::shared_ptr<CellsField> newField);
+	void replaceField(std::shared_ptr<CellsFieldModel> newField);
 	
 private slots:
 	void onAction(CellAction action, AddressOfCell address);
 	
 private:
-	std::shared_ptr<CellsField> field;
+	std::shared_ptr<CellsFieldModel> field;
 	CellsView *cellsView;
 };
 

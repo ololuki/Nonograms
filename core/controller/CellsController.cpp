@@ -22,7 +22,7 @@
 #include <QDebug>
 
 
-CellsController::CellsController(std::shared_ptr<CellsField> newField, CellsView *cellsView)
+CellsController::CellsController(std::shared_ptr<CellsFieldModel> newField, CellsView *cellsView)
 	: field(newField)
 {
 	qDebug() << "DrawingAreaController constructor";
@@ -43,7 +43,7 @@ CellsController::~CellsController()
 	disconnect(this->cellsView, &CellsView::action, this, &CellsController::onAction);
 }
 
-void CellsController::replaceField(std::shared_ptr<CellsField> newField)
+void CellsController::replaceField(std::shared_ptr<CellsFieldModel> newField)
 {
 	this->field = newField;
 	cellsView->setField(field);

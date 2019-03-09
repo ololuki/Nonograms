@@ -35,7 +35,7 @@ SOURCES += \
     widgets/CellsView.cpp \
     controller/HintsController.cpp \
     controller/CellsController.cpp \
-    field/CellsField.cpp \
+    field/CellsFieldModel.cpp \
     field/HintsField.cpp \
     field/Orientation.cpp \
     solver/SolverWorker.cpp \
@@ -72,7 +72,7 @@ HEADERS += \
     widgets/CellsView.h \
     controller/HintsController.h \
     controller/CellsController.h \
-    field/CellsField.h \
+    field/CellsFieldModel.h \
     field/HintsField.h \
     field/Orientation.h \
     solver/SolverWorker.h \
