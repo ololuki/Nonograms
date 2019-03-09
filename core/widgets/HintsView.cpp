@@ -33,13 +33,13 @@ HintsView::HintsView(QWidget *parent)
 	initInsertingButton();
 }
 
-void HintsView::setField(const std::shared_ptr<const HintsField> &field)
+void HintsView::setField(const std::shared_ptr<const HintsFieldModel> &field)
 {
 	this->field = field;
 	orientation = this->field->getOrientation();
 	connect(
-		static_cast<const HintsField*>(this->field.get()),
-		&HintsField::lineOfHintsChanged,
+		static_cast<const HintsFieldModel*>(this->field.get()),
+		&HintsFieldModel::lineOfHintsChanged,
 		this,
 		&HintsView::onLineOfHintsChanged
 	);

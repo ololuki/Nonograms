@@ -33,9 +33,9 @@ class HintsController : public QObject
 {
 	Q_OBJECT
 public:
-	HintsController(std::shared_ptr<HintsField> field, HintsView *hintsView);
+	HintsController(std::shared_ptr<HintsFieldModel> field, HintsView *hintsView);
 	~HintsController();
-	void replaceField(std::shared_ptr<HintsField> newField);
+	void replaceField(std::shared_ptr<HintsFieldModel> newField);
 	
 signals:
 	// invoked by controller
@@ -51,7 +51,7 @@ private:
 	// when inserting button is clicked
 	void onHintInsertBefore(AddressOfHint address);
 	
-	std::shared_ptr<HintsField> field;
+	std::shared_ptr<HintsFieldModel> field;
 	HintsView *hintsView;
 };
 

@@ -27,7 +27,7 @@
 #include "common/DrawableView.h"
 #include "common/FieldViewConstants.h"
 #include "common/InsertingButtonEventFilter.h"
-#include "field/HintsField.h"
+#include "field/HintsFieldModel.h"
 #include "controller/action/HintAction.h"
 
 
@@ -36,7 +36,7 @@ class HintsView : public DrawableView
 	Q_OBJECT
 public:
 	explicit HintsView(QWidget *parent = 0);
-	void setField(const std::shared_ptr<const HintsField> &field);
+	void setField(const std::shared_ptr<const HintsFieldModel> &field);
 	
 signals:
 	// signals emited to controller
@@ -60,7 +60,7 @@ protected:
 	std::shared_ptr<QPushButton> insertingButton;
 	const int insertingButtonHeight = constants.squareSize/2;
 	
-	std::shared_ptr<const HintsField> field;
+	std::shared_ptr<const HintsFieldModel> field;
 	
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;

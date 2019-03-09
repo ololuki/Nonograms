@@ -23,7 +23,7 @@
 
 #include <memory>
 #include "CellsFieldModel.h"
-#include "HintsField.h"
+#include "HintsFieldModel.h"
 #include <QMetaType>
 
 
@@ -41,16 +41,16 @@ public:
 	int getWidth() const;
 	int getHeight() const;
 	std::shared_ptr<CellsFieldModel> cells();
-	std::shared_ptr<HintsField> columnsHints();
-	std::shared_ptr<HintsField> rowsHints();
+	std::shared_ptr<HintsFieldModel> columnsHints();
+	std::shared_ptr<HintsFieldModel> rowsHints();
 	void clearDrawingArea();
 	void clearBlocksDescription();
 private:
 	int width;
 	int height;
 	std::shared_ptr<CellsFieldModel> cellsField;
-	std::shared_ptr<HintsField> columnsHintsField;
-	std::shared_ptr<HintsField> rowsHintsField;
+	std::shared_ptr<HintsFieldModel> columnsHintsField;
+	std::shared_ptr<HintsFieldModel> rowsHintsField;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr</*const*/ WholeField>)

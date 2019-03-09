@@ -1,27 +1,27 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
- * 
+ *
  * This file is part of Nonograms
  * https://github.com/ololuki/nonograms
- * 
+ *
  * Nonograms is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Nonograms is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include "HintsField.h"
+#include "HintsFieldModel.h"
 
 
-HintsField::HintsField(int numberOfLines, Orientation o)
+HintsFieldModel::HintsFieldModel(int numberOfLines, Orientation o)
 {
 	this->numberOfLines = numberOfLines;
 	this->orientation = o;
@@ -35,31 +35,30 @@ HintsField::HintsField(int numberOfLines, Orientation o)
 	}
 }
 
-HintsField::~HintsField()
+HintsFieldModel::~HintsFieldModel()
 {
-	
 }
 
-Hint HintsField::getHint(AddressOfHint address) const
+Hint HintsFieldModel::getHint(AddressOfHint address) const
 {
 	return linesOfHints[address.getLine()][address.getCount()];
 }
 
-void HintsField::updateHint(Hint hint)
+void HintsFieldModel::updateHint(Hint hint)
 {
 	int line = hint.getAddress().getLine();
 	linesOfHints[line].updateHint(hint);
 	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
 }
 
-void HintsField::insertHintBefore(Hint hint)
+void HintsFieldModel::insertHintBefore(Hint hint)
 {
 	int line = hint.getAddress().getLine();
 	linesOfHints[line].insertHintBefore(hint);
 	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
 }
 
-void HintsField::addHintAtEnd(Hint hint)
+void HintsFieldModel::addHintAtEnd(Hint hint)
 {
 	int line = hint.getAddress().getLine();
 	int count = hint.getAddress().getCount();
@@ -70,7 +69,7 @@ void HintsField::addHintAtEnd(Hint hint)
 	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
 }
 
-void HintsField::deleteHint(Hint hint)
+void HintsFieldModel::deleteHint(Hint hint)
 {
 	int line = hint.getAddress().getLine();
 	int count = hint.getAddress().getCount();
@@ -84,17 +83,17 @@ void HintsField::deleteHint(Hint hint)
 	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
 }
 
-int HintsField::numberOfBlocksInLine(int lineNumber) const
+int HintsFieldModel::numberOfBlocksInLine(int lineNumber) const
 {
 	return linesOfHints[lineNumber].size();
 }
 
-int HintsField::getNumberOfLines() const
+int HintsFieldModel::getNumberOfLines() const
 {
 	return numberOfLines;
 }
 
-int HintsField::allHintsLength() const
+int HintsFieldModel::allHintsLength() const
 {
 	int length = 0;
 	for (int i = 0; i < numberOfLines; i++)
@@ -104,12 +103,12 @@ int HintsField::allHintsLength() const
 	return length;
 }
 
-Orientation HintsField::getOrientation() const
+Orientation HintsFieldModel::getOrientation() const
 {
 	return orientation;
 }
 
-bool HintsField::isDefinedHintAt(AddressOfHint address) const
+bool HintsFieldModel::isDefinedHintAt(AddressOfHint address) const
 {
 	int line = address.getLine();
 	if (line >= linesOfHints.size()) return false;
@@ -117,12 +116,12 @@ bool HintsField::isDefinedHintAt(AddressOfHint address) const
 	return true;
 }
 
-LineOfHints HintsField::getLineOfHints(int lineNumber)
+LineOfHints HintsFieldModel::getLineOfHints(int lineNumber)
 {
 	return linesOfHints[lineNumber];
 }
 
-void HintsField::setLineOfHints(LineOfHints line)
+void HintsFieldModel::setLineOfHints(LineOfHints line)
 {
 	if (line.size() < 1) return;
 	int lineNumber = line[0].getAddress().getLine();

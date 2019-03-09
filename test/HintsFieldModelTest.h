@@ -1,31 +1,31 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
- * 
+ *
  * This file is part of Nonograms
  * https://github.com/ololuki/nonograms
- * 
+ *
  * Nonograms is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Nonograms is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef HINTSFIELDTEST_H
-#define HINTSFIELDTEST_H
+#ifndef HINTSFIELDMODELTEST_H
+#define HINTSFIELDMODELTEST_H
 
 #include <QtTest>
-#include "field/HintsField.h"
+#include "field/HintsFieldModel.h"
 
 
-class HintsFieldTest : public QObject
+class HintsFieldModelTest : public QObject
 {
 	Q_OBJECT
 private slots:
@@ -40,7 +40,7 @@ private slots:
 	void adresses_after_delete_should_be_same_as_count_in_line();
 	void hint_can_NOT_be_deleted_if_there_is_only_one_left();
 	void values_after_delete_should_be_shifted_properly();
-	
+
 	void getLineOfHints_should_return_valid_line();
 	void setLineOfHints_should_change_hints();
 	void signal_lineOfHintsChanged_should_be_emited_if_hints_was_changed_by_setLineOfHints();
@@ -60,4 +60,4 @@ private:
 	const Hint hintAtFirst = {addressFirst, blockValueAtFirst};
 };
 
-#endif // HINTSFIELDTEST_H
+#endif // HINTSFIELDMODELTEST_H

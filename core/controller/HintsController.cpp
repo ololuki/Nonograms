@@ -21,7 +21,7 @@
 #include "HintsController.h"
 
 
-HintsController::HintsController(std::shared_ptr<HintsField> field, HintsView *hintsView)
+HintsController::HintsController(std::shared_ptr<HintsFieldModel> field, HintsView *hintsView)
 	: field(field)
 {
 	this->hintsView = hintsView;
@@ -59,7 +59,7 @@ HintsController::~HintsController()
 	
 }
 
-void HintsController::replaceField(std::shared_ptr<HintsField> newField)
+void HintsController::replaceField(std::shared_ptr<HintsFieldModel> newField)
 {
 	this->field = newField;
 	hintsView->setField(field);
