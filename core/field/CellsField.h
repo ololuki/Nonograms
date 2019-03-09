@@ -18,30 +18,36 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include "CellsFieldModel.h"
-#include <QDebug>
+#ifndef CELLSFIELD_H
+#define CELLSFIELD_H
+
+#include <QObject>
+#include "AddressOfCell.h"
+#include "Orientation.h"
+#include "Cell.h"
+#include "ArrayOfCells.h"
+#include "LineOfCells.h"
 
 
-CellsFieldModel::CellsFieldModel(int width, int height) : CellsField(width, height)
+///
+/// \brief CellsField class is simple class of drawing area data.
+/// CellsFieldModel derive from CellsField.
+/// CellsField is part of WholeField. WholeField contains CellsField.
+///
+class CellsField
 {
-	qDebug() << "CellsFieldModel width height c-tor";
-}
+public:
+	CellsField(int width, int height);
+	virtual ~CellsField();
+	int getWidth() const {return array.width();}
+	int getHeight() const {return array.height();}
+	Cell getCell(AddressOfCell address) const;
+	virtual void setCell(Cell cell);
+	LineOfCells getLineOfCells(int lineNumber, Orientation orientation) const;
+	void setLineOfCells(LineOfCells lineOfCells);
 
-CellsFieldModel::~CellsFieldModel()
-{
-	qDebug() << "CellsFieldModel d-tor";
-}
+protected:
+	ArrayOfCells array;
+};
 
-void CellsFieldModel::setCell(Cell cell)
-{
-	if (cell.getAddress().isValid())
-	{
-		int x = cell.getAddress().getX();
-		int y = cell.getAddress().getY();
-		if (array(x, y) != cell)
-		{
-			array(x, y) = cell;
-			emit cellChanged(cell.getAddress());
-		}
-	}
-}
+#endif // CELLSFIELD_H

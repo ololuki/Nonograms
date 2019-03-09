@@ -22,33 +22,22 @@
 #define CELLSFIELDMODEL_H
 
 #include <QObject>
-#include "AddressOfCell.h"
-#include "Orientation.h"
-#include "Cell.h"
-#include "ArrayOfCells.h"
-#include "LineOfCells.h"
-
+#include "CellsField.h"
 
 ///
 /// \brief CellsFieldModel class is model class of drawing area data.
-/// CellsFieldModel is part of WholeFieldModel. WholeFieldModel contains CellsFieldModel.
+/// CellsFieldModel is part of WholeField. WholeField contains CellsFieldModel.
 ///
-class CellsFieldModel : public QObject
+class CellsFieldModel : public QObject, public CellsField
 {
 	Q_OBJECT
 public:
 	CellsFieldModel(int width, int height);
-	virtual ~CellsFieldModel();
-	int getWidth() const {return array.width();}
-	int getHeight() const {return array.height();}
-	Cell getCell(AddressOfCell address) const;
-	void setCell(Cell cell);
-	LineOfCells getLineOfCells(int lineNumber, Orientation orientation) const;
-	void setLineOfCells(LineOfCells lineOfCells);
+	virtual ~CellsFieldModel() override;
+	void setCell(Cell cell) override;
+
 signals:
 	void cellChanged(AddressOfCell address);
-protected:
-	ArrayOfCells array;
 };
 
 #endif // CELLSFIELDMODEL_H

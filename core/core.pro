@@ -35,6 +35,7 @@ SOURCES += \
     widgets/CellsView.cpp \
     controller/HintsController.cpp \
     controller/CellsController.cpp \
+    field/CellsField.cpp \
     field/CellsFieldModel.cpp \
     field/HintsFieldModel.cpp \
     field/Orientation.cpp \
@@ -72,6 +73,7 @@ HEADERS += \
     widgets/CellsView.h \
     controller/HintsController.h \
     controller/CellsController.h \
+    field/CellsField.h \
     field/CellsFieldModel.h \
     field/HintsFieldModel.h \
     field/Orientation.h \

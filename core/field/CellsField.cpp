@@ -18,21 +18,28 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#include "CellsFieldModel.h"
+#include "CellsField.h"
 #include <QDebug>
 
 
-CellsFieldModel::CellsFieldModel(int width, int height) : CellsField(width, height)
+CellsField::CellsField(int width, int height) : array(width, height)
 {
-	qDebug() << "CellsFieldModel width height c-tor";
+	qDebug() << "CellsField width height c-tor";
 }
 
-CellsFieldModel::~CellsFieldModel()
+CellsField::~CellsField()
 {
-	qDebug() << "CellsFieldModel d-tor";
+	qDebug() << "CellsField d-tor";
 }
 
-void CellsFieldModel::setCell(Cell cell)
+Cell CellsField::getCell(AddressOfCell address) const
+{
+	int x = address.getX();
+	int y = address.getY();
+	return array.getPixelAt(x, y);
+}
+
+void CellsField::setCell(Cell cell)
 {
 	if (cell.getAddress().isValid())
 	{
@@ -41,7 +48,42 @@ void CellsFieldModel::setCell(Cell cell)
 		if (array(x, y) != cell)
 		{
 			array(x, y) = cell;
-			emit cellChanged(cell.getAddress());
 		}
+	}
+}
+
+LineOfCells CellsField::getLineOfCells(int lineNumber, Orientation orientation) const
+{
+	NVector<Cell> line = NVector<Cell>();
+	int lineLength;
+	switch(orientation)
+	{
+	case Orientation::HORIZONTAL:
+		lineLength = getWidth();
+		break;
+	case Orientation::VERTICAL:
+		lineLength = getHeight();
+		break;
+	}
+	for (int i = 0; i < lineLength; i++)
+	{
+		switch(orientation)
+		{
+		case Orientation::HORIZONTAL:
+			line.push_back(getCell(AddressOfCell(i, lineNumber)));
+			break;
+		case Orientation::VERTICAL:
+			line.push_back(getCell(AddressOfCell(lineNumber, i)));
+			break;
+		}
+	}
+	return line;
+}
+
+void CellsField::setLineOfCells(LineOfCells lineOfCells)
+{
+	for (int i = 0; i < lineOfCells.size(); i++)
+	{
+		setCell(lineOfCells[i]);
 	}
 }
