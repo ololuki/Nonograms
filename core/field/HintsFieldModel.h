@@ -40,19 +40,19 @@ class HintsFieldModel : public QObject
 	Q_OBJECT
 public:
 	HintsFieldModel(int numberOfLines, Orientation o);
-	virtual ~HintsFieldModel();
-	virtual Hint getHint(AddressOfHint address) const;
-	virtual void updateHint(Hint hint);
-	virtual void insertHintBefore(Hint hint);
-	virtual void addHintAtEnd(Hint hint);
-	virtual void deleteHint(Hint hint);
+	~HintsFieldModel();
+	Hint getHint(AddressOfHint address) const;
+	void updateHint(Hint hint);
+	void insertHintBefore(Hint hint);
+	void addHintAtEnd(Hint hint);
+	void deleteHint(Hint hint);
 
-	virtual int numberOfBlocksInLine(int lineNumber) const;
-	virtual int getNumberOfLines() const;
-	virtual int allHintsLength() const;
-	virtual Orientation getOrientation() const;
+	int numberOfBlocksInLine(int lineNumber) const;
+	int getNumberOfLines() const;
+	int allHintsLength() const;
+	Orientation getOrientation() const;
 
-	virtual bool isDefinedHintAt(AddressOfHint address) const;
+	bool isDefinedHintAt(AddressOfHint address) const;
 
 	LineOfHints getLineOfHints(int lineNumber);
 	void setLineOfHints(LineOfHints line);
