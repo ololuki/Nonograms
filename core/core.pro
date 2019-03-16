@@ -37,6 +37,7 @@ SOURCES += \
     controller/CellsController.cpp \
     field/CellsField.cpp \
     field/CellsFieldModel.cpp \
+    field/HintsField.cpp \
     field/HintsFieldModel.cpp \
     field/Orientation.cpp \
     solver/SolverWorker.cpp \
@@ -75,6 +76,7 @@ HEADERS += \
     controller/CellsController.h \
     field/CellsField.h \
     field/CellsFieldModel.h \
+    field/HintsField.h \
     field/HintsFieldModel.h \
     field/Orientation.h \
     solver/SolverWorker.h \

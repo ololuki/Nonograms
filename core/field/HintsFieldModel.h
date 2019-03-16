@@ -22,11 +22,7 @@
 #define HINTSFIELDMODEL_H
 
 #include <QObject>
-#include "AddressOfHint.h"
-#include "Hint.h"
-#include "LineOfHints.h"
-#include "utils/NVector.h"
-
+#include "HintsField.h"
 
 ///
 /// \brief HintsFieldModel class is model class of
@@ -35,33 +31,22 @@
 /// WholeFieldModel contains two instances of HintsFieldModels
 /// - one for columns and one for rows.
 ///
-class HintsFieldModel : public QObject
+class HintsFieldModel : public QObject, public HintsField
 {
 	Q_OBJECT
 public:
 	HintsFieldModel(int numberOfLines, Orientation o);
 	~HintsFieldModel();
-	Hint getHint(AddressOfHint address) const;
-	void updateHint(Hint hint);
-	void insertHintBefore(Hint hint);
-	void addHintAtEnd(Hint hint);
-	void deleteHint(Hint hint);
 
-	int numberOfBlocksInLine(int lineNumber) const;
-	int getNumberOfLines() const;
-	int allHintsLength() const;
-	Orientation getOrientation() const;
+	virtual void updateHint(Hint hint) override;
+	virtual void insertHintBefore(Hint hint) override;
+	virtual void addHintAtEnd(Hint hint) override;
+	virtual void deleteHint(Hint hint) override;
 
-	bool isDefinedHintAt(AddressOfHint address) const;
+	virtual void setLineOfHints(LineOfHints line) override;
 
-	LineOfHints getLineOfHints(int lineNumber);
-	void setLineOfHints(LineOfHints line);
 signals:
 	void lineOfHintsChanged(int lineNumber, Orientation orientation);
-private:
-	int numberOfLines;
-	Orientation orientation;
-	NVector<LineOfHints> linesOfHints;
 };
 
 #endif // HINTSFIELDMODEL_H

@@ -22,109 +22,41 @@
 
 
 HintsFieldModel::HintsFieldModel(int numberOfLines, Orientation o)
+  : HintsField(numberOfLines, o)
 {
-	this->numberOfLines = numberOfLines;
-	this->orientation = o;
-	const int defaultBlockSize = 0;
-	for(int i = 0; i < numberOfLines; i++)
-	{
-		AddressOfHint address = AddressOfHint(orientation, i, 0);
-		NVector<Hint> line;
-		line.push_back(Hint(address, defaultBlockSize));
-		linesOfHints.push_back(line);
-	}
 }
 
 HintsFieldModel::~HintsFieldModel()
 {
 }
 
-Hint HintsFieldModel::getHint(AddressOfHint address) const
-{
-	return linesOfHints[address.getLine()][address.getCount()];
-}
-
 void HintsFieldModel::updateHint(Hint hint)
 {
-	int line = hint.getAddress().getLine();
-	linesOfHints[line].updateHint(hint);
-	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
+	HintsField::updateHint(hint);
+	emit lineOfHintsChanged(hint.getAddress().getLine(), hint.getAddress().getOrientation());
 }
 
 void HintsFieldModel::insertHintBefore(Hint hint)
 {
-	int line = hint.getAddress().getLine();
-	linesOfHints[line].insertHintBefore(hint);
-	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
+	HintsField::insertHintBefore(hint);
+	emit lineOfHintsChanged(hint.getAddress().getLine(), hint.getAddress().getOrientation());
 }
 
 void HintsFieldModel::addHintAtEnd(Hint hint)
 {
-	int line = hint.getAddress().getLine();
-	int count = hint.getAddress().getCount();
-	if (linesOfHints[line].size() == count)
-	{
-		linesOfHints[line].push_back(hint);
-	}
-	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
+	HintsField::addHintAtEnd(hint);
+	emit lineOfHintsChanged(hint.getAddress().getLine(), hint.getAddress().getOrientation());
 }
 
 void HintsFieldModel::deleteHint(Hint hint)
 {
-	int line = hint.getAddress().getLine();
-	int count = hint.getAddress().getCount();
-	if (linesOfHints[line].size() <= 1) return;
-	int newLength = linesOfHints[line].size() - 1;
-	for(int i = count; i < newLength; i++)
-	{
-		linesOfHints[line][i].setBlockSize(linesOfHints[line][i+1].getBlockSize());
-	}
-	linesOfHints[line].pop_back();
-	emit lineOfHintsChanged(line, hint.getAddress().getOrientation());
-}
-
-int HintsFieldModel::numberOfBlocksInLine(int lineNumber) const
-{
-	return linesOfHints[lineNumber].size();
-}
-
-int HintsFieldModel::getNumberOfLines() const
-{
-	return numberOfLines;
-}
-
-int HintsFieldModel::allHintsLength() const
-{
-	int length = 0;
-	for (int i = 0; i < numberOfLines; i++)
-	{
-		length = (numberOfBlocksInLine(i) > length) ? numberOfBlocksInLine(i) : length;
-	}
-	return length;
-}
-
-Orientation HintsFieldModel::getOrientation() const
-{
-	return orientation;
-}
-
-bool HintsFieldModel::isDefinedHintAt(AddressOfHint address) const
-{
-	int line = address.getLine();
-	if (line >= linesOfHints.size()) return false;
-	if (address.getCount() >= linesOfHints[line].size()) return false;
-	return true;
-}
-
-LineOfHints HintsFieldModel::getLineOfHints(int lineNumber)
-{
-	return linesOfHints[lineNumber];
+	HintsField::deleteHint(hint);
+	emit lineOfHintsChanged(hint.getAddress().getLine(), hint.getAddress().getOrientation());
 }
 
 void HintsFieldModel::setLineOfHints(LineOfHints line)
 {
 	if (line.size() < 1) return;
-	int lineNumber = line[0].getAddress().getLine();
-	linesOfHints[lineNumber] = line;
-	emit lineOfHintsChanged(lineNumber, line[0].getAddress().getOrientation());
+	HintsField::setLineOfHints(line);
+	emit lineOfHintsChanged(line[0].getAddress().getLine(), line[0].getAddress().getOrientation());
 }

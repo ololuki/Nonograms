@@ -30,6 +30,7 @@ HEADERS += \
     HintTest.h \
     ArrayOfCellsTest.h \
     LineOfCellsTest.h \
+    HintsFieldTest.h \
     HintsFieldModelTest.h \
     CellsFieldModelTest.h \
     solver/SolverWorkerTest.h \
@@ -45,6 +46,7 @@ SOURCES += TestMain.cpp \
     HintTest.cpp \
     ArrayOfCellsTest.cpp \
     LineOfCellsTest.cpp \
+    HintsFieldTest.cpp \
     HintsFieldModelTest.cpp \
     CellsFieldModelTest.cpp \
     solver/SolverWorkerTest.cpp \
