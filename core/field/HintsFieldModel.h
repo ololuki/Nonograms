@@ -45,6 +45,8 @@ public:
 
 	virtual void setLineOfHints(LineOfHints line) override;
 
+	HintsField getHintsField();
+
 signals:
 	void lineOfHintsChanged(int lineNumber, Orientation orientation);
 };

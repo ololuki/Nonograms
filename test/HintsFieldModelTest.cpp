@@ -204,3 +204,17 @@ void HintsFieldModelTest::signal_lineOfHintsChanged_should_be_emited_if_hints_wa
 	QCOMPARE(qvariant_cast<int>(spy.at(0).at(0)), lineNumber);
 	QCOMPARE(qvariant_cast<Orientation>(spy.at(0).at(1)), orientation);
 }
+
+void HintsFieldModelTest::getHintsField_should_return_HintsField_with_equal_content()
+{
+	HintsFieldModel hintsFieldModel(numberOfLines, orientation);
+	LineOfHints line = LineOfHints({hintAtZero, hintAtFirst});
+	hintsFieldModel.setLineOfHints(line);
+
+	HintsField hintsField = hintsFieldModel.getHintsField();
+
+	QCOMPARE(hintsField.getHint(addressZero).getBlockSize(),
+	         hintsFieldModel.getHint(addressZero).getBlockSize());
+	QCOMPARE(hintsField.getHint(addressFirst).getBlockSize(),
+	         hintsFieldModel.getHint(addressFirst).getBlockSize());
+}

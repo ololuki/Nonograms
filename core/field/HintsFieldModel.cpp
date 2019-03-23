@@ -60,3 +60,10 @@ void HintsFieldModel::setLineOfHints(LineOfHints line)
 	HintsField::setLineOfHints(line);
 	emit lineOfHintsChanged(line[0].getAddress().getLine(), line[0].getAddress().getOrientation());
 }
+
+/// returns HintsField - simply object, that not derives from QObject
+/// and is copyable
+HintsField HintsFieldModel::getHintsField()
+{
+	return (HintsField(*this));
+}

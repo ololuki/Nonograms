@@ -39,6 +39,7 @@ class HintsField
 {
 public:
 	HintsField(int numberOfLines, Orientation o);
+	HintsField(const HintsField& hintsField);
 	virtual ~HintsField();
 	Hint getHint(AddressOfHint address) const;
 	virtual void updateHint(Hint hint);

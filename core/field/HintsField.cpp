@@ -19,7 +19,7 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "HintsField.h"
-
+#include <QDebug>
 
 HintsField::HintsField(int numberOfLines, Orientation o)
 {
@@ -33,6 +33,14 @@ HintsField::HintsField(int numberOfLines, Orientation o)
 		line.push_back(Hint(address, defaultBlockSize));
 		linesOfHints.push_back(line);
 	}
+}
+
+HintsField::HintsField(const HintsField& hintsField)
+  : numberOfLines(hintsField.numberOfLines),
+    orientation(hintsField.orientation),
+    linesOfHints(hintsField.linesOfHints)
+{
+	qDebug() << "HintsField::HintsField(const HintsField& hintsField)";
 }
 
 HintsField::~HintsField()
