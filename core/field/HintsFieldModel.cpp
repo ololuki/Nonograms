@@ -67,3 +67,9 @@ HintsField HintsFieldModel::getHintsField()
 {
 	return (HintsField(*this));
 }
+
+/// set internal contents of this to be equal with given field
+void HintsFieldModel::setHintsField(HintsField field)
+{
+	static_cast<HintsField&>(*this) = field;
+}

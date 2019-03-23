@@ -218,3 +218,36 @@ void HintsFieldModelTest::getHintsField_should_return_HintsField_with_equal_cont
 	QCOMPARE(hintsField.getHint(addressFirst).getBlockSize(),
 	         hintsFieldModel.getHint(addressFirst).getBlockSize());
 }
+
+void HintsFieldModelTest::setHintsField_should_set_equal_content_as_in_HintsField()
+{
+	HintsField hintsField(5, Orientation::VERTICAL);
+	LineOfHints line = LineOfHints({{addressZero, 3},
+	                                {addressFirst, 6},
+	                                {addressSecond, 9}
+	                               });
+	hintsField.setLineOfHints(line);
+
+	// Create HintsFieldModel with different content
+	HintsFieldModel hintsFieldModel(10, Orientation::HORIZONTAL);
+	LineOfHints lineForModel = LineOfHints({{addressZero, 7},
+	                                        {addressFirst, 36},
+	                                        {addressSecond, 15},
+	                                        {addressThird, 12}
+	                                       });
+	hintsFieldModel.setLineOfHints(lineForModel);
+
+	hintsFieldModel.setHintsField(hintsField);
+
+	QCOMPARE(hintsFieldModel.getNumberOfLines(),
+	         hintsField.getNumberOfLines());
+	QCOMPARE(hintsFieldModel.getOrientation(),
+	         hintsField.getOrientation());
+
+	QCOMPARE(hintsFieldModel.getHint(addressZero).getBlockSize(),
+	         hintsField.getHint(addressZero).getBlockSize());
+	QCOMPARE(hintsFieldModel.getHint(addressFirst).getBlockSize(),
+	         hintsField.getHint(addressFirst).getBlockSize());
+	QCOMPARE(hintsFieldModel.getHint(addressSecond).getBlockSize(),
+	         hintsField.getHint(addressSecond).getBlockSize());
+}

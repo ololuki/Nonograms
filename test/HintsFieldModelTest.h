@@ -46,6 +46,8 @@ private slots:
 	void signal_lineOfHintsChanged_should_be_emited_if_hints_was_changed_by_setLineOfHints();
 
 	void getHintsField_should_return_HintsField_with_equal_content();
+	void setHintsField_should_set_equal_content_as_in_HintsField();
+
 private:
 	const Orientation orientation = Orientation::VERTICAL;
 	const int numberOfLines = 2;
