@@ -45,3 +45,16 @@ void CellsFieldModel::setCell(Cell cell)
 		}
 	}
 }
+
+/// returns CellsField - simply object, that not derives from QObject
+/// and is copyable
+CellsField CellsFieldModel::getCellsField()
+{
+	return (CellsField(*this));
+}
+
+/// set internal contents of this to be equal with given field
+void CellsFieldModel::setCellsField(CellsField field)
+{
+	static_cast<CellsField&>(*this) = field;
+}

@@ -36,6 +36,9 @@ private slots:
 	void setCell_with_empty_address_should_not_emit_cellChanged();
 	void signals_cellChanged_should_be_emited_only_for_cells_changed_by_setLineOfCells();
 
+	void getCellsField_should_return_CellsField_with_equal_content();
+	void setCellsField_should_set_equal_content_as_in_CellsField();
+
 private:
 	const int width = 3;
 	const int height = 2;

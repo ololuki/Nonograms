@@ -104,6 +104,76 @@ void CellsFieldModelTest::signals_cellChanged_should_be_emited_only_for_cells_ch
 	QVERIFY(qvariant_cast<AddressOfCell>(spy.takeFirst().at(0)) == address11);
 }
 
+void CellsFieldModelTest::getCellsField_should_return_CellsField_with_equal_content()
+{
+	CellsFieldModel cellsFieldModel(6, 10);
+	cellsFieldModel.setCell({{0, 1}, cellSign::SGN_DOT});
+	cellsFieldModel.setCell({{0, 2}, cellSign::SGN_DOT});
+	cellsFieldModel.setCell({{0, 3}, cellSign::SGN_FILL_BLACK});
+	cellsFieldModel.setCell({{1, 1}, cellSign::SGN_EMPTY});
+	cellsFieldModel.setCell({{1, 2}, cellSign::SGN_FILL_BLACK});
+	cellsFieldModel.setCell({{1, 3}, cellSign::SGN_DOT});
+
+	CellsField cellsField = cellsFieldModel.getCellsField();
+
+	QCOMPARE(     cellsField.getCell({0, 1}).getSign(),
+	         cellsFieldModel.getCell({0, 1}).getSign());
+	QCOMPARE(     cellsField.getCell({0, 2}).getSign(),
+	         cellsFieldModel.getCell({0, 2}).getSign());
+	QCOMPARE(     cellsField.getCell({0, 3}).getSign(),
+	         cellsFieldModel.getCell({0, 3}).getSign());
+	QCOMPARE(     cellsField.getCell({1, 1}).getSign(),
+	         cellsFieldModel.getCell({1, 1}).getSign());
+	QCOMPARE(     cellsField.getCell({1, 2}).getSign(),
+	         cellsFieldModel.getCell({1, 2}).getSign());
+	QCOMPARE(     cellsField.getCell({1, 3}).getSign(),
+	         cellsFieldModel.getCell({1, 3}).getSign());
+	QCOMPARE(     cellsField.getCell({2, 5}).getSign(),
+	         cellsFieldModel.getCell({2, 5}).getSign());
+}
+
+void CellsFieldModelTest::setCellsField_should_set_equal_content_as_in_CellsField()
+{
+	CellsFieldModel cellsFieldModel(6, 10);
+	cellsFieldModel.setCell({{0, 1}, cellSign::SGN_DOT});
+	cellsFieldModel.setCell({{0, 2}, cellSign::SGN_DOT});
+	cellsFieldModel.setCell({{0, 3}, cellSign::SGN_FILL_BLACK});
+	cellsFieldModel.setCell({{1, 1}, cellSign::SGN_FILL_BLACK});
+	cellsFieldModel.setCell({{1, 2}, cellSign::SGN_FILL_BLACK});
+	cellsFieldModel.setCell({{1, 3}, cellSign::SGN_DOT});
+	// only for CellsFieldModel
+	cellsFieldModel.setCell({{3, 6}, cellSign::SGN_FILL_BLACK});
+
+	CellsField cellsField(5, 8);
+	cellsField.setCell({{0, 1}, cellSign::SGN_EMPTY});
+	cellsField.setCell({{0, 2}, cellSign::SGN_FILL_BLACK});
+	cellsField.setCell({{0, 3}, cellSign::SGN_EMPTY});
+	cellsField.setCell({{1, 1}, cellSign::SGN_DOT});
+	cellsField.setCell({{1, 2}, cellSign::SGN_DOT});
+	cellsField.setCell({{1, 3}, cellSign::SGN_EMPTY});
+	// only for CellsField
+	cellsField.setCell({{2, 5}, cellSign::SGN_FILL_BLACK});
+
+	cellsFieldModel.setCellsField(cellsField);
+
+	QCOMPARE(cellsFieldModel.getCell({0, 1}).getSign(),
+	              cellsField.getCell({0, 1}).getSign());
+	QCOMPARE(cellsFieldModel.getCell({0, 2}).getSign(),
+	              cellsField.getCell({0, 2}).getSign());
+	QCOMPARE(cellsFieldModel.getCell({0, 3}).getSign(),
+	              cellsField.getCell({0, 3}).getSign());
+	QCOMPARE(cellsFieldModel.getCell({1, 1}).getSign(),
+	              cellsField.getCell({1, 1}).getSign());
+	QCOMPARE(cellsFieldModel.getCell({1, 2}).getSign(),
+	              cellsField.getCell({1, 2}).getSign());
+	QCOMPARE(cellsFieldModel.getCell({1, 3}).getSign(),
+	              cellsField.getCell({1, 3}).getSign());
+	QCOMPARE(cellsFieldModel.getCell({2, 5}).getSign(),
+	              cellsField.getCell({2, 5}).getSign());
+	QCOMPARE(cellsFieldModel.getCell({3, 6}).getSign(),
+	              cellsField.getCell({3, 6}).getSign());
+}
+
 QSharedPointer<CellsFieldModel> CellsFieldModelTest::makeEmptyCellsField()
 {
 	return QSharedPointer<CellsFieldModel>(new CellsFieldModel(width, height));

@@ -36,6 +36,9 @@ public:
 	virtual ~CellsFieldModel() override;
 	void setCell(Cell cell) override;
 
+	CellsField getCellsField();
+	void setCellsField(CellsField field);
+
 signals:
 	void cellChanged(AddressOfCell address);
 };
