@@ -34,6 +34,7 @@
 class WholeField
 {
 public:
+	WholeField();
 	WholeField(int width, int height);
 	WholeField(CellsField cells, HintsField columns, HintsField rows);
 	WholeField(const WholeField &field);
@@ -41,9 +42,9 @@ public:
 	virtual ~WholeField();
 	int getWidth() const;
 	int getHeight() const;
-	CellsField cells();
-	HintsField columnsHints();
-	HintsField rowsHints();
+	CellsField& cells();
+	HintsField& columnsHints();
+	HintsField& rowsHints();
 	void clearDrawingArea();
 	void clearBlocksDescription();
 private:
@@ -53,5 +54,7 @@ private:
 	HintsField columnsHintsField;
 	HintsField rowsHintsField;
 };
+
+Q_DECLARE_METATYPE(WholeField)
 
 #endif // WHOLEFIELD_H

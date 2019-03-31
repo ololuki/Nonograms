@@ -26,7 +26,7 @@
 void SolverWorkerTest::emitIsSolvedChangedTwiceAfterStartEmptyWorker()
 {
 	SolverWorker worker;
-	std::shared_ptr<WholeFieldModel> wholeField = std::make_shared<WholeFieldModel>(1,1);
+	WholeField wholeField = WholeField(1,1);
 	QSignalSpy spy(&worker, &SolverWorker::isSolvingChanged);
 	
 	worker.solve(wholeField);
@@ -41,7 +41,7 @@ void SolverWorkerTest::emitIsSolvedChangedTwiceAfterStartEmptyWorker()
 void SolverWorkerTest::notEmitCellChangedAfterStartEmptyWorker()
 {
 	SolverWorker worker;
-	std::shared_ptr<WholeFieldModel> wholeField = std::make_shared<WholeFieldModel>(1,1);
+	WholeField wholeField = WholeField(1,1);
 	QSignalSpy spyCellChanged(&worker, &SolverWorker::cellChanged);
 	QSignalSpy spyIsSolving(&worker, &SolverWorker::isSolvingChanged);
 	

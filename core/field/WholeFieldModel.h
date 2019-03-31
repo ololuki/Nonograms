@@ -57,6 +57,4 @@ private:
 	std::shared_ptr<HintsFieldModel> rowsHintsField;
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr</*const*/ WholeFieldModel>)
-
 #endif // WHOLEFIELDMODEL_H

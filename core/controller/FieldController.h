@@ -48,7 +48,7 @@ public:
 	
 signals:
 	/// emited to worker to start solving
-	void solve(std::shared_ptr</*const*/ WholeFieldModel> wholeField);
+	void solve(WholeField wholeField);
 	/// emited by worker when state (is solving or stopped) changed
 	void isSolvingChanged(bool isSolving);
 	/// emited to worker to stop jobs

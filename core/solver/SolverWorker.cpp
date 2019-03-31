@@ -31,7 +31,7 @@ SolverWorker::SolverWorker()
 	);
 }
 
-void SolverWorker::solve(std::shared_ptr</*const*/ WholeFieldModel> wholeField)
+void SolverWorker::solve(WholeField wholeField)
 {
 	this->wholeField = wholeField;
 	solving = true;
@@ -55,33 +55,33 @@ void SolverWorker::doJob()
 	if (!solving)
 		return;
 	
-	for (int row = 0; row < wholeField->getHeight(); row++)
+	for (int row = 0; row < wholeField.getHeight(); row++)
 	{
-		LineOfHints hints = wholeField->rowsHints()->getLineOfHints(row);
-		LineOfCells lineOfCells = wholeField->cells()->getLineOfCells(row, Orientation::HORIZONTAL);
+		LineOfHints hints = wholeField.rowsHints().getLineOfHints(row);
+		LineOfCells lineOfCells = wholeField.cells().getLineOfCells(row, Orientation::HORIZONTAL);
 		for (std::shared_ptr<AbstractLineSolver> s : lineSolvers)
 		{
 			s->solve(hints, lineOfCells);
-			wholeField->cells()->setLineOfCells(lineOfCells);
-//			for (int i = 0; i < lineOfCells.size(); i++)
-//			{
-//				emit cellChanged(Cell(lineOfCells.at(i)));
-//			}
+			wholeField.cells().setLineOfCells(lineOfCells);
+			for (int i = 0; i < lineOfCells.size(); i++)
+			{
+				emit cellChanged(Cell(lineOfCells.at(i)));
+			}
 		}
 	}
 	
-	for (int col = 0; col < wholeField->getWidth(); col++)
+	for (int col = 0; col < wholeField.getWidth(); col++)
 	{
-		LineOfHints hints = wholeField->columnsHints()->getLineOfHints(col);
-		LineOfCells lineOfCells = wholeField->cells()->getLineOfCells(col, Orientation::VERTICAL);
+		LineOfHints hints = wholeField.columnsHints().getLineOfHints(col);
+		LineOfCells lineOfCells = wholeField.cells().getLineOfCells(col, Orientation::VERTICAL);
 		for (std::shared_ptr<AbstractLineSolver> s : lineSolvers)
 		{
 			s->solve(hints, lineOfCells);
-			wholeField->cells()->setLineOfCells(lineOfCells);
-//			for (int i = 0; i < lineOfCells.size(); i++)
-//			{
-//				emit cellChanged(Cell(lineOfCells.at(i)));
-//			}
+			wholeField.cells().setLineOfCells(lineOfCells);
+			for (int i = 0; i < lineOfCells.size(); i++)
+			{
+				emit cellChanged(Cell(lineOfCells.at(i)));
+			}
 		}
 	}
 	

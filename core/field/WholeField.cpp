@@ -22,6 +22,12 @@
 #include <QDebug>
 
 
+WholeField::WholeField()
+  : WholeField(0, 0)
+{
+	qDebug() << "WholeField default c-tor";
+}
+
 WholeField::WholeField(int width, int height)
   : width(width),
     height(height),
@@ -78,17 +84,17 @@ int WholeField::getHeight() const
 	return height;
 }
 
-CellsField WholeField::cells()
+CellsField& WholeField::cells()
 {
 	return cellsField;
 }
 
-HintsField WholeField::columnsHints()
+HintsField& WholeField::columnsHints()
 {
 	return columnsHintsField;
 }
 
-HintsField WholeField::rowsHints()
+HintsField& WholeField::rowsHints()
 {
 	return rowsHintsField;
 }

@@ -34,7 +34,7 @@ class SolverWorker : public QObject
 public:
 	SolverWorker();
 	
-	void solve(std::shared_ptr</*const*/ WholeFieldModel> wholeField);
+	void solve(WholeField wholeField);
 	void stop();
 	void addLineSolver(std::shared_ptr<AbstractLineSolver> solver);
 	
@@ -45,7 +45,7 @@ signals:
 	
 private:
 	void doJob();
-	std::shared_ptr</*const*/ WholeFieldModel> wholeField;
+	WholeField wholeField;
 	QVector<std::shared_ptr<AbstractLineSolver>> lineSolvers;
 	bool solving = false;
 	int x = 0;

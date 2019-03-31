@@ -42,13 +42,10 @@ CellsView::~CellsView()
 void CellsView::setField(const std::shared_ptr<const CellsFieldModel> &field)
 {
 	this->field = field;
-	connect(
-		static_cast<const CellsFieldModel*>(this->field.get()),
-		&CellsFieldModel::cellChanged,
-		this,
-		&CellsView::onCellChanged,
-		Qt::QueuedConnection
-	);
+	connect(static_cast<const CellsFieldModel*>(this->field.get()),
+	        &CellsFieldModel::cellChanged,
+	        this,
+	        &CellsView::onCellChanged);
 	
 	int sizeX = field->getWidth() * constants.squareSize + 1;
 	int sizeY = field->getHeight() * constants.squareSize + 1;
