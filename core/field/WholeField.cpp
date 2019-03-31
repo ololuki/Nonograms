@@ -33,6 +33,16 @@ WholeField::WholeField(int width, int height)
 	qDebug() << "WholeField width height c-tor";
 }
 
+WholeField::WholeField(CellsField cells, HintsField columns, HintsField rows)
+  : width(cells.getWidth()),
+    height(cells.getHeight()),
+    cellsField(cells),
+    columnsHintsField(columns),
+    rowsHintsField(rows)
+{
+	qDebug() << "WholeField cells, columns, rows c-tor";
+}
+
 WholeField::WholeField(const WholeField &field)
   : width(field.width),
     height(field.height),

@@ -35,6 +35,7 @@ class WholeField
 {
 public:
 	WholeField(int width, int height);
+	WholeField(CellsField cells, HintsField columns, HintsField rows);
 	WholeField(const WholeField &field);
 	WholeField& operator=(const WholeField& field);
 	virtual ~WholeField();

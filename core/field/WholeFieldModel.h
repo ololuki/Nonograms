@@ -24,11 +24,12 @@
 #include <memory>
 #include "CellsFieldModel.h"
 #include "HintsFieldModel.h"
+#include "WholeField.h"
 #include <QMetaType>
 
 
 ///
-/// \brief WholeFieldModel class contains whole data about Field.
+/// \brief WholeFieldModel class contains Field models.
 /// It has models of field parts: drawing area, columns hints
 /// and rows hints.
 ///
@@ -45,6 +46,9 @@ public:
 	std::shared_ptr<HintsFieldModel> rowsHints();
 	void clearDrawingArea();
 	void clearBlocksDescription();
+
+	WholeField getWholeField();
+	void setWholeField(WholeField field);
 private:
 	int width;
 	int height;

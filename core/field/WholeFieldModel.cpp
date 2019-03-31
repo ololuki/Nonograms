@@ -87,3 +87,17 @@ void WholeFieldModel::clearBlocksDescription()
 {
 	// TODO
 }
+
+WholeField WholeFieldModel::getWholeField()
+{
+	return WholeField(cellsField->getCellsField(),
+	                  columnsHintsField->getHintsField(),
+	                  rowsHintsField->getHintsField());
+}
+
+void WholeFieldModel::setWholeField(WholeField field)
+{
+	cellsField->setCellsField(field.cells());
+	columnsHintsField->setHintsField(field.columnsHints());
+	rowsHintsField->setHintsField(field.rowsHints());
+}
