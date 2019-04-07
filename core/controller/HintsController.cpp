@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -57,12 +57,6 @@ HintsController::HintsController(std::shared_ptr<HintsFieldModel> field, HintsVi
 HintsController::~HintsController()
 {
 	
-}
-
-void HintsController::replaceField(std::shared_ptr<HintsFieldModel> newField)
-{
-	this->field = newField;
-	hintsView->setField(field);
 }
 
 void HintsController::onAction(HintAction action, AddressOfHint address)

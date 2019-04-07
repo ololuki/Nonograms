@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017-2018 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -55,9 +55,6 @@ signals:
 	void stopWorker();
 	
 private:
-	void replaceField(int width, int height);
-	void replaceField(std::shared_ptr<WholeFieldModel> newField);
-	
 	std::shared_ptr<WholeFieldModel> field;
 	
 	CellsView *cellsView;

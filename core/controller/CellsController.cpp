@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -25,7 +25,7 @@
 CellsController::CellsController(std::shared_ptr<CellsFieldModel> newField, CellsView *cellsView)
 	: field(newField)
 {
-	qDebug() << "DrawingAreaController constructor";
+	qDebug() << "CellsController constructor";
 	this->cellsView = cellsView;
 	this->cellsView->setField(field);
 	
@@ -39,14 +39,8 @@ CellsController::CellsController(std::shared_ptr<CellsFieldModel> newField, Cell
 
 CellsController::~CellsController()
 {
-	qDebug() << "DrawingAreaController destructor";
+	qDebug() << "CellsController destructor";
 	disconnect(this->cellsView, &CellsView::action, this, &CellsController::onAction);
-}
-
-void CellsController::replaceField(std::shared_ptr<CellsFieldModel> newField)
-{
-	this->field = newField;
-	cellsView->setField(field);
 }
 
 void CellsController::onAction(CellAction action, AddressOfCell address)

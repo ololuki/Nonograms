@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017-2018 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -37,7 +37,7 @@ FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsVi
 	columnsHintsController = std::make_shared<HintsController>(field->columnsHints(), this->columnsHintsView);
 	rowsHintsController = std::make_shared<HintsController>(field->rowsHints(), this->rowsHintsView);
 	
-	fileManager = std::make_shared<FileManager>(field);
+	fileManager = std::make_shared<FileManager>(field->getWholeField());
 	
 	qRegisterMetaType<Cell>();
 	qRegisterMetaType<WholeField>();
@@ -72,31 +72,10 @@ void FieldController::addDummyBlock()
 	field->rowsHints()->updateHint(Hint(AddressOfHint(Orientation::HORIZONTAL, 7, 0), 1));
 }
 
-void FieldController::replaceField(int width, int height)
-{
-	std::shared_ptr<WholeFieldModel> newField = std::make_shared<WholeFieldModel>(width, height);
-	replaceField(newField);
-}
-
-void FieldController::replaceField(std::shared_ptr<WholeFieldModel> newField)
-{
-	if (newField == nullptr)
-	{
-		qDebug() << "null ptr";
-		return;
-	}
-	field = newField;
-	
-	cellsController->replaceField(field->cells());
-	columnsHintsController->replaceField(field->columnsHints());
-	rowsHintsController->replaceField(field->rowsHints());
-	
-	connect(&solverWorker, &SolverWorker::cellChanged, static_cast<const CellsFieldModel*>(this->field->cells().get()), &CellsFieldModel::setCell);
-}
-
 void FieldController::onNew()
 {
-	if (!fileManager->abandonChangesOrSavePrompt(field)) return;
+	if (!fileManager->abandonChangesOrSavePrompt(field->getWholeField()))
+		return;
 	//fileManager->tryToSaveChanges(&isSavedOrAbandoned, &statusLog);
 	//if (!isSavedOrAbandoned) return;
 	
@@ -107,21 +86,22 @@ void FieldController::onNew()
 	delete d;
 	if (isConfirmed)
 	{
-		replaceField(width, height);
-		fileManager->setNewCreatedField(field);
+		field->setWholeField(WholeField(width, height));
+		fileManager->setNewCreatedField(field->getWholeField());
 	}
 }
 
 void FieldController::onOpen()
 {
-	if (!fileManager->abandonChangesOrSavePrompt(field)) return;
+	if (!fileManager->abandonChangesOrSavePrompt(field->getWholeField()))
+		return;
 	fileManager->tryOpenAnotherFile();
-	replaceField(fileManager->getField());
+	field->setWholeField(fileManager->getField());
 }
 
 void FieldController::onSaveAs()
 {
-	fileManager->trySaveAs(field);
+	fileManager->trySaveAs(field->getWholeField());
 }
 
 ///

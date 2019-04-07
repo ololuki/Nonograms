@@ -13,7 +13,7 @@ class FileWriter
 public:
 	virtual ~FileWriter() {}
 	
-	virtual void setField(std::shared_ptr<WholeFieldModel> field) = 0;
+	virtual void setField(const WholeField& field) = 0;
 	virtual bool write(const std::string &fileDir) = 0;
 };
 

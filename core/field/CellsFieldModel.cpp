@@ -57,4 +57,5 @@ CellsField CellsFieldModel::getCellsField()
 void CellsFieldModel::setCellsField(CellsField field)
 {
 	static_cast<CellsField&>(*this) = field;
+	emit cellsChanged();
 }

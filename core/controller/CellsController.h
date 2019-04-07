@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -32,7 +32,6 @@ class CellsController : public QObject
 public:
 	CellsController(std::shared_ptr<CellsFieldModel> newField, CellsView *cellsView);
 	~CellsController();
-	void replaceField(std::shared_ptr<CellsFieldModel> newField);
 	
 private slots:
 	void onAction(CellAction action, AddressOfCell address);

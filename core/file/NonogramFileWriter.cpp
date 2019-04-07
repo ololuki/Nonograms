@@ -35,7 +35,7 @@ NonogramFileWriter::~NonogramFileWriter()
 	
 }
 
-void NonogramFileWriter::setField(std::shared_ptr<WholeFieldModel> field)
+void NonogramFileWriter::setField(const WholeField& field)
 {
 	this->field = field;
 }
@@ -61,20 +61,20 @@ bool NonogramFileWriter::write(const std::string &fileDir)
 QJsonObject NonogramFileWriter::serializeSize()
 {
 	QJsonObject size;
-	size["width"] = field->getWidth();
-	size["height"] = field->getHeight();
+	size["width"] = field.getWidth();
+	size["height"] = field.getHeight();
 	return size;
 }
 
 QJsonArray NonogramFileWriter::serializeDrawingArea()
 {
 	QJsonArray drawingArea;
-	for (int y = 0; y < field->getHeight(); y++)
+	for (int y = 0; y < field.getHeight(); y++)
 	{
-		for (int x = 0; x < field->getWidth(); x++)
+		for (int x = 0; x < field.getWidth(); x++)
 		{
 			AddressOfCell address(x, y);
-			Cell cell = field->cells()->getCell(address);
+			Cell cell = field.cells().getCell(address);
 			drawingArea.append(serializeCell(cell));
 		}
 	}
@@ -93,7 +93,7 @@ QJsonObject NonogramFileWriter::serializeCell(Cell cell)
 QJsonArray NonogramFileWriter::serializeColumnsDescription()
 {
 	QJsonArray columnsDescription;
-	for (int i = 0; i < field->getWidth(); i++)
+	for (int i = 0; i < field.getWidth(); i++)
 	{
 		columnsDescription.append(serializeLineDescription(i, Orientation::VERTICAL));
 	}
@@ -103,7 +103,7 @@ QJsonArray NonogramFileWriter::serializeColumnsDescription()
 QJsonArray NonogramFileWriter::serializeRowsDescription()
 {
 	QJsonArray rowsDescription;
-	for (int i = 0; i < field->getHeight(); i++)
+	for (int i = 0; i < field.getHeight(); i++)
 	{
 		rowsDescription.append(serializeLineDescription(i, Orientation::HORIZONTAL));
 	}
@@ -118,11 +118,11 @@ QJsonObject NonogramFileWriter::serializeLineDescription(int lineNumber, Orienta
 	switch (orientation)
 	{
 	case Orientation::VERTICAL:
-		lineLength = field->columnsHints()->numberOfBlocksInLine(lineNumber);
+		lineLength = field.columnsHints().numberOfBlocksInLine(lineNumber);
 		lineDescription["lineLength"] = lineLength;
 		break;
 	case Orientation::HORIZONTAL:
-		lineLength = field->rowsHints()->numberOfBlocksInLine(lineNumber);
+		lineLength = field.rowsHints().numberOfBlocksInLine(lineNumber);
 		lineDescription["lineLength"] = lineLength;
 		break;
 	}
@@ -148,14 +148,14 @@ QJsonObject NonogramFileWriter::serializeHint(AddressOfHint address)
 	switch (address.getOrientation())
 	{
 	case Orientation::VERTICAL:
-		hint["blockSize"] = field->columnsHints()->getHint(address).getBlockSize();
+		hint["blockSize"] = field.columnsHints().getHint(address).getBlockSize();
 		hint["count"] = address.getCount();
-		hint["isBlack"] = field->columnsHints()->getHint(address).isFilledBlack();
+		hint["isBlack"] = field.columnsHints().getHint(address).isFilledBlack();
 		break;
 	case Orientation::HORIZONTAL:
-		hint["blockSize"] = field->rowsHints()->getHint(address).getBlockSize();
+		hint["blockSize"] = field.rowsHints().getHint(address).getBlockSize();
 		hint["count"] = address.getCount();
-		hint["isBlack"] = field->rowsHints()->getHint(address).isFilledBlack();
+		hint["isBlack"] = field.rowsHints().getHint(address).isFilledBlack();
 		break;
 	}
 	return hint;

@@ -39,11 +39,11 @@ public:
 	NonogramFileWriter();
 	~NonogramFileWriter();
 	
-	void setField(std::shared_ptr<WholeFieldModel> field) override;
+	void setField(const WholeField& field) override;
 	bool write(const std::string &fileDir) override;
 	
 private:
-	std::shared_ptr<WholeFieldModel> field;
+	WholeField field;
 	
 	QJsonObject serializeSize();
 	QJsonArray serializeDrawingArea();

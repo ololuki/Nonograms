@@ -41,6 +41,7 @@ public:
 
 signals:
 	void cellChanged(AddressOfCell address);
+	void cellsChanged();
 };
 
 #endif // CELLSFIELDMODEL_H

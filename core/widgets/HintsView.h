@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -46,6 +46,7 @@ signals:
 public slots:
 	// invoked by model to inform about changes
 	void onLineOfHintsChanged(int lineNumber, Orientation orientation);
+	void onHintsChanged();
 	// invoked by controller
 	void onShowInsertingButtonBefore(AddressOfHint address);
 	// invoked by controller

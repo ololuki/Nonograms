@@ -35,7 +35,7 @@ NonogramFileReader::~NonogramFileReader()
 	
 }
 
-std::shared_ptr<WholeFieldModel> NonogramFileReader::getField()
+WholeField NonogramFileReader::getField()
 {
 	return field;
 }
@@ -55,7 +55,7 @@ bool NonogramFileReader::read(const std::string &fileDir)
 	int width;
 	int height;
 	parseSize(width, height, jsonSize);
-	field.reset(new WholeFieldModel(width, height));
+	field = WholeField(width, height);
 	QJsonArray drawingArea = jsonObj["drawingArea"].toArray();
 	parseDrawingArea(drawingArea);
 	
@@ -80,7 +80,7 @@ void NonogramFileReader::parseDrawingArea(QJsonArray drawingArea)
 	{
 		QJsonObject jsonCell = drawingArea[i].toObject();
 		Cell cell = parseCell(jsonCell);
-		field->cells()->setCell(cell);
+		field.cells().setCell(cell);
 	}
 }
 
@@ -122,10 +122,10 @@ void NonogramFileReader::parseLineDescription(QJsonObject jsonLineDescription, i
 	switch (orientation)
 	{
 	case Orientation::VERTICAL:
-		field->columnsHints()->deleteHint(Hint(AddressOfHint(orientation, lineNumber, lineLength), 0));
+		field.columnsHints().deleteHint(Hint(AddressOfHint(orientation, lineNumber, lineLength), 0));
 		break;
 	case Orientation::HORIZONTAL:
-		field->rowsHints()->deleteHint(Hint(AddressOfHint(orientation, lineNumber, lineLength), 0));
+		field.rowsHints().deleteHint(Hint(AddressOfHint(orientation, lineNumber, lineLength), 0));
 		break;
 	}
 }
@@ -146,10 +146,10 @@ void NonogramFileReader::parseHint(QJsonObject jsonHint, AddressOfHint address)
 	switch (address.getOrientation())
 	{
 	case Orientation::VERTICAL:
-		field->columnsHints()->insertHintBefore(Hint(address, blockSize));
+		field.columnsHints().insertHintBefore(Hint(address, blockSize));
 		break;
 	case Orientation::HORIZONTAL:
-		field->rowsHints()->insertHintBefore(Hint(address, blockSize));
+		field.rowsHints().insertHintBefore(Hint(address, blockSize));
 		break;
 	}
 }

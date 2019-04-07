@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -43,6 +43,11 @@ void HintsView::setField(const std::shared_ptr<const HintsFieldModel> &field)
 		this,
 		&HintsView::onLineOfHintsChanged
 	);
+
+	connect(static_cast<const HintsFieldModel*>(this->field.get()),
+	        &HintsFieldModel::hintsChanged,
+	        this,
+	        &HintsView::onHintsChanged);
 	
 	QSize size = calculateSize();
 	resize(size);
@@ -59,6 +64,11 @@ void HintsView::setField(const std::shared_ptr<const HintsFieldModel> &field)
 void HintsView::onLineOfHintsChanged(int lineNumber, Orientation orientation)
 {
 	// TODO: Redraw only one line
+	onHintsChanged();
+}
+
+void HintsView::onHintsChanged()
+{
 	QSize size = calculateSize();
 	resize(size);
 	redrawAll();

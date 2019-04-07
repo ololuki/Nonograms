@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -35,7 +35,6 @@ class HintsController : public QObject
 public:
 	HintsController(std::shared_ptr<HintsFieldModel> field, HintsView *hintsView);
 	~HintsController();
-	void replaceField(std::shared_ptr<HintsFieldModel> newField);
 	
 signals:
 	// invoked by controller

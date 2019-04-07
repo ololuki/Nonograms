@@ -72,4 +72,5 @@ HintsField HintsFieldModel::getHintsField()
 void HintsFieldModel::setHintsField(HintsField field)
 {
 	static_cast<HintsField&>(*this) = field;
+	emit hintsChanged();
 }

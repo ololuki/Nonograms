@@ -8,18 +8,18 @@
 #include "file/NonogramFileReader.h"
 
 
-FileManager::FileManager(std::shared_ptr<WholeFieldModel> field)
+FileManager::FileManager(const WholeField& field)
+  : fieldInFile(field)
 {
-	this->fieldInFile = std::make_shared<WholeFieldModel>(*field);
 }
 
-bool FileManager::isFieldDirty(std::shared_ptr<WholeFieldModel> field)
+bool FileManager::isFieldDirty(const WholeField& field)
 {
 	//return (*fieldInFile != *field);
 	return true;	//TODO
 }
 
-void FileManager::trySaveChanges(std::shared_ptr<WholeFieldModel> field)
+void FileManager::trySaveChanges(const WholeField& field)
 {
 	if(isFileNameSet)
 	{
@@ -29,7 +29,7 @@ void FileManager::trySaveChanges(std::shared_ptr<WholeFieldModel> field)
 	}
 }
 
-void FileManager::trySaveAs(std::shared_ptr<WholeFieldModel> field)
+void FileManager::trySaveAs(const WholeField& field)
 {
 	// string filePath = FileView.FilePathDialog();
 	//setCurrentFileName(fileName);
@@ -62,15 +62,15 @@ void FileManager::tryOpenAnotherFile()
 	delete reader;
 }
 
-void FileManager::setNewCreatedField(std::shared_ptr<WholeFieldModel> field)
+void FileManager::setNewCreatedField(const WholeField& field)
 {
-	this->fieldInFile = std::make_shared<WholeFieldModel>(*field);
+	this->fieldInFile = field;
 	dropCurrentFileName();
 }
 
-std::shared_ptr<WholeFieldModel> FileManager::getField()
+const WholeField& FileManager::getField()
 {
-	return std::make_shared<WholeFieldModel>(*fieldInFile);
+	return fieldInFile;
 }
 
 void FileManager::setCurrentFileName(const QString &pathAndName)
@@ -85,13 +85,13 @@ void FileManager::dropCurrentFileName()
 	isFileNameSet = false;
 }
 
-void FileManager::saveFile(std::shared_ptr<WholeFieldModel> field)
+void FileManager::saveFile(const WholeField& field)
 {
 	FileWriter *writer = new NonogramFileWriter();
 	writer->setField(field);
 	if (writer->write(currentFileName.toStdString()))
 	{
-		this->fieldInFile = std::make_shared<WholeFieldModel>(*field);
+		this->fieldInFile = field;
 		//ui->statusBar->showMessage(QString("Saved file: \"%1\"").arg(currentFileName));
 		// public Qstring status = TODO
 	} else {
@@ -102,7 +102,7 @@ void FileManager::saveFile(std::shared_ptr<WholeFieldModel> field)
 	delete writer;
 }
 
-bool FileManager::abandonChangesOrSavePrompt(std::shared_ptr<WholeFieldModel> field)
+bool FileManager::abandonChangesOrSavePrompt(const WholeField& field)
 {
 	auto answer = QMessageBox::question(nullptr,
 		"Unsaved changes",

@@ -50,6 +50,7 @@ public:
 
 signals:
 	void lineOfHintsChanged(int lineNumber, Orientation orientation);
+	void hintsChanged();
 };
 
 #endif // HINTSFIELDMODEL_H

@@ -37,11 +37,11 @@ public:
 	NonogramFileReader();
 	~NonogramFileReader();
 	
-	std::shared_ptr<WholeFieldModel> getField() override;
+	WholeField getField() override;
 	bool read(const std::string &fileDir) override;
 	
 private:
-	std::shared_ptr<WholeFieldModel> field;
+	WholeField field;
 	
 	void parseSize(int &width, int &height, QJsonObject jsonSize);
 	void parseDrawingArea(QJsonArray drawingArea);

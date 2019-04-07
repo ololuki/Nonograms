@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -46,6 +46,11 @@ void CellsView::setField(const std::shared_ptr<const CellsFieldModel> &field)
 	        &CellsFieldModel::cellChanged,
 	        this,
 	        &CellsView::onCellChanged);
+
+	connect(static_cast<const CellsFieldModel*>(this->field.get()),
+	        &CellsFieldModel::cellsChanged,
+	        this,
+	        &CellsView::onCellsChanged);
 	
 	int sizeX = field->getWidth() * constants.squareSize + 1;
 	int sizeY = field->getHeight() * constants.squareSize + 1;
@@ -72,6 +77,15 @@ void CellsView::onCellChanged(AddressOfCell address)
 {
 	drawOneCell(field->getCell(address));
 	update();
+}
+
+void CellsView::onCellsChanged()
+{
+	int sizeX = field->getWidth() * constants.squareSize + 1;
+	int sizeY = field->getHeight() * constants.squareSize + 1;
+	QSize size(sizeX, sizeY);
+	resize(size);
+	drawAllCells();
 }
 
 void CellsView::mousePressEvent(QMouseEvent *event)
