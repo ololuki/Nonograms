@@ -32,7 +32,7 @@ CellsField::~CellsField()
 	qDebug() << "CellsField d-tor";
 }
 
-Cell CellsField::getCell(AddressOfCell address) const
+const Cell& CellsField::getCell(AddressOfCell address) const
 {
 	int x = address.getX();
 	int y = address.getY();

@@ -41,7 +41,7 @@ public:
 	virtual ~CellsField();
 	int getWidth() const {return array.width();}
 	int getHeight() const {return array.height();}
-	Cell getCell(AddressOfCell address) const;
+	const Cell& getCell(AddressOfCell address) const;
 	virtual void setCell(Cell cell);
 	LineOfCells getLineOfCells(int lineNumber, Orientation orientation) const;
 	void setLineOfCells(LineOfCells lineOfCells);

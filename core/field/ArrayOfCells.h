@@ -50,7 +50,7 @@ public:
 	{
 		return array.at(x)[y];
 	}
-	Cell getPixelAt(int x, int y) const {
+	const Cell& getPixelAt(int x, int y) const {
 		return array.at(x).at(y);
 	}
 	int width() const;
