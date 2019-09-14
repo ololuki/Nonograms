@@ -46,7 +46,7 @@ Cell::Cell(AddressOfCell address, cellSign sign)
 {
 }
 
-cellSign Cell::getSign()
+cellSign Cell::getSign() const
 {
 	return sign;
 }

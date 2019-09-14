@@ -35,14 +35,14 @@ public:
 	Cell(cellSign sign = cellSign::SGN_EMPTY);
 	Cell(char symbol);
 	Cell(AddressOfCell address, cellSign sign = cellSign::SGN_EMPTY);
-	bool isFilledBlack(){return sign == cellSign::SGN_FILL_BLACK;}
-	bool isDot(){return sign == cellSign::SGN_DOT;}
-	bool isEmpty(){return sign == cellSign::SGN_EMPTY;}
+	bool isFilledBlack() const {return sign == cellSign::SGN_FILL_BLACK;}
+	bool isDot() const {return sign == cellSign::SGN_DOT;}
+	bool isEmpty() const {return sign == cellSign::SGN_EMPTY;}
 	void makeFilledBlack() {sign = cellSign::SGN_FILL_BLACK;}
 	void makeDot(){sign = cellSign::SGN_DOT;}
 	void makeEmpty(){sign = cellSign::SGN_EMPTY;}
-	cellSign getSign();
-	AddressOfCell getAddress() {return address;}
+	cellSign getSign() const;
+	AddressOfCell getAddress() const {return address;}
 	bool operator==(const Cell &cell) const {
 		return (this->sign == cell.sign);
 	}
