@@ -45,6 +45,9 @@ public:
 	CellsField& cells();
 	HintsField& columnsHints();
 	HintsField& rowsHints();
+	const CellsField& cells() const;
+	const HintsField& columnsHints() const;
+	const HintsField& rowsHints() const;
 	void clearDrawingArea();
 	void clearBlocksDescription();
 private:

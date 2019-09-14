@@ -37,7 +37,7 @@ class WholeFieldModel
 {
 public:
 	WholeFieldModel(int width, int height);
-	WholeFieldModel(const WholeFieldModel &field);
+	WholeFieldModel(const WholeFieldModel &field) = delete;
 	virtual ~WholeFieldModel();
 	int getWidth() const;
 	int getHeight() const;
@@ -48,7 +48,7 @@ public:
 	void clearBlocksDescription();
 
 	WholeField getWholeField();
-	void setWholeField(WholeField field);
+	void setWholeField(const WholeField& field);
 private:
 	int width;
 	int height;

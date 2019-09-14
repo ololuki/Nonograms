@@ -99,6 +99,21 @@ HintsField& WholeField::rowsHints()
 	return rowsHintsField;
 }
 
+const CellsField& WholeField::cells() const
+{
+	return cellsField;
+}
+
+const HintsField& WholeField::columnsHints() const
+{
+	return columnsHintsField;
+}
+
+const HintsField& WholeField::rowsHints() const
+{
+	return rowsHintsField;
+}
+
 void WholeField::clearDrawingArea()
 {
 	for (int i = 0; i < getWidth(); i++)

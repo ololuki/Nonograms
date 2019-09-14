@@ -32,16 +32,6 @@ WholeFieldModel::WholeFieldModel(int width, int height)
 	qDebug() << "WholeFieldModel width height c-tor";
 }
 
-WholeFieldModel::WholeFieldModel(const WholeFieldModel &field)
-	: width(field.width),
-	  height(field.height)
-{
-	cellsField = field.cellsField;
-	columnsHintsField = field.columnsHintsField;
-	rowsHintsField = field.rowsHintsField;
-	qDebug() << "WholeFieldModel copy c-tor";
-}
-
 WholeFieldModel::~WholeFieldModel()
 {
 	qDebug() << "WholeFieldModel d-tor";
@@ -95,7 +85,7 @@ WholeField WholeFieldModel::getWholeField()
 	                  rowsHintsField->getHintsField());
 }
 
-void WholeFieldModel::setWholeField(WholeField field)
+void WholeFieldModel::setWholeField(const WholeField& field)
 {
 	cellsField->setCellsField(field.cells());
 	columnsHintsField->setHintsField(field.columnsHints());
