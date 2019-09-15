@@ -39,6 +39,7 @@ public:
 	WholeField(CellsField cells, HintsField columns, HintsField rows);
 	WholeField(const WholeField &field);
 	WholeField& operator=(const WholeField& field);
+	WholeField& operator=(WholeField&& field);
 	virtual ~WholeField();
 	int getWidth() const;
 	int getHeight() const;

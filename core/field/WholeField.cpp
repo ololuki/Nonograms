@@ -69,6 +69,16 @@ WholeField& WholeField::operator=(const WholeField& field)
 	return *this;
 }
 
+WholeField& WholeField::operator=(WholeField&& field)
+{
+	width = field.width;
+	height = field.height;
+	cellsField = std::move(field.cellsField);
+	columnsHintsField = std::move(field.columnsHintsField);
+	rowsHintsField = std::move(field.rowsHintsField);
+	return *this;
+}
+
 WholeField::~WholeField()
 {
 	qDebug() << "WholeField d-tor";

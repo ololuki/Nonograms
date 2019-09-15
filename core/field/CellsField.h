@@ -38,6 +38,9 @@ class CellsField
 {
 public:
 	CellsField(int width, int height);
+	CellsField(const CellsField& field) = default;
+	CellsField& operator=(const CellsField& field) = default;
+	CellsField& operator=(CellsField&& field);
 	virtual ~CellsField();
 	int getWidth() const {return array.width();}
 	int getHeight() const {return array.height();}

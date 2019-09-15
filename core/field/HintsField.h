@@ -40,6 +40,8 @@ class HintsField
 public:
 	HintsField(int numberOfLines, Orientation o);
 	HintsField(const HintsField& hintsField);
+	HintsField& operator=(const HintsField& field) = default;
+	HintsField& operator=(HintsField&& field) = default;
 	virtual ~HintsField();
 	const Hint& getHint(AddressOfHint address) const;
 	virtual void updateHint(Hint hint);

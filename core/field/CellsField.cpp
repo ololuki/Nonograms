@@ -27,6 +27,12 @@ CellsField::CellsField(int width, int height) : array(width, height)
 	qDebug() << "CellsField width height c-tor";
 }
 
+CellsField& CellsField::operator=(CellsField&& field)
+{
+	array = std::move(field.array);
+	return *this;
+}
+
 CellsField::~CellsField()
 {
 	qDebug() << "CellsField d-tor";
