@@ -37,9 +37,9 @@ public:
 	Hint(AddressOfHint address, int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
 	int getBlockSize() const {return blockSize;}
 	void setBlockSize(int blockSize) {this->blockSize = blockSize;}
-	bool isFilledBlack() {return sign == cellSign::SGN_FILL_BLACK;}
+	bool isFilledBlack() const {return sign == cellSign::SGN_FILL_BLACK;}
 	void makeFilledBlack() {sign = cellSign::SGN_FILL_BLACK;}
-	AddressOfHint getAddress() {return address;}
+	AddressOfHint getAddress() const {return address;}
 	void updateAddress(AddressOfHint newAddress) {address = newAddress;}
 private:
 	AddressOfHint address;

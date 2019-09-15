@@ -47,7 +47,7 @@ HintsField::~HintsField()
 {
 }
 
-Hint HintsField::getHint(AddressOfHint address) const
+const Hint& HintsField::getHint(AddressOfHint address) const
 {
 	return linesOfHints[address.getLine()][address.getCount()];
 }

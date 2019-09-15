@@ -41,7 +41,7 @@ public:
 	HintsField(int numberOfLines, Orientation o);
 	HintsField(const HintsField& hintsField);
 	virtual ~HintsField();
-	Hint getHint(AddressOfHint address) const;
+	const Hint& getHint(AddressOfHint address) const;
 	virtual void updateHint(Hint hint);
 	virtual void insertHintBefore(Hint hint);
 	virtual void addHintAtEnd(Hint hint);
