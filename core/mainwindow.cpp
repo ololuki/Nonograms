@@ -42,8 +42,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	QActionGroup* group = new QActionGroup(this);
 	ui->actionFree_drawing->setActionGroup(group);
 	ui->actionField_defining->setActionGroup(group);
-	ui->actionHuman_solving->setActionGroup(group);
+	ui->actionManual_solving->setActionGroup(group);
 	ui->actionAuto_solving->setActionGroup(group);
+	ui->actionAuto_solving_brute_force->setActionGroup(group);
 	
 	fieldController = std::make_shared<FieldController>(ui->cells, ui->columnsHints, ui->rowsHints);
 	connect(static_cast<const FieldController*>(this->fieldController.get()),

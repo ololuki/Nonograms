@@ -87,8 +87,9 @@
     </property>
     <addaction name="actionFree_drawing"/>
     <addaction name="actionField_defining"/>
-    <addaction name="actionHuman_solving"/>
+    <addaction name="actionManual_solving"/>
     <addaction name="actionAuto_solving"/>
+    <addaction name="actionAuto_solving_brute_force"/>
     <addaction name="separator"/>
     <addaction name="actionSolve"/>
    </widget>
@@ -155,12 +156,12 @@
     <string>Field defining</string>
    </property>
   </action>
-  <action name="actionHuman_solving">
+  <action name="actionManual_solving">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Human solving</string>
+    <string>Manual solving</string>
    </property>
   </action>
   <action name="actionAuto_solving">
@@ -168,12 +169,20 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Auto solving</string>
+    <string>Auto solving (human method)</string>
    </property>
   </action>
   <action name="actionSolve">
    <property name="text">
     <string>Solve</string>
+   </property>
+  </action>
+  <action name="actionAuto_solving_brute_force">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Auto solving (brute force)</string>
    </property>
   </action>
  </widget>
