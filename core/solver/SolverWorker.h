@@ -48,8 +48,6 @@ private:
 	WholeField wholeField;
 	QVector<std::shared_ptr<AbstractLineSolver>> lineSolvers;
 	bool solving = false;
-	int x = 0;
-	int y = 0;
 };
 
 #endif // SOLVERWORKER_H
