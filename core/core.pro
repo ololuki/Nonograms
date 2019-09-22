@@ -42,6 +42,8 @@ SOURCES += \
     field/HintsFieldModel.cpp \
     field/Orientation.cpp \
     solver/SolverWorker.cpp \
+    solver/field/AbstractFieldSolver.cpp \
+    solver/field/FieldSolverObserver.cpp \
     solver/line/AbstractLineSolver.cpp \
     solver/line/CoveringBlocksSolver.cpp \
     utils/TimeMeasure.cpp
@@ -82,6 +84,8 @@ HEADERS += \
     field/HintsFieldModel.h \
     field/Orientation.h \
     solver/SolverWorker.h \
+    solver/field/AbstractFieldSolver.h \
+    solver/field/FieldSolverObserver.h \
     solver/line/AbstractLineSolver.h \
     solver/line/CoveringBlocksSolver.h \
     utils/TimeMeasure.h
