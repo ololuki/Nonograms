@@ -22,14 +22,6 @@
 #include "FieldSolverObserver.h"
 
 
-void AbstractFieldSolver::notifyStepEnd()
-{
-	for (auto o : observers)
-	{
-		o->onStepEnd();
-	}
-}
-
 void AbstractFieldSolver::notifyCellChanged(Cell cell)
 {
 	for (auto o : observers)

@@ -30,7 +30,6 @@ public:
 	FieldSolverObserver() = default;
 	virtual ~FieldSolverObserver() = default;
 
-	virtual void onStepEnd() = 0;
 	virtual void onCellChanged(Cell cell) = 0;
 };
 
