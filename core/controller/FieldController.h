@@ -47,6 +47,8 @@ public:
 	void onSolve(bool start);
 	
 signals:
+	/// emited to worker to set appropriate solver
+	void setFieldSolver(std::shared_ptr<AbstractFieldSolver> solver);
 	/// emited to worker to start solving
 	void solve(WholeField wholeField);
 	/// emited by worker when state (is solving or stopped) changed

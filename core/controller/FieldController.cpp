@@ -21,7 +21,7 @@
 #include "FieldController.h"
 #include "SizeDialog.h"
 #include <QDebug>
-#include "../solver/line/CoveringBlocksSolver.h"
+#include "solver/field/DeductiveFieldSolver.h"
 
 
 FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsView, HintsView *rowsHintsView)
@@ -41,15 +41,14 @@ FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsVi
 	
 	qRegisterMetaType<Cell>();
 	qRegisterMetaType<WholeField>();
+	qRegisterMetaType<std::shared_ptr<AbstractFieldSolver>>();
 	
 	connect(&solverWorker, &SolverWorker::cellChanged, static_cast<const CellsFieldModel*>(this->field->cells().get()), &CellsFieldModel::setCell);
 	connect(this, &FieldController::solve, &solverWorker, &SolverWorker::solve);
+	connect(this, &FieldController::setFieldSolver, &solverWorker, &SolverWorker::setFieldSolver);
 	connect(&solverWorker, &SolverWorker::isSolvingChanged, this, &FieldController::isSolvingChanged);
 	connect(this, &FieldController::stopWorker, &solverWorker, &SolverWorker::stop);
 	thread.start();
-	
-	std::shared_ptr<AbstractLineSolver> solver = std::make_shared<CoveringBlocksSolver>();
-	solverWorker.addLineSolver(solver);
 	
 	solverWorker.moveToThread(&thread);
 }
@@ -112,7 +111,11 @@ void FieldController::onSaveAs()
 void FieldController::onSolve(bool start)
 {
 	if (start)
+	{
+		// TODO: choose appropriate type of solver here
+		emit setFieldSolver(std::make_shared<DeductiveFieldSolver>());
 		emit solve(field->getWholeField());
+	}
 	else
 		emit stopWorker();
 }

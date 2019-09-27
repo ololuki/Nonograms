@@ -43,6 +43,7 @@ SOURCES += \
     field/Orientation.cpp \
     solver/SolverWorker.cpp \
     solver/field/AbstractFieldSolver.cpp \
+    solver/field/DeductiveFieldSolver.cpp \
     solver/field/FieldSolverObserver.cpp \
     solver/line/AbstractLineSolver.cpp \
     solver/line/CoveringBlocksSolver.cpp \
@@ -85,6 +86,7 @@ HEADERS += \
     field/Orientation.h \
     solver/SolverWorker.h \
     solver/field/AbstractFieldSolver.h \
+    solver/field/DeductiveFieldSolver.h \
     solver/field/FieldSolverObserver.h \
     solver/line/AbstractLineSolver.h \
     solver/line/CoveringBlocksSolver.h \

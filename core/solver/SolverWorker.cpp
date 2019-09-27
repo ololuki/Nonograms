@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017-2018 Ololuki
+ * Copyright (C) 2017-2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -19,6 +19,8 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "SolverWorker.h"
+#include "field/AbstractFieldSolver.h"
+#include <QDebug>
 
 
 SolverWorker::SolverWorker()
@@ -31,12 +33,25 @@ SolverWorker::SolverWorker()
 	);
 }
 
+void SolverWorker::setFieldSolver(std::shared_ptr<AbstractFieldSolver> solver)
+{
+	this->solver = solver;
+	this->solver->registerObserver(this);
+}
+
 void SolverWorker::solve(WholeField wholeField)
 {
-	this->wholeField = wholeField;
-	solving = true;
-	emit isSolvingChanged(solving);
-	emit queueNextJob();
+	if(solver)
+	{
+		solver->setWholeField(wholeField);
+		solving = true;
+		emit isSolvingChanged(solving);
+		emit queueNextJob();
+	}
+	else
+	{
+		qCritical() << "solver not set!";
+	}
 }
 
 void SolverWorker::stop()
@@ -45,48 +60,25 @@ void SolverWorker::stop()
 	emit isSolvingChanged(solving);
 }
 
-void SolverWorker::addLineSolver(std::shared_ptr<AbstractLineSolver> solver)
+void SolverWorker::onCellChanged(Cell cell)
 {
-	lineSolvers.push_back(solver);
+	emit cellChanged(cell);
 }
 
 void SolverWorker::doJob()
 {
 	if (!solving)
 		return;
-	
-	for (int row = 0; row < wholeField.getHeight(); row++)
+
+	solver->solveOneStep();
+
+	if(solver->getState() == AbstractFieldSolver::State::finished)
 	{
-		LineOfHints hints = wholeField.rowsHints().getLineOfHints(row);
-		LineOfCells lineOfCells = wholeField.cells().getLineOfCells(row, Orientation::HORIZONTAL);
-		for (std::shared_ptr<AbstractLineSolver> s : lineSolvers)
-		{
-			s->solve(hints, lineOfCells);
-			wholeField.cells().setLineOfCells(lineOfCells);
-			for (int i = 0; i < lineOfCells.size(); i++)
-			{
-				emit cellChanged(Cell(lineOfCells.at(i)));
-			}
-		}
+		solving = false;
+		emit isSolvingChanged(solving);
 	}
-	
-	for (int col = 0; col < wholeField.getWidth(); col++)
+	else
 	{
-		LineOfHints hints = wholeField.columnsHints().getLineOfHints(col);
-		LineOfCells lineOfCells = wholeField.cells().getLineOfCells(col, Orientation::VERTICAL);
-		for (std::shared_ptr<AbstractLineSolver> s : lineSolvers)
-		{
-			s->solve(hints, lineOfCells);
-			wholeField.cells().setLineOfCells(lineOfCells);
-			for (int i = 0; i < lineOfCells.size(); i++)
-			{
-				emit cellChanged(Cell(lineOfCells.at(i)));
-			}
-		}
+		emit queueNextJob();
 	}
-	
-	solving = false;
-	emit isSolvingChanged(solving);
-	
-	emit queueNextJob();
 }

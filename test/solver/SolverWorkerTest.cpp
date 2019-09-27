@@ -20,6 +20,7 @@
  *********************************************************************/
 #include "SolverWorkerTest.h"
 #include <solver/SolverWorker.h>
+#include <solver/field/DeductiveFieldSolver.h>
 
 
 /// Empty worker mean that there are not line solvers or field solvers.
@@ -29,6 +30,7 @@ void SolverWorkerTest::emitIsSolvedChangedTwiceAfterStartEmptyWorker()
 	WholeField wholeField = WholeField(1,1);
 	QSignalSpy spy(&worker, &SolverWorker::isSolvingChanged);
 	
+	worker.setFieldSolver(std::make_shared<DeductiveFieldSolver>());
 	worker.solve(wholeField);
 	
 	const int numberOfSignals = 2;
