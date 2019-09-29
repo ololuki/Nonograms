@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017-2018 Ololuki
+ * Copyright (C) 2017-2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -23,8 +23,8 @@
 #include <solver/field/DeductiveFieldSolver.h>
 
 
-/// Empty worker mean that there are not line solvers or field solvers.
-void SolverWorkerTest::emitIsSolvedChangedTwiceAfterStartEmptyWorker()
+/// Worker with set FieldSolver should emit start and stop solving
+void SolverWorkerTest::emitIsSolvedChangedTwiceAfterStartWorkerWithSolver()
 {
 	SolverWorker worker;
 	WholeField wholeField = WholeField(1,1);
@@ -40,16 +40,16 @@ void SolverWorkerTest::emitIsSolvedChangedTwiceAfterStartEmptyWorker()
 	QCOMPARE(qvariant_cast<bool>(spy.at(1).at(0)), false);
 }
 
-void SolverWorkerTest::notEmitCellChangedAfterStartEmptyWorker()
+/// Empty worker mean that there are not line solvers or field solvers.
+void SolverWorkerTest::notEmitIsSolvingChangedAfterStartEmptyWorker()
 {
 	SolverWorker worker;
 	WholeField wholeField = WholeField(1,1);
-	QSignalSpy spyCellChanged(&worker, &SolverWorker::cellChanged);
 	QSignalSpy spyIsSolving(&worker, &SolverWorker::isSolvingChanged);
-	
+
 	worker.solve(wholeField);
-	
-	spyIsSolving.wait();
-	const int numberOfCellsChanged = 0;
-	QCOMPARE(spyCellChanged.count(), numberOfCellsChanged);
+
+	spyIsSolving.wait(0); // timeout 0, because isSolvingChange is emited in solve method
+	const int numberOfIsSolvingChanged = 0;
+	QCOMPARE(spyIsSolving.count(), numberOfIsSolvingChanged);
 }

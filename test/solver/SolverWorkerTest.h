@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017-2018 Ololuki
+ * Copyright (C) 2017-2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -28,8 +28,8 @@ class SolverWorkerTest : public QObject
 {
 	Q_OBJECT
 private slots:
-	void emitIsSolvedChangedTwiceAfterStartEmptyWorker();
-	void notEmitCellChangedAfterStartEmptyWorker();
+	void emitIsSolvedChangedTwiceAfterStartWorkerWithSolver();
+	void notEmitIsSolvingChangedAfterStartEmptyWorker();
 };
 
 #endif // SOLVERWORKERTEST_H
