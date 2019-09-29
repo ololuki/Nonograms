@@ -30,6 +30,7 @@
 #include "CellsFieldModelTest.h"
 #include "solver/SolverWorkerTest.h"
 #include "solver/line/CoveringBlocksSolverTest.h"
+#include "solver/field/DeductiveFieldSolverTest.h"
 
 
 int main(int argc, char **argv)
@@ -49,6 +50,7 @@ int main(int argc, char **argv)
 	tests.append(new CellsFieldModelTest);
 	tests.append(new SolverWorkerTest);
 	tests.append(new CoveringBlocksSolverTest);
+	tests.append(new DeductiveFieldSolverTest);
 	
 	int result = 0;
 	for (int i = 0; i < tests.length(); i++)
