@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -53,6 +53,9 @@ public:
 	const Cell& getPixelAt(int x, int y) const {
 		return array.at(x).at(y);
 	}
+
+	bool areSolvedCellsEqual(const ArrayOfCells& other);
+
 	int width() const;
 	int height() const;
 private:

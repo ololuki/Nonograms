@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -34,6 +34,11 @@ private slots:
 	void order_of_ctor_args_should_be_same_as_order_of_operator_parentheses_x_y(); //eg. array(x, y) <=> ArrayOfCells(x, y)
 	void width_and_height_should_return_width_and_height_of_array();
 	void width_and_height_for_empty_array_should_return_0_and_0();
+	void areSolvedCellsEqual_returns_true_for_empty_arrays_same_size();
+	void areSolvedCellsEqual_returns_true_for_arrays_zero_size();
+	void areSolvedCellsEqual_returns_false_for_empty_arrays_different_size();
+	void areSolvedCellsEqual_returns_true_for_arrays_with_some_solved_cells();
+	void areSolvedCellsEqual_returns_false_for_arrays_with_cells_solved_differentially();
 };
 
 #endif // ARRAYOFCELLSTEST_H

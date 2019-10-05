@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -56,4 +56,75 @@ void ArrayOfCellsTest::width_and_height_for_empty_array_should_return_0_and_0()
 	ArrayOfCells emptyArray(0, 0);
 	QCOMPARE( emptyArray.width(), 0 );
 	QCOMPARE( emptyArray.height(), 0 );
+}
+
+void ArrayOfCellsTest::areSolvedCellsEqual_returns_true_for_empty_arrays_same_size()
+{
+	ArrayOfCells arrayA(3, 14);
+	ArrayOfCells arrayB(3, 14);
+	QCOMPARE(arrayA.areSolvedCellsEqual(arrayB), true);
+}
+
+/// just test if there are not accessing to elements in empty vectors
+void ArrayOfCellsTest::areSolvedCellsEqual_returns_true_for_arrays_zero_size()
+{
+	ArrayOfCells arrayA(0, 0);
+	ArrayOfCells arrayB(0, 0);
+	QCOMPARE(arrayA.areSolvedCellsEqual(arrayB), true);
+}
+
+void ArrayOfCellsTest::areSolvedCellsEqual_returns_false_for_empty_arrays_different_size()
+{
+	ArrayOfCells arrayA(3, 14);
+	ArrayOfCells arrayB(2, 5);
+	QCOMPARE(arrayA.areSolvedCellsEqual(arrayB), false);
+}
+
+/// if both arrays have solved (filled or dot) cells in same places
+/// then they are equal
+/// empty cells does not matter
+/// if one array have solved cell and other has empty (not resolved)
+/// then it does not affect the result
+void ArrayOfCellsTest::areSolvedCellsEqual_returns_true_for_arrays_with_some_solved_cells()
+{
+	ArrayOfCells arrayA(3, 14);
+	ArrayOfCells arrayB(3, 14);
+
+	// same solved in both
+	arrayA(0, 0).makeFilledBlack();
+	arrayB(0, 0).makeFilledBlack();
+
+	arrayA(2, 7).makeFilledBlack();
+	arrayB(2, 7).makeFilledBlack();
+
+	arrayA(2, 13).makeDot();
+	arrayB(2, 13).makeDot();
+
+	// set solved only in one array - should not be taken into account
+	arrayA(1, 1).makeFilledBlack();
+	arrayA(1, 3).makeDot();
+
+	arrayB(2, 2).makeFilledBlack();
+	arrayB(2, 4).makeDot();
+
+	QCOMPARE(arrayA.areSolvedCellsEqual(arrayB), true);
+}
+
+/// if cell in one array is solved different than in other on same address
+/// (for example filled and dot)
+/// then arrays are not equal
+void ArrayOfCellsTest::areSolvedCellsEqual_returns_false_for_arrays_with_cells_solved_differentially()
+{
+	ArrayOfCells arrayA(3, 14);
+	ArrayOfCells arrayB(3, 14);
+
+	// same solved in both
+	arrayA(0, 0).makeFilledBlack();
+	arrayB(0, 0).makeFilledBlack();
+
+	// different in both
+	arrayA(2, 2).makeFilledBlack();
+	arrayB(2, 2).makeDot();
+
+	QCOMPARE(arrayA.areSolvedCellsEqual(arrayB), false);
 }

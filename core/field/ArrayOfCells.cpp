@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2019 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -20,6 +20,31 @@
  *********************************************************************/
 #include "ArrayOfCells.h"
 
+bool ArrayOfCells::areSolvedCellsEqual(const ArrayOfCells& other)
+{
+	if (this->width() != other.width())
+		return false;
+	if (this->height() != other.height())
+		return false;
+
+	for (int x = 0; x < width(); x++)
+	{
+		for (int y = 0; y < height(); y ++)
+		{
+			const Cell& thisCell = array.at(x).at(y);
+			const Cell& otherCell = other.getPixelAt(x, y);
+			if(!thisCell.isEmpty() && !otherCell.isEmpty())
+			{
+				if(thisCell != otherCell)
+				{
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
+
 int ArrayOfCells::width() const
 {
 	return array.size();
@@ -27,6 +52,9 @@ int ArrayOfCells::width() const
 
 int ArrayOfCells::height() const
 {
-	if (array.size() == 0) return 0;
+	if (array.size() == 0)
+	{
+		return 0;
+	}
 	return array.at(0).size();
 }
