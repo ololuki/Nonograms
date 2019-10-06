@@ -38,6 +38,11 @@ CellsField::~CellsField()
 	qDebug() << "CellsField d-tor";
 }
 
+bool CellsField::areSolvedCellsEqual(const CellsField& other) const
+{
+	return array.areSolvedCellsEqual(other.array);
+}
+
 const Cell& CellsField::getCell(AddressOfCell address) const
 {
 	int x = address.getX();

@@ -54,7 +54,7 @@ public:
 		return array.at(x).at(y);
 	}
 
-	bool areSolvedCellsEqual(const ArrayOfCells& other);
+	bool areSolvedCellsEqual(const ArrayOfCells& other) const;
 
 	int width() const;
 	int height() const;

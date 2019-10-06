@@ -20,7 +20,16 @@
  *********************************************************************/
 #include "ArrayOfCells.h"
 
-bool ArrayOfCells::areSolvedCellsEqual(const ArrayOfCells& other)
+
+/// return true if arrays are same size and have solved cells
+/// (dot or filled) in same places in both arrays
+///
+/// return false if cell in one array is solved different than in other
+/// on same address (for example filled and dot)
+///
+/// if one array have solved cell and other has empty (not resolved)
+/// then it does not affect the result
+bool ArrayOfCells::areSolvedCellsEqual(const ArrayOfCells& other) const
 {
 	if (this->width() != other.width())
 		return false;

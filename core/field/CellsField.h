@@ -42,6 +42,8 @@ public:
 	CellsField& operator=(const CellsField& field) = default;
 	CellsField& operator=(CellsField&& field);
 	virtual ~CellsField();
+
+	bool areSolvedCellsEqual(const CellsField& other) const;
 	int getWidth() const {return array.width();}
 	int getHeight() const {return array.height();}
 	const Cell& getCell(AddressOfCell address) const;
