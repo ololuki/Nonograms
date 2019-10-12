@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef CELLSFIELDTEST_H
-#define CELLSFIELDTEST_H
+#ifndef CELLSFIELDMODELTEST_H
+#define CELLSFIELDMODELTEST_H
 
 #include <QtTest>
 #include "field/CellsFieldModel.h"
@@ -57,4 +57,4 @@ private:
 	QSharedPointer<CellsFieldModel> makeFilledCellsField();
 };
 
-#endif // CELLSFIELDTEST_H
+#endif // CELLSFIELDMODELTEST_H
