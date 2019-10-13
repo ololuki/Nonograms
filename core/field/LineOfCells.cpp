@@ -49,7 +49,7 @@ LineOfCells::LineOfCells(NVector<Cell> vectorToCopy)
 {
 }
 
-int LineOfCells::size()
+int LineOfCells::size() const
 {
 	return cells.size();
 }

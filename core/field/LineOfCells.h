@@ -37,7 +37,7 @@ public:
 	LineOfCells();
 	LineOfCells(QString str);
 	LineOfCells(NVector<Cell> vectorToCopy);
-	int size();
+	int size() const;
 	
 	Cell& at(const int cellNumber);
 	Cell& operator[](const int cellNumber);
