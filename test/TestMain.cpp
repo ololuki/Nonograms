@@ -26,6 +26,7 @@
 #include "HintTest.h"
 #include "ArrayOfCellsTest.h"
 #include "LineOfCellsTest.h"
+#include "HintsFieldTest.h"
 #include "HintsFieldModelTest.h"
 #include "CellsFieldModelTest.h"
 #include "solver/SolverWorkerTest.h"
@@ -46,6 +47,7 @@ int main(int argc, char **argv)
 	tests.append(new HintTest);
 	tests.append(new ArrayOfCellsTest);
 	tests.append(new LineOfCellsTest);
+	tests.append(new HintsFieldTest);
 	tests.append(new HintsFieldModelTest);
 	tests.append(new CellsFieldModelTest);
 	tests.append(new SolverWorkerTest);
