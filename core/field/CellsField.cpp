@@ -27,6 +27,39 @@ CellsField::CellsField(int width, int height) : array(width, height)
 	qDebug() << "CellsField width height c-tor";
 }
 
+/// Build CellsField based on list of rows
+/// This could be used in tests to make field from strings
+/// representing rows of nonogram
+CellsField::CellsField(std::initializer_list<LineOfCells> rows) : array(0, 0)
+{
+	if(rows.size() > 0)
+	{
+		int height = static_cast<int>(rows.size());
+		int width = rows.begin()->size();
+		array = ArrayOfCells(width, height);
+		int lineNumber = 0;
+		bool isOk = true; // true if all rows has same length
+		for (auto row : rows)
+		{
+			if (row.size() == width)
+			{
+				setLineOfCells(row, lineNumber, Orientation::HORIZONTAL);
+				++lineNumber;
+			}
+			else
+			{
+				// error, revert changes and make empty array
+				isOk = false;
+				break;
+			}
+		}
+		if (isOk == false)
+		{
+			array = ArrayOfCells(0, 0);
+		}
+	}
+}
+
 CellsField& CellsField::operator=(CellsField&& field)
 {
 	array = std::move(field.array);
@@ -91,10 +124,35 @@ LineOfCells CellsField::getLineOfCells(int lineNumber, Orientation orientation) 
 	return line;
 }
 
+/// Set LineOfCells - this line should have cells with valid AddressOfCell
+/// Use it only with lines taken from getLineOfCells or made using Cells
+/// with valid Addresses
 void CellsField::setLineOfCells(LineOfCells lineOfCells)
 {
 	for (int i = 0; i < lineOfCells.size(); i++)
 	{
 		setCell(lineOfCells[i]);
+	}
+}
+
+/// Set LineOfCells - ignore AddressOfCell in LineOfCells and
+/// replace it with valid Address based on given lineNumber
+/// and orientation
+void CellsField::setLineOfCells(LineOfCells lineOfCells,
+                                int lineNumber,
+                                Orientation orientation)
+{
+	for (int i = 0; i < lineOfCells.size(); i++)
+	{
+		if (orientation == Orientation::HORIZONTAL)
+		{
+			setCell(Cell(AddressOfCell{i, lineNumber},
+			             lineOfCells[i].getSign()));
+		}
+		else if (orientation == Orientation::VERTICAL)
+		{
+			setCell(Cell(AddressOfCell{lineNumber, i},
+			             lineOfCells[i].getSign()));
+		}
 	}
 }

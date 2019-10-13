@@ -39,6 +39,7 @@ class CellsField
 public:
 	CellsField(int width, int height);
 	CellsField(const CellsField& field) = default;
+	CellsField(std::initializer_list<LineOfCells> rows);
 	CellsField& operator=(const CellsField& field) = default;
 	CellsField& operator=(CellsField&& field);
 	virtual ~CellsField();
@@ -50,6 +51,7 @@ public:
 	virtual void setCell(Cell cell);
 	LineOfCells getLineOfCells(int lineNumber, Orientation orientation) const;
 	void setLineOfCells(LineOfCells lineOfCells);
+	void setLineOfCells(LineOfCells lineOfCells, int lineNumber, Orientation orientation);
 
 protected:
 	ArrayOfCells array;
