@@ -43,6 +43,29 @@ HintsField::HintsField(const HintsField& hintsField)
 	qDebug() << "HintsField::HintsField(const HintsField& hintsField)";
 }
 
+/// Build HintsField based on list of lines
+/// For vertical first line is on left
+/// For horizontal first row is on top
+/// This could be used in tests to make field from strings
+/// representing lines of hints for nonogram
+HintsField::HintsField(Orientation o, std::initializer_list<LineOfHints> lines)
+  : numberOfLines(static_cast<int>(lines.size())),
+    orientation(o)
+{
+	int lineNumber = 0;
+	for (auto row : lines)
+	{
+		NVector<Hint> lineOfHints;
+		for (int i = 0; i < row.size(); i++)
+		{
+			lineOfHints.push_back(Hint(AddressOfHint(o, lineNumber, i),
+			                           row[i].getBlockSize()));
+		}
+		linesOfHints.push_back(LineOfHints(lineOfHints));
+		++lineNumber;
+	}
+}
+
 HintsField::~HintsField()
 {
 }

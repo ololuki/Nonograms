@@ -21,6 +21,51 @@
 #include "HintsFieldTest.h"
 
 
+void HintsFieldTest::constructor_initializer_list_horizontal()
+{
+	HintsField hintsField(
+	            Orientation::HORIZONTAL,
+	{
+	    LineOfHints({Hint(3), Hint(5)}),
+	    LineOfHints({Hint(1), {Hint(3)}}),
+	    LineOfHints({Hint(0)}),
+	    LineOfHints({Hint(105), Hint(13), Hint(5)})
+	});
+
+	QCOMPARE(hintsField.getNumberOfLines(), 4);
+	QCOMPARE(hintsField.allHintsLength(), 3);
+	QCOMPARE(hintsField.getOrientation(), Orientation::HORIZONTAL);
+	QVERIFY(hintsField.getHint({Orientation::HORIZONTAL, 0, 0}).getBlockSize() == 3);
+	QVERIFY(hintsField.getHint({Orientation::HORIZONTAL, 0, 1}).getBlockSize() == 5);
+}
+
+void HintsFieldTest::constructor_initializer_list_vertical()
+{
+	HintsField hintsField(
+	            Orientation::VERTICAL,
+	{
+	    LineOfHints({Hint(3), Hint(5)}),
+	    LineOfHints({Hint(1), {Hint(3)}}),
+	    LineOfHints({Hint(0)}),
+	    LineOfHints({Hint(105), Hint(13), Hint(5)})
+	});
+
+	QCOMPARE(hintsField.getNumberOfLines(), 4);
+	QCOMPARE(hintsField.allHintsLength(), 3);
+	QCOMPARE(hintsField.getOrientation(), Orientation::VERTICAL);
+	QVERIFY(hintsField.getHint({Orientation::VERTICAL, 0, 0}).getBlockSize() == 3);
+	QVERIFY(hintsField.getHint({Orientation::VERTICAL, 0, 1}).getBlockSize() == 5);
+}
+
+/// Empty initializer list should make empty CellsField
+void HintsFieldTest::constructor_initializer_list_empty_list_make_empty()
+{
+	HintsField hintsField(Orientation::VERTICAL, {});
+
+	QCOMPARE(hintsField.getNumberOfLines(), 0);
+	QCOMPARE(hintsField.allHintsLength(), 0);
+}
+
 void HintsFieldTest::default_value_of_hint_is_zero()
 {
 	HintsField hintsField(numberOfLines, Orientation::VERTICAL);

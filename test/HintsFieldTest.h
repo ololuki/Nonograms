@@ -29,6 +29,10 @@ class HintsFieldTest : public QObject
 {
 	Q_OBJECT
 private slots:
+	void constructor_initializer_list_horizontal();
+	void constructor_initializer_list_vertical();
+	void constructor_initializer_list_empty_list_make_empty();
+
 	void default_value_of_hint_is_zero();
 	void number_of_lines_should_increase_after_insert();
 	void adresses_after_insert_should_be_same_as_count_in_line();
