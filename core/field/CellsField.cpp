@@ -22,6 +22,12 @@
 #include <QDebug>
 
 
+/// Make invalid cells field
+CellsField::CellsField()
+  : array(0, 0)
+{
+}
+
 CellsField::CellsField(int width, int height) : array(width, height)
 {
 	qDebug() << "CellsField width height c-tor";

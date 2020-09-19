@@ -21,6 +21,8 @@
 #include "DeductiveFieldSolverTest.h"
 #include <solver/field/DeductiveFieldSolver.h>
 
+Q_DECLARE_METATYPE(CellsField)
+Q_DECLARE_METATYPE(HintsField)
 
 void DeductiveFieldSolverTest::initialStateShouldBeNotStarted()
 {
@@ -34,4 +36,37 @@ void DeductiveFieldSolverTest::stateShouldBeDifferentThanNotStartedAfterSolve()
 	DeductiveFieldSolver solver;
 	solver.solveOneStep();
 	QVERIFY(solver.getState() != DeductiveFieldSolver::State::notStarted);
+}
+
+void DeductiveFieldSolverTest::solving_test_data()
+{
+	QTest::addColumn<CellsField>("d_cellsField");
+	QTest::addColumn<HintsField>("d_rowsHints");
+	QTest::addColumn<HintsField>("d_columnsHints");
+
+	QTest::newRow("Block 3 on line 3")
+	        << CellsField{{"------"}, {"------"}, {"--###-"}}
+	        << HintsField{Orientation::HORIZONTAL, {{{Hint(0)}}, {{Hint(0)}}, {{Hint(3)}}}}
+	        << HintsField{Orientation::VERTICAL, {{{Hint(0)}}, {{Hint(0)}}, {{Hint(1)}}, {{Hint(1)}}, {{Hint(1)}}, {{Hint(0)}}}};
+}
+
+/// Check if solver works.
+/// Currently only resolved cells are compared, because solver is unfinished,
+/// but in the future we can check if whole field was resolved.
+/// Currently test checks if solver does not resolve cells to wrong values.
+void DeductiveFieldSolverTest::solving_test()
+{
+	QFETCH(CellsField, d_cellsField);
+	QFETCH(HintsField, d_rowsHints);
+	QFETCH(HintsField, d_columnsHints);
+	DeductiveFieldSolver solver;
+	solver.setWholeField(WholeField(d_cellsField, d_columnsHints, d_rowsHints));
+	while(solver.getState() != DeductiveFieldSolver::finished)
+	{
+		solver.solveOneStep();
+	}
+
+	QVERIFY(solver.getWholeField().cells().areSolvedCellsEqual(d_cellsField));
+
+	// TODO: check if field is resolved
 }

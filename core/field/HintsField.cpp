@@ -21,6 +21,14 @@
 #include "HintsField.h"
 #include <QDebug>
 
+
+/// Make invalid hints field
+HintsField::HintsField()
+{
+	numberOfLines = 0;
+	orientation = Orientation::HORIZONTAL;
+}
+
 HintsField::HintsField(int numberOfLines, Orientation o)
 {
 	this->numberOfLines = numberOfLines;

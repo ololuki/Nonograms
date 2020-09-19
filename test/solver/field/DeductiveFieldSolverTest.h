@@ -30,6 +30,9 @@ class DeductiveFieldSolverTest : public QObject
 private slots:
 	void initialStateShouldBeNotStarted();
 	void stateShouldBeDifferentThanNotStartedAfterSolve();
+
+	void solving_test_data();
+	void solving_test();
 };
 
 #endif // DEDUCTIVEFIELDSOLVERTEST_H

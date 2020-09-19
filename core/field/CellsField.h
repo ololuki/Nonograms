@@ -37,6 +37,7 @@
 class CellsField
 {
 public:
+	CellsField();
 	CellsField(int width, int height);
 	CellsField(const CellsField& field) = default;
 	CellsField(std::initializer_list<LineOfCells> rows);

@@ -40,6 +40,7 @@ public:
 	void setWholeField(WholeField wholeField) override;
 	void solveOneStep() override;
 
+	const WholeField& getWholeField() const {return wholeField;}
 	State getState() override;
 
 private:
