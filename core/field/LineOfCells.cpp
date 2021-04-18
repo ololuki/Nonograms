@@ -82,9 +82,7 @@ bool LineOfCells::operator==(const LineOfCells& other) const
 		return false;
 	for (int i = 0; i < size(); i++)
 	{
-		if (at(i).isFilledBlack() != other.at(i).isFilledBlack())
-			return false;
-		if (at(i).isDot() != other.at(i).isDot())
+		if (at(i) != other.at(i))
 			return false;
 	}
 	return true;
