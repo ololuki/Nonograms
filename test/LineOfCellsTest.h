@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2018 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -41,6 +41,10 @@ private slots:
 	void Cells_are_dot_after_setting_them();
 	void constructor_from_string_test();
 	void constructor_from_empty_string_makes_zero_length_line();
+	void equality_opeators_compare_cell_sign_equal_data();
+	void equality_opeators_compare_cell_sign_equal();
+	void equality_opeators_compare_cell_sign_not_equal_data();
+	void equality_opeators_compare_cell_sign_not_equal();
 private:
 	AddressOfCell dummyAddress{0, 0};
 };

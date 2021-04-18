@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2018 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -130,4 +130,52 @@ void LineOfCellsTest::constructor_from_empty_string_makes_zero_length_line()
 {
 	LineOfCells lineOfCells = LineOfCells("");
 	QCOMPARE(lineOfCells.size(), 0);
+}
+
+void LineOfCellsTest::equality_opeators_compare_cell_sign_equal_data()
+{
+	QTest::addColumn<LineOfCells>("d_lineA");
+	QTest::addColumn<LineOfCells>("d_lineB");
+
+	QTest::newRow("empty")    << LineOfCells{""}      << LineOfCells{""};
+	QTest::newRow("one char") << LineOfCells{"-"}     << LineOfCells{"-"};
+	QTest::newRow("one char") << LineOfCells{"."}     << LineOfCells{"."};
+	QTest::newRow("one char") << LineOfCells{"#"}     << LineOfCells{"#"};
+	QTest::newRow("longer")   << LineOfCells{"#####"} << LineOfCells{"#####"};
+	QTest::newRow("mixed")    << LineOfCells{"--#.-"} << LineOfCells{"--#.-"};
+	QTest::newRow("mixed")    << LineOfCells{"###-"}  << LineOfCells{"###-"};
+	QTest::newRow("mixed")    << LineOfCells{".#"}    << LineOfCells{".#"};
+}
+
+void LineOfCellsTest::equality_opeators_compare_cell_sign_equal()
+{
+	QFETCH(LineOfCells, d_lineA);
+	QFETCH(LineOfCells, d_lineB);
+
+	QVERIFY(d_lineA == d_lineB);
+	QCOMPARE(d_lineA, d_lineB);
+	QCOMPARE(d_lineA != d_lineB, false);
+}
+
+void LineOfCellsTest::equality_opeators_compare_cell_sign_not_equal_data()
+{
+	QTest::addColumn<LineOfCells>("d_lineA");
+	QTest::addColumn<LineOfCells>("d_lineB");
+
+	QTest::newRow("one char")  << LineOfCells{"-"}     << LineOfCells{"."};
+	QTest::newRow("one char")  << LineOfCells{"."}     << LineOfCells{"#"};
+	QTest::newRow("one char")  << LineOfCells{"#"}     << LineOfCells{"-"};
+	QTest::newRow("diff size") << LineOfCells{"#####"} << LineOfCells{"######"};
+	QTest::newRow("diff size") << LineOfCells{"####"}  << LineOfCells{"#####"};
+	QTest::newRow("mixed")     << LineOfCells{".-#.-"} << LineOfCells{"--#.-"};
+	QTest::newRow("mixed")     << LineOfCells{"--#.."} << LineOfCells{"--#.-"};
+}
+
+void LineOfCellsTest::equality_opeators_compare_cell_sign_not_equal()
+{
+	QFETCH(LineOfCells, d_lineA);
+	QFETCH(LineOfCells, d_lineB);
+
+	QCOMPARE((d_lineA == d_lineB), false);
+	QVERIFY(d_lineA != d_lineB);
 }

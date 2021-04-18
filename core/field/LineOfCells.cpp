@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2018 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -54,12 +54,43 @@ int LineOfCells::size() const
 	return cells.size();
 }
 
-Cell &LineOfCells::at(const int cellNumber)
+Cell &LineOfCells::at(int cellNumber)
 {
 	return cells.operator[](cellNumber);
 }
 
-Cell &LineOfCells::operator[](const int cellNumber)
+const Cell &LineOfCells::at(int cellNumber) const
 {
 	return cells.operator[](cellNumber);
+}
+
+Cell &LineOfCells::operator[](int cellNumber)
+{
+	return cells.operator[](cellNumber);
+}
+
+///
+/// \brief Compare if LineOfCells have the same lenght and
+/// contains the same CellSigns.
+/// AddressOfCells are ignored.
+/// \param other
+/// \return true if CellSigns are equal in both LineOfCells.
+///
+bool LineOfCells::operator==(const LineOfCells& other) const
+{
+	if (size() != other.size())
+		return false;
+	for (int i = 0; i < size(); i++)
+	{
+		if (at(i).isFilledBlack() != other.at(i).isFilledBlack())
+			return false;
+		if (at(i).isDot() != other.at(i).isDot())
+			return false;
+	}
+	return true;
+}
+
+bool LineOfCells::operator!=(const LineOfCells& other) const
+{
+	return !operator==(other);
 }

@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2018 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -39,8 +39,12 @@ public:
 	LineOfCells(NVector<Cell> vectorToCopy);
 	int size() const;
 	
-	Cell& at(const int cellNumber);
-	Cell& operator[](const int cellNumber);
+	Cell& at(int cellNumber);
+	const Cell& at(int cellNumber) const;
+	Cell& operator[](int cellNumber);
+
+	bool operator==(const LineOfCells& other) const;
+	bool operator!=(const LineOfCells& other) const;
 private:
 	NVector<Cell> cells;
 };
