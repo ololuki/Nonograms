@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -26,7 +26,8 @@
 
 ///
 /// \brief CellsFieldModel class is model class of drawing area data.
-/// CellsFieldModel is part of WholeField. WholeField contains CellsFieldModel.
+/// CellsFieldModel is part of WholeFieldModel.
+/// WholeFieldModel contains CellsFieldModel.
 ///
 class CellsFieldModel : public QObject, public CellsField
 {

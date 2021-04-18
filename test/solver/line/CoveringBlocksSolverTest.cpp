@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017-2018 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -38,12 +38,24 @@ void CoveringBlocksSolverTest::solving_test_data()
 	QTest::addColumn<LineOfCells>("d_startingLineOfCells");
 	QTest::addColumn<LineOfCells>("d_expectedLineOfCells");
 	
-	QTest::newRow("Block 3 on line 3") << LineOfHints({Hint(3)}) << LineOfCells("---") << LineOfCells("###");
-	QTest::newRow("Block 6 on line 7") << LineOfHints({Hint(6)}) << LineOfCells("-------") << LineOfCells("-#####-");
-	QTest::newRow("Block 6 on line 9") << LineOfHints({Hint(6)}) << LineOfCells("---------") << LineOfCells("---###---");
-	QTest::newRow("Block 6 on line 10") << LineOfHints({Hint(6)}) << LineOfCells("----------") << LineOfCells("----##----");
-	QTest::newRow("Block 3 and 3 on line 8") << LineOfHints({Hint(3), Hint(3)}) << LineOfCells("--------") << LineOfCells("-##--##-");
-	QTest::newRow("Block 4 on line 7 starting filled") << LineOfHints({Hint(4)}) << LineOfCells("-##----") << LineOfCells("-###---");
+	QTest::newRow("Block 3 on line 3") << LineOfHints({Hint(3)})
+	                                   << LineOfCells("---")
+	                                   << LineOfCells("###");
+	QTest::newRow("Block 6 on line 7") << LineOfHints({Hint(6)})
+	                                   << LineOfCells("-------")
+	                                   << LineOfCells("-#####-");
+	QTest::newRow("Block 6 on line 9") << LineOfHints({Hint(6)})
+	                                   << LineOfCells("---------")
+	                                   << LineOfCells("---###---");
+	QTest::newRow("Block 6 on line 10") << LineOfHints({Hint(6)})
+	                                    << LineOfCells("----------")
+	                                    << LineOfCells("----##----");
+	QTest::newRow("Block 3 and 3 on line 8") << LineOfHints({Hint(3), Hint(3)})
+	                                         << LineOfCells("--------")
+	                                         << LineOfCells("-##--##-");
+	QTest::newRow("Block 4 on line 7 starting filled") << LineOfHints({Hint(4)})
+	                                                   << LineOfCells("-##----")
+	                                                   << LineOfCells("-###---");
 }
 
 void CoveringBlocksSolverTest::solving_test()
@@ -56,20 +68,5 @@ void CoveringBlocksSolverTest::solving_test()
 	solver->solve(d_lineOfHints, d_startingLineOfCells);
 	delete solver;
 	
-	QVERIFY(areLineOfCellsEqualByCellSign(d_startingLineOfCells, d_expectedLineOfCells));
-}
-
-// TODO: move to LineOfCells
-bool CoveringBlocksSolverTest::areLineOfCellsEqualByCellSign(LineOfCells &a, LineOfCells &b)
-{
-	if (a.size() != b.size())
-		return false;
-	for (int i = 0; i < a.size(); i++)
-	{
-		if (a.at(i).isFilledBlack() != b.at(i).isFilledBlack())
-			return false;
-		if (a.at(i).isDot() != b.at(i).isDot())
-			return false;
-	}
-	return true;
+	QCOMPARE(d_startingLineOfCells, d_expectedLineOfCells);
 }

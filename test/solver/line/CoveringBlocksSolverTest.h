@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017-2018 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -23,9 +23,6 @@
 
 #include <QtTest>
 
-class LineOfHints;
-class LineOfCells;
-
 
 class CoveringBlocksSolverTest : public QObject
 {
@@ -34,9 +31,6 @@ private slots:
 	void coveringBlocksSolver_is_type_of_abstractLineSolver();
 	void solving_test_data();
 	void solving_test();
-	
-private:
-	bool areLineOfCellsEqualByCellSign(LineOfCells& a, LineOfCells& b);
 };
 
 #endif // COVERINGBLOCKSSOLVERTEST_H
