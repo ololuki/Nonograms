@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2018 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -32,6 +32,7 @@
 #include "CellsFieldModelTest.h"
 #include "solver/SolverWorkerTest.h"
 #include "solver/line/CoveringBlocksSolverTest.h"
+#include "solver/line/BlocksFromBordersSolverTest.h"
 #include "solver/field/DeductiveFieldSolverTest.h"
 
 
@@ -54,6 +55,7 @@ int main(int argc, char **argv)
 	tests.append(new CellsFieldModelTest);
 	tests.append(new SolverWorkerTest);
 	tests.append(new CoveringBlocksSolverTest);
+	tests.append(new BlocksFromBordersSolverTest);
 	tests.append(new DeductiveFieldSolverTest);
 	
 	int result = 0;

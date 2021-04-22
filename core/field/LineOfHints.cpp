@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -79,6 +79,26 @@ Hint &LineOfHints::operator[](int count)
 const Hint &LineOfHints::operator[](int count) const
 {
 	return hints.operator[](static_cast<size_t>(count));
+}
+
+Hint& LineOfHints::front()
+{
+	return hints.front();
+}
+
+const Hint& LineOfHints::front() const
+{
+	return hints.front();
+}
+
+Hint& LineOfHints::back()
+{
+	return hints.back();
+}
+
+const Hint& LineOfHints::back() const
+{
+	return hints.back();
 }
 
 void LineOfHints::push_back(Hint hint)

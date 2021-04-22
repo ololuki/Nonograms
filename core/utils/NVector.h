@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -47,12 +47,18 @@ public:
 	
 	int size() const {return static_cast<int>(vect.size());}
 	
-	T& operator[](const int index) {return vect.operator[](index);}
-	const T& operator[](const int index) const {return vect.operator[](index);}
+	T& operator[](int index) {return vect.operator[](index);}
+	const T& operator[](int index) const {return vect.operator[](index);}
 	
-	T& at(const int index) {return vect.at(index);}
-	const T& at(const int index) const {return vect.at(index);}
+	T& at(int index) {return vect.at(index);}
+	const T& at(int index) const {return vect.at(index);}
 	
+	T& front() {return vect.front();}
+	const T& front() const {return vect.front();}
+
+	T& back() {return vect.back();}
+	const T& back() const {return vect.back();}
+
 	void push_back(T object) {vect.push_back(object);}
 	
 	void pop_back() {vect.pop_back();}

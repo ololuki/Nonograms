@@ -46,6 +46,7 @@ SOURCES += \
     solver/field/DeductiveFieldSolver.cpp \
     solver/field/FieldSolverObserver.cpp \
     solver/line/AbstractLineSolver.cpp \
+    solver/line/BlocksFromBordersSolver.cpp \
     solver/line/CoveringBlocksSolver.cpp \
     utils/TimeMeasure.cpp
 
@@ -89,6 +90,7 @@ HEADERS += \
     solver/field/DeductiveFieldSolver.h \
     solver/field/FieldSolverObserver.h \
     solver/line/AbstractLineSolver.h \
+    solver/line/BlocksFromBordersSolver.h \
     solver/line/CoveringBlocksSolver.h \
     utils/TimeMeasure.h
 

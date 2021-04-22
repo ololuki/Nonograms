@@ -36,6 +36,7 @@ HEADERS += \
     CellsFieldModelTest.h \
     solver/SolverWorkerTest.h \
     solver/field/DeductiveFieldSolverTest.h \
+    solver/line/BlocksFromBordersSolverTest.h \
     solver/line/CoveringBlocksSolverTest.h
 
 
@@ -54,4 +55,5 @@ SOURCES += TestMain.cpp \
     CellsFieldModelTest.cpp \
     solver/SolverWorkerTest.cpp \
     solver/field/DeductiveFieldSolverTest.cpp \
+    solver/line/BlocksFromBordersSolverTest.cpp \
     solver/line/CoveringBlocksSolverTest.cpp
