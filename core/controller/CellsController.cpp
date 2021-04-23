@@ -58,7 +58,7 @@ void CellsController::onAction(CellAction action, AddressOfCell address)
 		cell.makeEmpty();
 		break;
 	default:
-		break;
+		return;
 	}
 	field->setCell(cell);
 }

@@ -98,7 +98,7 @@ void CellsView::mousePressEvent(QMouseEvent *event)
 	if (cellX >= field->getWidth()) return;
 	if (cellY >= field->getHeight()) return;
 	
-	CellAction cellAction;
+	CellAction cellAction = CellAction::NoAction;
 	switch(event->button())
 	{
 	case Qt::LeftButton:
@@ -110,6 +110,8 @@ void CellsView::mousePressEvent(QMouseEvent *event)
 	case Qt::MiddleButton:
 		cellAction = CellAction::MakeEmpty;
 		break;
+	default:
+		return;
 	}
 	emit action(cellAction, AddressOfCell(cellX, cellY));
 }

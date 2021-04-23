@@ -73,12 +73,12 @@ void LineOfHints::insertHintBefore(Hint hint)
 
 Hint &LineOfHints::operator[](int count)
 {
-	return hints.operator[](static_cast<size_t>(count));
+	return hints.operator[](count);
 }
 
 const Hint &LineOfHints::operator[](int count) const
 {
-	return hints.operator[](static_cast<size_t>(count));
+	return hints.operator[](count);
 }
 
 Hint& LineOfHints::front()

@@ -23,8 +23,8 @@
 
 void AddressOfHintTest::orientation_line_and_count_of_Address_should_be_same_as_given_in_constructor()
 {
-	unsigned int line = 2;
-	unsigned int count = 3;
+	int line = 2;
+	int count = 3;
 	Orientation o = Orientation::VERTICAL;
 	AddressOfHint address(o, line, count);
 	QVERIFY(address.getLine() == line);
