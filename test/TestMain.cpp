@@ -33,6 +33,7 @@
 #include "solver/SolverWorkerTest.h"
 #include "solver/line/CoveringBlocksSolverTest.h"
 #include "solver/line/BlocksFromBordersSolverTest.h"
+#include "solver/line/SingleDotsAroundFinishedBlocksSolverTest.h"
 #include "solver/field/DeductiveFieldSolverTest.h"
 
 
@@ -56,6 +57,7 @@ int main(int argc, char **argv)
 	tests.append(new SolverWorkerTest);
 	tests.append(new CoveringBlocksSolverTest);
 	tests.append(new BlocksFromBordersSolverTest);
+	tests.append(new SingleDotsAroundFinishedBlocksSolverTest);
 	tests.append(new DeductiveFieldSolverTest);
 	
 	int result = 0;

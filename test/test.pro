@@ -37,7 +37,8 @@ HEADERS += \
     solver/SolverWorkerTest.h \
     solver/field/DeductiveFieldSolverTest.h \
     solver/line/BlocksFromBordersSolverTest.h \
-    solver/line/CoveringBlocksSolverTest.h
+    solver/line/CoveringBlocksSolverTest.h \
+    solver/line/SingleDotsAroundFinishedBlocksSolverTest.h
 
 
 # Sources of Test classes
@@ -56,4 +57,5 @@ SOURCES += TestMain.cpp \
     solver/SolverWorkerTest.cpp \
     solver/field/DeductiveFieldSolverTest.cpp \
     solver/line/BlocksFromBordersSolverTest.cpp \
-    solver/line/CoveringBlocksSolverTest.cpp
+    solver/line/CoveringBlocksSolverTest.cpp \
+    solver/line/SingleDotsAroundFinishedBlocksSolverTest.cpp

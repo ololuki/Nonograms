@@ -27,7 +27,6 @@
 ///
 LineOfCells::LineOfCells()
 {
-	
 }
 
 ///
@@ -54,19 +53,39 @@ int LineOfCells::size() const
 	return cells.size();
 }
 
-Cell &LineOfCells::at(int cellNumber)
+Cell& LineOfCells::at(int cellNumber)
+{
+	return cells.at(cellNumber);
+}
+
+const Cell& LineOfCells::at(int cellNumber) const
+{
+	return cells.at(cellNumber);
+}
+
+Cell& LineOfCells::operator[](int cellNumber)
 {
 	return cells.operator[](cellNumber);
 }
 
-const Cell &LineOfCells::at(int cellNumber) const
+Cell& LineOfCells::front()
 {
-	return cells.operator[](cellNumber);
+	return cells.front();
 }
 
-Cell &LineOfCells::operator[](int cellNumber)
+const Cell& LineOfCells::front() const
 {
-	return cells.operator[](cellNumber);
+	return cells.front();
+}
+
+Cell& LineOfCells::back()
+{
+	return cells.back();
+}
+
+const Cell& LineOfCells::back() const
+{
+	return cells.back();
 }
 
 ///
