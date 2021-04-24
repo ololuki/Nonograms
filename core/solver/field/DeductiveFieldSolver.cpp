@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017-2019 Ololuki
+ * Copyright (C) 2017-2021 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -19,12 +19,17 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "DeductiveFieldSolver.h"
+#include "solver/line/BlocksFromBordersSolver.h"
 #include "solver/line/CoveringBlocksSolver.h"
 
 
 DeductiveFieldSolver::DeductiveFieldSolver()
 {
-	std::shared_ptr<AbstractLineSolver> solver = std::make_shared<CoveringBlocksSolver>();
+	std::shared_ptr<AbstractLineSolver> solver;
+
+	solver = std::make_shared<BlocksFromBordersSolver>();
+	lineSolvers.push_back(solver);
+	solver = std::make_shared<CoveringBlocksSolver>();
 	lineSolvers.push_back(solver);
 }
 
