@@ -53,6 +53,8 @@ private:
 	NVector<Cell> cells;
 };
 
+char* toString(const LineOfCells& cells);
+
 Q_DECLARE_METATYPE(LineOfCells)
 
 #endif // LINEOFCELLS_H

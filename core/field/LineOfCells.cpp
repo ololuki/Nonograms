@@ -19,6 +19,7 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "LineOfCells.h"
+#include <string>
 
 
 ///
@@ -110,4 +111,23 @@ bool LineOfCells::operator==(const LineOfCells& other) const
 bool LineOfCells::operator!=(const LineOfCells& other) const
 {
 	return !operator==(other);
+}
+
+///
+/// Returns a textual representation of LineOfCells.
+/// This function is used by QCOMPARE() to output verbose
+/// information in case of a test failure.
+/// The caller of toString() must delete the returned data using delete[].
+/// \param cells
+/// \return pointer to c string alocated with new[]
+///
+char *toString(const LineOfCells& cells)
+{
+	std::string str = "[";
+	for (int i = 0; i < cells.size(); i++)
+	{
+		str += CellSignUtils::toChar(cells.at(i).getSign());
+	}
+	str += "]";
+	return qstrdup(str.c_str());
 }
