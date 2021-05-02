@@ -23,13 +23,6 @@
 
 void SingleDotsAroundFinishedBlocksSolver::solve(const LineOfHints& hints, LineOfCells& cells)
 {
-	drawDotsOnFirstBlock(hints, cells);
-	drawDotsOnLastBlock(hints, cells);
-	drawDotsOnBiggestBlock(hints, cells);
-}
-
-void SingleDotsAroundFinishedBlocksSolver::drawDotsOnFirstBlock(const LineOfHints& hints, LineOfCells& cells)
-{
 	if (hints.size() == 0)
 	{
 		return;
@@ -40,10 +33,32 @@ void SingleDotsAroundFinishedBlocksSolver::drawDotsOnFirstBlock(const LineOfHint
 		return;
 	}
 
+	drawDotsOnFirstBlock(hints, cells);
+	drawDotsOnLastBlock(hints, cells);
+	drawDotsOnBiggestBlock(hints, cells);
+}
+
+///
+/// \brief Draw dots around first finished block.
+/// Before:
+/// 2 3 |-##-----|
+/// After:
+/// 2 3 |.##.----|
+/// \param hints - line of hints
+/// \param cells - current line of cells, unresolved cells will be changed
+///
+void SingleDotsAroundFinishedBlocksSolver::drawDotsOnFirstBlock(const LineOfHints& hints, LineOfCells& cells)
+{
 	int firstNonDotCell = 0;
 	while (cells.at(firstNonDotCell).isDot())
 	{
 		++firstNonDotCell;
+	}
+
+	// TODO: if hints.size() <= 1 return and use biggestBlock
+	if (firstNonDotCell + hints.front().getBlockSize() >= cells.size())
+	{
+		return;
 	}
 
 	bool isFullBlock = false; // if whole block is finished
@@ -85,15 +100,87 @@ void SingleDotsAroundFinishedBlocksSolver::drawDotsOnFirstBlock(const LineOfHint
 		{
 			// add dot before finished block
 			cells.at(firstNonDotCell).makeDot();
-			// add dot after finished block
-			cells.at(firstNonDotCell + hints.front().getBlockSize() + 1).makeDot();
+			// add dot after finished block (if there is any cell behind)
+			if ((firstNonDotCell + hints.front().getBlockSize() + 1) < cells.size())
+			{
+				cells.at(firstNonDotCell + hints.front().getBlockSize() + 1).makeDot();
+			}
 		}
 	}
 }
 
+///
+/// \brief Draw dots around last finished block.
+/// Before:
+/// 2 3 |-#--###-|
+/// After:
+/// 2 3 |-#-.###.|
+/// \param hints - line of hints
+/// \param cells - current line of cells, unresolved cells will be changed
+///
 void SingleDotsAroundFinishedBlocksSolver::drawDotsOnLastBlock(const LineOfHints& hints, LineOfCells& cells)
 {
-	//	TODO: implement
+	int firstNonDotCell = cells.size() - 1;
+	while (cells.at(firstNonDotCell).isDot())
+	{
+		--firstNonDotCell;
+	}
+
+	// TODO: if hints.size() <= 1 return and use biggestBlock
+	if (firstNonDotCell < hints.back().getBlockSize())
+	{
+		return;
+	}
+
+	bool isFullBlock = false; // if whole block is finished
+
+	if (cells.at(firstNonDotCell).isFilledBlack())
+	{
+		// check if full block is filled black
+		isFullBlock = true;
+		for (int i = firstNonDotCell; i > firstNonDotCell - hints.back().getBlockSize(); i--)
+		{
+			if (!cells.at(i).isFilledBlack())
+			{
+				isFullBlock = false;
+				break;
+			}
+		}
+		if (isFullBlock)
+		{
+			// add dot before last finished block
+			int dotPositionForLastBlock = firstNonDotCell - hints.back().getBlockSize();
+			cells.at(dotPositionForLastBlock).makeDot();
+		}
+	}
+	else
+	{
+		// first (backwards) non dot cell could be empty
+		// so filled block could start from firstNonDotCell - 1
+		// and if this block is finished then
+		// dots before and after this block could be added
+		isFullBlock = true;
+		for (int i = firstNonDotCell - 1;
+		     i > firstNonDotCell - hints.back().getBlockSize() - 1;
+		     i--)
+		{
+			if (!cells.at(i).isFilledBlack())
+			{
+				isFullBlock = false;
+				break;
+			}
+		}
+		if (isFullBlock)
+		{
+			// add dot after finished block
+			cells.at(firstNonDotCell).makeDot();
+			// add dot before finished block (if there is any cell before)
+			if (firstNonDotCell > (hints.back().getBlockSize()))
+			{
+				cells.at(firstNonDotCell - hints.back().getBlockSize() - 1).makeDot();
+			}
+		}
+	}
 }
 
 void SingleDotsAroundFinishedBlocksSolver::drawDotsOnBiggestBlock(const LineOfHints& hints, LineOfCells& cells)

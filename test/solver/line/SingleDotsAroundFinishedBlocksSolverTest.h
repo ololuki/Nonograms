@@ -36,6 +36,9 @@ private slots:
 
 	void biggest_block_solving_test_data();
 	void biggest_block_solving_test();
+
+	void common_test_data();
+	void common_test();
 };
 
 #endif // SINGLEDOTSAROUNDFINISHEDBLOCKSSOLVERTEST_H
