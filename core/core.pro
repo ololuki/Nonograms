@@ -48,6 +48,7 @@ SOURCES += \
     solver/line/AbstractLineSolver.cpp \
     solver/line/BlocksFromBordersSolver.cpp \
     solver/line/CoveringBlocksSolver.cpp \
+    solver/line/FillFinishedSolver.cpp \
     solver/line/SingleDotsAroundFinishedBlocksSolver.cpp \
     utils/TimeMeasure.cpp
 
@@ -93,6 +94,7 @@ HEADERS += \
     solver/line/AbstractLineSolver.h \
     solver/line/BlocksFromBordersSolver.h \
     solver/line/CoveringBlocksSolver.h \
+    solver/line/FillFinishedSolver.h \
     solver/line/SingleDotsAroundFinishedBlocksSolver.h \
     utils/TimeMeasure.h
 

@@ -47,6 +47,14 @@ public:
 	Cell& back();
 	const Cell& back() const;
 
+	NVector<Cell>::iterator begin() {return cells.begin();}
+	NVector<Cell>::const_iterator begin() const {return cells.begin();}
+	NVector<Cell>::const_iterator cbegin() const {return cells.cbegin();}
+
+	NVector<Cell>::iterator end() {return cells.end();}
+	NVector<Cell>::const_iterator end() const {return cells.end();}
+	NVector<Cell>::const_iterator cend() const {return cells.cend();}
+
 	bool operator==(const LineOfCells& other) const;
 	bool operator!=(const LineOfCells& other) const;
 private:

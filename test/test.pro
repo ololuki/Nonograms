@@ -38,6 +38,7 @@ HEADERS += \
     solver/field/DeductiveFieldSolverTest.h \
     solver/line/BlocksFromBordersSolverTest.h \
     solver/line/CoveringBlocksSolverTest.h \
+    solver/line/FillFinishedSolverTest.h \
     solver/line/SingleDotsAroundFinishedBlocksSolverTest.h
 
 
@@ -58,4 +59,5 @@ SOURCES += TestMain.cpp \
     solver/field/DeductiveFieldSolverTest.cpp \
     solver/line/BlocksFromBordersSolverTest.cpp \
     solver/line/CoveringBlocksSolverTest.cpp \
+    solver/line/FillFinishedSolverTest.cpp \
     solver/line/SingleDotsAroundFinishedBlocksSolverTest.cpp

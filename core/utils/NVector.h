@@ -35,6 +35,9 @@ template <class T>
 class NVector
 {
 public:
+	typedef typename std::vector<T>::iterator iterator;
+	typedef typename std::vector<T>::const_iterator const_iterator;
+
 	NVector() {}
 	NVector(int count, const T& element = T())
 		: vect(count, element) {}
@@ -58,6 +61,14 @@ public:
 
 	T& back() {return vect.back();}
 	const T& back() const {return vect.back();}
+
+	iterator begin() {return vect.begin();}
+	const_iterator begin() const {return vect.begin();}
+	const_iterator cbegin() const {return vect.cbegin();}
+
+	iterator end() {return vect.end();}
+	const_iterator end() const {return vect.end();}
+	const_iterator cend() const {return vect.cend();}
 
 	void push_back(T object) {vect.push_back(object);}
 	

@@ -46,6 +46,15 @@ public:
 	const Hint& front() const;
 	Hint& back();
 	const Hint& back() const;
+
+	NVector<Hint>::iterator begin() {return hints.begin();}
+	NVector<Hint>::const_iterator begin() const {return hints.begin();}
+	NVector<Hint>::const_iterator cbegin() const {return hints.cbegin();}
+
+	NVector<Hint>::iterator end() {return hints.end();}
+	NVector<Hint>::const_iterator end() const {return hints.end();}
+	NVector<Hint>::const_iterator cend() const {return hints.cend();}
+
 	void push_back(Hint hint);
 	void pop_back();
 private:
