@@ -21,6 +21,7 @@
 #include "DeductiveFieldSolver.h"
 #include "solver/line/BlocksFromBordersSolver.h"
 #include "solver/line/CoveringBlocksSolver.h"
+#include "solver/line/DotsBetweenDotsSolver.h"
 #include "solver/line/FillFinishedSolver.h"
 #include "solver/line/SingleDotsAroundFinishedBlocksSolver.h"
 
@@ -32,6 +33,8 @@ DeductiveFieldSolver::DeductiveFieldSolver()
 	solver = std::make_shared<BlocksFromBordersSolver>();
 	lineSolvers.push_back(solver);
 	solver = std::make_shared<CoveringBlocksSolver>();
+	lineSolvers.push_back(solver);
+	solver = std::make_shared<DotsBetweenDotsSolver>();
 	lineSolvers.push_back(solver);
 	solver = std::make_shared<FillFinishedSolver>();
 	lineSolvers.push_back(solver);
