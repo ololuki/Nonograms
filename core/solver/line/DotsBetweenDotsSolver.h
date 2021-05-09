@@ -32,6 +32,10 @@ public:
 private:
 	void solveFirst(const LineOfHints &hints, LineOfCells &cells);
 	void solveLast(const LineOfHints &hints, LineOfCells &cells);
+
+	template <typename T>
+	void solveFirstLast(T begin, T end, int firstLastBlockSize);
+
 	void solveSmallest(const LineOfHints &hints, LineOfCells &cells);
 };
 

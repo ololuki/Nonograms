@@ -34,6 +34,11 @@
 class LineOfCells
 {
 public:
+	typedef typename NVector<Cell>::iterator iterator;
+	typedef typename NVector<Cell>::const_iterator const_iterator;
+	typedef typename NVector<Cell>::reverse_iterator reverse_iterator;
+	typedef typename NVector<Cell>::const_reverse_iterator const_reverse_iterator;
+
 	LineOfCells();
 	LineOfCells(QString str);
 	LineOfCells(NVector<Cell> vectorToCopy);
@@ -47,13 +52,21 @@ public:
 	Cell& back();
 	const Cell& back() const;
 
-	NVector<Cell>::iterator begin() {return cells.begin();}
-	NVector<Cell>::const_iterator begin() const {return cells.begin();}
-	NVector<Cell>::const_iterator cbegin() const {return cells.cbegin();}
+	iterator begin() {return cells.begin();}
+	const_iterator begin() const {return cells.begin();}
+	const_iterator cbegin() const {return cells.cbegin();}
 
-	NVector<Cell>::iterator end() {return cells.end();}
-	NVector<Cell>::const_iterator end() const {return cells.end();}
-	NVector<Cell>::const_iterator cend() const {return cells.cend();}
+	iterator end() {return cells.end();}
+	const_iterator end() const {return cells.end();}
+	const_iterator cend() const {return cells.cend();}
+
+	reverse_iterator rbegin() {return cells.rbegin();}
+	const_reverse_iterator rbegin() const {return cells.rbegin();}
+	const_reverse_iterator crbegin() const {return cells.crbegin();}
+
+	reverse_iterator rend() {return cells.rend();}
+	const_reverse_iterator rend() const {return cells.rend();}
+	const_reverse_iterator crend() const {return cells.crend();}
 
 	bool operator==(const LineOfCells& other) const;
 	bool operator!=(const LineOfCells& other) const;

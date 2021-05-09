@@ -55,13 +55,13 @@ void DotsBetweenDotsSolverTest::first_block_solving_test_data()
 	        << LineOfCells("--..-..-----------------")
 	        << LineOfCells(".......-----------------");
 
-	QTest::newRow("Two places smaller than hint")
-	        << LineOfHints({Hint(3), Hint(5)})
+	QTest::newRow("Two places smaller than first hint")
+	        << LineOfHints({Hint(3), Hint(1)})
 	        << LineOfCells(".--..-..-----------------")
 	        << LineOfCells("........-----------------");
 
-	QTest::newRow("Two places smaller than hint - strt with multiple dots")
-	        << LineOfHints({Hint(3), Hint(5)})
+	QTest::newRow("Two places smaller than first hint - start with multiple dots")
+	        << LineOfHints({Hint(3), Hint(1)})
 	        << LineOfCells(".....--..-..-----------------")
 	        << LineOfCells("............-----------------");
 
@@ -112,6 +112,46 @@ void DotsBetweenDotsSolverTest::first_block_solving_test_data()
 }
 
 void DotsBetweenDotsSolverTest::first_block_solving_test()
+{
+	QFETCH(LineOfHints, d_lineOfHints);
+	QFETCH(LineOfCells, d_startingLineOfCells);
+	QFETCH(LineOfCells, d_expectedLineOfCells);
+
+	AbstractLineSolver *solver = new DotsBetweenDotsSolver();
+	solver->solve(d_lineOfHints, d_startingLineOfCells);
+	delete solver;
+
+	QCOMPARE(d_startingLineOfCells, d_expectedLineOfCells);
+}
+
+void DotsBetweenDotsSolverTest::last_block_solving_test_data()
+{
+	QTest::addColumn<LineOfHints>("d_lineOfHints");
+	QTest::addColumn<LineOfCells>("d_startingLineOfCells");
+	QTest::addColumn<LineOfCells>("d_expectedLineOfCells");
+
+	QTest::newRow("One place smaller than last hint - start from border")
+	        << LineOfHints({Hint(2), Hint(3)})
+	        << LineOfCells(".---------.--")
+	        << LineOfCells(".---------...");
+
+	QTest::newRow("One place smaller than last hint - start from border")
+	        << LineOfHints({Hint(2), Hint(3)})
+	        << LineOfCells(".---------.-")
+	        << LineOfCells(".---------..");
+
+	QTest::newRow("One place smaller than last hint")
+	        << LineOfHints({Hint(2), Hint(3)})
+	        << LineOfCells(".---------.--.")
+	        << LineOfCells(".---------....");
+
+	QTest::newRow("One place smaller than last hint")
+	        << LineOfHints({Hint(1), Hint(3)})
+	        << LineOfCells(".---------.-.")
+	        << LineOfCells(".---------...");
+}
+
+void DotsBetweenDotsSolverTest::last_block_solving_test()
 {
 	QFETCH(LineOfHints, d_lineOfHints);
 	QFETCH(LineOfCells, d_startingLineOfCells);
@@ -180,10 +220,10 @@ void DotsBetweenDotsSolverTest::common_test_data()
 	        << LineOfCells("----....-----.----..---.--..----------")
 	        << LineOfCells("........-----.----..---.....----------");
 
-//	QTest::newRow("Last start from border smaller than last hint and some empty blocks in center")
-//	        << LineOfHints({Hint(3), Hint(5)})
-//	        << LineOfCells("------.----..---.--..------.---")
-//	        << LineOfCells("------.----..---.....------....");
+	QTest::newRow("Last start from border smaller than last hint and some empty blocks in center")
+	        << LineOfHints({Hint(3), Hint(5)})
+	        << LineOfCells("------.----..---.--..------.---")
+	        << LineOfCells("------.----..---.....------....");
 }
 
 void DotsBetweenDotsSolverTest::common_test()

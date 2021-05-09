@@ -37,6 +37,8 @@ class NVector
 public:
 	typedef typename std::vector<T>::iterator iterator;
 	typedef typename std::vector<T>::const_iterator const_iterator;
+	typedef typename std::vector<T>::reverse_iterator reverse_iterator;
+	typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
 
 	NVector() {}
 	NVector(int count, const T& element = T())
@@ -69,6 +71,14 @@ public:
 	iterator end() {return vect.end();}
 	const_iterator end() const {return vect.end();}
 	const_iterator cend() const {return vect.cend();}
+
+	reverse_iterator rbegin() {return vect.rbegin();}
+	const_reverse_iterator rbegin() const {return vect.rbegin();}
+	const_reverse_iterator crbegin() const {return vect.crbegin();}
+
+	reverse_iterator rend() {return vect.rend();}
+	const_reverse_iterator rend() const {return vect.rend();}
+	const_reverse_iterator crend() const {return vect.crend();}
 
 	void push_back(T object) {vect.push_back(object);}
 	

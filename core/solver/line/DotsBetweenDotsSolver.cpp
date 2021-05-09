@@ -42,20 +42,44 @@ void DotsBetweenDotsSolver::solve(const LineOfHints& hints, LineOfCells& cells)
 }
 
 ///
-/// \brief Multiple empty blocks can be solved
-/// as long as this blocks are smaller than first hint
-/// and does not contain filled black cell.
+/// \brief Solve for first Hint, start from front.
 /// \param hints - line of hints
 /// \param cells - current line of cells, unresolved cells will be changed
 ///
 void DotsBetweenDotsSolver::solveFirst(const LineOfHints& hints, LineOfCells& cells)
 {
+	solveFirstLast(cells.begin(), cells.end(), hints.front().getBlockSize());
+}
+
+///
+/// \brief Solve for last Hint, start from back.
+/// \param hints - line of hints
+/// \param cells - current line of cells, unresolved cells will be changed
+///
+void DotsBetweenDotsSolver::solveLast(const LineOfHints& hints, LineOfCells& cells)
+{
+	solveFirstLast(cells.rbegin(), cells.rend(), hints.back().getBlockSize());
+}
+
+///
+/// \brief Multiple empty blocks can be solved
+/// as long as this blocks are smaller than first (or last) hint
+/// and does not contain filled black cell.
+/// \tparam T - LineOfCells::iterator for first;
+///             LineOfCells::reverse_iterator for last
+/// \param begin - begin for first; rbegin for last
+/// \param end   - end for first;   rend for last
+/// \param firstLastBlockSize - Block size from first or last Hint
+///
+template<typename T>
+void DotsBetweenDotsSolver::solveFirstLast(T begin, T end, int firstLastBlockSize)
+{
 	// true if start of block of empty cells was found
 	bool isEmptyBlockStarted = false;
-	// iterator to first element in block of empty cells
-	NVector<Cell>::iterator start;
+	// iterator to first Cell in block of empty cells
+	T start;
 
-	for (auto it = cells.begin(); it != cells.end(); it++)
+	for (auto it = begin; it != end; ++it)
 	{
 		if (it->isFilledBlack())
 		{
@@ -74,7 +98,7 @@ void DotsBetweenDotsSolver::solveFirst(const LineOfHints& hints, LineOfCells& ce
 		{
 			if (it->isDot())
 			{
-				if (std::distance(start, it) < hints.front().getBlockSize())
+				if (std::distance(start, it) < firstLastBlockSize)
 				{
 					std::for_each(start, it, [](Cell& c){c.makeDot();});
 				}
@@ -86,11 +110,6 @@ void DotsBetweenDotsSolver::solveFirst(const LineOfHints& hints, LineOfCells& ce
 			}
 		}
 	}
-}
-
-void DotsBetweenDotsSolver::solveLast(const LineOfHints& hints, LineOfCells& cells)
-{
-	// TODO: implement
 }
 
 void DotsBetweenDotsSolver::solveSmallest(const LineOfHints& hints, LineOfCells& cells)
@@ -108,7 +127,7 @@ void DotsBetweenDotsSolver::solveSmallest(const LineOfHints& hints, LineOfCells&
 	// true if current block of non dot cells has filled black cell(s)
 	bool blockHasFilledCells = false;
 
-	for (auto it = cells.begin(); it != cells.end(); it++)
+	for (auto it = cells.begin(); it != cells.end(); ++it)
 	{
 		if (it->isFilledBlack())
 		{

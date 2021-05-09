@@ -31,8 +31,8 @@ private slots:
 	void first_block_solving_test_data();
 	void first_block_solving_test();
 
-//	void last_block_solving_test_data();
-//	void last_block_solving_test();
+	void last_block_solving_test_data();
+	void last_block_solving_test();
 
 	void smallest_block_solving_test_data();
 	void smallest_block_solving_test();
