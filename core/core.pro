@@ -47,6 +47,7 @@ SOURCES += \
     solver/field/FieldSolverObserver.cpp \
     solver/line/AbstractLineSolver.cpp \
     solver/line/BlocksFromBordersSolver.cpp \
+    solver/line/BlocksFromDotAndFilledSolver.cpp \
     solver/line/CoveringBlocksSolver.cpp \
     solver/line/DotsBetweenDotsSolver.cpp \
     solver/line/FillFinishedSolver.cpp \
@@ -94,6 +95,7 @@ HEADERS += \
     solver/field/FieldSolverObserver.h \
     solver/line/AbstractLineSolver.h \
     solver/line/BlocksFromBordersSolver.h \
+    solver/line/BlocksFromDotAndFilledSolver.h \
     solver/line/CoveringBlocksSolver.h \
     solver/line/DotsBetweenDotsSolver.h \
     solver/line/FillFinishedSolver.h \
