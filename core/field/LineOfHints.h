@@ -31,6 +31,11 @@
 class LineOfHints
 {
 public:
+	typedef typename NVector<Hint>::iterator iterator;
+	typedef typename NVector<Hint>::const_iterator const_iterator;
+	typedef typename NVector<Hint>::reverse_iterator reverse_iterator;
+	typedef typename NVector<Hint>::const_reverse_iterator const_reverse_iterator;
+
 	LineOfHints();
 	LineOfHints(NVector<Hint> vectorToCopy);
 	int size() const;
@@ -47,13 +52,21 @@ public:
 	Hint& back();
 	const Hint& back() const;
 
-	NVector<Hint>::iterator begin() {return hints.begin();}
-	NVector<Hint>::const_iterator begin() const {return hints.begin();}
-	NVector<Hint>::const_iterator cbegin() const {return hints.cbegin();}
+	iterator begin() {return hints.begin();}
+	const_iterator begin() const {return hints.begin();}
+	const_iterator cbegin() const {return hints.cbegin();}
 
-	NVector<Hint>::iterator end() {return hints.end();}
-	NVector<Hint>::const_iterator end() const {return hints.end();}
-	NVector<Hint>::const_iterator cend() const {return hints.cend();}
+	iterator end() {return hints.end();}
+	const_iterator end() const {return hints.end();}
+	const_iterator cend() const {return hints.cend();}
+
+	reverse_iterator rbegin() {return hints.rbegin();}
+	const_reverse_iterator rbegin() const {return hints.rbegin();}
+	const_reverse_iterator crbegin() const {return hints.crbegin();}
+
+	reverse_iterator rend() {return hints.rend();}
+	const_reverse_iterator rend() const {return hints.rend();}
+	const_reverse_iterator crend() const {return hints.crend();}
 
 	void push_back(Hint hint);
 	void pop_back();
