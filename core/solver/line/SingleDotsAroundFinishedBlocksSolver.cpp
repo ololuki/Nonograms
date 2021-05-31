@@ -49,13 +49,18 @@ void SingleDotsAroundFinishedBlocksSolver::solve(const LineOfHints& hints, LineO
 ///
 void SingleDotsAroundFinishedBlocksSolver::drawDotsOnFirstBlock(const LineOfHints& hints, LineOfCells& cells)
 {
+	if (hints.size() <= 1)
+	{
+		// solve with drawDotsOnBiggestBlock
+		return;
+	}
+
 	int firstNonDotCell = 0;
 	while (cells.at(firstNonDotCell).isDot())
 	{
 		++firstNonDotCell;
 	}
 
-	// TODO: if hints.size() <= 1 return and use biggestBlock
 	if (firstNonDotCell + hints.front().getBlockSize() >= cells.size())
 	{
 		return;
@@ -120,13 +125,18 @@ void SingleDotsAroundFinishedBlocksSolver::drawDotsOnFirstBlock(const LineOfHint
 ///
 void SingleDotsAroundFinishedBlocksSolver::drawDotsOnLastBlock(const LineOfHints& hints, LineOfCells& cells)
 {
+	if (hints.size() <= 1)
+	{
+		// solve with drawDotsOnBiggestBlock
+		return;
+	}
+
 	int firstNonDotCell = cells.size() - 1;
 	while (cells.at(firstNonDotCell).isDot())
 	{
 		--firstNonDotCell;
 	}
 
-	// TODO: if hints.size() <= 1 return and use biggestBlock
 	if (firstNonDotCell < hints.back().getBlockSize())
 	{
 		return;
@@ -183,7 +193,48 @@ void SingleDotsAroundFinishedBlocksSolver::drawDotsOnLastBlock(const LineOfHints
 	}
 }
 
+///
+/// \brief Draw dots around biggest finished blocks.
+/// Multiple blocks can be solved.
+/// \param hints - line of hints
+/// \param cells - current line of cells, unresolved cells will be changed
+///
 void SingleDotsAroundFinishedBlocksSolver::drawDotsOnBiggestBlock(const LineOfHints& hints, LineOfCells& cells)
 {
-	//	TODO: implement
+	auto maxBlockSize = std::max_element(
+	            hints.begin(),
+	            hints.end(),
+	            [](const Hint& a, const Hint& b) {return a.getBlockSize() < b.getBlockSize();}
+	        )->getBlockSize();
+
+	// number of cells continuously filled black
+	int cellsContinuousFilled = 0;
+	// last not filled black cell - init with invalid value
+	LineOfCells::iterator lastNotFilled = cells.end();
+
+	for (auto it = cells.begin(); it != cells.end(); ++it)
+	{
+		if (it->isFilledBlack())
+		{
+			++cellsContinuousFilled;
+			if (cellsContinuousFilled == maxBlockSize)
+			{
+				// make dot before block (if block does not start from border)
+				if (lastNotFilled != cells.end())
+				{
+					lastNotFilled->makeDot();
+				}
+				// make dot after block (if block does not end on border)
+				if ((it + 1) != cells.end())
+				{
+					(it + 1)->makeDot();
+				}
+			}
+		}
+		else
+		{
+			cellsContinuousFilled = 0;
+			lastNotFilled = it;
+		}
+	}
 }

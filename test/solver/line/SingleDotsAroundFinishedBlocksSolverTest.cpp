@@ -172,7 +172,24 @@ void SingleDotsAroundFinishedBlocksSolverTest::last_block_solving_test()
 
 void SingleDotsAroundFinishedBlocksSolverTest::biggest_block_solving_test_data()
 {
-	//TODO: implement
+	QTest::addColumn<LineOfHints>("d_lineOfHints");
+	QTest::addColumn<LineOfCells>("d_startingLineOfCells");
+	QTest::addColumn<LineOfCells>("d_expectedLineOfCells");
+
+	QTest::newRow("1 finished in center + 3 unfinished blocks far from borders")
+	        << LineOfHints({Hint(3), Hint(2), Hint(5), Hint(4)})
+	        << LineOfCells("....-##---#---#####----###-.....")
+	        << LineOfCells("....-##---#--.#####.---###-.....");
+
+	QTest::newRow("2 finished in center + 2 unfinished blocks far from borders")
+	        << LineOfHints({Hint(3), Hint(5), Hint(5), Hint(3)})
+	        << LineOfCells("....-##---#####---#####----##-.....")
+	        << LineOfCells("....-##--.#####.-.#####.---##-.....");
+
+	QTest::newRow("2 finished in center + 3 unfinished blocks far from borders")
+	        << LineOfHints({Hint(3), Hint(5), Hint(2), Hint(5), Hint(3)})
+	        << LineOfCells("....-##---#####----#--#####----##-.....")
+	        << LineOfCells("....-##--.#####.---#-.#####.---##-.....");
 }
 
 ///
@@ -180,7 +197,15 @@ void SingleDotsAroundFinishedBlocksSolverTest::biggest_block_solving_test_data()
 ///
 void SingleDotsAroundFinishedBlocksSolverTest::biggest_block_solving_test()
 {
-	//TODO: implement
+	QFETCH(LineOfHints, d_lineOfHints);
+	QFETCH(LineOfCells, d_startingLineOfCells);
+	QFETCH(LineOfCells, d_expectedLineOfCells);
+
+	AbstractLineSolver *solver = new SingleDotsAroundFinishedBlocksSolver();
+	solver->solve(d_lineOfHints, d_startingLineOfCells);
+	delete solver;
+
+	QCOMPARE(d_startingLineOfCells, d_expectedLineOfCells);
 }
 
 void SingleDotsAroundFinishedBlocksSolverTest::common_test_data()
@@ -243,6 +268,16 @@ void SingleDotsAroundFinishedBlocksSolverTest::common_test_data()
 	        << LineOfHints({Hint(4), Hint(5)})
 	        << LineOfCells("-####----#####-")
 	        << LineOfCells(".####.--.#####.");
+
+	QTest::newRow("2 finished blocks far from borders")
+	        << LineOfHints({Hint(4), Hint(5)})
+	        << LineOfCells(".....-####----#####-.....")
+	        << LineOfCells("......####.--.#####......");
+
+	QTest::newRow("3 finished + 1 unfinished blocks far from borders, biggest in center")
+	        << LineOfHints({Hint(3), Hint(2), Hint(5), Hint(4)})
+	        << LineOfCells("....-###---#---#####----####-.....")
+	        << LineOfCells(".....###.--#--.#####.--.####......");
 }
 
 ///
