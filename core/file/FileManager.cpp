@@ -46,7 +46,12 @@ void FileManager::trySaveAs(const WholeField& field)
 	saveFile(field);
 }
 
-void FileManager::tryOpenAnotherFile()
+///
+/// \brief Get filename from user and open it.
+/// \return true - file opened
+///         false - operation cancelled
+///
+bool FileManager::tryOpenAnotherFile()
 {
 	QString fileName =
 		QFileDialog::getOpenFileName(nullptr,
@@ -54,12 +59,16 @@ void FileManager::tryOpenAnotherFile()
 			QDir::currentPath(),
 			QObject::tr("nonogram (*.nonogram);;All File Types (*.*)"));
 	
-	if (fileName.isEmpty()) return;
+	if (fileName.isEmpty())
+	{
+		return false;
+	}
 	
 	FileReader *reader = new NonogramFileReader();
 	reader->read(fileName.toStdString());
 	this->fieldInFile = reader->getField();
 	delete reader;
+	return true;
 }
 
 void FileManager::setNewCreatedField(const WholeField& field)

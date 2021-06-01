@@ -94,8 +94,10 @@ void FieldController::onOpen()
 {
 	if (!fileManager->abandonChangesOrSavePrompt(field->getWholeField()))
 		return;
-	fileManager->tryOpenAnotherFile();
-	field->setWholeField(fileManager->getField());
+	if (fileManager->tryOpenAnotherFile())
+	{
+		field->setWholeField(fileManager->getField());
+	}
 }
 
 void FieldController::onSaveAs()
