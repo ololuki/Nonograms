@@ -29,7 +29,13 @@ void FileManager::trySaveChanges(const WholeField& field)
 	}
 }
 
-void FileManager::trySaveAs(const WholeField& field)
+///
+/// \brief Get filename from user and save field to file.
+/// \param field
+/// \return true - file saved
+///         false - operation cancelled
+///
+bool FileManager::trySaveAs(const WholeField& field)
 {
 	// string filePath = FileView.FilePathDialog();
 	//setCurrentFileName(fileName);
@@ -41,9 +47,11 @@ void FileManager::trySaveAs(const WholeField& field)
 			QDir::currentPath(),
 			QObject::tr("nonogram (*.nonogram)"));
 	qDebug() << fileName;
-	if (fileName.isEmpty()) return;
+	if (fileName.isEmpty())
+		return false;
 	setCurrentFileName(fileName);
 	saveFile(field);
+	return true;
 }
 
 ///
@@ -111,18 +119,34 @@ void FileManager::saveFile(const WholeField& field)
 	delete writer;
 }
 
+///
+/// \brief FileManager::abandonChangesOrSavePrompt
+/// \param field
+/// \return true - file saved,
+///                no need to save or
+///                user explicitly discarded changes;
+///         false - operation cancelled
+///
 bool FileManager::abandonChangesOrSavePrompt(const WholeField& field)
 {
+	if (!isFieldDirty(field))
+	{
+		// no need to save
+		return true;
+	}
 	auto answer = QMessageBox::question(nullptr,
 		"Unsaved changes",
 		"Do you want to save changes?",
 		QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
 	if (answer == QMessageBox::Yes)
 	{
-		trySaveAs(field);
-		
-	} else if (answer == QMessageBox::Cancel) {
-		return false;
+		return trySaveAs(field);
 	}
-	return true;
+	else if (answer == QMessageBox::No)
+	{
+		// user explicitly discarded changes
+		return true;
+	}
+	// operation cancelled
+	return false;
 }
