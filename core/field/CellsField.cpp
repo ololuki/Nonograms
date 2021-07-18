@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -75,6 +75,16 @@ CellsField& CellsField::operator=(CellsField&& field)
 CellsField::~CellsField()
 {
 	qDebug() << "CellsField d-tor";
+}
+
+bool CellsField::operator==(const CellsField& other) const
+{
+	return array == other.array;
+}
+
+bool CellsField::operator!=(const CellsField& other) const
+{
+	return array != other.array;
 }
 
 bool CellsField::areSolvedCellsEqual(const CellsField& other) const

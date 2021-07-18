@@ -21,6 +21,16 @@
 #include "ArrayOfCells.h"
 
 
+bool ArrayOfCells::operator==(const ArrayOfCells& other) const
+{
+	return array == other.array;
+}
+
+bool ArrayOfCells::operator!=(const ArrayOfCells& other) const
+{
+	return array != other.array;
+}
+
 /// return true if arrays are same size and have solved cells
 /// (dot or filled) in same places in both arrays
 ///

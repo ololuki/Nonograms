@@ -84,6 +84,15 @@ public:
 	
 	void pop_back() {vect.pop_back();}
 
+	bool operator==(const NVector<T>& other) const
+	{
+		return vect == other.vect;
+	}
+	bool operator!=(const NVector<T>& other) const
+	{
+		return vect != other.vect;
+	}
+
 private:
 	std::vector<T> vect;
 };

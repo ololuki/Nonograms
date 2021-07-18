@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -31,6 +31,11 @@ private slots:
 	void constructor_initializer_list();
 	void constructor_initializer_list_not_valid_make_empty();
 	void constructor_initializer_list_empty_list_make_empty();
+
+	void equality_opeators_compare_cell_sign_equal_data();
+	void equality_opeators_compare_cell_sign_equal();
+	void equality_opeators_compare_cell_sign_not_equal_data();
+	void equality_opeators_compare_cell_sign_not_equal();
 };
 
 #endif // CELLSFIELDTEST_H

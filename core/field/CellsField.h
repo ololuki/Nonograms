@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -44,6 +44,9 @@ public:
 	CellsField& operator=(const CellsField& field) = default;
 	CellsField& operator=(CellsField&& field);
 	virtual ~CellsField();
+
+	bool operator==(const CellsField& other) const;
+	bool operator!=(const CellsField& other) const;
 
 	bool areSolvedCellsEqual(const CellsField& other) const;
 	int getWidth() const {return array.width();}
