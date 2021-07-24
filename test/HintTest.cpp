@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2018 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -89,4 +89,32 @@ void HintTest::getAddress_should_give_same_address_as_given_in_constructor()
 	AddressOfHint address = AddressOfHint(Orientation::VERTICAL, 3, 5);
 	Hint hint = Hint(address, 2);
 	QVERIFY(hint.getAddress() == address);
+}
+
+void HintTest::equality_operators_equal_for_same_blockSize_and_CellSign()
+{
+	Hint hintA = Hint(15, cellSign::SGN_FILL_BLACK);
+	Hint hintB = Hint(15, cellSign::SGN_FILL_BLACK);
+
+	QCOMPARE(hintA, hintB);
+	QVERIFY(hintA == hintB);
+	QCOMPARE(hintA != hintB, false);
+}
+
+void HintTest::equality_operators_not_equal_for_different_blockSize()
+{
+	Hint hintA = Hint(15, cellSign::SGN_FILL_BLACK);
+	Hint hintB = Hint(20, cellSign::SGN_FILL_BLACK);
+
+	QVERIFY(hintA != hintB);
+	QCOMPARE(hintA == hintB, false);
+}
+
+void HintTest::equality_operators_not_equal_for_different_CellSign()
+{
+	Hint hintA = Hint(2, cellSign::SGN_FILL_BLACK);
+	Hint hintB = Hint(2, cellSign::SGN_FILLED);
+
+	QVERIFY(hintA != hintB);
+	QCOMPARE(hintA == hintB, false);
 }

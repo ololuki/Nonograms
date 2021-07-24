@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -45,6 +45,10 @@ public:
 	HintsField& operator=(const HintsField& field) = default;
 	HintsField& operator=(HintsField&& field) = default;
 	virtual ~HintsField();
+
+	bool operator==(const HintsField& other) const;
+	bool operator!=(const HintsField& other) const;
+
 	const Hint& getHint(AddressOfHint address) const;
 	virtual void updateHint(Hint hint);
 	virtual void insertHintBefore(Hint hint);
@@ -61,10 +65,13 @@ public:
 	LineOfHints getLineOfHints(int lineNumber);
 	virtual void setLineOfHints(LineOfHints line);
 
+	std::string toStdString() const;
 protected:
 	int numberOfLines;
 	Orientation orientation;
 	NVector<LineOfHints> linesOfHints;
 };
+
+char *toString(const HintsField& hints);
 
 #endif // HINTSFIELD_H

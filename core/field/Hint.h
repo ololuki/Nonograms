@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2018 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -35,8 +35,17 @@ public:
 	Hint(int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
 	Hint(int blockSize, char symbol);
 	Hint(AddressOfHint address, int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
+
+	bool operator==(const Hint &other) const {
+		return (blockSize == other.blockSize && sign == other.sign);
+	}
+	bool operator!=(const Hint &other) const {
+		return (blockSize != other.blockSize || sign != other.sign);
+	}
+
 	int getBlockSize() const {return blockSize;}
 	void setBlockSize(int blockSize) {this->blockSize = blockSize;}
+	cellSign getCellSign() const {return sign;}
 	bool isFilledBlack() const {return sign == cellSign::SGN_FILL_BLACK;}
 	void makeFilledBlack() {sign = cellSign::SGN_FILL_BLACK;}
 	AddressOfHint getAddress() const {return address;}

@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -19,6 +19,8 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "HintsFieldTest.h"
+
+Q_DECLARE_METATYPE(HintsField)
 
 
 void HintsFieldTest::constructor_initializer_list_horizontal()
@@ -57,13 +59,160 @@ void HintsFieldTest::constructor_initializer_list_vertical()
 	QVERIFY(hintsField.getHint({Orientation::VERTICAL, 0, 1}).getBlockSize() == 5);
 }
 
-/// Empty initializer list should make empty CellsField
+/// Empty initializer list should make empty HintsField
 void HintsFieldTest::constructor_initializer_list_empty_list_make_empty()
 {
 	HintsField hintsField(Orientation::VERTICAL, {});
 
 	QCOMPARE(hintsField.getNumberOfLines(), 0);
 	QCOMPARE(hintsField.allHintsLength(), 0);
+}
+
+void HintsFieldTest::equality_opeators_compare_cell_sign_equal_data()
+{
+	QTest::addColumn<HintsField>("d_fieldA");
+	QTest::addColumn<HintsField>("d_fieldB");
+
+	QTest::newRow("empty") << HintsField() << HintsField();
+
+	QTest::newRow("1 column") << HintsField{1, Orientation::VERTICAL}
+	                          << HintsField{1, Orientation::VERTICAL};
+
+	QTest::newRow("1 row") << HintsField{1, Orientation::HORIZONTAL}
+	                       << HintsField{1, Orientation::HORIZONTAL};
+
+	QTest::newRow("1 column with Hints")
+	        << HintsField{Orientation::VERTICAL, {LineOfHints({Hint(5), Hint(9)})}}
+	        << HintsField{Orientation::VERTICAL, {LineOfHints({Hint(5), Hint(9)})}};
+
+	QTest::newRow("1 row with Hints")
+	        << HintsField{Orientation::HORIZONTAL, {LineOfHints({Hint(15), Hint(2)})}}
+	        << HintsField{Orientation::HORIZONTAL, {LineOfHints({Hint(15), Hint(2)})}};
+
+	QTest::newRow("3 columns")
+	        << HintsField{
+	           Orientation::VERTICAL, {
+	           LineOfHints({Hint(1)}),
+	           LineOfHints({Hint(5), Hint(9)}),
+	           LineOfHints({Hint(13)}) }}
+	        << HintsField{
+	           Orientation::VERTICAL, {
+	           LineOfHints({Hint(1)}),
+	           LineOfHints({Hint(5), Hint(9)}),
+	           LineOfHints({Hint(13)}) }};
+}
+
+void HintsFieldTest::equality_opeators_compare_cell_sign_equal()
+{
+	QFETCH(HintsField, d_fieldA);
+	QFETCH(HintsField, d_fieldB);
+
+	QCOMPARE(d_fieldA, d_fieldB);
+	QVERIFY(d_fieldA == d_fieldB);
+	QCOMPARE(d_fieldA != d_fieldB, false);
+}
+
+void HintsFieldTest::equality_opeators_compare_cell_sign_not_equal_data()
+{
+	QTest::addColumn<HintsField>("d_fieldA");
+	QTest::addColumn<HintsField>("d_fieldB");
+
+	QTest::newRow("different orientation")
+	        << HintsField{1, Orientation::VERTICAL}
+	        << HintsField{1, Orientation::HORIZONTAL};
+
+	QTest::newRow("different number of rows")
+	        << HintsField{5, Orientation::HORIZONTAL}
+	        << HintsField{1, Orientation::HORIZONTAL};
+
+	QTest::newRow("1 column with 1 Hint - different blockSize")
+	        << HintsField{Orientation::VERTICAL, {LineOfHints({Hint(5)})}}
+	        << HintsField{Orientation::VERTICAL, {LineOfHints({Hint(4)})}};
+
+	QTest::newRow("1 column with 1 Hint - different cellSign")
+	        << HintsField{Orientation::VERTICAL, {LineOfHints({Hint(4, cellSign::SGN_FILLED)})}}
+	        << HintsField{Orientation::VERTICAL, {LineOfHints({Hint(4, cellSign::SGN_FILL_BLACK)})}};
+
+	QTest::newRow("1 column with 2 Hints")
+	        << HintsField{Orientation::VERTICAL, {LineOfHints({Hint(9), Hint(5)})}}
+	        << HintsField{Orientation::VERTICAL, {LineOfHints({Hint(9), Hint(4)})}};
+
+	QTest::newRow("3 columns")
+	        << HintsField{
+	           Orientation::VERTICAL, {
+	           LineOfHints({Hint(1)}),
+	           LineOfHints({Hint(5), Hint(9)}),
+	           LineOfHints({Hint(13)}) }}
+	        << HintsField{
+	           Orientation::VERTICAL, {
+	           LineOfHints({Hint(1)}),
+	           LineOfHints({Hint(5), Hint(9)}),
+	           LineOfHints({Hint(2)}) }};
+
+	QTest::newRow("3 columns/rows with different orientation only")
+	        << HintsField{
+	           Orientation::VERTICAL, {
+	           LineOfHints({Hint(1)}),
+	           LineOfHints({Hint(5), Hint(9)}),
+	           LineOfHints({Hint(13)}) }}
+	        << HintsField{
+	           Orientation::HORIZONTAL, {
+	           LineOfHints({Hint(1)}),
+	           LineOfHints({Hint(5), Hint(9)}),
+	           LineOfHints({Hint(13)}) }};
+
+	QTest::newRow("3 columns with different number of Hints in one row - more in second")
+	        << HintsField{
+	           Orientation::VERTICAL, {
+	           LineOfHints({Hint(1)}),
+	           LineOfHints({Hint(5), Hint(9)}),
+	           LineOfHints({Hint(13)}) }}
+	        << HintsField{
+	           Orientation::VERTICAL, {
+	           LineOfHints({Hint(1), Hint(5)}),
+	           LineOfHints({Hint(5), Hint(9)}),
+	           LineOfHints({Hint(13)}) }};
+
+	QTest::newRow("3 columns with different number of Hints in one row - more in first")
+	        << HintsField{
+	           Orientation::VERTICAL, {
+	           LineOfHints({Hint(1), Hint(5)}),
+	           LineOfHints({Hint(5), Hint(9)}),
+	           LineOfHints({Hint(13)}) }}
+	        << HintsField{
+	           Orientation::VERTICAL, {
+	           LineOfHints({Hint(1)}),
+	           LineOfHints({Hint(5), Hint(9)}),
+	           LineOfHints({Hint(13)}) }};
+
+	QTest::newRow("different number of columns with same data")
+	        << HintsField{
+	           Orientation::VERTICAL, {
+	           LineOfHints({Hint(1)}),
+	           LineOfHints({Hint(5), Hint(9)}),
+	           LineOfHints({Hint(13)}) }}
+	        << HintsField{
+	           Orientation::VERTICAL, {
+	           LineOfHints({Hint(1)}),
+	           LineOfHints({Hint(5), Hint(9)}) }};
+
+	HintsField someHintsField{
+		Orientation::HORIZONTAL, {
+			LineOfHints({Hint(1)}),
+			LineOfHints({Hint(3), Hint(9)}),
+			LineOfHints({Hint(5)}) }};
+	HintsField copiedHintsField(someHintsField);
+	copiedHintsField.updateHint({AddressOfHint(Orientation::HORIZONTAL, 0, 0), 25});
+	QTest::newRow("copy and modify") << someHintsField << copiedHintsField;
+}
+
+void HintsFieldTest::equality_opeators_compare_cell_sign_not_equal()
+{
+	QFETCH(HintsField, d_fieldA);
+	QFETCH(HintsField, d_fieldB);
+
+	QCOMPARE(d_fieldA == d_fieldB, false);
+	QVERIFY(d_fieldA != d_fieldB);
 }
 
 void HintsFieldTest::default_value_of_hint_is_zero()

@@ -110,3 +110,48 @@ void LineOfHints::pop_back()
 {
 	hints.pop_back();
 }
+
+bool LineOfHints::operator==(const LineOfHints& other) const
+{
+	return hints == other.hints;
+}
+
+bool LineOfHints::operator!=(const LineOfHints& other) const
+{
+	return hints != other.hints;
+}
+
+///
+/// Returns a textual representation of LineOfHints
+/// for testing and debugging.
+/// \return std::string with readable contents of LineOfHints
+///
+std::string LineOfHints::toStdString() const
+{
+	std::string str = "[";
+	for (int i = 0; i < hints.size(); i++)
+	{
+		if (i > 0)
+		{
+			str += "| ";
+		}
+		str += std::to_string(hints.operator[](i).getBlockSize());
+		str += ",";
+		str += CellSignUtils::toChar(hints.operator[](i).getCellSign());
+	}
+	str += "]";
+	return str;
+}
+
+///
+/// Returns a textual representation of LineOfHints.
+/// This function is used by QCOMPARE() to output verbose
+/// information in case of a test failure.
+/// The caller of toString() must delete the returned data using delete[].
+/// \param hints
+/// \return pointer to c string alocated with new[]
+///
+char *toString(const LineOfHints& hints)
+{
+	return qstrdup(hints.toStdString().c_str());
+}

@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -67,7 +67,8 @@ HintsField::HintsField(Orientation o, std::initializer_list<LineOfHints> lines)
 		for (int i = 0; i < row.size(); i++)
 		{
 			lineOfHints.push_back(Hint(AddressOfHint(o, lineNumber, i),
-			                           row[i].getBlockSize()));
+			                           row[i].getBlockSize(),
+			                           row[i].getCellSign()));
 		}
 		linesOfHints.push_back(LineOfHints(lineOfHints));
 		++lineNumber;
@@ -76,6 +77,24 @@ HintsField::HintsField(Orientation o, std::initializer_list<LineOfHints> lines)
 
 HintsField::~HintsField()
 {
+}
+
+bool HintsField::operator==(const HintsField& other) const
+{
+	if (orientation == other.orientation)
+	{
+		return linesOfHints == other.linesOfHints;
+	}
+	return false;
+}
+
+bool HintsField::operator!=(const HintsField& other) const
+{
+	if (orientation != other.orientation)
+	{
+		return true;
+	}
+	return linesOfHints != other.linesOfHints;
 }
 
 const Hint& HintsField::getHint(AddressOfHint address) const
@@ -161,4 +180,35 @@ void HintsField::setLineOfHints(LineOfHints line)
 	if (line.size() < 1) return;
 	int lineNumber = line[0].getAddress().getLine();
 	linesOfHints[lineNumber] = line;
+}
+
+///
+/// Returns a textual representation of HintsField
+/// for testing and debugging.
+/// \return std::string with readable contents of HintsField
+///
+std::string HintsField::toStdString() const
+{
+	std::string str = "HinstField ";
+	str += (orientation == Orientation::HORIZONTAL) ? "Horizontal" : "Vertical";
+	str += "\n";
+	for (auto line : linesOfHints)
+	{
+		str += line.toStdString();
+		str += "\n";
+	}
+	return str;
+}
+
+///
+/// Returns a textual representation of HintsField.
+/// This function is used by QCOMPARE() to output verbose
+/// information in case of a test failure.
+/// The caller of toString() must delete the returned data using delete[].
+/// \param hints
+/// \return pointer to c string alocated with new[]
+///
+char *toString(const HintsField& hints)
+{
+	return qstrdup(hints.toStdString().c_str());
 }

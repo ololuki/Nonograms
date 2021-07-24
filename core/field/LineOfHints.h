@@ -70,9 +70,16 @@ public:
 
 	void push_back(Hint hint);
 	void pop_back();
+
+	bool operator==(const LineOfHints& other) const;
+	bool operator!=(const LineOfHints& other) const;
+
+	std::string toStdString() const;
 private:
 	NVector<Hint> hints;
 };
+
+char* toString(const LineOfHints& cells);
 
 Q_DECLARE_METATYPE(LineOfHints)
 
