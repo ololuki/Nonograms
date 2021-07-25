@@ -19,7 +19,6 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "LineOfCells.h"
-#include <string>
 
 
 ///
@@ -36,11 +35,11 @@ LineOfCells::LineOfCells()
 /// Used mainly for tests.
 /// \param str - line as string
 ///
-LineOfCells::LineOfCells(QString str)
+LineOfCells::LineOfCells(std::string str)
 {
-	for (int i = 0; i < str.size(); i++)
+	for (size_t i = 0; i < str.size(); i++)
 	{
-		cells.push_back(Cell(str[i].toLatin1()));
+		cells.push_back(Cell(str[i]));
 	}
 }
 
@@ -98,19 +97,12 @@ const Cell& LineOfCells::back() const
 ///
 bool LineOfCells::operator==(const LineOfCells& other) const
 {
-	if (size() != other.size())
-		return false;
-	for (int i = 0; i < size(); i++)
-	{
-		if (at(i) != other.at(i))
-			return false;
-	}
-	return true;
+	return cells == other.cells;
 }
 
 bool LineOfCells::operator!=(const LineOfCells& other) const
 {
-	return !operator==(other);
+	return cells != other.cells;
 }
 
 ///

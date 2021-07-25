@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -21,7 +21,7 @@
 #ifndef ADDRESSOFCELL_H
 #define ADDRESSOFCELL_H
 
-#include <QObject>
+#include <QMetaType>
 
 
 ///

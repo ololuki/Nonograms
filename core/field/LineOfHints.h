@@ -21,7 +21,7 @@
 #ifndef LINEOFHINTS_H
 #define LINEOFHINTS_H
 
-#include <vector>
+#include <string>
 #include "utils/NVector.h"
 #include "field/Hint.h"
 

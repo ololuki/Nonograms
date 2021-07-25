@@ -21,6 +21,8 @@
 #ifndef HINTSFIELD_H
 #define HINTSFIELD_H
 
+#include <initializer_list>
+#include <string>
 #include "AddressOfHint.h"
 #include "Hint.h"
 #include "LineOfHints.h"

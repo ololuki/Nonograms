@@ -22,7 +22,7 @@
 #define LINEOFCELLS_H
 
 #include "Cell.h"
-#include "vector"
+#include <string>
 #include "utils/NVector.h"
 
 
@@ -40,7 +40,7 @@ public:
 	typedef typename NVector<Cell>::const_reverse_iterator const_reverse_iterator;
 
 	LineOfCells();
-	LineOfCells(QString str);
+	LineOfCells(std::string str);
 	LineOfCells(NVector<Cell> vectorToCopy);
 	int size() const;
 	
