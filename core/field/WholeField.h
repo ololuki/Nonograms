@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -41,6 +41,8 @@ public:
 	WholeField& operator=(const WholeField& field);
 	WholeField& operator=(WholeField&& field);
 	virtual ~WholeField();
+	bool operator==(const WholeField& other) const;
+	bool operator!=(const WholeField& other) const;
 	int getWidth() const;
 	int getHeight() const;
 	CellsField& cells();

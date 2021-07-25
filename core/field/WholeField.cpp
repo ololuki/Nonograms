@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -82,6 +82,20 @@ WholeField& WholeField::operator=(WholeField&& field)
 WholeField::~WholeField()
 {
 	qDebug() << "WholeField d-tor";
+}
+
+bool WholeField::operator==(const WholeField& other) const
+{
+	return cellsField == other.cellsField
+	        && columnsHintsField == other.columnsHintsField
+	        && rowsHintsField == other.rowsHintsField;
+}
+
+bool WholeField::operator!=(const WholeField& other) const
+{
+	return cellsField != other.cellsField
+	        || columnsHintsField != other.columnsHintsField
+	        || rowsHintsField != other.rowsHintsField;
 }
 
 int WholeField::getWidth() const
