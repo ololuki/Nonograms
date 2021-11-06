@@ -55,6 +55,7 @@ SOURCES += \
     utils/TimeMeasure.cpp
 
 HEADERS += \
+    controller/DrawingMode.h \
     mainwindow.h \
     field/WholeField.h \
     field/WholeFieldModel.h \
