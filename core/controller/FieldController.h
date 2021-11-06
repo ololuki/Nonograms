@@ -28,6 +28,7 @@
 #include "controller/HintsController.h"
 #include "file/FileManager.h"
 #include "../solver/SolverWorker.h"
+#include "DrawingMode.h"
 
 #include <QThread>
 
@@ -44,6 +45,7 @@ public:
 	void onOpen();
 	void onSaveAs();
 	
+	void setDrawingMode(DrawingMode drawingMode);
 	void onSolve(bool start);
 	
 signals:
@@ -62,7 +64,9 @@ private:
 	CellsView *cellsView;
 	HintsView *columnsHintsView;
 	HintsView *rowsHintsView;
-	
+
+	DrawingMode drawingMode;
+
 	std::shared_ptr<CellsController> cellsController;
 	std::shared_ptr<HintsController> columnsHintsController;
 	std::shared_ptr<HintsController> rowsHintsController;

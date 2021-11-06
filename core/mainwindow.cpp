@@ -74,27 +74,27 @@ void MainWindow::on_actionSave_as_triggered()
 
 void MainWindow::on_actionFree_drawing_triggered()
 {
-	qDebug() << "on_actionFree_drawing_triggered";
+	fieldController->setDrawingMode(DrawingMode::FreeDrawing);
 }
 
 void MainWindow::on_actionField_defining_triggered()
 {
-	qDebug() << "on_actionField_defining_triggered";
+	fieldController->setDrawingMode(DrawingMode::FieldDefining);
 }
 
 void MainWindow::on_actionManual_solving_triggered()
 {
-	qDebug() << "on_actionManual_solving_triggered";
+	fieldController->setDrawingMode(DrawingMode::ManualSolving);
 }
 
 void MainWindow::on_actionAuto_solving_triggered()
 {
-	qDebug() << "on_actionAuto_solving_triggered";
+	fieldController->setDrawingMode(DrawingMode::AutoDeductiveSolving);
 }
 
 void MainWindow::on_actionAuto_solving_brute_force_triggered()
 {
-	qDebug() << "on_actionAuto_solving_brute_force_triggered";
+	fieldController->setDrawingMode(DrawingMode::AutoBruteForceSolving);
 }
 
 void MainWindow::on_actionSolve_triggered()

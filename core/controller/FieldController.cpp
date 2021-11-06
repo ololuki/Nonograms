@@ -106,6 +106,18 @@ void FieldController::onSaveAs()
 }
 
 ///
+/// \brief Set drawing mode.
+/// Changes controllers behavior - drawing cells and defining hints
+/// could be enabled or disabled based on DrawingMode.
+/// \param drawingMode - new mode to set
+///
+void FieldController::setDrawingMode(DrawingMode drawingMode)
+{
+	this->drawingMode = drawingMode;
+	qDebug() << "drawingMode " << static_cast<int>(drawingMode);
+}
+
+///
 /// \brief Used when user clicks "Solve" button.
 /// \param start - if true button starts solving
 /// if false stops solving
