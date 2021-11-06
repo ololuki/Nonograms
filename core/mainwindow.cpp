@@ -72,6 +72,31 @@ void MainWindow::on_actionSave_as_triggered()
 	fieldController->onSaveAs();
 }
 
+void MainWindow::on_actionFree_drawing_triggered()
+{
+	qDebug() << "on_actionFree_drawing_triggered";
+}
+
+void MainWindow::on_actionField_defining_triggered()
+{
+	qDebug() << "on_actionField_defining_triggered";
+}
+
+void MainWindow::on_actionManual_solving_triggered()
+{
+	qDebug() << "on_actionManual_solving_triggered";
+}
+
+void MainWindow::on_actionAuto_solving_triggered()
+{
+	qDebug() << "on_actionAuto_solving_triggered";
+}
+
+void MainWindow::on_actionAuto_solving_brute_force_triggered()
+{
+	qDebug() << "on_actionAuto_solving_brute_force_triggered";
+}
+
 void MainWindow::on_actionSolve_triggered()
 {
 	bool start = ui->actionSolve->text() == textSolve;
@@ -82,6 +107,9 @@ void MainWindow::on_actionAdd_blocks_triggered()
 {
 	fieldController->addDummyBlock();
 }
+
+// TODO: fieldController->onAutoSolvingDeductiveSelected
+// fieldController->onAutoSolvingBruteForceSelected
 
 void MainWindow::on_actionAbout_triggered()
 {

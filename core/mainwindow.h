@@ -43,6 +43,11 @@ private slots:
 	void on_actionOpen_triggered();
 	void on_actionSave_as_triggered();
 	
+	void on_actionFree_drawing_triggered();
+	void on_actionField_defining_triggered();
+	void on_actionManual_solving_triggered();
+	void on_actionAuto_solving_triggered();
+	void on_actionAuto_solving_brute_force_triggered();
 	void on_actionSolve_triggered();
 	
 	void on_actionAdd_blocks_triggered();
