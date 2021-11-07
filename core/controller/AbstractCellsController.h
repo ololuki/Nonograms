@@ -21,9 +21,13 @@
 #ifndef ABSTRACTCELLSCONTROLLER_H
 #define ABSTRACTCELLSCONTROLLER_H
 
-#include "field/WholeFieldModel.h"
-#include "widgets/CellsView.h"
 #include "action/CellAction.h"
+#include "field/AddressOfCell.h"
+#include <QObject>
+#include <memory>
+
+class CellsFieldModel;
+class CellsView;
 
 
 class AbstractCellsController : public QObject

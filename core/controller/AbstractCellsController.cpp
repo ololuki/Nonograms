@@ -19,6 +19,7 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "AbstractCellsController.h"
+#include "widgets/CellsView.h"
 #include <QDebug>
 
 
