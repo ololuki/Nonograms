@@ -13,6 +13,9 @@ DESTDIR = ../bin
 DEFINES += QT_DEPRECATED_WARNINGS #emit warning if any deprecated feature is used
 
 SOURCES += \
+    controller/AbstractCellsController.cpp \
+    controller/EditableCellsController.cpp \
+    controller/ReadOnlyCellsController.cpp \
     mainwindow.cpp \
     field/WholeField.cpp \
     field/WholeFieldModel.cpp \
@@ -35,7 +38,6 @@ SOURCES += \
     field/LineOfCells.cpp \
     widgets/CellsView.cpp \
     controller/HintsController.cpp \
-    controller/CellsController.cpp \
     field/CellsField.cpp \
     field/CellsFieldModel.cpp \
     field/HintsField.cpp \
@@ -55,7 +57,10 @@ SOURCES += \
     utils/TimeMeasure.cpp
 
 HEADERS += \
+    controller/AbstractCellsController.h \
     controller/DrawingMode.h \
+    controller/EditableCellsController.h \
+    controller/ReadOnlyCellsController.h \
     mainwindow.h \
     field/WholeField.h \
     field/WholeFieldModel.h \
@@ -84,7 +89,6 @@ HEADERS += \
     field/LineOfCells.h \
     widgets/CellsView.h \
     controller/HintsController.h \
-    controller/CellsController.h \
     field/CellsField.h \
     field/CellsFieldModel.h \
     field/HintsField.h \

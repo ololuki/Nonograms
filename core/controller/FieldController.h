@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -24,7 +24,7 @@
 #include "field/WholeFieldModel.h"
 #include "widgets/CellsView.h"
 #include "widgets/HintsView.h"
-#include "controller/CellsController.h"
+#include "controller/AbstractCellsController.h"
 #include "controller/HintsController.h"
 #include "file/FileManager.h"
 #include "../solver/SolverWorker.h"
@@ -67,7 +67,7 @@ private:
 
 	DrawingMode drawingMode;
 
-	std::shared_ptr<CellsController> cellsController;
+	std::shared_ptr<AbstractCellsController> cellsController;
 	std::shared_ptr<HintsController> columnsHintsController;
 	std::shared_ptr<HintsController> rowsHintsController;
 	std::shared_ptr<FileManager> fileManager;

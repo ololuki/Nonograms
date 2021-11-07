@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2021 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -21,6 +21,8 @@
 #include "FieldController.h"
 #include "SizeDialog.h"
 #include <QDebug>
+#include "controller/EditableCellsController.h"
+#include "controller/ReadOnlyCellsController.h"
 #include "solver/field/DeductiveFieldSolver.h"
 
 
@@ -33,7 +35,7 @@ FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsVi
 	this->columnsHintsView = columnsHintsView;
 	this->rowsHintsView = rowsHintsView;
 	
-	cellsController = std::make_shared<CellsController>(field->cells(), this->cellsView);
+	cellsController = std::make_shared<EditableCellsController>(field->cells(), this->cellsView);
 	columnsHintsController = std::make_shared<HintsController>(field->columnsHints(), this->columnsHintsView);
 	rowsHintsController = std::make_shared<HintsController>(field->rowsHints(), this->rowsHintsView);
 	
@@ -115,6 +117,14 @@ void FieldController::setDrawingMode(DrawingMode drawingMode)
 {
 	this->drawingMode = drawingMode;
 	qDebug() << "drawingMode " << static_cast<int>(drawingMode);
+	if (drawingMode == DrawingMode::FreeDrawing || drawingMode == DrawingMode::ManualSolving)
+	{
+		cellsController = std::make_shared<EditableCellsController>(field->cells(), this->cellsView);
+	}
+	else
+	{
+		cellsController = std::make_shared<ReadOnlyCellsController>(field->cells(), this->cellsView);
+	}
 }
 
 ///
