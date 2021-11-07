@@ -161,11 +161,16 @@ void HintsView::mouseMoveEvent(QMouseEvent *event)
 		if ((screenPoint.y() + insertingButtonHeight/2) % constants.squareSize < insertingButtonHeight)
 		{
 			screenPoint.setY(screenPoint.y() - insertingButtonHeight/2);	// remap to area with defined descriptions + area for half of insertButtons
-			if (screenPoint.y() < 0) screenPoint.setY(0);
-			if(isPointOnDefinedHint(screenPoint))
+			if (screenPoint.y() < 0)
+			{
+				screenPoint.setY(0);
+			}
+			if (isPointOnDefinedHint(screenPoint))
 			{
 				action(HintAction::InsertingButtonHover, address);
-			} else {
+			}
+			else
+			{
 				hideInsertingButton();
 			}
 		} else {
@@ -175,11 +180,18 @@ void HintsView::mouseMoveEvent(QMouseEvent *event)
 		if ((screenPoint.x() + insertingButtonHeight/2) % constants.squareSize < insertingButtonHeight)
 		{
 			screenPoint.setX(screenPoint.x() - insertingButtonHeight/2);	// remap to area with defined descriptions + area for half of insertButtons
-			if (screenPoint.x() < 0) screenPoint.setX(0);
-			if(isPointOnDefinedHint(screenPoint))
-				moveAndShowInsertingButton(address);
+			if (screenPoint.x() < 0)
+			{
+				screenPoint.setX(0);
+			}
+			if (isPointOnDefinedHint(screenPoint))
+			{
+				action(HintAction::InsertingButtonHover, address);
+			}
 			else
+			{
 				hideInsertingButton();
+			}
 		} else {
 			hideInsertingButton();
 		}
