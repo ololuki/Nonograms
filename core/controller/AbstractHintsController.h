@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
-#ifndef HINTSCONTROLLER_H
-#define HINTSCONTROLLER_H
+#ifndef ABSTRACTHINTSCONTROLLER_H
+#define ABSTRACTHINTSCONTROLLER_H
 
 #include "action/HintAction.h"
 #include "field/AddressOfHint.h"
@@ -31,29 +31,28 @@ class HintsFieldModel;
 class HintsView;
 
 
-class HintsController : public QObject
+class AbstractHintsController : public QObject
 {
 	Q_OBJECT
 public:
-	HintsController(std::shared_ptr<HintsFieldModel> field, HintsView *hintsView);
-	~HintsController() override = default;
+	AbstractHintsController(std::shared_ptr<HintsFieldModel> field, HintsView *hintsView);
+	~AbstractHintsController() override = default;
 
 signals:
-	// invoked by controller
+	// invoked by this controller
 	void showInsertingButtonBefore(AddressOfHint address);
 	void showHintEditingBox(AddressOfHint address);
 
 private slots:
-	// on signals emited to controller
-	void onAction(HintAction action, AddressOfHint address);
-	void onAction(HintAction action, Hint hint);
+	// on signals emited to this controller
+	virtual void onAction(HintAction action, AddressOfHint address) = 0;
+	virtual void onAction(HintAction action, Hint hint) = 0;
+
+protected:
+	std::shared_ptr<HintsFieldModel> field;
 
 private:
-	// when inserting button is clicked
-	void onHintInsertBefore(AddressOfHint address);
-
-	std::shared_ptr<HintsFieldModel> field;
 	HintsView *hintsView;
 };
 
-#endif // HINTSCONTROLLER_H
+#endif // ABSTRACTHINTSCONTROLLER_H

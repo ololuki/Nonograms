@@ -22,7 +22,9 @@
 #include "SizeDialog.h"
 #include <QDebug>
 #include "controller/EditableCellsController.h"
+#include "controller/EditableHintsController.h"
 #include "controller/ReadOnlyCellsController.h"
+#include "controller/ReadOnlyHintsController.h"
 #include "solver/field/DeductiveFieldSolver.h"
 
 
@@ -36,8 +38,8 @@ FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsVi
 	this->rowsHintsView = rowsHintsView;
 	
 	cellsController = std::make_shared<EditableCellsController>(field->cells(), this->cellsView);
-	columnsHintsController = std::make_shared<HintsController>(field->columnsHints(), this->columnsHintsView);
-	rowsHintsController = std::make_shared<HintsController>(field->rowsHints(), this->rowsHintsView);
+	columnsHintsController = std::make_shared<ReadOnlyHintsController>(field->columnsHints(), this->columnsHintsView);
+	rowsHintsController = std::make_shared<ReadOnlyHintsController>(field->rowsHints(), this->rowsHintsView);
 	
 	fileManager = std::make_shared<FileManager>(field->getWholeField());
 	
@@ -116,7 +118,7 @@ void FieldController::onSaveAs()
 void FieldController::setDrawingMode(DrawingMode drawingMode)
 {
 	this->drawingMode = drawingMode;
-	qDebug() << "drawingMode " << static_cast<int>(drawingMode);
+
 	if (drawingMode == DrawingMode::FreeDrawing || drawingMode == DrawingMode::ManualSolving)
 	{
 		cellsController = std::make_shared<EditableCellsController>(field->cells(), this->cellsView);
@@ -124,6 +126,17 @@ void FieldController::setDrawingMode(DrawingMode drawingMode)
 	else
 	{
 		cellsController = std::make_shared<ReadOnlyCellsController>(field->cells(), this->cellsView);
+	}
+
+	if (drawingMode == DrawingMode::FieldDefining)
+	{
+		columnsHintsController = std::make_shared<EditableHintsController>(field->columnsHints(), this->columnsHintsView);
+		rowsHintsController = std::make_shared<EditableHintsController>(field->rowsHints(), this->rowsHintsView);
+	}
+	else
+	{
+		columnsHintsController = std::make_shared<ReadOnlyHintsController>(field->columnsHints(), this->columnsHintsView);
+		rowsHintsController = std::make_shared<ReadOnlyHintsController>(field->rowsHints(), this->rowsHintsView);
 	}
 }
 

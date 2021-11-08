@@ -25,7 +25,7 @@
 #include "widgets/CellsView.h"
 #include "widgets/HintsView.h"
 #include "controller/AbstractCellsController.h"
-#include "controller/HintsController.h"
+#include "controller/AbstractHintsController.h"
 #include "file/FileManager.h"
 #include "../solver/SolverWorker.h"
 #include "DrawingMode.h"
@@ -68,8 +68,8 @@ private:
 	DrawingMode drawingMode;
 
 	std::shared_ptr<AbstractCellsController> cellsController;
-	std::shared_ptr<HintsController> columnsHintsController;
-	std::shared_ptr<HintsController> rowsHintsController;
+	std::shared_ptr<AbstractHintsController> columnsHintsController;
+	std::shared_ptr<AbstractHintsController> rowsHintsController;
 	std::shared_ptr<FileManager> fileManager;
 	
 	SolverWorker solverWorker;

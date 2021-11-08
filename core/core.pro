@@ -14,8 +14,11 @@ DEFINES += QT_DEPRECATED_WARNINGS #emit warning if any deprecated feature is use
 
 SOURCES += \
     controller/AbstractCellsController.cpp \
+    controller/AbstractHintsController.cpp \
     controller/EditableCellsController.cpp \
+    controller/EditableHintsController.cpp \
     controller/ReadOnlyCellsController.cpp \
+    controller/ReadOnlyHintsController.cpp \
     mainwindow.cpp \
     field/WholeField.cpp \
     field/WholeFieldModel.cpp \
@@ -37,7 +40,6 @@ SOURCES += \
     field/Hint.cpp \
     field/LineOfCells.cpp \
     widgets/CellsView.cpp \
-    controller/HintsController.cpp \
     field/CellsField.cpp \
     field/CellsFieldModel.cpp \
     field/HintsField.cpp \
@@ -58,9 +60,12 @@ SOURCES += \
 
 HEADERS += \
     controller/AbstractCellsController.h \
+    controller/AbstractHintsController.h \
     controller/DrawingMode.h \
     controller/EditableCellsController.h \
+    controller/EditableHintsController.h \
     controller/ReadOnlyCellsController.h \
+    controller/ReadOnlyHintsController.h \
     mainwindow.h \
     field/WholeField.h \
     field/WholeFieldModel.h \
@@ -88,7 +93,6 @@ HEADERS += \
     field/Hint.h \
     field/LineOfCells.h \
     widgets/CellsView.h \
-    controller/HintsController.h \
     field/CellsField.h \
     field/CellsFieldModel.h \
     field/HintsField.h \
