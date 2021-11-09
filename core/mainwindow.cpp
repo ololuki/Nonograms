@@ -103,11 +103,6 @@ void MainWindow::on_actionSolve_triggered()
 	fieldController->onSolve(start);
 }
 
-void MainWindow::on_actionAdd_blocks_triggered()
-{
-	fieldController->addDummyBlock();
-}
-
 void MainWindow::on_actionAbout_triggered()
 {
 	QString textAbout = "Program to create and solve nonograms.<br>"

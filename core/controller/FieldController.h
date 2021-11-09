@@ -39,8 +39,7 @@ class FieldController : public QObject
 public:
 	FieldController(CellsView *cellsView, HintsView *columnsHintsView, HintsView *rowsHintsView);
 	~FieldController();
-	void addDummyBlock();
-	
+
 	void onNew();
 	void onOpen();
 	void onSaveAs();

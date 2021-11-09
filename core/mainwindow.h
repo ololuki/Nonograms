@@ -50,8 +50,6 @@ private slots:
 	void on_actionAuto_solving_brute_force_triggered();
 	void on_actionSolve_triggered();
 
-	void on_actionAdd_blocks_triggered();
-
 	void on_actionAbout_triggered();
 	void on_actionAbout_Qt_triggered();
 
