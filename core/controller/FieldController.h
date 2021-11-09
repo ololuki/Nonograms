@@ -59,7 +59,7 @@ signals:
 	void stopWorker();
 	
 private:
-	std::shared_ptr<WholeFieldModel> field;
+	std::unique_ptr<WholeFieldModel> field;
 	
 	CellsView *cellsView;
 	HintsView *columnsHintsView;
@@ -67,10 +67,10 @@ private:
 
 	DrawingMode drawingMode;
 
-	std::shared_ptr<AbstractCellsController> cellsController;
-	std::shared_ptr<AbstractHintsController> columnsHintsController;
-	std::shared_ptr<AbstractHintsController> rowsHintsController;
-	std::shared_ptr<FileManager> fileManager;
+	std::unique_ptr<AbstractCellsController> cellsController;
+	std::unique_ptr<AbstractHintsController> columnsHintsController;
+	std::unique_ptr<AbstractHintsController> rowsHintsController;
+	std::unique_ptr<FileManager> fileManager;
 	
 	SolverWorker solverWorker;
 	QThread thread;

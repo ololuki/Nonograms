@@ -37,11 +37,11 @@ FieldController::FieldController(CellsView *cellsView, HintsView *columnsHintsVi
 	this->columnsHintsView = columnsHintsView;
 	this->rowsHintsView = rowsHintsView;
 	
-	cellsController = std::make_shared<EditableCellsController>(field->cells(), this->cellsView);
-	columnsHintsController = std::make_shared<ReadOnlyHintsController>(field->columnsHints(), this->columnsHintsView);
-	rowsHintsController = std::make_shared<ReadOnlyHintsController>(field->rowsHints(), this->rowsHintsView);
+	cellsController = std::make_unique<EditableCellsController>(field->cells(), this->cellsView);
+	columnsHintsController = std::make_unique<ReadOnlyHintsController>(field->columnsHints(), this->columnsHintsView);
+	rowsHintsController = std::make_unique<ReadOnlyHintsController>(field->rowsHints(), this->rowsHintsView);
 	
-	fileManager = std::make_shared<FileManager>(field->getWholeField());
+	fileManager = std::make_unique<FileManager>(field->getWholeField());
 	
 	qRegisterMetaType<Cell>();
 	qRegisterMetaType<WholeField>();
@@ -121,22 +121,22 @@ void FieldController::setDrawingMode(DrawingMode drawingMode)
 
 	if (drawingMode == DrawingMode::FreeDrawing || drawingMode == DrawingMode::ManualSolving)
 	{
-		cellsController = std::make_shared<EditableCellsController>(field->cells(), this->cellsView);
+		cellsController = std::make_unique<EditableCellsController>(field->cells(), this->cellsView);
 	}
 	else
 	{
-		cellsController = std::make_shared<ReadOnlyCellsController>(field->cells(), this->cellsView);
+		cellsController = std::make_unique<ReadOnlyCellsController>(field->cells(), this->cellsView);
 	}
 
 	if (drawingMode == DrawingMode::FieldDefining)
 	{
-		columnsHintsController = std::make_shared<EditableHintsController>(field->columnsHints(), this->columnsHintsView);
-		rowsHintsController = std::make_shared<EditableHintsController>(field->rowsHints(), this->rowsHintsView);
+		columnsHintsController = std::make_unique<EditableHintsController>(field->columnsHints(), this->columnsHintsView);
+		rowsHintsController = std::make_unique<EditableHintsController>(field->rowsHints(), this->rowsHintsView);
 	}
 	else
 	{
-		columnsHintsController = std::make_shared<ReadOnlyHintsController>(field->columnsHints(), this->columnsHintsView);
-		rowsHintsController = std::make_shared<ReadOnlyHintsController>(field->rowsHints(), this->rowsHintsView);
+		columnsHintsController = std::make_unique<ReadOnlyHintsController>(field->columnsHints(), this->columnsHintsView);
+		rowsHintsController = std::make_unique<ReadOnlyHintsController>(field->rowsHints(), this->rowsHintsView);
 	}
 }
 

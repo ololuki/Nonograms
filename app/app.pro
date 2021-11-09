@@ -12,6 +12,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = nonograms
 TEMPLATE = app
 
+CONFIG += c++14
+
 # put binaries in common directory
 DESTDIR = $$OUT_PWD/../bin
 

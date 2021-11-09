@@ -7,6 +7,8 @@ TEMPLATE = lib
 # using static lib there is no need to declaring export / import macros for MSVC
 CONFIG += staticlib
 
+CONFIG += c++14
+
 # put binaries in common directory
 DESTDIR = ../bin
 
