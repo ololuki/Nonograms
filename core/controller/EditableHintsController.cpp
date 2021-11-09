@@ -68,12 +68,8 @@ void EditableHintsController::onHintInsertBefore(AddressOfHint address)
 {
 	int line = address.getLine();
 	int count = address.getCount();
-	if (count < field->numberOfBlocksInLine(line))
+	if (count <= field->numberOfBlocksInLine(line))
 	{
 		field->insertHintBefore(Hint(address, 0));
-	}
-	else if (count == field->numberOfBlocksInLine(line))
-	{
-		field->addHintAtEnd(Hint(address, 0));
 	}
 }
