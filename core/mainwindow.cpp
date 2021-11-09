@@ -20,15 +20,8 @@
  *********************************************************************/
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "SizeDialog.h"
-#include "file/FileWriter.h"
-#include "file/FileReader.h"
-#include "file/NonogramFileWriter.h"
-#include "file/NonogramFileReader.h"
-#include <QDebug>
-
+#include "controller/FieldController.h"
 #include <QMessageBox>
-#include <QFileDialog>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -46,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->actionAuto_solving->setActionGroup(group);
 	ui->actionAuto_solving_brute_force->setActionGroup(group);
 
-	fieldController = std::make_shared<FieldController>(ui->cells, ui->columnsHints, ui->rowsHints);
+	fieldController = std::make_unique<FieldController>(ui->cells, ui->columnsHints, ui->rowsHints);
 	connect(static_cast<const FieldController*>(this->fieldController.get()),
 		&FieldController::isSolvingChanged,
 		this,
@@ -56,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
 		}
 	);
 }
+
+MainWindow::~MainWindow() = default;
 
 void MainWindow::on_actionNew_triggered()
 {

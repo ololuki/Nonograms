@@ -23,8 +23,8 @@
 
 #include <QMainWindow>
 #include <memory>
-#include "controller/FieldController.h"
 
+class FieldController;
 
 namespace Ui {
 class MainWindow;
@@ -37,6 +37,7 @@ class MainWindow : public QMainWindow
 
 public:
 	explicit MainWindow(QWidget *parent = nullptr);
+	~MainWindow();
 
 private slots:
 	void on_actionNew_triggered();
@@ -54,8 +55,8 @@ private slots:
 	void on_actionAbout_Qt_triggered();
 
 private:
-	std::shared_ptr<Ui::MainWindow> ui;
-	std::shared_ptr<FieldController> fieldController;
+	std::unique_ptr<Ui::MainWindow> ui;
+	std::unique_ptr<FieldController> fieldController;
 
 	const QString textStopSolving = "Stop";
 	const QString textSolve = "Solve";
