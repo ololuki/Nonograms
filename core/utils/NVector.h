@@ -51,7 +51,9 @@ public:
 	}
 	
 	int size() const {return static_cast<int>(vect.size());}
-	
+
+	void reserve(int n) {vect.reserve(n);}
+
 	T& operator[](int index) {return vect.operator[](index);}
 	const T& operator[](int index) const {return vect.operator[](index);}
 	

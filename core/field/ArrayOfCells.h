@@ -37,9 +37,11 @@ class ArrayOfCells
 public:
 	ArrayOfCells(int width, int height)
 	{
+		array.reserve(width);
 		for (int i = 0; i < width; i++)
 		{
 			array.push_back(NVector<Cell>());
+			array[i].reserve(height);
 			for (int j = 0; j < height; j++)
 			{
 				array[i].push_back(Cell(AddressOfCell(i, j)));
