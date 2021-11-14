@@ -41,7 +41,7 @@ public:
 	typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
 
 	NVector() {}
-	NVector(int count, const T& element = T())
+	explicit NVector(int count, const T& element = T())
 		: vect(count, element) {}
 	NVector(std::initializer_list<T> list)
 		: vect(list) {}
