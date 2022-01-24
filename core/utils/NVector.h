@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -82,8 +82,21 @@ public:
 	const_reverse_iterator rend() const {return vect.rend();}
 	const_reverse_iterator crend() const {return vect.crend();}
 
-	void push_back(T object) {vect.push_back(object);}
-	
+	void push_back(const T& object)
+	{
+		vect.push_back(object);
+	}
+	void push_back(T&& object)
+	{
+		vect.push_back(std::move(object));
+	}
+
+	template <class... Args>
+	void emplace_back(Args&&... args)
+	{
+		vect.emplace_back(std::forward<Args>(args)...);
+	}
+
 	void pop_back() {vect.pop_back();}
 
 	bool operator==(const NVector<T>& other) const
