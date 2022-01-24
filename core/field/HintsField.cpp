@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -170,7 +170,7 @@ bool HintsField::isDefinedHintAt(AddressOfHint address) const
 	return true;
 }
 
-LineOfHints HintsField::getLineOfHints(int lineNumber)
+LineOfHints HintsField::getLineOfHints(int lineNumber) const
 {
 	return linesOfHints[lineNumber];
 }

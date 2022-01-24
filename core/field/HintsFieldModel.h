@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -45,7 +45,7 @@ public:
 
 	virtual void setLineOfHints(LineOfHints line) override;
 
-	HintsField getHintsField();
+	HintsField getHintsField() const;
 	void setHintsField(HintsField field);
 
 signals:

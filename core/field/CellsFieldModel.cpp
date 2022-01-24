@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -48,7 +48,7 @@ void CellsFieldModel::setCell(Cell cell)
 
 /// returns CellsField - simply object, that not derives from QObject
 /// and is copyable
-CellsField CellsFieldModel::getCellsField()
+CellsField CellsFieldModel::getCellsField() const
 {
 	return (CellsField(*this));
 }

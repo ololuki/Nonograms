@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -20,13 +20,11 @@
  *********************************************************************/
 #include "AbstractCellsController.h"
 #include "widgets/CellsView.h"
-#include <QDebug>
 
 
 AbstractCellsController::AbstractCellsController(std::shared_ptr<CellsFieldModel> newField, CellsView *cellsView)
 	: field(newField)
 {
-	qDebug() << "CellsController constructor";
 	this->cellsView = cellsView;
 	this->cellsView->setField(field);
 
@@ -40,6 +38,5 @@ AbstractCellsController::AbstractCellsController(std::shared_ptr<CellsFieldModel
 
 AbstractCellsController::~AbstractCellsController()
 {
-	qDebug() << "CellsController destructor";
 	disconnect(this->cellsView, &CellsView::action, this, &AbstractCellsController::onAction);
 }

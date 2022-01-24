@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -63,7 +63,7 @@ void HintsFieldModel::setLineOfHints(LineOfHints line)
 
 /// returns HintsField - simply object, that not derives from QObject
 /// and is copyable
-HintsField HintsFieldModel::getHintsField()
+HintsField HintsFieldModel::getHintsField() const
 {
 	return (HintsField(*this));
 }

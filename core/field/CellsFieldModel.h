@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -37,7 +37,7 @@ public:
 	virtual ~CellsFieldModel() override;
 	void setCell(Cell cell) override;
 
-	CellsField getCellsField();
+	CellsField getCellsField() const;
 	void setCellsField(CellsField field);
 
 signals:

@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -64,11 +64,11 @@ public:
 
 	bool isDefinedHintAt(AddressOfHint address) const;
 
-	LineOfHints getLineOfHints(int lineNumber);
+	LineOfHints getLineOfHints(int lineNumber) const;
 	virtual void setLineOfHints(LineOfHints line);
 
 	std::string toStdString() const;
-protected:
+private:
 	int numberOfLines;
 	Orientation orientation;
 	NVector<LineOfHints> linesOfHints;
