@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -43,9 +43,9 @@
 int main(int argc, char **argv)
 {
 	QGuiApplication app(argc, argv);
-	
+
 	QVector<QObject*> tests;
-	
+
 	tests.append(new CellSignTest);
 	tests.append(new AddressOfCellTest);
 	tests.append(new AddressOfHintTest);
@@ -65,12 +65,15 @@ int main(int argc, char **argv)
 	tests.append(new FillFinishedSolverTest);
 	tests.append(new SingleDotsAroundFinishedBlocksSolverTest);
 	tests.append(new DeductiveFieldSolverTest);
-	
+
 	int result = 0;
 	for (int i = 0; i < tests.length(); i++)
 	{
-		result = QTest::qExec(tests[i]);
-		if (result) break;
+		result = QTest::qExec(tests[i], argc, argv);
+		if (result)
+		{
+			break;
+		}
 	}
 	qDeleteAll(tests);
 	return result;
