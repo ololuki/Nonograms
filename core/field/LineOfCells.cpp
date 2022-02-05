@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -37,9 +37,10 @@ LineOfCells::LineOfCells()
 ///
 LineOfCells::LineOfCells(std::string str)
 {
+	cells.reserve(static_cast<int>(str.size()));
 	for (size_t i = 0; i < str.size(); i++)
 	{
-		cells.push_back(Cell(str[i]));
+		cells.emplace_back(str[i]);
 	}
 }
 

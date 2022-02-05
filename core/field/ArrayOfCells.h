@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -44,7 +44,7 @@ public:
 			array[i].reserve(height);
 			for (int j = 0; j < height; j++)
 			{
-				array[i].push_back(Cell(AddressOfCell(i, j)));
+				array[i].emplace_back(AddressOfCell(i, j));
 			}
 		}
 	}

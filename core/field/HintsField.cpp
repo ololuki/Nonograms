@@ -34,11 +34,12 @@ HintsField::HintsField(int numberOfLines, Orientation o)
 	this->numberOfLines = numberOfLines;
 	this->orientation = o;
 	const int defaultBlockSize = 0;
+	linesOfHints.reserve(numberOfLines);
 	for(int i = 0; i < numberOfLines; i++)
 	{
 		AddressOfHint address = AddressOfHint(orientation, i, 0);
 		NVector<Hint> line;
-		line.push_back(Hint(address, defaultBlockSize));
+		line.emplace_back(address, defaultBlockSize);
 		linesOfHints.push_back(line);
 	}
 }
