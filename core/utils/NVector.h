@@ -40,7 +40,13 @@ public:
 	typedef typename std::vector<T>::reverse_iterator reverse_iterator;
 	typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
 
-	NVector() {}
+	NVector() = default;
+	NVector(const NVector<T>&) = default;
+	NVector(NVector<T>&&) = default;
+	NVector<T>& operator=(const NVector<T>&) = default;
+	NVector<T>& operator=(NVector<T>&&) = default;
+	~NVector() = default;
+
 	explicit NVector(int count, const T& element = T())
 		: vect(count, element) {}
 	NVector(std::initializer_list<T> list)

@@ -54,7 +54,7 @@ CellsField CellsFieldModel::getCellsField() const
 }
 
 /// set internal contents of this to be equal with given field
-void CellsFieldModel::setCellsField(CellsField field)
+void CellsFieldModel::setCellsField(const CellsField& field)
 {
 	static_cast<CellsField&>(*this) = field;
 	emit cellsChanged();

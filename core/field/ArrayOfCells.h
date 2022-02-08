@@ -48,6 +48,13 @@ public:
 			}
 		}
 	}
+
+	ArrayOfCells(const ArrayOfCells&) = default;
+	ArrayOfCells(ArrayOfCells&&) = default;
+	ArrayOfCells& operator=(const ArrayOfCells&) = default;
+	ArrayOfCells& operator=(ArrayOfCells&&) = default;
+	~ArrayOfCells() = default;
+
 	Cell& operator()(int x, int y)
 	{
 		return array.at(x)[y];

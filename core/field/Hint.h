@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -35,6 +35,12 @@ public:
 	Hint(int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
 	Hint(int blockSize, char symbol);
 	Hint(AddressOfHint address, int blockSize, cellSign sign = cellSign::SGN_FILL_BLACK);
+
+	Hint(const Hint&) = default;
+	Hint(Hint&&) = default;
+	Hint& operator=(const Hint&) = default;
+	Hint& operator=(Hint&&) = default;
+	~Hint() = default;
 
 	bool operator==(const Hint &other) const {
 		return (blockSize == other.blockSize && sign == other.sign);

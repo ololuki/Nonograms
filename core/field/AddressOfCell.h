@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -32,6 +32,13 @@ class AddressOfCell
 public:
 	AddressOfCell();
 	AddressOfCell(int x, int y) : x(x), y(y) {}
+
+	AddressOfCell(const AddressOfCell&) = default;
+	AddressOfCell(AddressOfCell&&) = default;
+	AddressOfCell& operator=(const AddressOfCell&) = default;
+	AddressOfCell& operator=(AddressOfCell&&) = default;
+	~AddressOfCell() = default;
+
 	bool isValid() const;
 	int getX() const {return x;}
 	int getY() const {return y;}

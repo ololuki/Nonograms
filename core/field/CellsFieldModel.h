@@ -38,7 +38,7 @@ public:
 	void setCell(Cell cell) override;
 
 	CellsField getCellsField() const;
-	void setCellsField(CellsField field);
+	void setCellsField(const CellsField& field);
 
 signals:
 	void cellChanged(AddressOfCell address);

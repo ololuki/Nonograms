@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -42,6 +42,13 @@ public:
 	LineOfCells();
 	LineOfCells(std::string str);
 	LineOfCells(NVector<Cell> vectorToCopy);
+
+	LineOfCells(const LineOfCells&) = default;
+	LineOfCells(LineOfCells&&) = default;
+	LineOfCells& operator=(const LineOfCells&) = default;
+	LineOfCells& operator=(LineOfCells&&) = default;
+	~LineOfCells() = default;
+
 	int size() const;
 	
 	Cell& at(int cellNumber);

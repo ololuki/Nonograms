@@ -35,6 +35,13 @@ public:
 	Cell(cellSign sign = cellSign::SGN_EMPTY);
 	Cell(char symbol);
 	Cell(AddressOfCell address, cellSign sign = cellSign::SGN_EMPTY);
+
+	Cell(const Cell&) = default;
+	Cell(Cell&&) = default;
+	Cell& operator=(const Cell&) = default;
+	Cell& operator=(Cell&&) = default;
+	~Cell() = default;
+
 	bool isFilledBlack() const {return sign == cellSign::SGN_FILL_BLACK;}
 	bool isDot() const {return sign == cellSign::SGN_DOT;}
 	bool isEmpty() const {return sign == cellSign::SGN_EMPTY;}

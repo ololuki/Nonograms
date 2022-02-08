@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -39,8 +39,10 @@ class CellsField
 public:
 	CellsField();
 	CellsField(int width, int height);
-	CellsField(const CellsField& field) = default;
 	CellsField(std::initializer_list<LineOfCells> rows);
+
+	CellsField(const CellsField&) = default;
+	CellsField(CellsField&&) = default;
 	CellsField& operator=(const CellsField& field) = default;
 	CellsField& operator=(CellsField&& field);
 	virtual ~CellsField();

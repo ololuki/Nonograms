@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -38,6 +38,13 @@ public:
 
 	LineOfHints();
 	LineOfHints(NVector<Hint> vectorToCopy);
+
+	LineOfHints(const LineOfHints&) = default;
+	LineOfHints(LineOfHints&&) = default;
+	LineOfHints& operator=(const LineOfHints&) = default;
+	LineOfHints& operator=(LineOfHints&&) = default;
+	~LineOfHints() = default;
+
 	int size() const;
 	
 	void updateHint(Hint hint);

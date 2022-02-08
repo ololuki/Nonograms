@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2021 Ololuki
+ * Copyright (C) 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -30,6 +30,11 @@
 
 FileManager::FileManager(const WholeField& field)
   : fieldInFile(field)
+{
+}
+
+FileManager::FileManager(WholeField&& field)
+  : fieldInFile(std::move(field))
 {
 }
 

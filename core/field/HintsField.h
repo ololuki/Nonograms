@@ -42,8 +42,10 @@ class HintsField
 public:
 	HintsField();
 	HintsField(int numberOfLines, Orientation o);
-	HintsField(const HintsField& hintsField);
 	HintsField(Orientation o, std::initializer_list<LineOfHints> lines);
+
+	HintsField(const HintsField& hintsField);
+	HintsField(HintsField&&) = default;
 	HintsField& operator=(const HintsField& field) = default;
 	HintsField& operator=(HintsField&& field) = default;
 	virtual ~HintsField();

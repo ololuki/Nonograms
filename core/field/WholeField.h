@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -37,10 +37,13 @@ public:
 	WholeField();
 	WholeField(int width, int height);
 	WholeField(CellsField cells, HintsField columns, HintsField rows);
+
 	WholeField(const WholeField &field);
+	WholeField(WholeField&&) = default;
 	WholeField& operator=(const WholeField& field);
 	WholeField& operator=(WholeField&& field);
 	virtual ~WholeField();
+
 	bool operator==(const WholeField& other) const;
 	bool operator!=(const WholeField& other) const;
 	int getWidth() const;
