@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -19,7 +19,6 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "CellsField.h"
-#include <QDebug>
 
 
 /// Make invalid cells field
@@ -30,7 +29,6 @@ CellsField::CellsField()
 
 CellsField::CellsField(int width, int height) : array(width, height)
 {
-	qDebug() << "CellsField width height c-tor";
 }
 
 /// Build CellsField based on list of rows
@@ -74,7 +72,6 @@ CellsField& CellsField::operator=(CellsField&& field)
 
 CellsField::~CellsField()
 {
-	qDebug() << "CellsField d-tor";
 }
 
 bool CellsField::operator==(const CellsField& other) const

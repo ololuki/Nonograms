@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -19,7 +19,6 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "WholeFieldModel.h"
-#include <QDebug>
 
 
 WholeFieldModel::WholeFieldModel(int width, int height)
@@ -29,12 +28,10 @@ WholeFieldModel::WholeFieldModel(int width, int height)
 	cellsField = std::make_shared<CellsFieldModel>(width, height);
 	columnsHintsField = std::make_shared<HintsFieldModel>(width, Orientation::VERTICAL);
 	rowsHintsField = std::make_shared<HintsFieldModel>(height, Orientation::HORIZONTAL);
-	qDebug() << "WholeFieldModel width height c-tor";
 }
 
 WholeFieldModel::~WholeFieldModel()
 {
-	qDebug() << "WholeFieldModel d-tor";
 }
 
 int WholeFieldModel::getWidth() const

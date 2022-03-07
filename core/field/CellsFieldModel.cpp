@@ -19,17 +19,14 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "CellsFieldModel.h"
-#include <QDebug>
 
 
 CellsFieldModel::CellsFieldModel(int width, int height) : CellsField(width, height)
 {
-	qDebug() << "CellsFieldModel width height c-tor";
 }
 
 CellsFieldModel::~CellsFieldModel()
 {
-	qDebug() << "CellsFieldModel d-tor";
 }
 
 void CellsFieldModel::setCell(Cell cell)

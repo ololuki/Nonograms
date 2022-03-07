@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -19,13 +19,11 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "WholeField.h"
-#include <QDebug>
 
 
 WholeField::WholeField()
   : WholeField(0, 0)
 {
-	qDebug() << "WholeField default c-tor";
 }
 
 WholeField::WholeField(int width, int height)
@@ -34,9 +32,7 @@ WholeField::WholeField(int width, int height)
     cellsField(width, height),
     columnsHintsField(width, Orientation::VERTICAL),
     rowsHintsField(height, Orientation::HORIZONTAL)
-
 {
-	qDebug() << "WholeField width height c-tor";
 }
 
 WholeField::WholeField(CellsField cells, HintsField columns, HintsField rows)
@@ -46,7 +42,6 @@ WholeField::WholeField(CellsField cells, HintsField columns, HintsField rows)
     columnsHintsField(columns),
     rowsHintsField(rows)
 {
-	qDebug() << "WholeField cells, columns, rows c-tor";
 }
 
 WholeField::WholeField(const WholeField &field)
@@ -56,7 +51,6 @@ WholeField::WholeField(const WholeField &field)
     columnsHintsField(field.columnsHintsField),
     rowsHintsField(field.rowsHintsField)
 {
-	qDebug() << "WholeField copy c-tor";
 }
 
 WholeField& WholeField::operator=(const WholeField& field)
@@ -81,7 +75,6 @@ WholeField& WholeField::operator=(WholeField&& field)
 
 WholeField::~WholeField()
 {
-	qDebug() << "WholeField d-tor";
 }
 
 bool WholeField::operator==(const WholeField& other) const

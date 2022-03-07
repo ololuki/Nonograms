@@ -19,7 +19,6 @@
  * along with Nonograms.  If not, see <http://www.gnu.org/licenses/>.
  *********************************************************************/
 #include "HintsField.h"
-#include <QDebug>
 
 
 /// Make invalid hints field
@@ -49,7 +48,6 @@ HintsField::HintsField(const HintsField& hintsField)
     orientation(hintsField.orientation),
     linesOfHints(hintsField.linesOfHints)
 {
-	qDebug() << "HintsField::HintsField(const HintsField& hintsField)";
 }
 
 /// Build HintsField based on list of lines

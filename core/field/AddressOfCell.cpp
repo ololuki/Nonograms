@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  * 
  * This file is part of Nonograms
@@ -26,7 +26,6 @@
 /// passing as queued Signal-Slot parameter and QSignalSpy
 AddressOfCell::AddressOfCell() : x(-1), y(-1)
 {
-	qDebug("default AddressOfCell c-tor");
 }
 
 bool AddressOfCell::isValid() const
