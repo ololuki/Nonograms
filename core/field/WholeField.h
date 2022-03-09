@@ -36,13 +36,14 @@ class WholeField
 public:
 	WholeField();
 	WholeField(int width, int height);
-	WholeField(CellsField cells, HintsField columns, HintsField rows);
+	WholeField(const CellsField& cells, const HintsField& columns, const HintsField& rows);
+	WholeField(CellsField&& cells, HintsField&& columns, HintsField&& rows);
 
 	WholeField(const WholeField &field);
 	WholeField(WholeField&&) = default;
 	WholeField& operator=(const WholeField& field);
 	WholeField& operator=(WholeField&& field);
-	virtual ~WholeField();
+	~WholeField();
 
 	bool operator==(const WholeField& other) const;
 	bool operator!=(const WholeField& other) const;

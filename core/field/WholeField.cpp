@@ -35,12 +35,21 @@ WholeField::WholeField(int width, int height)
 {
 }
 
-WholeField::WholeField(CellsField cells, HintsField columns, HintsField rows)
+WholeField::WholeField(const CellsField& cells, const HintsField& columns, const HintsField& rows)
   : width(cells.getWidth()),
     height(cells.getHeight()),
     cellsField(cells),
     columnsHintsField(columns),
     rowsHintsField(rows)
+{
+}
+
+WholeField::WholeField(CellsField&& cells, HintsField&& columns, HintsField&& rows)
+  : width(cells.getWidth()),
+    height(cells.getHeight()),
+    cellsField(std::move(cells)),
+    columnsHintsField(std::move(columns)),
+    rowsHintsField(std::move(rows))
 {
 }
 

@@ -38,7 +38,7 @@ class WholeFieldModel
 public:
 	WholeFieldModel(int width, int height);
 	WholeFieldModel(const WholeFieldModel &field) = delete;
-	virtual ~WholeFieldModel();
+	~WholeFieldModel();
 	int getWidth() const;
 	int getHeight() const;
 	std::shared_ptr<CellsFieldModel> cells();
