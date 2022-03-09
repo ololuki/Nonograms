@@ -41,7 +41,9 @@ public:
 	void trySaveChanges(const WholeField& field);		// zapisuje do bieżącego pliku lub pyta o scieżkę (trySaveAs); TODO zwraca SavedOkOrAbandoned = 0 lub Error = 1
 	bool trySaveAs(const WholeField& field);
 	bool tryOpenAnotherFile();
-	void setNewCreatedField(const WholeField& field);	// wywoływać po utworzeniu nowego pola, resetuje śiężkę do bieżącego pliku
+
+	void setNewCreatedField(const WholeField& field);
+	void setNewCreatedField(WholeField&& field);
 	const WholeField& getField();	// zwraca field, który jest aktualnie zapisany w pliku; wywoływać po odczycie z pliku
 	
 	bool abandonChangesOrSavePrompt(const WholeField& field);	// will be private

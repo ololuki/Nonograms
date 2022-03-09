@@ -103,9 +103,20 @@ bool FileManager::tryOpenAnotherFile()
 	return true;
 }
 
+///
+/// \brief Sets field in file, should be called after creation of new field.
+/// Resets current filename, because we created new file.
+/// \param field - new created field
+///
 void FileManager::setNewCreatedField(const WholeField& field)
 {
 	this->fieldInFile = field;
+	dropCurrentFileName();
+}
+
+void FileManager::setNewCreatedField(WholeField&& field)
+{
+	this->fieldInFile = std::move(field);
 	dropCurrentFileName();
 }
 
