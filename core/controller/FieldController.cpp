@@ -78,8 +78,9 @@ void FieldController::onNew()
 	delete d;
 	if (isConfirmed)
 	{
-		field->setWholeField(WholeField(width, height));
-		fileManager->setNewCreatedField(field->getWholeField());
+		WholeField newField = WholeField(width, height);
+		field->setWholeField(newField);
+		fileManager->setNewCreatedField(std::move(newField));
 	}
 }
 
