@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2021 Ololuki
+ * Copyright (C) 2021 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -27,7 +27,7 @@
 /// \param hints - line of hints
 /// \param cells - current line of cells, unresolved cells will be changed
 ///
-void FillFinishedSolver::solve(const LineOfHints& hints, LineOfCells& cells)
+void FillFinishedSolver::solve(const LineOfHints& hints, LineOfCells& cells) const
 {
 	int filledBlackInCells = std::count_if(cells.cbegin(), cells.cend(), [](const Cell& c){return c.isFilledBlack();});
 	int filledBlackInHints = 0;

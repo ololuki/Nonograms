@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017-2021 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -29,20 +29,12 @@
 
 DeductiveFieldSolver::DeductiveFieldSolver()
 {
-	std::shared_ptr<AbstractLineSolver> solver;
-
-	solver = std::make_shared<BlocksFromBordersSolver>();
-	lineSolvers.push_back(solver);
-	solver = std::make_shared<BlocksFromDotAndFilledSolver>();
-	lineSolvers.push_back(solver);
-	solver = std::make_shared<CoveringBlocksSolver>();
-	lineSolvers.push_back(solver);
-	solver = std::make_shared<DotsBetweenDotsSolver>();
-	lineSolvers.push_back(solver);
-	solver = std::make_shared<FillFinishedSolver>();
-	lineSolvers.push_back(solver);
-	solver = std::make_shared<SingleDotsAroundFinishedBlocksSolver>();
-	lineSolvers.push_back(solver);
+	lineSolvers.push_back(std::make_unique<const BlocksFromBordersSolver>());
+	lineSolvers.push_back(std::make_unique<const BlocksFromDotAndFilledSolver>());
+	lineSolvers.push_back(std::make_unique<const CoveringBlocksSolver>());
+	lineSolvers.push_back(std::make_unique<const DotsBetweenDotsSolver>());
+	lineSolvers.push_back(std::make_unique<const FillFinishedSolver>());
+	lineSolvers.push_back(std::make_unique<const SingleDotsAroundFinishedBlocksSolver>());
 }
 
 void DeductiveFieldSolver::setWholeField(WholeField wholeField)
@@ -56,7 +48,7 @@ void DeductiveFieldSolver::solveOneStep()
 	{
 		LineOfHints hints = wholeField.rowsHints().getLineOfHints(row);
 		LineOfCells lineOfCells = wholeField.cells().getLineOfCells(row, Orientation::HORIZONTAL);
-		for (std::shared_ptr<AbstractLineSolver> s : lineSolvers)
+		for (const auto& s : lineSolvers)
 		{
 			s->solve(hints, lineOfCells);
 			wholeField.cells().setLineOfCells(lineOfCells);
@@ -71,7 +63,7 @@ void DeductiveFieldSolver::solveOneStep()
 	{
 		LineOfHints hints = wholeField.columnsHints().getLineOfHints(col);
 		LineOfCells lineOfCells = wholeField.cells().getLineOfCells(col, Orientation::VERTICAL);
-		for (std::shared_ptr<AbstractLineSolver> s : lineSolvers)
+		for (const auto& s : lineSolvers)
 		{
 			s->solve(hints, lineOfCells);
 			wholeField.cells().setLineOfCells(lineOfCells);

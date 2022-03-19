@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2021 Ololuki
+ * Copyright (C) 2021 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -30,7 +30,7 @@
 /// \param hints
 /// \param cells
 ///
-void BlocksFromBordersSolver::solve(const LineOfHints &hints, LineOfCells &cells)
+void BlocksFromBordersSolver::solve(const LineOfHints &hints, LineOfCells &cells) const
 {
 	if (hints.size() == 0)
 	{

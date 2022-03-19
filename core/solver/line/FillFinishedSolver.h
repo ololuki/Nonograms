@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2021 Ololuki
+ * Copyright (C) 2021 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -27,7 +27,7 @@
 class FillFinishedSolver : public AbstractLineSolver
 {
 public:
-	void solve(const LineOfHints &hints, LineOfCells &cells) override;
+	void solve(const LineOfHints &hints, LineOfCells &cells) const override;
 };
 
 #endif // FILLFINISHEDSOLVER_H

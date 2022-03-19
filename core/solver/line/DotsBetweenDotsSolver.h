@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2021 Ololuki
+ * Copyright (C) 2021 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -27,16 +27,16 @@
 class DotsBetweenDotsSolver : public AbstractLineSolver
 {
 public:
-	void solve(const LineOfHints &hints, LineOfCells &cells) override;
+	void solve(const LineOfHints &hints, LineOfCells &cells) const override;
 
 private:
-	void solveFirst(const LineOfHints &hints, LineOfCells &cells);
-	void solveLast(const LineOfHints &hints, LineOfCells &cells);
+	void solveFirst(const LineOfHints &hints, LineOfCells &cells) const;
+	void solveLast(const LineOfHints &hints, LineOfCells &cells) const;
 
 	template <typename T>
-	void solveFirstLast(T begin, T end, int firstLastBlockSize);
+	void solveFirstLast(T begin, T end, int firstLastBlockSize) const;
 
-	void solveSmallest(const LineOfHints &hints, LineOfCells &cells);
+	void solveSmallest(const LineOfHints &hints, LineOfCells &cells) const;
 };
 
 #endif // DOTSBETWEENDOTSSOLVER_H

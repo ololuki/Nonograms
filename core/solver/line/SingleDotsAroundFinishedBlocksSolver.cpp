@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2021 Ololuki
+ * Copyright (C) 2021 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -21,7 +21,7 @@
 #include "SingleDotsAroundFinishedBlocksSolver.h"
 
 
-void SingleDotsAroundFinishedBlocksSolver::solve(const LineOfHints& hints, LineOfCells& cells)
+void SingleDotsAroundFinishedBlocksSolver::solve(const LineOfHints& hints, LineOfCells& cells) const
 {
 	if (hints.size() == 0)
 	{
@@ -47,7 +47,7 @@ void SingleDotsAroundFinishedBlocksSolver::solve(const LineOfHints& hints, LineO
 /// \param hints - line of hints
 /// \param cells - current line of cells, unresolved cells will be changed
 ///
-void SingleDotsAroundFinishedBlocksSolver::drawDotsOnFirstBlock(const LineOfHints& hints, LineOfCells& cells)
+void SingleDotsAroundFinishedBlocksSolver::drawDotsOnFirstBlock(const LineOfHints& hints, LineOfCells& cells) const
 {
 	if (hints.size() <= 1)
 	{
@@ -123,7 +123,7 @@ void SingleDotsAroundFinishedBlocksSolver::drawDotsOnFirstBlock(const LineOfHint
 /// \param hints - line of hints
 /// \param cells - current line of cells, unresolved cells will be changed
 ///
-void SingleDotsAroundFinishedBlocksSolver::drawDotsOnLastBlock(const LineOfHints& hints, LineOfCells& cells)
+void SingleDotsAroundFinishedBlocksSolver::drawDotsOnLastBlock(const LineOfHints& hints, LineOfCells& cells) const
 {
 	if (hints.size() <= 1)
 	{
@@ -199,7 +199,7 @@ void SingleDotsAroundFinishedBlocksSolver::drawDotsOnLastBlock(const LineOfHints
 /// \param hints - line of hints
 /// \param cells - current line of cells, unresolved cells will be changed
 ///
-void SingleDotsAroundFinishedBlocksSolver::drawDotsOnBiggestBlock(const LineOfHints& hints, LineOfCells& cells)
+void SingleDotsAroundFinishedBlocksSolver::drawDotsOnBiggestBlock(const LineOfHints& hints, LineOfCells& cells) const
 {
 	auto maxBlockSize = std::max_element(
 	            hints.begin(),

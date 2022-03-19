@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2021 Ololuki
+ * Copyright (C) 2021 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -22,19 +22,19 @@
 #include <algorithm>
 
 
-void BlocksFromDotAndFilledSolver::solve(const LineOfHints& hints, LineOfCells& cells)
+void BlocksFromDotAndFilledSolver::solve(const LineOfHints& hints, LineOfCells& cells) const
 {
 	solveFirst(hints, cells);
 	solveLast(hints, cells);
 	solveSmallest(hints, cells);
 }
 
-void BlocksFromDotAndFilledSolver::solveFirst(const LineOfHints& hints, LineOfCells& cells)
+void BlocksFromDotAndFilledSolver::solveFirst(const LineOfHints& hints, LineOfCells& cells) const
 {
 	solveFirstLast(hints.cbegin(), hints.cend(), cells.begin(), cells.end());
 }
 
-void BlocksFromDotAndFilledSolver::solveLast(const LineOfHints& hints, LineOfCells& cells)
+void BlocksFromDotAndFilledSolver::solveLast(const LineOfHints& hints, LineOfCells& cells) const
 {
 	solveFirstLast(hints.crbegin(), hints.crend(), cells.rbegin(), cells.rend());
 }
@@ -54,7 +54,7 @@ void BlocksFromDotAndFilledSolver::solveLast(const LineOfHints& hints, LineOfCel
 /// \param cellsEnd   - end or rend
 ///
 template<typename TH, typename TC>
-void BlocksFromDotAndFilledSolver::solveFirstLast(TH hintsBegin, TH hintsEnd, TC cellsBegin, TC cellsEnd)
+void BlocksFromDotAndFilledSolver::solveFirstLast(TH hintsBegin, TH hintsEnd, TC cellsBegin, TC cellsEnd) const
 {
 	auto hint = hintsBegin;
 	// previous cell is dot - assume true if start from border
@@ -86,7 +86,7 @@ void BlocksFromDotAndFilledSolver::solveFirstLast(TH hintsBegin, TH hintsEnd, TC
 	}
 }
 
-void BlocksFromDotAndFilledSolver::solveSmallest(const LineOfHints& hints, LineOfCells& cells)
+void BlocksFromDotAndFilledSolver::solveSmallest(const LineOfHints& hints, LineOfCells& cells) const
 {
 	auto minBlockSize = std::min_element(
 	            hints.begin(),
@@ -107,7 +107,7 @@ void BlocksFromDotAndFilledSolver::solveSmallest(const LineOfHints& hints, LineO
 /// \param smallestBlockSize - size of smallest block given in hints
 ///
 template<typename T>
-void BlocksFromDotAndFilledSolver::fillSmallest(T begin, T end, int smallestBlockSize)
+void BlocksFromDotAndFilledSolver::fillSmallest(T begin, T end, int smallestBlockSize) const
 {
 	// previous cell is dot - assume true if start from border
 	bool isPreviousDot = true;

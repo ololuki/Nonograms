@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2021 Ololuki
+ * Copyright (C) 2021 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -29,7 +29,7 @@
 /// \param hints - line of hints
 /// \param cells - current line of cells, unresolved cells will be changed
 ///
-void DotsBetweenDotsSolver::solve(const LineOfHints& hints, LineOfCells& cells)
+void DotsBetweenDotsSolver::solve(const LineOfHints& hints, LineOfCells& cells) const
 {
 	if (hints.size() == 0)
 	{
@@ -46,7 +46,7 @@ void DotsBetweenDotsSolver::solve(const LineOfHints& hints, LineOfCells& cells)
 /// \param hints - line of hints
 /// \param cells - current line of cells, unresolved cells will be changed
 ///
-void DotsBetweenDotsSolver::solveFirst(const LineOfHints& hints, LineOfCells& cells)
+void DotsBetweenDotsSolver::solveFirst(const LineOfHints& hints, LineOfCells& cells) const
 {
 	solveFirstLast(cells.begin(), cells.end(), hints.front().getBlockSize());
 }
@@ -56,7 +56,7 @@ void DotsBetweenDotsSolver::solveFirst(const LineOfHints& hints, LineOfCells& ce
 /// \param hints - line of hints
 /// \param cells - current line of cells, unresolved cells will be changed
 ///
-void DotsBetweenDotsSolver::solveLast(const LineOfHints& hints, LineOfCells& cells)
+void DotsBetweenDotsSolver::solveLast(const LineOfHints& hints, LineOfCells& cells) const
 {
 	solveFirstLast(cells.rbegin(), cells.rend(), hints.back().getBlockSize());
 }
@@ -72,7 +72,7 @@ void DotsBetweenDotsSolver::solveLast(const LineOfHints& hints, LineOfCells& cel
 /// \param firstLastBlockSize - Block size from first or last Hint
 ///
 template<typename T>
-void DotsBetweenDotsSolver::solveFirstLast(T begin, T end, int firstLastBlockSize)
+void DotsBetweenDotsSolver::solveFirstLast(T begin, T end, int firstLastBlockSize) const
 {
 	// true if start of block of empty cells was found
 	bool isEmptyBlockStarted = false;
@@ -112,7 +112,7 @@ void DotsBetweenDotsSolver::solveFirstLast(T begin, T end, int firstLastBlockSiz
 	}
 }
 
-void DotsBetweenDotsSolver::solveSmallest(const LineOfHints& hints, LineOfCells& cells)
+void DotsBetweenDotsSolver::solveSmallest(const LineOfHints& hints, LineOfCells& cells) const
 {
 	auto minBlockSize = std::min_element(
 	            hints.begin(),

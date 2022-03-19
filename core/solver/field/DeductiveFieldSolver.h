@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017-2019 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -46,7 +46,7 @@ public:
 private:
 	WholeField wholeField;
 	State state = State::notStarted;
-	std::vector<std::shared_ptr<AbstractLineSolver>> lineSolvers;
+	std::vector<std::unique_ptr<const AbstractLineSolver>> lineSolvers;
 };
 
 #endif // DEDUCTIVEFIELDSOLVER_H

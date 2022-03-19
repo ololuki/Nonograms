@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2021 Ololuki
+ * Copyright (C) 2021 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -27,11 +27,11 @@
 class SingleDotsAroundFinishedBlocksSolver : public AbstractLineSolver
 {
 public:
-	void solve(const LineOfHints &hints, LineOfCells &cells) override;
+	void solve(const LineOfHints &hints, LineOfCells &cells) const override;
 private:
-	void drawDotsOnFirstBlock(const LineOfHints &hints, LineOfCells &cells);
-	void drawDotsOnLastBlock(const LineOfHints &hints, LineOfCells &cells);
-	void drawDotsOnBiggestBlock(const LineOfHints &hints, LineOfCells &cells);
+	void drawDotsOnFirstBlock(const LineOfHints &hints, LineOfCells &cells) const;
+	void drawDotsOnLastBlock(const LineOfHints &hints, LineOfCells &cells) const;
+	void drawDotsOnBiggestBlock(const LineOfHints &hints, LineOfCells &cells) const;
 };
 
 #endif // SINGLEDOTSAROUNDFINISHEDBLOCKSSOLVER_H

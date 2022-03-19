@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2021 Ololuki
+ * Copyright (C) 2021 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -27,19 +27,19 @@
 class BlocksFromDotAndFilledSolver : public AbstractLineSolver
 {
 public:
-	void solve(const LineOfHints &hints, LineOfCells &cells) override;
+	void solve(const LineOfHints &hints, LineOfCells &cells) const override;
 
 private:
-	void solveFirst(const LineOfHints &hints, LineOfCells &cells);
-	void solveLast(const LineOfHints &hints, LineOfCells &cells);
+	void solveFirst(const LineOfHints &hints, LineOfCells &cells) const;
+	void solveLast(const LineOfHints &hints, LineOfCells &cells) const;
 
 	template<typename TH, typename TC>
-	void solveFirstLast(TH hintsBegin, TH hintsEnd, TC cellsBegin, TC cellsEnd);
+	void solveFirstLast(TH hintsBegin, TH hintsEnd, TC cellsBegin, TC cellsEnd) const;
 
-	void solveSmallest(const LineOfHints &hints, LineOfCells &cells);
+	void solveSmallest(const LineOfHints &hints, LineOfCells &cells) const;
 
 	template <typename T>
-	void fillSmallest(T begin, T end, int smallestBlockSize);
+	void fillSmallest(T begin, T end, int smallestBlockSize) const;
 };
 
 #endif // BLOCKSFROMDOTANDFILLED_H
