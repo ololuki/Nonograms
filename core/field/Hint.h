@@ -48,6 +48,9 @@ public:
 	bool operator!=(const Hint &other) const {
 		return (blockSize != other.blockSize || sign != other.sign);
 	}
+	bool operator<(const Hint &other) const {
+		return (blockSize < other.blockSize || sign < other.sign);
+	}
 
 	int getBlockSize() const {return blockSize;}
 	void setBlockSize(int blockSize) {this->blockSize = blockSize;}

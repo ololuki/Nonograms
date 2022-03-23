@@ -43,7 +43,9 @@ HEADERS += \
     solver/line/CoveringBlocksSolverTest.h \
     solver/line/DotsBetweenDotsSolverTest.h \
     solver/line/FillFinishedSolverTest.h \
-    solver/line/SingleDotsAroundFinishedBlocksSolverTest.h
+    solver/line/SingleDotsAroundFinishedBlocksSolverTest.h \
+    splitter/FinishedBlocksLineSplitterTest.h \
+    splitter/SplittingToolsTest.h
 
 
 # Sources of Test classes
@@ -66,4 +68,6 @@ SOURCES += TestMain.cpp \
     solver/line/CoveringBlocksSolverTest.cpp \
     solver/line/DotsBetweenDotsSolverTest.cpp \
     solver/line/FillFinishedSolverTest.cpp \
-    solver/line/SingleDotsAroundFinishedBlocksSolverTest.cpp
+    solver/line/SingleDotsAroundFinishedBlocksSolverTest.cpp \
+    splitter/FinishedBlocksLineSplitterTest.cpp \
+    splitter/SplittingToolsTest.cpp

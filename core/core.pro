@@ -58,6 +58,8 @@ SOURCES += \
     solver/line/DotsBetweenDotsSolver.cpp \
     solver/line/FillFinishedSolver.cpp \
     solver/line/SingleDotsAroundFinishedBlocksSolver.cpp \
+    splitter/FinishedBlocksLineSplitter.cpp \
+    splitter/SplittingTools.cpp \
     utils/TimeMeasure.cpp
 
 HEADERS += \
@@ -111,6 +113,11 @@ HEADERS += \
     solver/line/DotsBetweenDotsSolver.h \
     solver/line/FillFinishedSolver.h \
     solver/line/SingleDotsAroundFinishedBlocksSolver.h \
+    splitter/AbstractLineSplitter.h \
+    splitter/FinishedBlock.h \
+    splitter/FinishedBlocksLineSplitter.h \
+    splitter/SplittingTools.h \
+    splitter/SubLine.h \
     utils/TimeMeasure.h
 
 FORMS += \

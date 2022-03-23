@@ -38,6 +38,8 @@
 #include "solver/line/FillFinishedSolverTest.h"
 #include "solver/line/SingleDotsAroundFinishedBlocksSolverTest.h"
 #include "solver/field/DeductiveFieldSolverTest.h"
+#include "splitter/SplittingToolsTest.h"
+#include "splitter/FinishedBlocksLineSplitterTest.h"
 
 
 int main(int argc, char **argv)
@@ -65,6 +67,8 @@ int main(int argc, char **argv)
 	tests.append(new FillFinishedSolverTest);
 	tests.append(new SingleDotsAroundFinishedBlocksSolverTest);
 	tests.append(new DeductiveFieldSolverTest);
+	tests.append(new SplittingToolsTest);
+	tests.append(new FinishedBlocksLineSplitterTest);
 
 	int result = 0;
 	for (int i = 0; i < tests.length(); i++)

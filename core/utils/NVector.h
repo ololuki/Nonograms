@@ -49,6 +49,10 @@ public:
 
 	explicit NVector(int count, const T& element = T())
 		: vect(count, element) {}
+
+	template<class InputIt>
+	NVector(InputIt first, InputIt last) : vect(first, last) {}
+
 	NVector(std::initializer_list<T> list)
 		: vect(list) {}
 	
