@@ -86,5 +86,22 @@ std::list<FinishedBlock> SplittingTools::findFinished(const LineOfCells& lineOfC
 			                true}); // last block ends on wall - so all next 0 Cells are finished
 		}
 	}
+
+	if (!list.empty())
+	{
+		// if all Cells after last block are dots
+		for (auto it = lineOfCells.crbegin(); it != lineOfCells.crend(); ++it)
+		{
+			if (it->isEmpty())
+			{
+				break;
+			}
+			else if (it->isFilledBlack())
+			{
+				list.back().allFinishedToNextBlock = true;
+			}
+		}
+	}
+
 	return list;
 }

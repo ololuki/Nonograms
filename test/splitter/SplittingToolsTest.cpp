@@ -29,6 +29,7 @@ void SplittingToolsTest::find_finished_test_data()
 	QTest::addColumn<LineOfCells>("d_lineOfCells");
 	QTest::addColumn<std::list<FinishedBlock>>("d_expectedList");
 
+	// From front
 	QTest::newRow("offset 0")
 	        << LineOfCells("###.--")
 	        << std::list<FinishedBlock>{{{3}, 0, true, false}};
@@ -38,15 +39,40 @@ void SplittingToolsTest::find_finished_test_data()
 	QTest::newRow("offset 2")
 	        << LineOfCells("..###.--")
 	        << std::list<FinishedBlock>{{{3}, 2, true, false}};
+
+	// From back
+	QTest::newRow("offset 0 backward")
+	        << LineOfCells("--.###")
+	        << std::list<FinishedBlock>{{{3}, 3, false, true}};
+	QTest::newRow("offset 1 backward")
+	        << LineOfCells("--.###.")
+	        << std::list<FinishedBlock>{{{3}, 3, false, true}};
+	QTest::newRow("offset 2 backward")
+	        << LineOfCells("--.###..")
+	        << std::list<FinishedBlock>{{{3}, 3, false, true}};
+
+	// Unfinished on both ends
 	QTest::newRow("unfinished, offset 3")
 	        << LineOfCells("--.###.--")
 	        << std::list<FinishedBlock>{{{3}, 3, false, false}};
 
+	// Finished
 	QTest::newRow("all filled")
 	        << LineOfCells("###")
 	        << std::list<FinishedBlock>{{{3}, 0, true, true}};
+	QTest::newRow("all filled with dots around")
+	        << LineOfCells("..###....")
+	        << std::list<FinishedBlock>{{{3}, 2, true, true}};
 	QTest::newRow("3+2 finished")
 	        << LineOfCells("###.##")
+	        << std::list<FinishedBlock>{{{3}, 0, true, true},
+	                                    {{2}, 4, true, true}};
+	QTest::newRow("3+2 finished with dots on front")
+	        << LineOfCells("..###.##")
+	        << std::list<FinishedBlock>{{{3}, 2, true, true},
+	                                    {{2}, 6, true, true}};
+	QTest::newRow("3+2 finished with dots on back")
+	        << LineOfCells("###.##...")
 	        << std::list<FinishedBlock>{{{3}, 0, true, true},
 	                                    {{2}, 4, true, true}};
 }
