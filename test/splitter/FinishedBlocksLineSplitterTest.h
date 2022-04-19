@@ -28,10 +28,8 @@ class FinishedBlocksLineSplitterTest : public QObject
 {
 	Q_OBJECT
 private slots:
-	void first_finished_and_few_empty_returns_one_shorter_subline();
-	void last_finished_and_few_empty_returns_one_shorter_subline();
-	void all_finished_returns_empty_list();
-	void none_finished_returns_empty_list();
+	void split_test_data();
+	void split_test();
 };
 
 #endif // FINISHEDBLOCKSLINESPLITTERTEST_H

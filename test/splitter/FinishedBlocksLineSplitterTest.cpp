@@ -22,50 +22,52 @@
 #include "splitter/FinishedBlocksLineSplitter.h"
 
 
-void FinishedBlocksLineSplitterTest::first_finished_and_few_empty_returns_one_shorter_subline()
-{
-	LineOfHints lineOfHints({Hint(3), Hint(1), Hint(4)});
-	LineOfCells lineOfCells(".###.-..----##-");
-	FinishedBlocksLineSplitter splitter;
-	auto splittedList = splitter.split(lineOfHints, lineOfCells);
+Q_DECLARE_METATYPE(std::list<SubLine>)
 
-	QVERIFY(splittedList.size() == 1);
-	QVERIFY(splittedList.front().offset == 4);
-	QCOMPARE(splittedList.front().lineOfCells, LineOfCells(".-..----##-"));
-	QCOMPARE(splittedList.front().lineOfHints, LineOfHints({Hint(1), Hint(4)}));
+
+void FinishedBlocksLineSplitterTest::split_test_data()
+{
+	QTest::addColumn<LineOfHints>("d_lineOfHints");
+	QTest::addColumn<LineOfCells>("d_lineOfCells");
+	QTest::addColumn<std::list<SubLine>>("d_expectedList");
+
+	QTest::newRow("first finished and few empty returns one shorter subline")
+	        << LineOfHints({Hint(3), Hint(1), Hint(4)})
+	        << LineOfCells(".###.-..----##-")
+	        << std::list<SubLine>{{LineOfHints({Hint(1), Hint(4)}), {".-..----##-"}, 4}};
+
+	QTest::newRow("last finished and few empty returns one shorter subline")
+	        << LineOfHints({Hint(4), Hint(1), Hint(3)})
+	        << LineOfCells("-##----.--..###")
+	        << std::list<SubLine>{{LineOfHints({Hint(4), Hint(1)}), {"-##----.--."}, 0}};
+
+	QTest::newRow("all finished returns empty list")
+	        << LineOfHints({Hint(3), Hint(3)})
+	        << LineOfCells(".###.....###")
+	        << std::list<SubLine>{};
+
+	QTest::newRow("none finished returns empty list")
+	        << LineOfHints({Hint(3), Hint(1), Hint(3)})
+	        << LineOfCells(".-##--..----##-")
+	        << std::list<SubLine>{};
 }
 
-void FinishedBlocksLineSplitterTest::last_finished_and_few_empty_returns_one_shorter_subline()
+void FinishedBlocksLineSplitterTest::split_test()
 {
-	LineOfHints lineOfHints({Hint(4), Hint(1), Hint(3)});
-	LineOfCells lineOfCells("-##----.--..###");
+	QFETCH(LineOfHints, d_lineOfHints);
+	QFETCH(LineOfCells, d_lineOfCells);
+	QFETCH(std::list<SubLine>, d_expectedList);
+
 	FinishedBlocksLineSplitter splitter;
-	auto splittedList = splitter.split(lineOfHints, lineOfCells);
-	QVERIFY(splittedList.size() == 1);
+	auto splittedList = splitter.split(d_lineOfHints, d_lineOfCells);
 
-	QVERIFY(splittedList.front().offset == 0);
-	QCOMPARE(splittedList.front().lineOfCells, LineOfCells("-##----.--."));
-	QCOMPARE(splittedList.front().lineOfHints, LineOfHints({Hint(4), Hint(1)}));
-}
-
-/// All finished so nothing to solve
-void FinishedBlocksLineSplitterTest::all_finished_returns_empty_list()
-{
-	LineOfHints lineOfHints({Hint(3), Hint(3)});
-	LineOfCells lineOfCells(".###.....###");
-	FinishedBlocksLineSplitter splitter;
-	auto splittedList = splitter.split(lineOfHints, lineOfCells);
-
-	QVERIFY(splittedList.size() == 0);
-}
-
-/// None finished so no sublines
-void FinishedBlocksLineSplitterTest::none_finished_returns_empty_list()
-{
-	LineOfHints lineOfHints({Hint(3), Hint(1), Hint(3)});
-	LineOfCells lineOfCells(".-##--..----##-");
-	FinishedBlocksLineSplitter splitter;
-	auto splittedList = splitter.split(lineOfHints, lineOfCells);
-
-	QVERIFY(splittedList.size() == 0);
+	QCOMPARE(splittedList.size(), d_expectedList.size());
+	auto itExpected = d_expectedList.cbegin();
+	for (const SubLine& subLine : splittedList)
+	{
+		QCOMPARE(subLine.offset, itExpected->offset);
+		QCOMPARE(subLine.lineOfHints, itExpected->lineOfHints);
+		QCOMPARE(subLine.lineOfCells, itExpected->lineOfCells);
+		++itExpected;
+	}
 }
