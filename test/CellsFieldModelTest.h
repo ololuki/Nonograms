@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -32,6 +32,8 @@ private slots:
 	void getLineOfCells_should_return_valid_line_check_horizontal();
 	void getLineOfCells_should_return_valid_line_check_vertical();
 	void setLineOfCells_should_change_cells_check_horizontal();
+	void setLineOfCells_with_offset_new_line_shorter();
+	void setLineOfCells_with_offset_new_line_ends_on_same_place_that_existing();
 	void setCell_with_empty_address_should_not_change_any_Cell();
 	void setCell_with_empty_address_should_not_emit_cellChanged();
 	void signals_cellChanged_should_be_emited_only_for_cells_changed_by_setLineOfCells();

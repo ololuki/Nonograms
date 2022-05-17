@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (C) 2017 - 2019 Ololuki
+ * Copyright (C) 2017 - 2022 Ololuki
  * https://ololuki.pl
  *
  * This file is part of Nonograms
@@ -57,6 +57,30 @@ void CellsFieldModelTest::setLineOfCells_should_change_cells_check_horizontal()
 	QVERIFY(field->getCell(address01) == cell01);
 	QVERIFY(field->getCell(address11) == cell11);
 	QVERIFY(field->getCell(address21) == cell21);
+}
+
+void CellsFieldModelTest::setLineOfCells_with_offset_new_line_shorter()
+{
+	QSharedPointer<CellsFieldModel> field(new CellsFieldModel(10, 3));
+	QCOMPARE(field->getLineOfCells(1, Orientation::HORIZONTAL), LineOfCells("----------"));
+
+	LineOfCells line = LineOfCells(".##-.#");
+
+	field->setLineOfCells(line, Orientation::HORIZONTAL, 1, 3);
+
+	QCOMPARE(field->getLineOfCells(1, Orientation::HORIZONTAL), LineOfCells("---.##-.#-"));
+}
+
+void CellsFieldModelTest::setLineOfCells_with_offset_new_line_ends_on_same_place_that_existing()
+{
+	QSharedPointer<CellsFieldModel> field(new CellsFieldModel(8, 3));
+	QCOMPARE(field->getLineOfCells(1, Orientation::HORIZONTAL), LineOfCells("--------"));
+
+	LineOfCells line = LineOfCells("#-.##");
+
+	field->setLineOfCells(line, Orientation::HORIZONTAL, 1, 3);
+
+	QCOMPARE(field->getLineOfCells(1, Orientation::HORIZONTAL), LineOfCells("---#-.##"));
 }
 
 void CellsFieldModelTest::setCell_with_empty_address_should_not_change_any_Cell()

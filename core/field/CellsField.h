@@ -57,7 +57,7 @@ public:
 	virtual void setCell(Cell cell);
 	LineOfCells getLineOfCells(int lineNumber, Orientation orientation) const;
 	void setLineOfCells(LineOfCells lineOfCells);
-	void setLineOfCells(LineOfCells lineOfCells, int lineNumber, Orientation orientation);
+	void setLineOfCells(LineOfCells lineOfCells, Orientation orientation, int lineNumber, int offset = 0);
 
 protected:
 	ArrayOfCells array;

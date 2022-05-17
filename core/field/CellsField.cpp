@@ -47,7 +47,7 @@ CellsField::CellsField(std::initializer_list<LineOfCells> rows) : array(0, 0)
 		{
 			if (row.size() == width)
 			{
-				setLineOfCells(row, lineNumber, Orientation::HORIZONTAL);
+				setLineOfCells(row, Orientation::HORIZONTAL, lineNumber);
 				++lineNumber;
 			}
 			else
@@ -152,19 +152,28 @@ void CellsField::setLineOfCells(LineOfCells lineOfCells)
 /// replace it with valid Address based on given lineNumber
 /// and orientation
 void CellsField::setLineOfCells(LineOfCells lineOfCells,
+                                Orientation orientation,
                                 int lineNumber,
-                                Orientation orientation)
+                                int offset)
 {
 	for (int i = 0; i < lineOfCells.size(); i++)
 	{
 		if (orientation == Orientation::HORIZONTAL)
 		{
-			setCell(Cell(AddressOfCell{i, lineNumber},
+			if (i + offset >= array.width())
+			{
+				return;
+			}
+			setCell(Cell(AddressOfCell{i + offset, lineNumber},
 			             lineOfCells[i].getSign()));
 		}
 		else if (orientation == Orientation::VERTICAL)
 		{
-			setCell(Cell(AddressOfCell{lineNumber, i},
+			if (i + offset >= array.height())
+			{
+				return;
+			}
+			setCell(Cell(AddressOfCell{lineNumber, i + offset},
 			             lineOfCells[i].getSign()));
 		}
 	}
