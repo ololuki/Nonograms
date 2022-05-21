@@ -24,6 +24,11 @@
 
 void BlocksFromDotAndFilledSolver::solve(const LineOfHints& hints, LineOfCells& cells) const
 {
+	if (hints.size() == 0)
+	{
+		return;
+	}
+
 	solveFirst(hints, cells);
 	solveLast(hints, cells);
 	solveSmallest(hints, cells);

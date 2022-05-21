@@ -25,6 +25,7 @@
 #include "solver/line/DotsBetweenDotsSolver.h"
 #include "solver/line/FillFinishedSolver.h"
 #include "solver/line/SingleDotsAroundFinishedBlocksSolver.h"
+#include "splitter/FinishedBlocksLineSplitter.h"
 
 
 DeductiveFieldSolver::DeductiveFieldSolver()
@@ -44,17 +45,31 @@ void DeductiveFieldSolver::setWholeField(WholeField wholeField)
 
 void DeductiveFieldSolver::solveOneStep()
 {
+	FinishedBlocksLineSplitter splitter;
 	for (int row = 0; row < wholeField.getHeight(); row++)
 	{
 		LineOfHints hints = wholeField.rowsHints().getLineOfHints(row);
-		LineOfCells lineOfCells = wholeField.cells().getLineOfCells(row, Orientation::HORIZONTAL);
+
 		for (const auto& s : lineSolvers)
 		{
+			LineOfCells lineOfCells = wholeField.cells().getLineOfCells(row, Orientation::HORIZONTAL);
+
 			s->solve(hints, lineOfCells);
 			wholeField.cells().setLineOfCells(lineOfCells);
 			for (int i = 0; i < lineOfCells.size(); i++)
 			{
 				notifyCellChanged(Cell(lineOfCells.at(i)));
+			}
+
+			auto list = splitter.split(hints, lineOfCells);
+			for (auto& subline : list)
+			{
+				s->solve(subline.lineOfHints, subline.lineOfCells);
+				wholeField.cells().setLineOfCells(subline.lineOfCells, Orientation::HORIZONTAL, row, subline.offset);
+				for (int i = 0; i < lineOfCells.size(); i++)
+				{
+					notifyCellChanged(Cell(lineOfCells.at(i)));
+				}
 			}
 		}
 	}
@@ -62,14 +77,27 @@ void DeductiveFieldSolver::solveOneStep()
 	for (int col = 0; col < wholeField.getWidth(); col++)
 	{
 		LineOfHints hints = wholeField.columnsHints().getLineOfHints(col);
-		LineOfCells lineOfCells = wholeField.cells().getLineOfCells(col, Orientation::VERTICAL);
+
 		for (const auto& s : lineSolvers)
 		{
+			LineOfCells lineOfCells = wholeField.cells().getLineOfCells(col, Orientation::VERTICAL);
+
 			s->solve(hints, lineOfCells);
 			wholeField.cells().setLineOfCells(lineOfCells);
 			for (int i = 0; i < lineOfCells.size(); i++)
 			{
 				notifyCellChanged(Cell(lineOfCells.at(i)));
+			}
+
+			auto list = splitter.split(hints, lineOfCells);
+			for (auto& subline : list)
+			{
+				s->solve(subline.lineOfHints, subline.lineOfCells);
+				wholeField.cells().setLineOfCells(subline.lineOfCells, Orientation::VERTICAL, col, subline.offset);
+				for (int i = 0; i < lineOfCells.size(); i++)
+				{
+					notifyCellChanged(Cell(lineOfCells.at(i)));
+				}
 			}
 		}
 	}
