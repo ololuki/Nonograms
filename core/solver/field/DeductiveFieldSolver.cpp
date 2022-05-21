@@ -36,6 +36,8 @@ DeductiveFieldSolver::DeductiveFieldSolver()
 	lineSolvers.push_back(std::make_unique<const DotsBetweenDotsSolver>());
 	lineSolvers.push_back(std::make_unique<const FillFinishedSolver>());
 	lineSolvers.push_back(std::make_unique<const SingleDotsAroundFinishedBlocksSolver>());
+
+	lineSplitters.push_back(std::make_unique<const FinishedBlocksLineSplitter>());
 }
 
 void DeductiveFieldSolver::setWholeField(WholeField wholeField)
@@ -45,7 +47,6 @@ void DeductiveFieldSolver::setWholeField(WholeField wholeField)
 
 void DeductiveFieldSolver::solveOneStep()
 {
-	FinishedBlocksLineSplitter splitter;
 	for (int row = 0; row < wholeField.getHeight(); row++)
 	{
 		LineOfHints hints = wholeField.rowsHints().getLineOfHints(row);
@@ -61,14 +62,17 @@ void DeductiveFieldSolver::solveOneStep()
 				notifyCellChanged(Cell(lineOfCells.at(i)));
 			}
 
-			auto list = splitter.split(hints, lineOfCells);
-			for (auto& subline : list)
+			for (const auto& splitter : lineSplitters)
 			{
-				s->solve(subline.lineOfHints, subline.lineOfCells);
-				wholeField.cells().setLineOfCells(subline.lineOfCells, Orientation::HORIZONTAL, row, subline.offset);
-				for (int i = 0; i < lineOfCells.size(); i++)
+				auto list = splitter->split(hints, lineOfCells);
+				for (auto& subline : list)
 				{
-					notifyCellChanged(Cell(lineOfCells.at(i)));
+					s->solve(subline.lineOfHints, subline.lineOfCells);
+					wholeField.cells().setLineOfCells(subline.lineOfCells, Orientation::HORIZONTAL, row, subline.offset);
+					for (int i = 0; i < lineOfCells.size(); i++)
+					{
+						notifyCellChanged(Cell(lineOfCells.at(i)));
+					}
 				}
 			}
 		}
@@ -89,14 +93,17 @@ void DeductiveFieldSolver::solveOneStep()
 				notifyCellChanged(Cell(lineOfCells.at(i)));
 			}
 
-			auto list = splitter.split(hints, lineOfCells);
-			for (auto& subline : list)
+			for (const auto& splitter : lineSplitters)
 			{
-				s->solve(subline.lineOfHints, subline.lineOfCells);
-				wholeField.cells().setLineOfCells(subline.lineOfCells, Orientation::VERTICAL, col, subline.offset);
-				for (int i = 0; i < lineOfCells.size(); i++)
+				auto list = splitter->split(hints, lineOfCells);
+				for (auto& subline : list)
 				{
-					notifyCellChanged(Cell(lineOfCells.at(i)));
+					s->solve(subline.lineOfHints, subline.lineOfCells);
+					wholeField.cells().setLineOfCells(subline.lineOfCells, Orientation::VERTICAL, col, subline.offset);
+					for (int i = 0; i < lineOfCells.size(); i++)
+					{
+						notifyCellChanged(Cell(lineOfCells.at(i)));
+					}
 				}
 			}
 		}

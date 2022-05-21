@@ -24,6 +24,7 @@
 #include "AbstractFieldSolver.h"
 #include "field/WholeField.h"
 #include "solver/line/AbstractLineSolver.h"
+#include "splitter/AbstractLineSplitter.h"
 #include <memory>
 
 
@@ -47,6 +48,7 @@ private:
 	WholeField wholeField;
 	State state = State::notStarted;
 	std::vector<std::unique_ptr<const AbstractLineSolver>> lineSolvers;
+	std::vector<std::unique_ptr<const AbstractLineSplitter>> lineSplitters;
 };
 
 #endif // DEDUCTIVEFIELDSOLVER_H
