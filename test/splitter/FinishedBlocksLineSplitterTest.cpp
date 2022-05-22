@@ -31,15 +31,20 @@ void FinishedBlocksLineSplitterTest::split_test_data()
 	QTest::addColumn<LineOfCells>("d_lineOfCells");
 	QTest::addColumn<std::list<SubLine>>("d_expectedList");
 
-	QTest::newRow("first finished and few empty returns one shorter subline")
+	QTest::newRow("first finished and few empty returns one shorter subline (with trimmed dots on both ends)")
 	        << LineOfHints({Hint(3), Hint(1), Hint(4)})
 	        << LineOfCells(".###.-..----##-")
-	        << std::list<SubLine>{{LineOfHints({Hint(1), Hint(4)}), {".-..----##-"}, 4}};
+	        << std::list<SubLine>{{LineOfHints({Hint(1), Hint(4)}), {"-..----##-"}, 5}};
 
-	QTest::newRow("last finished and few empty returns one shorter subline")
+	QTest::newRow("first finished and few empty returns one shorter subline (with trimmed dots on both ends)")
+	        << LineOfHints({Hint(3), Hint(1), Hint(4)})
+	        << LineOfCells(".###....-----##-...")
+	        << std::list<SubLine>{{LineOfHints({Hint(1), Hint(4)}), {"-----##-"}, 8}};
+
+	QTest::newRow("last finished and few empty returns one shorter subline (with trimmed dots on both ends)")
 	        << LineOfHints({Hint(4), Hint(1), Hint(3)})
 	        << LineOfCells("-##----.--..###")
-	        << std::list<SubLine>{{LineOfHints({Hint(4), Hint(1)}), {"-##----.--."}, 0}};
+	        << std::list<SubLine>{{LineOfHints({Hint(4), Hint(1)}), {"-##----.--"}, 0}};
 
 	QTest::newRow("all finished returns empty list")
 	        << LineOfHints({Hint(3), Hint(3)})

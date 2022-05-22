@@ -24,6 +24,7 @@
 #include "FinishedBlock.h"
 #include "field/LineOfCells.h"
 #include <list>
+#include "SubLine.h"
 
 
 struct SplittingTools
@@ -31,6 +32,7 @@ struct SplittingTools
 	SplittingTools() = delete;
 
 	static std::list<FinishedBlock> findFinished(const LineOfCells& lineOfCells);
+	static SubLine trimDotsOnEnds(SubLine subline);
 };
 
 #endif // SPLITTINGTOOLS_H

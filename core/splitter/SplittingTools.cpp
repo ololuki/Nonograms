@@ -104,3 +104,31 @@ std::list<FinishedBlock> SplittingTools::findFinished(const LineOfCells& lineOfC
 
 	return list;
 }
+
+SubLine SplittingTools::trimDotsOnEnds(SubLine subline)
+{
+	int frontDots = 0;
+	for (const auto& cell : subline.lineOfCells)
+	{
+		if (!cell.isDot())
+		{
+			break;
+		}
+		++frontDots;
+	}
+	int backDots = 0;
+	for (auto it = subline.lineOfCells.crbegin(); it != subline.lineOfCells.crend(); ++it)
+	{
+		if (!it->isDot())
+		{
+			break;
+		}
+		++backDots;
+	}
+	if (frontDots || backDots)
+	{
+		subline.lineOfCells = LineOfCells(NVector<Cell>(subline.lineOfCells.cbegin() + frontDots, subline.lineOfCells.cend() - backDots));
+		subline.offset += frontDots;
+	}
+	return subline;
+}

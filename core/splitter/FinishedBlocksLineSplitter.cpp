@@ -66,9 +66,8 @@ std::list<SubLine> FinishedBlocksLineSplitter::split(const LineOfHints& lineOfHi
 				SubLine subline;
 				subline.offset = itPreviousCell - lineOfCells.cbegin();
 				subline.lineOfHints = LineOfHints(NVector<Hint>(itPreviousHint, itHint));
-				// TODO: trim dots on the ends
 				subline.lineOfCells = LineOfCells(NVector<Cell>(itPreviousCell, lineOfCells.cbegin() + itFinished->offset - 1));
-				list.push_back(subline);
+				list.push_back(SplittingTools::trimDotsOnEnds(std::move(subline)));
 			}
 			// We can advance previous iterator, because we saved SubLine
 			// or all Cells was finished so we do not need Subline here.
@@ -87,9 +86,8 @@ std::list<SubLine> FinishedBlocksLineSplitter::split(const LineOfHints& lineOfHi
 		SubLine subline;
 		subline.offset = itPreviousCell - lineOfCells.cbegin();
 		subline.lineOfHints = LineOfHints(NVector<Hint>(itPreviousHint, lineOfHints.cend()));
-		// TODO: trim dots on the ends
 		subline.lineOfCells = LineOfCells(NVector<Cell>(itPreviousCell, lineOfCells.cend()));
-		list.push_back(subline);
+		list.push_back(SplittingTools::trimDotsOnEnds(std::move(subline)));
 	}
 
 	return list;
