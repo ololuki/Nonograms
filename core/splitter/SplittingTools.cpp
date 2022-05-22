@@ -46,7 +46,7 @@ std::list<FinishedBlock> SplittingTools::findFinished(const LineOfCells& lineOfC
 					list.push_back({Hint(currentBlockCounter, previous.getSign()),
 					                i - currentBlockCounter,
 					                allFinishedFromPrevBlock,
-					                false}); // will be filled in the future TODO: fill for last finished block after loop
+					                false}); // will be filled in the future
 					allFinishedFromPrevBlock = true;
 				}
 			}
@@ -86,8 +86,7 @@ std::list<FinishedBlock> SplittingTools::findFinished(const LineOfCells& lineOfC
 			                true}); // last block ends on wall - so all next 0 Cells are finished
 		}
 	}
-
-	if (!list.empty())
+	else if (!list.empty())
 	{
 		// if all Cells after last block are dots
 		for (auto it = lineOfCells.crbegin(); it != lineOfCells.crend(); ++it)

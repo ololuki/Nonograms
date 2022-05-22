@@ -27,7 +27,7 @@
 #include "controller/AbstractCellsController.h"
 #include "controller/AbstractHintsController.h"
 #include "file/FileManager.h"
-#include "../solver/SolverWorker.h"
+#include "solver/SolverWorker.h"
 #include "DrawingMode.h"
 
 #include <QThread>
